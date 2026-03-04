@@ -1,15 +1,13 @@
 @font-face {
-    font-family: 'Montserrat';
-    src: local('Montserrat'), url(../fonts/Montserrat-Regular.ttf) format('ttf');
-    /* Adjust path and format */
+    font-family: 'Noto Sans';
+    src: url(../fonts/NotoSansHebrew-Regular.ttf) format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Montserrat';
-    src: local('Montserrat'), url(../fonts/Montserrat-Bold.ttf) format('ttf');
-    /* Adjust path and format */
+    font-family: 'Noto Sans';
+    src: url(../fonts/NotoSansHebrew-Bold.ttf) format('truetype');
     font-weight: bold;
     font-style: normal;
 }
@@ -17,11 +15,8 @@
 body {
     background-image: url('../assets/kaboomBackground.png');
     background-repeat: no-repeat;
-    /* Prevents the image from tiling */
     background-size: cover;
-    /* Scales the image to cover the entire container while maintaining aspect ratio */
     background-position: center;
-    /* Centers the image */
     background-attachment: fixed;
 }
 
@@ -55,7 +50,7 @@ body {
     padding: 0.4rem;
     color: #B2B2B2;
     border-color: #B2B2B2;
-    font-family: 'Montserrat';
+    font-family: 'Noto Sans';
     font-weight: bold;
 }
 
@@ -64,7 +59,7 @@ body {
     color: white;
     border-radius: 4px;
     padding: 0.4rem;
-    font-family: 'Montserrat';
+    font-family: 'Noto Sans';
     font-weight: bold;
 }
 
@@ -73,12 +68,15 @@ body {
     bottom: 0.5rem;
     text-align: center;
     color: white;
-    font-family: 'Montserrat';
     left: 50%;
-    /* Moves the left edge to the horizontal center of the parent */
     transform: translateX(-50%);
 }
 
-.infoText {
+.info-text, .credit-text {
     margin: 0;
+    font-family: 'Noto Sans';
+}
+
+.info-text {
+    font-weight: bold;
 }

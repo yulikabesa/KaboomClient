@@ -22,8 +22,8 @@ const JoinGamePage = () => {
                 </div>
             </div>
             <div className={classes['info']}>
-                <p className={classes['infoText']}>צור את ה”קאבום” שלך בקלות דרך Kaboom.com/create</p>
-                <p className={classes['infoText']}>זכויות שמורות לארטק מדור טכנולוגיות למידה</p>
+                <p className={classes['info-text']}>צור את ה”קאבום” שלך בקלות דרך Kaboom.com/create</p>
+                <p className={classes['credit-text']}>זכויות שמורות לארטק מדור טכנולוגיות למידה</p>
             </div>
         </>
     )
