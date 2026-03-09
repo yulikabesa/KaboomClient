@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import classes from './GameLobby.module.css';
-import kaboomLogo from '../assets/kaboomLogo.png';
-import personIcon from '../assets/personIcon.png';
-import rightWhiteTextBackground from '../assets/rightWhiteTextBackground.png';
-import leftWhiteTextBackground from '../assets/leftWhiteTextBackground.png';
+import kaboomLogo from '../../assets/kaboomLogo.png';
+import personIcon from '../../assets/personIcon.png';
+import rightWhiteTextBackground from '../../assets/rightWhiteTextBackground.png';
+import leftWhiteTextBackground from '../../assets/leftWhiteTextBackground.png';
 
 const GameLobby: React.FC<{ pin: string; }> = (props) => {
     // todo delete players example

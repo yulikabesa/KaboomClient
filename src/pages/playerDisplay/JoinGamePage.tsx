@@ -1,5 +1,5 @@
 import classes from './JoinGamePage.module.css';
-import kaboomLogo from '../assets/kaboomLogo.png';
+import kaboomLogo from '../../assets/kaboomLogo.png';
 import React, { useState } from 'react';
 
 const JoinGamePage: React.FC = () => {

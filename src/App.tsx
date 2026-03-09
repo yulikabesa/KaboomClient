@@ -5,9 +5,9 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import NotFound from "./pages/NotFound";
-import JoinGamePage from "./pages/JoinGamePage";
+import JoinGamePage from "./pages/playerDisplay/JoinGamePage";
 import { Outlet } from 'react-router-dom';
-import GameLobby from "./pages/GameLobby";
+import GameLobby from "./pages/projectorDisplay/GameLobby";
 
 const App = () => {
   // const authCtx = useContext(AuthContext);
