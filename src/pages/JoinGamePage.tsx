@@ -2,7 +2,7 @@ import classes from './JoinGamePage.module.css';
 import kaboomLogo from '../assets/kaboomLogo.png';
 import React, { useState } from 'react';
 
-const JoinGamePage = () => {
+const JoinGamePage: React.FC = () => {
     const [pin, setPin] = useState('');
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPin(event.target.value);

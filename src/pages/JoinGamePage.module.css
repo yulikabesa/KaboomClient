@@ -80,3 +80,27 @@ body {
 .info-text {
     font-weight: bold;
 }
+
+
+
+
+.buttons-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* pushes the divs to the right */
+  width: 100%;
+  position: relative;
+  gap: 12px;
+}
+
+.kaboom-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.player-number-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

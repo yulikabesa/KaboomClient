@@ -7,6 +7,7 @@ import {
 import NotFound from "./pages/NotFound";
 import JoinGamePage from "./pages/JoinGamePage";
 import { Outlet } from 'react-router-dom';
+import GameLobby from "./pages/GameLobby";
 
 const App = () => {
   // const authCtx = useContext(AuthContext);
@@ -25,6 +26,10 @@ const App = () => {
         {
           path: "/home",
           element: <JoinGamePage />,
+        },
+        {
+          path: "/lobby",
+          element: <GameLobby pin="1234567" />,
         },
       ],
     },
