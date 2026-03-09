@@ -1,17 +1,3 @@
-@font-face {
-    font-family: 'Noto Sans';
-    src: url(../../fonts/NotoSansHebrew-Regular.ttf) format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Noto Sans';
-    src: url(../../fonts/NotoSansHebrew-Bold.ttf) format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-
 body {
     background-image: url('../../assets/kaboomBackground.png');
     background-repeat: no-repeat;
