@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import JoinGamePage from "./pages/playerDisplay/JoinGamePage";
 import { Outlet } from 'react-router-dom';
 import GameLobby from "./pages/projectorDisplay/GameLobby";
+import { LobbyProvider } from "./store/LobbyContext";
 
 const App = () => {
   // const authCtx = useContext(AuthContext);
@@ -29,7 +30,7 @@ const App = () => {
         },
         {
           path: "/lobby",
-          element: <GameLobby pin="1234567" />,
+          element: <GameLobby />,
         },
       ],
     },
@@ -39,7 +40,9 @@ const App = () => {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return <LobbyProvider>
+    <RouterProvider router={router} />
+  </LobbyProvider>;
 };
 
 export default App;
