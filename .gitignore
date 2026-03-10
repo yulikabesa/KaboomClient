@@ -1,3 +1,4 @@
 node_modules
-services/
+BamReqService.ts
+UserService.ts
 .env
