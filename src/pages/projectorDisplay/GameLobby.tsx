@@ -3,13 +3,10 @@ import kaboomLogo from '../../assets/kaboomLogo.png';
 import personIcon from '../../assets/personIcon.png';
 import rightWhiteTextBackground from '../../assets/rightWhiteTextBackground.png';
 import leftWhiteTextBackground from '../../assets/leftWhiteTextBackground.png';
-// import { connectSocket } from '../../services/socketService';
 import { useLobby } from '../../store/LobbyContext';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const GameLobby: React.FC = () => {
-    // const navigate = useNavigate();
-    // const { setLobby } = useLobby();
 
     const { lobby } = useLobby();
     // making sure u can go to this page only if 
@@ -17,27 +14,6 @@ const GameLobby: React.FC = () => {
     if (!lobby) {
         return <Navigate to="/home" replace />;
     }
-
-    // todo
-    // move createGameSession function to the page where you click on the button to create the game pin and whole session 
-
-    // const createGameSession = () => {
-    //     const socket = connectSocket();
-
-    //     // Emit event to create game
-    //     socket.emit("create-game-sessiom", { quizIdClicked });
-
-    //     // Listen for the game-created event only once
-    //     socket.once("game-created", ({ pin }) => {
-    //         console.log("Game created with pin:", pin);
-    //         setLobby({
-    //             gamePin: pin,
-    //             players: [],
-    //             quizId: quizIdClicked
-    //         });
-    //         navigate("/lobby");
-    //     });
-    // };
 
     // todo
     // add function that connects to socket and receives players that joined the game

@@ -1,6 +1,7 @@
 import classes from './JoinGamePage.module.css';
 import kaboomLogo from '../../assets/kaboomLogo.png';
 import React, { useState } from 'react';
+import { MyKabooms } from '../projectorDisplay/MyKabooms';
 
 const JoinGamePage: React.FC = () => {
     const [pin, setPin] = useState('');
@@ -21,6 +22,7 @@ const JoinGamePage: React.FC = () => {
                     <button className={classes['join-button']}>כנס</button>
                 </div>
             </div>
+            <MyKabooms />
             <div className={classes['info']}>
                 <p className={classes['info-text']}>צור את ה”קאבום” שלך בקלות דרך Kaboom.com/create</p>
                 <p className={classes['credit-text']}>זכויות שמורות לארטק מדור טכנולוגיות למידה</p>
