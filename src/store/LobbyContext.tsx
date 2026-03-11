@@ -17,14 +17,10 @@ type LobbyContextType = {
 const LobbyContext = createContext<LobbyContextType | null>(null);
 
 export const LobbyProvider = ({ children }: { children: React.ReactNode }) => {
-    const [lobby, setLobbyState] = useState<LobbyDataType | null>(null);
-
-    useEffect(() => {
+    const [lobby, setLobbyState] = useState<LobbyDataType | null>(() => {
         const saved = localStorage.getItem("lobby");
-        if (saved) {
-            setLobbyState(JSON.parse(saved));
-        }
-    }, []);
+        return saved ? JSON.parse(saved) : null;
+    });
 
     const setLobby = (data: LobbyDataType) => {
         setLobbyState(data);
