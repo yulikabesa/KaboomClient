@@ -3,6 +3,8 @@
     height: 6vh;
     width: 100%;
     display: flex;
+    position: absolute;
+    bottom: 0;
     align-items: center;
     padding: 1vh;
     box-sizing: border-box;

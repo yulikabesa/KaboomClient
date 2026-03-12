@@ -18,6 +18,13 @@
     align-items: center;
     min-height: 0;
     border-radius: 8px;
+    background-color: var(--bg-color);
+    transition: background-color 0.2s ease;
+}
+
+.answer-option:hover {
+    background-color: var(--hover-color);
+    cursor: pointer;
 }
 
 .answer-option svg {
