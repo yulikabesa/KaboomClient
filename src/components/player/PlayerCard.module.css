@@ -1,0 +1,29 @@
+.container {
+    background-color: white;
+    height: 6vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 1vh;
+    box-sizing: border-box;
+    gap: 1vw;
+}
+
+.player-photo {
+    height: 100%;
+    /* padding: 1vh; */
+}
+
+.player-name {
+    font-family: 'Noto Sans';
+    font-weight: 700;
+}
+
+.player-points {
+    background-color: #333333;
+    color: white;
+    padding: 0.4vh 1vh;
+    font-family: 'Noto Sans';
+    font-weight: 700;
+    margin-right: auto;
+}
