@@ -3,7 +3,7 @@ import React from 'react';
 const Triangle = () => {
     return (
         <svg viewBox='0 0 100 100'>
-            <polygon points='50,10 90,90 10,90' fill='white' />
+            <polygon points='50,13.4 0,86.6 100,86.6' fill='white' />
         </svg>
     )
 }

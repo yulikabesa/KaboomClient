@@ -4,6 +4,8 @@ import Triangle from '../../components/shapes/Triangle';
 import Square from '../../components/shapes/Square';
 import Circle from '../../components/shapes/Circle';
 import PlayerCard from '../../components/player/playerCard';
+import UpsideDownTriangle from '../../components/shapes/UpsideDownTriangle';
+import Pentagon from '../../components/shapes/Pentagon';
 
 const AnswerOptions = () => {
     const answersCount = 4; // to change to receive from server later
@@ -12,8 +14,8 @@ const AnswerOptions = () => {
         { color: "#E21B3C", shape: <Triangle />, colorOnHover: "#CB002C" },
         { color: "#26890C", shape: <Square />, colorOnHover: "#007600" },
         { color: "#D89E00", shape: <Circle />, colorOnHover: "#C28B00" },
-        { color: "#0AA3A3", shape: <Diamond />, colorOnHover: "#099494ff" },
-        { color: "#864CBF", shape: <Diamond />, colorOnHover: "#7845acff" }
+        { color: "#0AA3A3", shape: <Pentagon />, colorOnHover: "#099494ff" },
+        { color: "#864CBF", shape: <UpsideDownTriangle />, colorOnHover: "#7845acff" }
     ];
     return (
         <>
