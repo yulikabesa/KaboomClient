@@ -1,6 +1,6 @@
 // context for the game lobby-
 // relevant to lobby Gamepage and the page where the host can click on starting the game session
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 
 type LobbyDataType = {
     gamePin: string;

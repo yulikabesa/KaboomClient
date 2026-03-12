@@ -1,5 +1,3 @@
-import React from 'react';
-
 const UpsideDownTriangle = () => {
     return (
         <svg viewBox="0 0 100 100">

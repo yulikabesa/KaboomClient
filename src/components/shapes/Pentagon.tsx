@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Pentagon = () => {
     return (
         <svg viewBox="0 0 100 100">
