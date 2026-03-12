@@ -1,0 +1,11 @@
+import React from 'react';
+
+const Circle = () => {
+    return (
+        <svg viewBox='0 0 100 100'>
+            <circle cx={50} cy={50} r={40} fill='white' />
+        </svg>
+    )
+}
+
+export default Circle;

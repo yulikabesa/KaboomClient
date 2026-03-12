@@ -1,0 +1,11 @@
+import React from 'react';
+
+const Diamond = () => {
+    return (
+        <svg viewBox='0 0 100 100'>
+            <polygon points='50,10 90,50 50,90 10,50' fill='white' />
+        </svg>
+    )
+}
+
+export default Diamond;
