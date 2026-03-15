@@ -9,7 +9,7 @@ import JoinGamePage from "./pages/playerDisplay/JoinGamePage";
 import { Outlet } from 'react-router-dom';
 import GameLobby from "./pages/projectorDisplay/GameLobby";
 import { LobbyProvider } from "./store/LobbyContext";
-import AnswerOptions from "./pages/playerDisplay/AnswerOptions";
+import PlayerGamePage from "./pages/playerDisplay/PlayerGamePage";
 
 const App = () => {
   // const authCtx = useContext(AuthContext);
@@ -34,8 +34,8 @@ const App = () => {
           element: <GameLobby />,
         },
         {
-          path: "/answerQuestion",
-          element: <AnswerOptions />,
+          path: "/game",
+          element: <PlayerGamePage />,
         },
       ],
     },
