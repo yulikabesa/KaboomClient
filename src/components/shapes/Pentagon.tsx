@@ -10,6 +10,8 @@ const Pentagon = () => {
           5,38.2
         "
                 fill="white"
+                stroke="#088282"
+                strokeWidth="2"
             />
         </svg>
     )
