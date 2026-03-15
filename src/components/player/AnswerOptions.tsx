@@ -7,7 +7,7 @@ import Pentagon from '../shapes/Pentagon';
 import UpsideDownTriangle from '../shapes/UpsideDownTriangle';
 import classes from './AnswerOptions.module.css';
 
-const AnswerOptions: React.FC<{ answersCount: number; }> = (props) => {
+const AnswerOptions: React.FC<{ answersCount: number; onAnswerClick: (answerIndex: number) => void; }> = (props) => {
     const options = [
         { color: "#1368CE", shape: <Diamond />, colorOnHover: "#0057BA" },
         { color: "#E21B3C", shape: <Triangle />, colorOnHover: "#CB002C" },
@@ -22,6 +22,7 @@ const AnswerOptions: React.FC<{ answersCount: number; }> = (props) => {
                 <div
                     key={i}
                     className={classes["answer-option"]}
+                    onClick={() => props.onAnswerClick(i)}
                     style={
                         {
                             "--bg-color": options[i].color,
