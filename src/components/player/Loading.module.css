@@ -12,7 +12,7 @@
 }
 
 .spin {
-  animation: spin 2s linear infinite;
+  animation: spin 1.3s linear infinite;
   transform-origin: center;
 }
 
