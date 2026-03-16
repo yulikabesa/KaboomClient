@@ -5,18 +5,30 @@ import rightWhiteTextBackground from '../../assets/rightWhiteTextBackground.png'
 import leftWhiteTextBackground from '../../assets/leftWhiteTextBackground.png';
 import { useLobby } from '../../store/LobbyContext';
 import { Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { connectSocket } from '../../services/socketService';
 
 const GameLobby: React.FC = () => {
 
-    const { lobby } = useLobby();
+    const { lobby, addPlayer } = useLobby();
     // making sure u can go to this page only if 
     // if you clicked on create game session from one of your quizes and received game pin
     if (!lobby) {
         return <Navigate to="/home" replace />;
     }
 
-    // todo
-    // add function that connects to socket and receives players that joined the game
+    useEffect(() => {
+        const socket = connectSocket();
+        const handlePlayerJoined = (player: { id: string; nickname: string }) => {
+            addPlayer(player.nickname); // or player.id if you prefer
+        };
+
+        socket.on("player-joined", handlePlayerJoined);
+
+        return () => {
+            socket.off("player-joined", handlePlayerJoined);
+        };
+    }, [addPlayer]);
 
     return (
         <div className={classes['page']}>

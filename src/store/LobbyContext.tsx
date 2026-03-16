@@ -11,6 +11,7 @@ type LobbyDataType = {
 type LobbyContextType = {
     lobby: LobbyDataType | null;
     setLobby: (data: LobbyDataType) => void;
+    addPlayer: (player: string) => void;
     clearLobby: () => void;
 };
 
@@ -32,8 +33,22 @@ export const LobbyProvider = ({ children }: { children: React.ReactNode }) => {
         localStorage.removeItem("lobby");
     };
 
+    const addPlayer = (player: string) => {
+        setLobbyState((prev) => {
+            if (!prev) return prev;
+
+            const updated = {
+                ...prev,
+                players: [...prev.players, player],
+            };
+
+            localStorage.setItem("lobby", JSON.stringify(updated));
+            return updated;
+        });
+    };
+
     return (
-        <LobbyContext.Provider value={{ lobby, setLobby, clearLobby }}>
+        <LobbyContext.Provider value={{ lobby, setLobby, addPlayer, clearLobby }}>
             {children}
         </LobbyContext.Provider>
     );
