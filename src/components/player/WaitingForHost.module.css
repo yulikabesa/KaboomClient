@@ -6,7 +6,10 @@
     gap: 4vh;
     height: 100vh;
     width: 100vw;
-    background-color: rgba(8, 2, 66, 0.548);
+    background-image: url('../../assets/kaboomDarkBackground.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: white;
     text-align: center;
 }
