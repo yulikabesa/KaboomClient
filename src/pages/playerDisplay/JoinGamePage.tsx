@@ -27,9 +27,10 @@ const JoinGamePage: React.FC = () => {
 
         // todo move this to project side
         // Listen for the game-created event only once
-        socket.once("player-joined", ({ player }: { player: { id: string; nickname: string; } }) => {
-            console.log("player joined:", player);
-        });
+        socket.once("player-joined", (player: { id: string; nickname: string }) => {
+                console.log("player joined:", player);
+            }
+        );
     };
 
     return (
