@@ -1,0 +1,22 @@
+.darker-background {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4vh;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(8, 2, 66, 0.548);
+    color: white;
+    text-align: center;
+}
+
+.soldier-pic {
+    width: 8vw;
+    min-width: 90px;
+}
+
+.nickname {
+    font-weight: 600;
+    font-size: clamp(28px, 2vmax, 40px);
+}

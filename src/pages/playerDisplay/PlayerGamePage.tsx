@@ -3,6 +3,7 @@ import AnswerOptions from '../../components/player/AnswerOptions';
 import { useState } from 'react';
 import Loading from '../../components/player/Loading';
 import AnswerFeedback from '../../components/player/AnswerFeedback';
+import WaitingForHost from '../../components/player/WaitingForHost';
 
 const PlayerGamePage = () => {
     const [status, setStatus] = useState("answering");
@@ -12,6 +13,7 @@ const PlayerGamePage = () => {
     }
     return (
         <>
+            { status === "lobby" && <WaitingForHost nickname='יעל' /> }
             { status === "answering" && <AnswerOptions answersCount={4} onAnswerClick={handleAnswerClick} /> } 
             {/* to change answersCount number to receive from server later */}
             { status === "loading" && <Loading /> }
