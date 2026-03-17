@@ -10,6 +10,7 @@ import { Outlet } from 'react-router-dom';
 import GameLobby from "./pages/projectorDisplay/GameLobby";
 import { LobbyProvider } from "./store/LobbyContext";
 import PlayerGamePage from "./pages/playerDisplay/PlayerGamePage";
+import GameQuestion from "./pages/projectorDisplay/GameQuestion";
 
 const App = () => {
   // const authCtx = useContext(AuthContext);
@@ -37,6 +38,10 @@ const App = () => {
           path: "/game",
           element: <PlayerGamePage />,
         },
+        {
+          path: "/gameQuestion",
+          element: <GameQuestion />,
+        }
       ],
     },
     {

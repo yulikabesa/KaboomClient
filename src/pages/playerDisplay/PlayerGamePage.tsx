@@ -1,5 +1,5 @@
-import PlayerCard from '../../components/player/playerCard';
-import AnswerOptions from '../../components/player/AnswerOptions';
+import PlayerCard from '../../components/player/PlayerCard';
+import AnswerOptions from '../../components/AnswerOptions';
 import { useState } from 'react';
 import Loading from '../../components/player/Loading';
 import AnswerFeedback from '../../components/player/AnswerFeedback';
@@ -14,7 +14,7 @@ const PlayerGamePage = () => {
     return (
         <>
             { status === "lobby" && <WaitingForHost nickname='יעל' /> }
-            { status === "answering" && <AnswerOptions answersCount={4} onAnswerClick={handleAnswerClick} /> } 
+            { status === "answering" && <AnswerOptions viewMode="player" answersCount={4} onAnswerClick={handleAnswerClick} /> } 
             {/* to change answersCount number to receive from server later */}
             { status === "loading" && <Loading /> }
             { status === "correct" && <AnswerFeedback wasCorrect={true} /> }
