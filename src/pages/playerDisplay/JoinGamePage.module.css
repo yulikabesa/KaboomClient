@@ -49,6 +49,10 @@ body {
     font-weight: bold;
 }
 
+.join-button:hover {
+    cursor: pointer;
+}
+
 .info {
     position: absolute;
     bottom: 0.5rem;
@@ -66,9 +70,6 @@ body {
 .info-text {
     font-weight: bold;
 }
-
-
-
 
 .buttons-box {
   display: flex;
@@ -89,4 +90,11 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+.error-text {
+    color: #ff4d4f;
+    font-size: 0.9rem;
+    margin-top: 8px;
+    text-align: center;
 }

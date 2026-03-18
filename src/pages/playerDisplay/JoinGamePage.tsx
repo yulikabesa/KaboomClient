@@ -8,23 +8,45 @@ const JoinGamePage: React.FC = () => {
     const [pin, setPin] = useState('');
     const [didSubmitPin, setDidSubmitPin] = useState(false);
     const [nickname, setNickname] = useState('');
+    const [error, setError] = useState('');
 
     const handlePinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPin(event.target.value);
+        setError('');
     };
 
     const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNickname(event.target.value);
+        setError('');
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
+        // PIN validation
         if (!didSubmitPin) {
-            // move to nickname step
+            if (!pin.trim()) {
+                setError("הקוד לא יכול להיות ריק");
+                return;
+            }
+
+            if (pin.length < 4) {
+                setError("הקוד קצר מדי");
+                return;
+            }
+
+            setError('');
             setDidSubmitPin(true);
             return;
         }
+
+        // nickname validation
+        if (!nickname.trim()) {
+            setError("יש להזין שם");
+            return;
+        }
+
+        setError(''); // clear error
 
         // join game
         const socket = connectSocket();
@@ -68,6 +90,11 @@ const JoinGamePage: React.FC = () => {
                             </button>
                         </>
                     )}
+                    {error &&
+                        <p className={classes['error-text']}>
+                            {error}
+                        </p>
+                    }
                 </form>
             </div>
             <MyKabooms />
