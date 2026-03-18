@@ -30,8 +30,8 @@ const JoinGamePage: React.FC = () => {
                 return;
             }
 
-            if (pin.length < 4) {
-                setError("הקוד קצר מדי");
+            if (!/^\d{7}$/.test(pin)) {
+                setError("הקוד חייב להיות בן 7 ספרות");
                 return;
             }
 
