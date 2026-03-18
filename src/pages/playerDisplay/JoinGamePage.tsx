@@ -9,6 +9,7 @@ const JoinGamePage: React.FC = () => {
     const [didSubmitPin, setDidSubmitPin] = useState(false);
     const [nickname, setNickname] = useState('');
     const [error, setError] = useState('');
+    const socket = React.useMemo(() => connectSocket(), []);
 
     const handlePinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPin(event.target.value);
@@ -35,8 +36,23 @@ const JoinGamePage: React.FC = () => {
                 return;
             }
 
-            setError('');
-            setDidSubmitPin(true);
+            // success case
+            socket.once("pin-valid", () => {
+                setError('');
+                setDidSubmitPin(true);
+            });
+
+            // error case
+            socket.once("error", (message: string) => {
+                setError(message);
+            });
+
+            socket.emit("game-event", {
+                type: 'validate-pin',
+                payload: {
+                    pin
+                }
+            });
             return;
         }
 
@@ -49,7 +65,7 @@ const JoinGamePage: React.FC = () => {
         setError(''); // clear error
 
         // join game
-        const socket = connectSocket();
+        // const socket = connectSocket();
         // Emit event to join gam
         socket.emit("join-game", { pin, nickname });
         // todo navigate to game page
