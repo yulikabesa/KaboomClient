@@ -10,6 +10,7 @@ const JoinGamePage: React.FC = () => {
     const [nickname, setNickname] = useState('');
     const [error, setError] = useState('');
     const socket = React.useMemo(() => connectSocket(), []);
+    const [isCheckingPin, setIsCheckingPin] = useState(false);
 
     const handlePinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPin(event.target.value);
@@ -36,14 +37,19 @@ const JoinGamePage: React.FC = () => {
                 return;
             }
 
+            if (isCheckingPin) return;
+            setIsCheckingPin(true);
+
             // success case
             socket.once("pin-valid", () => {
+                setIsCheckingPin(false);
                 setError('');
                 setDidSubmitPin(true);
             });
 
             // error case
-            socket.once("error", (message: string) => {
+            socket.once("pin-error", (message: string) => {
+                setIsCheckingPin(false);
                 setError(message);
             });
 
