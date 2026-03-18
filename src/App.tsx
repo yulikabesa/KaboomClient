@@ -11,6 +11,7 @@ import GameLobby from "./pages/projectorDisplay/GameLobby";
 import { LobbyProvider } from "./store/LobbyContext";
 import PlayerGamePage from "./pages/playerDisplay/PlayerGamePage";
 import GameQuestion from "./pages/projectorDisplay/GameQuestion";
+import { SocketProvider } from "./store/SocketContext";
 
 const App = () => {
   // const authCtx = useContext(AuthContext);
@@ -50,9 +51,12 @@ const App = () => {
     },
   ]);
 
-  return <LobbyProvider>
-    <RouterProvider router={router} />
-  </LobbyProvider>;
+  return (
+    <SocketProvider>
+      <LobbyProvider>
+        <RouterProvider router={router} />
+      </LobbyProvider>
+    </SocketProvider>);
 };
 
 export default App;

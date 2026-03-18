@@ -3,13 +3,14 @@ import kaboomLogo from '../../assets/kaboomLogo.png';
 import React, { useState } from 'react';
 import { MyKabooms } from '../projectorDisplay/MyKabooms';
 import { connectSocket } from "../../services/socketService";
+import { useSocket } from '../../store/SocketContext';
 
 const JoinGamePage: React.FC = () => {
     const [pin, setPin] = useState('');
     const [didSubmitPin, setDidSubmitPin] = useState(false);
     const [nickname, setNickname] = useState('');
     const [error, setError] = useState('');
-    const socket = React.useMemo(() => connectSocket(), []);
+    const socket = useSocket();
     const [isCheckingPin, setIsCheckingPin] = useState(false);
 
     const handlePinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +74,13 @@ const JoinGamePage: React.FC = () => {
         // join game
         // const socket = connectSocket();
         // Emit event to join gam
-        socket.emit("join-game", { pin, nickname });
+        socket.emit("game-event", {
+                type: 'join-game',
+                payload: {
+                    pin,
+                    nickname
+                }
+            });
         // todo navigate to game page
     };
 

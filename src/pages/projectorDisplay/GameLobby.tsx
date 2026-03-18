@@ -7,9 +7,10 @@ import { useLobby } from '../../store/LobbyContext';
 import { Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { connectSocket } from '../../services/socketService';
+import { useSocket } from '../../store/SocketContext';
 
 const GameLobby: React.FC = () => {
-
+    const socket = useSocket();
     const { lobby, addPlayer } = useLobby();
     // making sure u can go to this page only if 
     // if you clicked on create game session from one of your quizes and received game pin
@@ -18,7 +19,6 @@ const GameLobby: React.FC = () => {
     }
 
     useEffect(() => {
-        const socket = connectSocket();
         const handlePlayerJoined = (player: { id: string; nickname: string }) => {
             addPlayer(player.nickname); // or player.id if you prefer
         };
