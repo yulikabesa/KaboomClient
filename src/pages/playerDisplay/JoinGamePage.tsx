@@ -17,10 +17,18 @@ const JoinGamePage: React.FC = () => {
         setNickname(event.target.value);
     };
 
-    const joinGame = () => {
-        const socket = connectSocket();
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
 
-        // Emit event to join game
+        if (!didSubmitPin) {
+            // move to nickname step
+            setDidSubmitPin(true);
+            return;
+        }
+
+        // join game
+        const socket = connectSocket();
+        // Emit event to join gam
         socket.emit("join-game", { pin, nickname });
         // todo navigate to game page
     };
@@ -30,24 +38,37 @@ const JoinGamePage: React.FC = () => {
             <div className={classes['parent-div']}>
                 <img src={kaboomLogo}
                     alt="kaboom logo" />
-                <div className={classes['child-div']}>
-                    {!didSubmitPin ? (<>
-                        <input type="text"
-                            value={pin}
-                            placeholder='הכנס קוד'
-                            onChange={handlePinChange}
-                            className={classes['pin-input']} />
-                        <button className={classes['join-button']} onClick={() => { setDidSubmitPin(true); }}>כנס</button>
-                    </>) : (<>
-                        <input type="text"
-                            value={nickname}
-                            placeholder='כתוב שם'
-                            onChange={handleNicknameChange}
-                            className={classes['pin-input']} />
-                        <button className={classes['join-button']} onClick={joinGame}>אחלה, מתחברים!</button>
-                    </>)
-                    }
-                </div>
+                <form className={classes['child-div']} onSubmit={handleSubmit}>
+                    {!didSubmitPin ? (
+                        <>
+                            <input
+                                type="text"
+                                value={pin}
+                                placeholder='הכנס קוד'
+                                onChange={handlePinChange}
+                                className={classes['pin-input']} />
+                            <button
+                                type='submit'
+                                className={classes['join-button']}>
+                                כנס
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <input
+                                type="text"
+                                value={nickname}
+                                placeholder='כתוב שם'
+                                onChange={handleNicknameChange}
+                                className={classes['pin-input']} />
+                            <button
+                                type='submit'
+                                className={classes['join-button']}>
+                                אחלה, מתחברים!
+                            </button>
+                        </>
+                    )}
+                </form>
             </div>
             <MyKabooms />
             <div className={classes['info']}>
