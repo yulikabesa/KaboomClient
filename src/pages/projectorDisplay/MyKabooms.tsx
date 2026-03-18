@@ -8,11 +8,14 @@ export const MyKabooms = () => {
   const { setLobby } = useLobby();
 
   const createGameSession = () => {
-    const quizIdClicked = "69b02da5aafb3d0aa67f7627";
+    const quizIdClicked = "69b8fe30e833a33118dea163";
     const socket = connectSocket();
 
     // Emit event to create game
-    socket.emit("create-game-session", { quizId: quizIdClicked });
+    socket.emit("game-event", {
+      type: "create-game-session",
+      payload: { quizId: quizIdClicked },
+    });
 
     // Listen for the game-created event only once
     socket.once("game-created", ({ pin }: { pin: string }) => {
