@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 type Props = {
     duration: number; // in seconds
+    timeLeft: number;
+    setTimeLeft: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const CountdownCircle: React.FC<Props> = ({ duration }) => {
-    const [timeLeft, setTimeLeft] = useState(duration);
-
+const CountdownCircle: React.FC<Props> = ({ duration, timeLeft, setTimeLeft }) => {
     const radius = 50;
     const stroke = 6;
 
