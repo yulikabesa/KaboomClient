@@ -14,6 +14,7 @@ import GameQuestion from "./pages/projectorDisplay/GameQuestion";
 import { SocketProvider } from "./store/SocketContext";
 import { useEffect } from "react";
 import { connectSocket } from "./services/socketService";
+import Login from "./pages/Login";
 
 const App = () => {
   // const authCtx = useContext(AuthContext);
@@ -32,6 +33,10 @@ const App = () => {
         {
           path: "/home",
           element: <JoinGamePage />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
         },
         {
           path: "/lobby",
@@ -60,17 +65,6 @@ const App = () => {
       connectSocket(token); // auto reconnect after refresh
     }
   }, []);
-
-  //todo add this whenever login happens:
-  // import { connectSocket } from "../services/socketService";
-
-  // const handleLogin = async () => {
-  //   const token = "jwt-from-server";
-
-  //   localStorage.setItem("token", token);
-
-  //   connectSocket(token); // connect ONLY here
-  // };
 
   return (
     <SocketProvider>
