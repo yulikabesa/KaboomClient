@@ -24,8 +24,9 @@ const Login = () => {
         try {
             // Send the POST request using await
             const url = "http://localhost:3000/user/login";
+            let response;
             try {
-                const response = await axios.post(url,
+                response = await axios.post(url,
                     {
                         email: enteredEmail,
                         password: enteredPassword,
@@ -52,7 +53,9 @@ const Login = () => {
                 );
             }
             setIsLoading(false);
+            console.log(response);
             // todo add authcontext which saves token in local storage
+            localStorage.setItem("token", response.data.data.token)
             navigate("/home", { replace: true });
         } catch (error) {
             setIsError(true);
