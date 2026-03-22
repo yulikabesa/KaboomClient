@@ -6,7 +6,6 @@ import leftWhiteTextBackground from '../../assets/leftWhiteTextBackground.png';
 import { useLobby } from '../../store/LobbyContext';
 import { Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { connectSocket } from '../../services/socketService';
 import { useSocket } from '../../store/SocketContext';
 
 const GameLobby: React.FC = () => {

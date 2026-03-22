@@ -1,7 +1,5 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useLobby } from "../../store/LobbyContext";
-import { connectSocket } from "../../services/socketService";
 import { useSocket } from "../../store/SocketContext";
 
 export const MyKabooms = () => {
