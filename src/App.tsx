@@ -12,6 +12,8 @@ import { LobbyProvider } from "./store/LobbyContext";
 import PlayerGamePage from "./pages/playerDisplay/PlayerGamePage";
 import GameQuestion from "./pages/projectorDisplay/GameQuestion";
 import { SocketProvider } from "./store/SocketContext";
+import { useEffect } from "react";
+import { connectSocket } from "./services/socketService";
 
 const App = () => {
   // const authCtx = useContext(AuthContext);
@@ -50,6 +52,25 @@ const App = () => {
       element: <NotFound />,
     },
   ]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      connectSocket(token); // auto reconnect after refresh
+    }
+  }, []);
+
+  //todo add this whenever login happens:
+  // import { connectSocket } from "../services/socketService";
+
+  // const handleLogin = async () => {
+  //   const token = "jwt-from-server";
+
+  //   localStorage.setItem("token", token);
+
+  //   connectSocket(token); // connect ONLY here
+  // };
 
   return (
     <SocketProvider>
