@@ -3,25 +3,17 @@ import { io, Socket } from "socket.io-client";
 
 let socket: Socket | null = null;
 
-export const createSocket = () => {
-  if (!socket) {
-    socket = io("http://localhost:3000", {
-      autoConnect: false, 
-    });
+export const connectSocket = (token: string) => {
+  if (socket) {
+    socket.disconnect(); // Force reconnect when token changes
   }
+
+  socket = io("http://localhost:3000", {
+    auth: { token },
+  });
+
   return socket;
 };
-
-export const connectSocket = (token: string) => {
-  if (!socket) {
-    socket = createSocket();
-  }
-
-  socket.auth = { token }; // set token BEFORE connect
-  socket.connect();
-};
-
-export const getSocket = () => socket;
 
 export const disconnectSocket = () => {
   if (socket) {

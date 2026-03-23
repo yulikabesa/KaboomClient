@@ -12,8 +12,6 @@ import { LobbyProvider } from "./store/LobbyContext";
 import PlayerGamePage from "./pages/playerDisplay/PlayerGamePage";
 import GameQuestion from "./pages/projectorDisplay/GameQuestion";
 import { SocketProvider } from "./store/SocketContext";
-import { useEffect } from "react";
-import { connectSocket } from "./services/socketService";
 import Login from "./pages/Login";
 
 const App = () => {
@@ -57,14 +55,6 @@ const App = () => {
       element: <NotFound />,
     },
   ]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      connectSocket(token); // auto reconnect after refresh
-    }
-  }, []);
 
   return (
     <SocketProvider>

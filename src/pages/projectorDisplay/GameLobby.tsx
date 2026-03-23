@@ -18,6 +18,7 @@ const GameLobby: React.FC = () => {
     }
 
     useEffect(() => {
+        if (!socket) return; // Guard against null
         const handlePlayerJoined = (player: { id: string; nickname: string }) => {
             addPlayer(player.nickname); // or player.id if you prefer
         };

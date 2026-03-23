@@ -40,6 +40,8 @@ const JoinGamePage: React.FC = () => {
       if (isCheckingPin) return;
       setIsCheckingPin(true);
 
+      if (!socket) return;
+
       // success case
       socket.once("pin-valid", () => {
         setIsCheckingPin(false);
