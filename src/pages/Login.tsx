@@ -3,7 +3,6 @@ import type { SyntheticEvent } from "react";
 import type { ChangeEvent } from "react";
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
-import { connectSocket } from "../services/socketService";
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -76,12 +75,7 @@ const Login = () => {
         handleLogin();
     };
 
-    //todo add this whenever login happens:
-
     const handleLogin = () => {
-        // const token = localStorage.getItem("token");
-        // if (token) connectSocket(token); 
-        // 👇 notify the app that login happened
         window.dispatchEvent(new Event("login"));
         navigate("/home", { replace: true });
     };

@@ -6,7 +6,7 @@ import AnswerFeedback from '../../components/player/AnswerFeedback';
 import WaitingForHost from '../../components/player/WaitingForHost';
 
 const PlayerGamePage = () => {
-    const [status, setStatus] = useState("answering");
+    const [status, setStatus] = useState("lobby");
     const handleAnswerClick = (answerIndex: number) => {
         setStatus("loading");
         // todo send through socket the answer

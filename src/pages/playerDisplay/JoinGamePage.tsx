@@ -3,6 +3,7 @@ import kaboomLogo from "../../assets/kaboomLogo.png";
 import React, { useState } from "react";
 import { MyKabooms } from "../projectorDisplay/MyKabooms";
 import { useSocket } from "../../store/SocketContext";
+import { useNavigate } from "react-router-dom";
 
 const JoinGamePage: React.FC = () => {
   const [pin, setPin] = useState("");
@@ -11,6 +12,7 @@ const JoinGamePage: React.FC = () => {
   const [error, setError] = useState("");
   const socket = useSocket();
   const [isCheckingPin, setIsCheckingPin] = useState(false);
+  const navigate = useNavigate();
 
   const handlePinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPin(event.target.value);
@@ -85,9 +87,8 @@ const JoinGamePage: React.FC = () => {
 
     socket.once("player-joined", () => {
         localStorage.setItem("kaboom-pin-recovery", pin);
+        navigate("/game", { replace: true });
     });
-    
-    // todo navigate to game page
   };
 
   return (
