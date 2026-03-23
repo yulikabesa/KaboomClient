@@ -13,13 +13,13 @@ const PlayerGamePage = () => {
     }
     return (
         <>
-            { status === "lobby" && <WaitingForHost nickname='יעל' /> }
+            { status === "lobby" && <WaitingForHost nickname={localStorage.getItem("nickname") || "Guest"} /> }
             { status === "answering" && <AnswerOptions viewMode="player" answersCount={4} onAnswerClick={handleAnswerClick} /> } 
             {/* to change answersCount number to receive from server later */}
             { status === "loading" && <Loading /> }
             { status === "correct" && <AnswerFeedback wasCorrect={true} /> }
             { status === "wrong" && <AnswerFeedback wasCorrect={false} /> }
-            <PlayerCard name='יעל' points='777' />
+            <PlayerCard name={localStorage.getItem("nickname") || "Guest"} points='777' />
         </>
     )
 }
