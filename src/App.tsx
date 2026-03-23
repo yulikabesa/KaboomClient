@@ -28,7 +28,7 @@ const App = () => {
       children: [
         {
           index: true,
-          element: <Navigate replace to="/home" />,
+          element: <Navigate replace to="/login" />,
         },
         {
           path: "/home",
