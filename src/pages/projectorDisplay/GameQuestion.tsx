@@ -1,14 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AnswerOptions from '../../components/AnswerOptions';
 import CountdownCircle from '../../components/projector/CountdownCircle';
 import classes from './GameQuestion.module.css';
+import { useSocket } from '../../store/SocketContext';
 
 const GameQuestion = () => {
     // todo change those variables that are hardcoded 
-    const question = "שאלה ממש ממש ממש ממש ממש ממש גדולה ארוכה ומשעממת את לפחות שתי שורות?";
+    const [question, setQuestion] = useState("שאלה ממש ממש ממש ממש ממש ממש גדולה ארוכה ומשעממת את לפחות שתי שורות?");
     const playerAnsweredNum = 2;
     const duration = 12; // timer duration
     const [timeLeft, setTimeLeft] = useState(duration);
+    const socket = useSocket();
+
+    useEffect(() => {
+        if (!socket) return; // Guard against null
+        const getQuestion = (question: {
+            question: any;
+            answers: any;
+            timeLimit: any;
+        }) => {
+            setQuestion(question.question);
+        };
+
+        socket.on("game-started", getQuestion);
+
+        return () => {
+            socket.off("game-started", getQuestion);
+        };
+    }, []);
 
     return (
         <>

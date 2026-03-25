@@ -21,10 +21,10 @@ const PlayerGamePage = () => {
             setStatus(status); 
         };
 
-        socket.on("game-status-changed", handleStatusChange);
+        socket.on("game-state", handleStatusChange);
 
         return () => {
-            socket.off("game-status-changed", handleStatusChange);
+            socket.off("game-state", handleStatusChange);
         };
     }, []);
     

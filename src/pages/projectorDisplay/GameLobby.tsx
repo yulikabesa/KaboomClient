@@ -4,13 +4,14 @@ import personIcon from '../../assets/personIcon.png';
 import rightWhiteTextBackground from '../../assets/rightWhiteTextBackground.png';
 import leftWhiteTextBackground from '../../assets/leftWhiteTextBackground.png';
 import { useLobby } from '../../store/LobbyContext';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useSocket } from '../../store/SocketContext';
 
 const GameLobby: React.FC = () => {
     const socket = useSocket();
     const { lobby, addPlayer } = useLobby();
+    const navigate = useNavigate();
     // making sure u can go to this page only if 
     // if you clicked on create game session from one of your quizes and received game pin
     if (!lobby) {
@@ -29,6 +30,17 @@ const GameLobby: React.FC = () => {
             socket.off("player-joined", handlePlayerJoined);
         };
     }, [addPlayer]);
+
+    const startGame = () => {
+        if (!socket || !lobby) return;
+        socket.emit("game-event", {
+            type: "start-game",
+            payload: {
+                pin: lobby.gamePin,
+            },
+        });
+        navigate("/gameQuestion", { replace: true });
+    };
 
     return (
         <div className={classes['page']}>
@@ -52,7 +64,7 @@ const GameLobby: React.FC = () => {
             </div>
 
             <div className={classes['buttons-box']}>
-                <div className={classes['start-button']}>התחל</div>
+                <div onClick={startGame} className={classes['start-button']}>התחל</div>
                 <div className={classes['player-number-box']}>
                     {lobby.players.length.toString()}
                     <img src={personIcon} alt="kaboom logo" />
