@@ -1,19 +1,16 @@
-import React from "react";
 import classes from "./Question.module.css";
+import React from "react";
 
-const Question = () => {
-  const question = "שאלה ממש ממש ממש ממש ממש ממש גדולה ארוכה ומשעממת את לפחות שתי שורות";
-  const currentQuestion = 1;
-  const questionCount = 12;
+const Question: React.FC<{ question: string, currentQuestion: number, questionCount: number }> = (props) => {
   
   return (
     <>
       <div className={classes["question-count"]}>
-        {currentQuestion} מתוך {questionCount}
+        {props.currentQuestion} מתוך {props.questionCount}
       </div>
       <div className={classes["wrapper"]}>
         <div className={classes["content"]}>
-          <p>{question}</p>
+          <p>{props.question}</p>
         </div>
       </div>
     </>
