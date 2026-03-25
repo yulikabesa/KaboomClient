@@ -14,12 +14,14 @@ const GameQuestion = () => {
 
     useEffect(() => {
         if (!socket) return; // Guard against null
-        const getQuestion = (question: {
-            question: any;
-            answers: any;
-            timeLimit: any;
+        const getQuestion = (data: {
+            question: {
+                question: any;
+                answers: any;
+                timeLimit: any;
+            };
         }) => {
-            setQuestion(question.question);
+            setQuestion(data.question.question);
         };
 
         socket.on("game-started", getQuestion);
