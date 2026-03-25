@@ -17,8 +17,15 @@ const PlayerGamePage = () => {
     }
     useEffect(() => {
         if (!socket) return; // Guard against null
-        const handleStatusChange = (status: GameStatus) => {
-            setStatus(status); 
+        const handleStatusChange = (
+            state: {
+                phase: string;
+                data: any;
+            }) => {
+                console.log(state.phase);
+            if (state.phase === "question")
+                setStatus("answering");
+            // todo add more statuses
         };
 
         socket.on("game-state", handleStatusChange);
@@ -27,7 +34,7 @@ const PlayerGamePage = () => {
             socket.off("game-state", handleStatusChange);
         };
     }, []);
-    
+
     return (
         <>
             {status === "lobby" && <WaitingForHost nickname={localStorage.getItem("nickname") || "Guest"} />}
