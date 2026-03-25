@@ -3,33 +3,23 @@ import AnswerOptions from '../../components/AnswerOptions';
 import CountdownCircle from '../../components/projector/CountdownCircle';
 import classes from './GameQuestion.module.css';
 import { useSocket } from '../../store/SocketContext';
+import { useLocation } from "react-router-dom";
 
 const GameQuestion = () => {
     // todo change those variables that are hardcoded 
-    const [question, setQuestion] = useState("שאלה ממש ממש ממש ממש ממש ממש גדולה ארוכה ומשעממת את לפחות שתי שורות?");
-    const playerAnsweredNum = 2;
-    const duration = 12; // timer duration
-    const [timeLeft, setTimeLeft] = useState(duration);
+    const location = useLocation();
+    const initialData = location.state?.questionData;
+    const [question, setQuestion] = useState(initialData?.question || "שאלה ממש ממש ממש ממש ממש ממש גדולה ארוכה ומשעממת את לפחות שתי שורות?");
+    const playerAnsweredNum = 0;
+    const [timeLeft, setTimeLeft] = useState(initialData?.timeLimit || 0);
+    const [answerTexts, setAnswerTexts] = useState<string[]>(initialData?.answers || []);
     const socket = useSocket();
 
     useEffect(() => {
-        if (!socket) return; // Guard against null
-        const getQuestion = (data: {
-            question: {
-                question: any;
-                answers: any;
-                timeLimit: any;
-            };
-        }) => {
-            setQuestion(data.question.question);
-        };
+        if (!socket) return;
 
-        socket.on("game-started", getQuestion);
-
-        return () => {
-            socket.off("game-started", getQuestion);
-        };
-    }, []);
+        // future events like next question can go here
+    }, [socket]);
 
     return (
         <>
@@ -43,13 +33,13 @@ const GameQuestion = () => {
                     <p className={classes['players-answered-text']}>ענו</p>
                 </div>
                 <CountdownCircle
-                    duration={duration}
+                    duration={timeLeft}
                     timeLeft={timeLeft}
                     setTimeLeft={setTimeLeft} />
             </div>
             <AnswerOptions viewMode="projector"
-                answersCount={4}
-                answerTexts={['דוגמא 1', 'דוגמא 2', 'דוגמא 3', 'דוגמא 4']}
+                answersCount={answerTexts.length}
+                answerTexts={answerTexts}
                 onAnswerClick={(i) => console.log(i)}
             />
         </>

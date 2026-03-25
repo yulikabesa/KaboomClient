@@ -33,13 +33,25 @@ const GameLobby: React.FC = () => {
 
     const startGame = () => {
         if (!socket || !lobby) return;
+        socket.once("game-started", (
+            data: {
+                question: {
+                    question: any;
+                    answers: any;
+                    timeLimit: any;
+                };
+            }) => {
+            navigate("/gameQuestion", {
+                replace: true,
+                state: { questionData: data.question }
+            });
+        });
         socket.emit("game-event", {
             type: "start-game",
             payload: {
                 pin: lobby.gamePin,
             },
         });
-        navigate("/gameQuestion", { replace: true });
     };
 
     return (
