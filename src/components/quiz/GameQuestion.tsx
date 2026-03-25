@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction } from 'react';
-import AnswerOptions from '../../components/AnswerOptions';
-import CountdownCircle from '../../components/projector/CountdownCircle';
+import AnswerOptions from '../AnswerOptions';
+import CountdownCircle from '../projector/CountdownCircle';
 import classes from './GameQuestion.module.css';
 
 const GameQuestion: React.FC<{question: string, playerAnsweredNum: number, timeLeft: number, setTimeLeft: Dispatch<SetStateAction<number>> , answerTexts: string[] }> = (props) => {

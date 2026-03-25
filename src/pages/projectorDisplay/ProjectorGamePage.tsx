@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSocket } from "../../store/SocketContext";
-import GameQuestion from "./GameQuestion";
+import GameQuestion from "../../components/quiz/GameQuestion";
 // import Question from "../../components/quiz/Question";
 import { useLocation } from "react-router-dom";
 
