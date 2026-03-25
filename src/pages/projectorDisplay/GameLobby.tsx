@@ -39,7 +39,7 @@ const GameLobby: React.FC = () => {
                 data: any;
             }) => {
             if (state.phase === "question") {
-                navigate("/gameQuestion", {
+                navigate("/hostGame", {
                     replace: true,
                     state: { questionData: state.data }
                 });
