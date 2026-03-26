@@ -3,7 +3,7 @@ import AnswerOptions from '../AnswerOptions';
 import CountdownCircle from '../projector/CountdownCircle';
 import classes from './GameQuestion.module.css';
 
-const GameQuestion: React.FC<{question: string, playerAnsweredNum: number, timeLeft: number, setTimeLeft: Dispatch<SetStateAction<number>> , answerTexts: string[] }> = (props) => {
+const GameQuestion: React.FC<{question: string, playerAnsweredNum: number, timeLeft: number, setTimeLeft: Dispatch<SetStateAction<number>> , answerTexts: string[], duration: number }> = (props) => {
 
     return (
         <>
@@ -17,7 +17,7 @@ const GameQuestion: React.FC<{question: string, playerAnsweredNum: number, timeL
                     <p className={classes['players-answered-text']}>ענו</p>
                 </div>
                 <CountdownCircle
-                    duration={props.timeLeft}
+                    duration={props.duration}
                     timeLeft={props.timeLeft}
                     setTimeLeft={props.setTimeLeft} />
             </div>

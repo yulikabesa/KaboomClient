@@ -25,7 +25,7 @@ const CountdownCircle: React.FC<Props> = ({ duration, timeLeft, setTimeLeft }) =
         return () => clearInterval(interval);
     }, [timeLeft]);
 
-    const progress = timeLeft / duration;
+    const progress = duration > 0 ? timeLeft / duration : 0;
     const strokeDashoffset = circumference * (1 - progress);
 
     return (
