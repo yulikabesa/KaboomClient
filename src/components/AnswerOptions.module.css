@@ -47,6 +47,7 @@
     color: white;
     padding-right: 2vh;
     border-radius: 2px;
+    gap: 8px;
 }
 
 .answer-option:hover {
@@ -60,11 +61,11 @@
 }
 
 .answer-option.projector svg {
-    width: 20%;
-    height: 70%;
+    width: 7%;       /* reduce width */
+    height: 20%;      /* reduce height to match */
 }
-
 /* text inside projector option */
 .answerText {
-    margin-left: 1vh;
+    font-weight: 700;
+    font-size: 1.8vmax;
 }
