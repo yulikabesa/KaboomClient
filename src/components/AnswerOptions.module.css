@@ -1,4 +1,5 @@
 .container {
+    direction: ltr;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-flow: row;
@@ -26,6 +27,7 @@
 }
 
 .answer-option {
+    direction: rtl;
     display: flex;
     align-items: center;
     min-height: 0;

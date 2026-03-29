@@ -22,12 +22,12 @@ const AnswerOptions: React.FC<Props> = ({
 }) => {
 
     const options = [
-        { color: "#1368CE", shape: <Diamond />, colorOnHover: "#0057BA" },
         { color: "#E21B3C", shape: <Triangle />, colorOnHover: "#CB002C" },
-        { color: "#26890C", shape: <Square />, colorOnHover: "#007600" },
+        { color: "#1368CE", shape: <Diamond />, colorOnHover: "#0057BA" },
         { color: "#D89E00", shape: <Circle />, colorOnHover: "#C28B00" },
+        { color: "#26890C", shape: <Square />, colorOnHover: "#007600" },
+        { color: "#864CBF", shape: <UpsideDownTriangle />, colorOnHover: "#7845acff" },
         { color: "#0AA3A3", shape: <Pentagon />, colorOnHover: "#099494ff" },
-        { color: "#864CBF", shape: <UpsideDownTriangle />, colorOnHover: "#7845acff" }
     ];
 
     return (
