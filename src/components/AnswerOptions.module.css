@@ -62,8 +62,8 @@
 }
 
 .answer-option.projector svg {
-    width: 7%;       /* reduce width */
-    height: 20%;      /* reduce height to match */
+    width: 2vw;       /* reduce width */
+    height: 2vw;      /* reduce height to match */
 }
 /* text inside projector option */
 .answerText {
