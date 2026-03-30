@@ -11,11 +11,11 @@ const GameQuestion: React.FC<{ question: string, playerAnsweredNum: number, time
             <div className={classes['top-container']}>
                 <div className={classes['question']}>{props.question}</div>
                 {props.showAnswer ?
-                    <div className={classes['shorten-time-btn']} onClick={() => props.setTimeLeft(0)}>
+                    <div className={classes['shorten-time-btn']} >
                         הבא
                     </div>
                     :
-                    <div className={classes['shorten-time-btn']} >
+                    <div className={classes['shorten-time-btn']} onClick={() => props.setTimeLeft(0)} >
                         קיצור זמנים
                     </div>
                 }
