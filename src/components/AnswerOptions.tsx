@@ -49,7 +49,7 @@ const AnswerOptions: React.FC<Props> = ({
                 >
                     {showResult && (
                         <span className={classes.resultSign}>
-                            {isCorrect ? "✔️" : "❌"}
+                            {isCorrect ? "✔" : "✖"}
                         </span>
                     )}
                     {viewMode === "player" && options[i].shape}
