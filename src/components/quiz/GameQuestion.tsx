@@ -4,7 +4,17 @@ import CountdownCircle from '../projector/CountdownCircle';
 import classes from './GameQuestion.module.css';
 import BarIndicatorsList from '../projector/BarIndicatorsList';
 
-const GameQuestion: React.FC<{ question: string, playerAnsweredNum: number, timeLeft: number, setTimeLeft: Dispatch<SetStateAction<number>>, answerTexts: string[], duration: number, showAnswer: boolean }> = (props) => {
+const GameQuestion: React.FC<{
+    question: string,
+    playerAnsweredNum: number,
+    timeLeft: number,
+    setTimeLeft: Dispatch<SetStateAction<number>>,
+    answerTexts: string[],
+    duration: number,
+    showAnswer: boolean,
+    correctAnswerIndex: number,
+    answerDistributionArrray: number[]
+}> = (props) => {
 
     return (
         <>
@@ -23,10 +33,10 @@ const GameQuestion: React.FC<{ question: string, playerAnsweredNum: number, time
             {props.showAnswer ?
                 <div className={classes['bar-indicators-wrapper']}>
                     <BarIndicatorsList
-                        answersCount={2}
-                        correctAnswerIndex={0}
-                        maxValue={1}
-                        values={[1, 0, 3, 4]}
+                        answersCount={props.answerDistributionArrray.length}
+                        correctAnswerIndex={props.correctAnswerIndex}
+                        maxValue={Math.max(...props.answerDistributionArrray)}
+                        values={props.answerDistributionArrray}
                     />
                 </div>
                 :

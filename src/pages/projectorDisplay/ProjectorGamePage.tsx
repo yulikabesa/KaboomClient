@@ -46,6 +46,8 @@ const ProjectorGamePage = () => {
                     answerTexts={answerTexts}
                     duration={duration}
                     showAnswer={showResults}
+                    correctAnswerIndex={1} // to get from server
+                    answerDistributionArrray={[0,1]} // to get from server
                 />
             }
         </>
