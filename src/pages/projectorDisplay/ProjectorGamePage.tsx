@@ -20,14 +20,17 @@ const ProjectorGamePage = () => {
 
     useEffect(() => {
         if (!socket) return;
-        socket.on("game-state", (
-            state: {
-                phase: string;
-                data: any;
-            }) => {
+
+        const handler = (state: { phase: string; data: any }) => {
             setStatus(state.phase);
             // todo based on data: set state variables
-        });
+        };
+
+        socket.on("game-state", handler);
+
+        return () => {
+            socket.off("game-state", handler);
+        };
     }, [socket]);
 
     useEffect(() => {
