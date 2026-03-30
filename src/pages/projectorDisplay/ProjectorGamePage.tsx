@@ -14,6 +14,7 @@ const ProjectorGamePage = () => {
     const duration = initialData?.timeLimit || 0;
     const [timeLeft, setTimeLeft] = useState(initialData?.timeLimit || 0);
     const [answerTexts, setAnswerTexts] = useState<string[]>(initialData?.answers || []);
+    const showResults = timeLeft === 0;
     const socket = useSocket();
 
     useEffect(() => {
@@ -44,7 +45,7 @@ const ProjectorGamePage = () => {
                     setTimeLeft={setTimeLeft}
                     answerTexts={answerTexts}
                     duration={duration}
-                    showAnswer={false}
+                    showAnswer={showResults}
                 />
             }
         </>

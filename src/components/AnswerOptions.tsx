@@ -52,12 +52,14 @@ const AnswerOptions: React.FC<Props> = ({
                             {isCorrect ? "✔️" : "❌"}
                         </span>
                     )}
-                    <div className={classes.contentRight}>
-                        {options[i].shape}
-                        {viewMode === "projector" && (
+                    {viewMode === "player" && options[i].shape}
+
+                    {viewMode === "projector" && (
+                        <div className={classes.contentRight}>
+                            {options[i].shape}
                             <span className={classes.answerText}>{answerTexts[i]}</span>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>)
             })}
         </div>
