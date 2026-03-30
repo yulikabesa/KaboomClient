@@ -39,7 +39,7 @@ const AnswerOptions: React.FC<Props> = ({
                 const showResult = viewMode === "projector" && correctAnswerIndex !== undefined;
                 return (<div
                     key={i}
-                    className={`${classes["answer-option"]} ${classes[viewMode]} ${showResult ? classes.withResult : ""}`}
+                    className={`${classes["answer-option"]} ${classes[viewMode]} `}
                     onClick={() => onAnswerClick(i)}
                     style={{
                         "--bg-color": options[i].color,

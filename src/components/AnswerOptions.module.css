@@ -71,11 +71,6 @@
     font-size: 1.8vmax;
 }
 
-/* result icons on the left */
-.answer-option.withResult {
-    /* opacity handled inline */
-}
-
 /* right-side group (text + shape) */
 .contentRight {
     display: flex;
