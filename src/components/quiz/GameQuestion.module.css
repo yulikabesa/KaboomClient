@@ -58,34 +58,15 @@
 .answered-and-time-container {
     display: flex;
     width: 100vw;
-    justify-content: center; /* center the middle element */
-    align-items: center;     /* vertically center everything */
-    position: relative;      /* needed for absolute positioning if used */
+    justify-content: space-between;
     padding: 4vh 3vh 0 3vh;
     box-sizing: border-box;
 }
 
-.players-answered-container {
+.bar-indicators-wrapper {
     display: flex;
-    flex-direction: column;
+    width: 100vw;
     justify-content: center;
-    text-align: center;
-    font-weight: 500;
-    color: white;
-    line-height: 1;
-    position: absolute;    
-    right: 3vh;              
-}
-
-/* Right element */
-.countdown-container {
-    position: absolute;
-    left: 3vh;            
-}
-
-/* Middle element */
-.bar-indicators-wrapper {  
-    display: flex;
-    justify-content: center;
-    flex: 1;                /* take remaining space to center */
+    padding: 4vh 3vh 0 3vh;
+    box-sizing: border-box;
 }

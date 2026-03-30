@@ -43,13 +43,14 @@
 
 /* projector option */
 .answer-option.projector {
-    justify-content: flex-start;
+    display: flex;
+    justify-content: space-between; /* 👈 splits left and right */
+    align-items: center;
+    direction: ltr; /* keep layout predictable */
     color: white;
-    padding-right: 2vh;
+    padding: 0 2vh;
     border-radius: 2px;
-    gap: 8px;
 }
-
 .answer-option:hover {
     background-color: var(--hover-color);
     cursor: pointer;
@@ -68,4 +69,25 @@
 .answerText {
     font-weight: 700;
     font-size: 1.8vmax;
+}
+
+/* result icons on the left */
+.answer-option.withResult {
+    /* opacity handled inline */
+}
+
+/* right-side group (text + shape) */
+.contentRight {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    gap: 8px;
+    margin-left: auto; /* 👈 THIS fixes it */
+}
+
+/* result icon on the LEFT */
+.resultSign {
+    font-size: 2vmax;
+    display: flex;
+    align-items: center;
 }

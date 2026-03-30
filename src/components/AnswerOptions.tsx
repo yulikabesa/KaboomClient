@@ -12,13 +12,15 @@ type Props = {
     onAnswerClick: (answerIndex: number) => void;
     viewMode?: "player" | "projector";
     answerTexts?: string[];
+    correctAnswerIndex?: number; // new prop for projector mode
 };
 
 const AnswerOptions: React.FC<Props> = ({
     answersCount,
     onAnswerClick,
     viewMode = "player",
-    answerTexts = []
+    answerTexts = [],
+    correctAnswerIndex
 }) => {
 
     const options = [
@@ -32,22 +34,32 @@ const AnswerOptions: React.FC<Props> = ({
 
     return (
         <div className={`${classes.container} ${classes[viewMode]}`}>
-            {Array.from({ length: answersCount }).map((_, i) => (
-                <div
+            {Array.from({ length: answersCount }).map((_, i) => {
+                const isCorrect = correctAnswerIndex === i;
+                const showResult = viewMode === "projector" && correctAnswerIndex !== undefined;
+                return (<div
                     key={i}
-                    className={`${classes["answer-option"]} ${classes[viewMode]}`}
+                    className={`${classes["answer-option"]} ${classes[viewMode]} ${showResult ? classes.withResult : ""}`}
                     onClick={() => onAnswerClick(i)}
                     style={{
                         "--bg-color": options[i].color,
-                        "--hover-color": options[i].colorOnHover
+                        "--hover-color": options[i].colorOnHover,
+                        opacity: showResult && !isCorrect ? 0.7 : 1, // 70% for wrong answers
                     } as React.CSSProperties}
                 >
-                    {options[i].shape}
-                    {viewMode === "projector" && (
-                        <span className={classes.answerText}>{answerTexts[i]}</span>
+                    {showResult && (
+                        <span className={classes.resultSign}>
+                            {isCorrect ? "✔️" : "❌"}
+                        </span>
                     )}
-                </div>
-            ))}
+                    <div className={classes.contentRight}>
+                        {options[i].shape}
+                        {viewMode === "projector" && (
+                            <span className={classes.answerText}>{answerTexts[i]}</span>
+                        )}
+                    </div>
+                </div>)
+            })}
         </div>
     );
 };

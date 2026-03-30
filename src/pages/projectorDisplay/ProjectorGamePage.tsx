@@ -44,6 +44,7 @@ const ProjectorGamePage = () => {
                     setTimeLeft={setTimeLeft}
                     answerTexts={answerTexts}
                     duration={duration}
+                    showAnswer={false}
                 />
             }
         </>

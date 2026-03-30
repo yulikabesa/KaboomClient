@@ -16,9 +16,7 @@ export const BarIndicator: React.FC<BarIndicatorProps> = ({
     Shape,
     showCorrect = false,
 }) => {
-    // const heightPercent = Math.min((value / maxValue) * 100, 100);
-
-    const minHeightPercent = 18; // or whatever fits your bottom overlay
+    const minHeightPercent = 21; // or whatever fits your bottom overlay
     const heightPercent = Math.max((value / maxValue) * 100, minHeightPercent);
     return (
         <div className={classes["bar-container"]}>

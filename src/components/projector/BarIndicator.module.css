@@ -1,7 +1,7 @@
 .bar-container {
   width: 6vw;
   min-width: 50px;
-  height: 26vh;
+  height: 22vh;
   display: flex;
   align-items: flex-end;
   direction: rtl;
