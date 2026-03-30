@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./BarIndicator.module.css";
 
 type BarIndicatorProps = {
@@ -16,8 +16,20 @@ export const BarIndicator: React.FC<BarIndicatorProps> = ({
     Shape,
     showCorrect = false,
 }) => {
-    const minHeightPercent = 21; // or whatever fits your bottom overlay
-    const heightPercent = Math.max((value / maxValue) * 100, minHeightPercent);
+    const minHeightPercent = 21; // bottom overlay
+    const targetHeightPercent = Math.max((value / maxValue) * 100, minHeightPercent);
+
+    const [heightPercent, setHeightPercent] = useState(minHeightPercent);
+
+    useEffect(() => {
+        // Animate after mount
+        const timer = setTimeout(() => {
+            setHeightPercent(targetHeightPercent);
+        }, 50); // small delay to trigger transition
+
+        return () => clearTimeout(timer);
+    }, [targetHeightPercent]);
+
     return (
         <div className={classes["bar-container"]}>
             <div
@@ -28,14 +40,12 @@ export const BarIndicator: React.FC<BarIndicatorProps> = ({
                 }}
             >
                 <div className={classes["bar-bottom"]}>
-                    {Shape && (
+                    {Shape &&
                         <div className={classes["shape-wrapper"]}>
                             {Shape}
                         </div>
-                    )}
-
+                    }
                     <span className={classes["value"]}>{value}</span>
-
                     <span
                         className={classes["check"]}
                         style={{ opacity: showCorrect ? 1 : 0 }}
