@@ -10,7 +10,14 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const initSocket = () => {
     const token = localStorage.getItem("token");
-    const pin = localStorage.getItem("kaboom-pin-recovery");
+    let pin = localStorage.getItem("kaboom-pin-recovery");
+
+    if (!pin) {
+      const hostGameData = localStorage.getItem("lobby");
+      if (hostGameData) {
+        pin = JSON.parse(hostGameData).gamePin;
+      }
+    }
 
     if (token) {
       const newSocket = connectSocket(token, pin);

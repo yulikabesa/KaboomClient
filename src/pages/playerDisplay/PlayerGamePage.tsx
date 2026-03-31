@@ -23,7 +23,7 @@ const PlayerGamePage = () => {
                 data: any;
             }) => {
                 console.log(state.phase);
-            if (state.phase === "question")
+            if (state.phase === "answers")
                 setStatus("answering");
             // todo add more statuses
         };
