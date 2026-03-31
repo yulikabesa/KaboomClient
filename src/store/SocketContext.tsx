@@ -12,6 +12,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
     const token = localStorage.getItem("token");
     let pin = localStorage.getItem("kaboom-pin-recovery");
 
+    // todo: fix to a nice solution
     if (!pin) {
       const hostGameData = localStorage.getItem("lobby");
       if (hostGameData) {
