@@ -5,12 +5,13 @@ import Question from "../../components/quiz/Question";
 import { useLocation } from "react-router-dom";
 
 const ProjectorGamePage = () => {
-  const [status, setStatus] = useState("loading");
-
   const INTRO_DURATION = 10;
-  const location = useLocation();
-  const initialData = location.state?.questionData;
 
+  const location = useLocation();
+  const initialData = location.state.data;
+  const initialPhase = location.state.phase;
+
+  const [status, setStatus] = useState(initialPhase);
   const [question, setQuestion] = useState(initialData?.question || "");
   const [answerTexts, setAnswerTexts] = useState<string[]>([]);
 

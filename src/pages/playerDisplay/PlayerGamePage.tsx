@@ -5,11 +5,16 @@ import Loading from "../../components/player/Loading";
 import AnswerFeedback from "../../components/player/AnswerFeedback";
 import WaitingForHost from "../../components/player/WaitingForHost";
 import { useSocket } from "../../store/SocketContext";
+import { useLocation } from "react-router-dom";
 
 type GameStatus = "lobby" | "answers" | "loading" | "correct" | "wrong";
 
 const PlayerGamePage = () => {
-  const [status, setStatus] = useState<GameStatus>("loading");
+  const location = useLocation();
+  const initialData = location.state.data;
+  const initialPhase = location.state.phase;
+
+  const [status, setStatus] = useState<GameStatus>(initialPhase);
   const socket = useSocket();
   const handleAnswerClick = (answerIndex: number) => {
     setStatus("loading");
