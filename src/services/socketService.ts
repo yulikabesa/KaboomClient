@@ -3,13 +3,13 @@ import { io, Socket } from "socket.io-client";
 
 let socket: Socket | null = null;
 
-export const connectSocket = (token: string) => {
+export const connectSocket = (token: string, pin: string | null) => {
   if (socket) {
     socket.disconnect(); // Force reconnect when token changes
   }
 
   socket = io("http://localhost:3000", {
-    auth: { token },
+    auth: { token, pin },
   });
 
   return socket;

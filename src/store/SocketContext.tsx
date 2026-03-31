@@ -3,52 +3,53 @@ import { connectSocket, disconnectSocket } from "../services/socketService";
 
 const SocketContext = createContext<any>(null);
 
-export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [socket, setSocket] = useState<any>(null);
+export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [socket, setSocket] = useState<any>(null);
 
-    const initSocket = () => {
-        const token = localStorage.getItem("token");
+  const initSocket = () => {
+    const token = localStorage.getItem("token");
+    const pin = localStorage.getItem("kaboom-pin-recovery");
 
-        if (token) {
-            const newSocket = connectSocket(token);
-            setSocket(newSocket);
+    if (token) {
+      const newSocket = connectSocket(token, pin);
+      setSocket(newSocket);
 
-            // 🔹 Rejoin after connection
-            newSocket.on("connect", () => {
-                const pin = localStorage.getItem("gamePin");
-                if (pin) {
-                    console.log("Rejoining game with pin:", pin);
-                    socket.emit("game-event", {
-                        type: "rejoin-game",
-                        payload: {
-                            pin,
-                        },
-                    });
-                }
-            });
-        }
+      // Rejoin after connection
+      // newSocket.on("connect", () => {
+      //     const pin = localStorage.getItem("kaboom-pin-recovery");
+      //     if (pin) {
+      //         console.log("Rejoining game with pin:", pin);
+      //         socket.emit("game-event", {
+      //             type: "rejoin-game",
+      //             payload: {
+      //                 pin,
+      //             },
+      //         });
+      //     }
+      // });
+    }
+  };
+
+  useEffect(() => {
+    // run on mount
+    initSocket();
+
+    // listen to login event
+    window.addEventListener("login", initSocket);
+
+    return () => {
+      window.removeEventListener("login", initSocket);
+      disconnectSocket();
     };
+  }, []);
 
-    useEffect(() => {
-        // run on mount
-        initSocket();
-
-        // listen to login event
-        window.addEventListener("login", initSocket);
-
-        return () => {
-            window.removeEventListener("login", initSocket);
-            disconnectSocket();
-        };
-    }, []);
-
-    return (
-        <SocketContext.Provider value={socket}>
-            {children}
-        </SocketContext.Provider>
-    );
+  return (
+    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
+  );
 };
 
 export const useSocket = () => {
-    return useContext(SocketContext);
+  return useContext(SocketContext);
 };
