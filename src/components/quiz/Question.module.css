@@ -28,3 +28,24 @@
   padding: 0.5% 3% 0.5% 1.5%;
   border-radius: 4px 0px 0px 4px;
 }
+
+/* the moving white bar */
+.progress-bar-animated {
+  position: absolute;
+  height: 2vh;
+  bottom: 2vh;
+  left: 2vh;
+  background-color: white;
+  border-radius: 999px;
+  animation: moveBar linear forwards;
+}
+
+/* animation */
+@keyframes moveBar {
+  from {
+    width: 0vw;
+  }
+  to {
+    width: 96vw;
+  }
+}

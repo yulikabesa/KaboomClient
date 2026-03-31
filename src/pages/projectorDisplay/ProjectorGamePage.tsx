@@ -7,14 +7,18 @@ import { useLocation } from "react-router-dom";
 const ProjectorGamePage = () => {
     const [status, setStatus] = useState("question");
 
+    const INTRO_DURATION = 10;
     const location = useLocation();
     const initialData = location.state?.questionData;
+
     const [question, setQuestion] = useState(initialData?.question || " ");
+    const [answerTexts, setAnswerTexts] = useState<string[]>(initialData?.answers || []);
+
     const [showIntroQuestion, setShowIntroQuestion] = useState(true);
+
     const playerAnsweredNum = 0;
     const duration = initialData?.timeLimit || 0;
     const [timeLeft, setTimeLeft] = useState(initialData?.timeLimit || 0);
-    const [answerTexts, setAnswerTexts] = useState<string[]>(initialData?.answers || []);
     const showResults = timeLeft === 0;
     const socket = useSocket();
 
@@ -36,12 +40,11 @@ const ProjectorGamePage = () => {
     useEffect(() => {
         if (status !== "question") return;
 
-        // reset when entering question phase
         setShowIntroQuestion(true);
 
         const timer = setTimeout(() => {
             setShowIntroQuestion(false);
-        }, 10000);
+        }, INTRO_DURATION * 1000); // 10 seconds
 
         return () => clearTimeout(timer);
     }, [status, question]);
@@ -52,6 +55,7 @@ const ProjectorGamePage = () => {
                 <Question question={question}
                     currentQuestion={1} // todo get from server
                     questionCount={2} // todo get from server
+                    duration={INTRO_DURATION}
                 />
             }
             {status === "question" && !showIntroQuestion &&
