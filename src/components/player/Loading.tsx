@@ -1,4 +1,4 @@
-import loading from '../../assets/loading.png';
+import loading from '../../assets/LoadingEllipse.svg';
 import classes from './Loading.module.css';
 
 const Loading = () => {
