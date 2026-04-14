@@ -15,17 +15,42 @@ const PlayerGamePage = () => {
   const initialPhase = location.state.phase;
 
   const [status, setStatus] = useState<GameStatus>(initialPhase);
+  const [answersCount, setAnswersCount] = useState(0);
+  const [points, setPoints] = useState("0");
+
   const socket = useSocket();
   const handleAnswerClick = (answerIndex: number) => {
     setStatus("loading");
-    // todo send through socket the answer
+    socket.emit("game-event", {
+      type: "submit-answer",
+      payload: {
+        answer: [answerIndex],
+      },
+    });
   };
   useEffect(() => {
     if (!socket) return; // Guard against null
     const handleStatusChange = (state: { phase: string; data: any }) => {
-      console.log(state.phase);
-      setStatus(state.phase as GameStatus);
-      // todo add more statuses
+      console.log("phase", state.phase);
+      console.log("data", state.data);
+      switch (state.phase) {
+        case "answers":
+          setAnswersCount(state.data.answers.length);
+          setStatus(state.phase as GameStatus);
+          break;
+        case "results":
+          if (state.data.isCorrect) {
+            setStatus('correct');
+          }
+          else {
+            setStatus('wrong');
+          }
+          // setPoints(state.data.points);
+          break;
+        default:
+          setStatus(state.phase as GameStatus);
+          break;
+      }
     };
 
     socket.on("game-state", handleStatusChange);
@@ -45,7 +70,7 @@ const PlayerGamePage = () => {
       {status === "answers" && (
         <AnswerOptions
           viewMode="player"
-          answersCount={4}
+          answersCount={answersCount}
           onAnswerClick={handleAnswerClick}
         />
       )}
@@ -55,7 +80,7 @@ const PlayerGamePage = () => {
       {status === "wrong" && <AnswerFeedback wasCorrect={false} />}
       <PlayerCard
         name={localStorage.getItem("nickname") || "Guest"}
-        points="777"
+        points={points}
       />
     </>
   );
