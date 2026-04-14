@@ -21,14 +21,24 @@ const ProjectorGamePage = () => {
   const duration = 20;
   const [timeLeft, setTimeLeft] = useState(20);
   const showResults = timeLeft === 0;
+
+  const [correctAnswerIndex, SetCorrectAnswerIndex] = useState(0);
+  const [answerDistributionArrray, setAnswerDistributionArrray] = useState([0,0]);
   const socket = useSocket();
 
   useEffect(() => {
     if (!socket) return;
 
     const handler = (state: any) => {
+      console.log("state", state);
       setStatus(state.phase);
-      setAnswerTexts(state.data.answers);
+      if(state.phase === 'answers'){
+        setAnswerTexts(state.data.answers);
+      }
+      if(state.phase === 'results'){
+        setAnswerDistributionArrray(state.data.distribution);
+        SetCorrectAnswerIndex(state.data.correctAnswers[0]);
+      }
     };
 
     socket.on("game-state", handler);
@@ -61,7 +71,7 @@ const ProjectorGamePage = () => {
           duration={INTRO_DURATION}
         />
       )}
-      {status === "answers" && (
+      {(status === "answers" || status === "results") && (
         <GameQuestion
           question={question}
           playerAnsweredNum={playerAnsweredNum}
@@ -70,8 +80,8 @@ const ProjectorGamePage = () => {
           answerTexts={answerTexts}
           duration={duration}
           showAnswer={showResults}
-          correctAnswerIndex={1} // todo get from server
-          answerDistributionArrray={[0, 1]} // todo get from server
+          correctAnswerIndex={correctAnswerIndex} // todo get from server
+          answerDistributionArrray={answerDistributionArrray} // todo get from server
         />
       )}
     </>

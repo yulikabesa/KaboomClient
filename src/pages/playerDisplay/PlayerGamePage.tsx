@@ -25,6 +25,7 @@ const PlayerGamePage = () => {
       type: "submit-answer",
       payload: {
         answer: [answerIndex],
+        pin: localStorage.getItem('kaboom-pin-recovery')
       },
     });
   };
