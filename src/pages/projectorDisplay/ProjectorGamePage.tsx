@@ -38,10 +38,11 @@ const ProjectorGamePage = () => {
       setStatus(state.phase);
       switch (state.phase) {
         case "question":
-          setQuestion(state.data?.question ?? "")
+          setQuestion(state.data?.question ?? "");
           break;
         case "answers":
           setAnswerTexts(state.data?.answers ?? []);
+          setTimeLeft(state.data?.timeLimit ?? 20);
           break;
 
         case "results":
