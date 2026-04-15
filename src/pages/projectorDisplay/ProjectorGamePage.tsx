@@ -37,6 +37,9 @@ const ProjectorGamePage = () => {
       console.log("state", state);
       setStatus(state.phase);
       switch (state.phase) {
+        case "question":
+          setQuestion(state.data?.question ?? "")
+          break;
         case "answers":
           setAnswerTexts(state.data?.answers ?? []);
           break;

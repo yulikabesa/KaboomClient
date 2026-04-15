@@ -46,6 +46,7 @@
     color: white;
     background-color: transparent;
     font-size: clamp(20px, 2vmax, 24px);
+    user-select: none;   
 }
 
 .Leaderboard-line:first-child {
