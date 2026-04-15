@@ -24,6 +24,7 @@ const PlayerGamePage = () => {
   const [status, setStatus] = useState<GameStatus>(initialPhase);
   const [answersCount, setAnswersCount] = useState(0);
   const [points, setPoints] = useState("0");
+  const [currentRank, setCurrentRank] = useState(0);
 
   const socket = useSocket();
   const handleAnswerClick = (answerIndex: number) => {
@@ -56,6 +57,7 @@ const PlayerGamePage = () => {
           } else {
             setStatus("wrong");
           }
+          setCurrentRank(state.data.currentRank + 1);
           // setPoints(state.data.points);
           break;
         default:
@@ -88,8 +90,8 @@ const PlayerGamePage = () => {
       {status === "question" && <CountDown initialSeconds={5} />}
       {/* to change answersCount number to receive from server later */}
       {status === "loading" && <Loading />}
-      {status === "correct" && <AnswerFeedback wasCorrect={true} />}
-      {status === "wrong" && <AnswerFeedback wasCorrect={false} />}
+      {status === "correct" && <AnswerFeedback wasCorrect={true} currentRank={currentRank} />}
+      {status === "wrong" && <AnswerFeedback wasCorrect={false} currentRank={currentRank} />}
       <PlayerCard
         name={localStorage.getItem("nickname") || "Guest"}
         points={points}
