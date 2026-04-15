@@ -28,12 +28,21 @@ const GameQuestion: React.FC<{
       },
     });
   };
+  const moveToLeaderboard = () => {
+    if (!socket) return;
+    socket.emit("game-event", {
+      type: "show-leaderboard",
+      payload: {
+        pin: JSON.parse(localStorage.getItem("lobby")!).gamePin,
+      },
+    });
+  };
   return (
     <>
       <div className={classes["top-container"]}>
         <div className={classes["question"]}>{props.question}</div>
         {props.showAnswer ? (
-          <div className={classes["shorten-time-btn"]}>הבא</div>
+          <div className={classes["shorten-time-btn"]} onClick={moveToLeaderboard}>הבא</div>
         ) : (
           <div className={classes["shorten-time-btn"]} onClick={onClickHandler}>
             קיצור זמנים

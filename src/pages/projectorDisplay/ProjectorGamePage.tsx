@@ -3,9 +3,10 @@ import { useSocket } from "../../store/SocketContext";
 import GameQuestion from "../../components/quiz/GameQuestion";
 import Question from "../../components/quiz/Question";
 import { useLocation } from "react-router-dom";
+import Leaderboard from "../../components/projector/Leaderboard";
 
 const ProjectorGamePage = () => {
-  const INTRO_DURATION = 10;
+  const INTRO_DURATION = 5;
 
   const location = useLocation();
   const initialData = location.state.data;
@@ -23,7 +24,10 @@ const ProjectorGamePage = () => {
   const showResults = timeLeft === 0;
 
   const [correctAnswerIndex, SetCorrectAnswerIndex] = useState(0);
-  const [answerDistributionArrray, setAnswerDistributionArrray] = useState([0,0]);
+  const [answerDistributionArrray, setAnswerDistributionArrray] = useState([
+    0, 0,
+  ]);
+  const [rankingArray, SetRankingArray] = useState([]);
   const socket = useSocket();
 
   useEffect(() => {
@@ -32,12 +36,16 @@ const ProjectorGamePage = () => {
     const handler = (state: any) => {
       console.log("state", state);
       setStatus(state.phase);
-      if(state.phase === 'answers'){
+      if (state.phase === "answers") {
         setAnswerTexts(state.data.answers);
       }
-      if(state.phase === 'results'){
+      if (state.phase === "results") {
         setAnswerDistributionArrray(state.data.distribution);
         SetCorrectAnswerIndex(state.data.correctAnswers[0]);
+        setAnswerTexts(state.data.answers);
+      }
+      if(state.phase === "leaderboard"){
+        SetRankingArray(state.data);
       }
     };
 
@@ -84,6 +92,7 @@ const ProjectorGamePage = () => {
           answerDistributionArrray={answerDistributionArrray} // todo get from server
         />
       )}
+      {status === "leaderboard" && <Leaderboard rankingArray={rankingArray} />}
     </>
   );
 };

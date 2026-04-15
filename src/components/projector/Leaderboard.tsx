@@ -16,7 +16,8 @@ import classes from './Leaderboard.module.css';
 type Rank = {
     nickname: string;
     score: number;
-    rankChangeDirection: 'UP' | 'DOWN' | 'UNCHANGED';
+    rankChangeDirection: string ;
+    // 'UP' | 'DOWN' | 'UNCHANGED';
 };
 
 const Leaderboard: React.FC<{ rankingArray: Rank[] }> = (props) => {
