@@ -6,8 +6,9 @@ import AnswerFeedback from "../../components/player/AnswerFeedback";
 import WaitingForHost from "../../components/player/WaitingForHost";
 import { useSocket } from "../../store/SocketContext";
 import { useLocation } from "react-router-dom";
+import CountDown from "../../components/player/CountDown";
 
-type GameStatus = "lobby" | "answers" | "loading" | "correct" | "wrong";
+type GameStatus = "lobby" | "question" | "answers" | "loading" | "correct" | "wrong";
 
 const PlayerGamePage = () => {
   const location = useLocation();
@@ -40,6 +41,7 @@ const PlayerGamePage = () => {
           setStatus(state.phase as GameStatus);
           break;
         case "results":
+        case "leaderboard":
           if (state.data.isCorrect) {
             setStatus('correct');
           }
@@ -75,6 +77,7 @@ const PlayerGamePage = () => {
           onAnswerClick={handleAnswerClick}
         />
       )}
+      {status === 'question' && <CountDown initialSeconds={5} />}
       {/* to change answersCount number to receive from server later */}
       {status === "loading" && <Loading />}
       {status === "correct" && <AnswerFeedback wasCorrect={true} />}
