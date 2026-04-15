@@ -8,7 +8,13 @@ import { useSocket } from "../../store/SocketContext";
 import { useLocation } from "react-router-dom";
 import CountDown from "../../components/player/CountDown";
 
-type GameStatus = "lobby" | "question" | "answers" | "loading" | "correct" | "wrong";
+type GameStatus =
+  | "lobby"
+  | "question"
+  | "answers"
+  | "loading"
+  | "correct"
+  | "wrong";
 
 const PlayerGamePage = () => {
   const location = useLocation();
@@ -26,7 +32,7 @@ const PlayerGamePage = () => {
       type: "submit-answer",
       payload: {
         answer: [answerIndex],
-        pin: localStorage.getItem('kaboom-pin-recovery')
+        pin: localStorage.getItem("kaboom-pin-recovery"),
       },
     });
   };
@@ -37,16 +43,18 @@ const PlayerGamePage = () => {
       console.log("data", state.data);
       switch (state.phase) {
         case "answers":
-          setAnswersCount(state.data.answers.length);
-          setStatus(state.phase as GameStatus);
+          if (state.data.hasAnswered) setStatus("loading");
+          else {
+            setAnswersCount(state.data.answers.length);
+            setStatus(state.phase as GameStatus);
+          }
           break;
         case "results":
         case "leaderboard":
           if (state.data.isCorrect) {
-            setStatus('correct');
-          }
-          else {
-            setStatus('wrong');
+            setStatus("correct");
+          } else {
+            setStatus("wrong");
           }
           // setPoints(state.data.points);
           break;
@@ -77,7 +85,7 @@ const PlayerGamePage = () => {
           onAnswerClick={handleAnswerClick}
         />
       )}
-      {status === 'question' && <CountDown initialSeconds={5} />}
+      {status === "question" && <CountDown initialSeconds={5} />}
       {/* to change answersCount number to receive from server later */}
       {status === "loading" && <Loading />}
       {status === "correct" && <AnswerFeedback wasCorrect={true} />}

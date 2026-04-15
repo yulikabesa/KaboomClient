@@ -18,7 +18,7 @@ const ProjectorGamePage = () => {
 
   const [showIntroQuestion, setShowIntroQuestion] = useState(true);
 
-  const playerAnsweredNum = 0;
+  const [playerAnsweredNum, SetPlayerAnsweredNum] = useState(0);
   const duration = 20;
   const [timeLeft, setTimeLeft] = useState(20);
   const showResults = timeLeft === 0;
@@ -36,16 +36,21 @@ const ProjectorGamePage = () => {
     const handler = (state: any) => {
       console.log("state", state);
       setStatus(state.phase);
-      if (state.phase === "answers") {
-        setAnswerTexts(state.data.answers);
-      }
-      if (state.phase === "results") {
-        setAnswerDistributionArrray(state.data.distribution);
-        SetCorrectAnswerIndex(state.data.correctAnswers[0]);
-        setAnswerTexts(state.data.answers);
-      }
-      if(state.phase === "leaderboard"){
-        SetRankingArray(state.data);
+      switch (state.phase) {
+        case "answers":
+          setAnswerTexts(state.data?.answers ?? []);
+          break;
+
+        case "results":
+          setAnswerTexts(state.data?.answers ?? []);
+          setAnswerDistributionArrray(state.data?.distribution ?? []);
+          SetCorrectAnswerIndex(state.data?.correctAnswers?.[0]);
+          setTimeLeft(0);
+          break;
+
+        case "leaderboard":
+          SetRankingArray(state.data);
+          break;
       }
     };
 
@@ -59,15 +64,27 @@ const ProjectorGamePage = () => {
     setShowIntroQuestion(true);
 
     const timer = setTimeout(() => {
-      setShowIntroQuestion(false);
       socket.emit("game-event", {
         type: "reveal-answers",
         payload: {},
       });
+      setShowIntroQuestion(false);
     }, INTRO_DURATION * 1000);
 
     return () => clearTimeout(timer);
   }, [status, socket]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const progressHandler = (answeredNumber: number) => {
+      SetPlayerAnsweredNum(answeredNumber);
+    };
+
+    socket.on("answer-progress", progressHandler);
+
+    return () => socket.off("answer-progress", progressHandler);
+  }, [socket]);
 
   return (
     <>
