@@ -4,6 +4,7 @@ import CountdownCircle from "../projector/CountdownCircle";
 import classes from "./GameQuestion.module.css";
 import BarIndicatorsList from "../projector/BarIndicatorsList";
 import { useSocket } from "../../store/SocketContext";
+import DoubleScore from "../projector/DoubleScore";
 
 const GameQuestion: React.FC<{
   question: string;
@@ -39,6 +40,7 @@ const GameQuestion: React.FC<{
   };
   return (
     <>
+      <DoubleScore className={classes["double-score"]} />
       <div className={classes["top-container"]}>
         <div className={classes["question"]}>{props.question}</div>
         {props.showAnswer ? (

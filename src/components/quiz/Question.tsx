@@ -1,3 +1,4 @@
+import DoubleScore from "../projector/DoubleScore";
 import classes from "./Question.module.css";
 import React from "react";
 
@@ -6,13 +7,16 @@ const Question: React.FC<{
   currentQuestion: number;
   questionCount: number;
   duration: number;
+  scoringWeight: number;
 }> = (props) => {
-
   return (
     <>
       <div className={classes["question-count"]}>
         {props.currentQuestion} מתוך {props.questionCount}
       </div>
+      {props.scoringWeight === 2 && (
+        <DoubleScore className={classes["scoring-weight"]} />
+      )}
       <div className={classes["wrapper"]}>
         <div className={classes["content"]}>
           <p>{props.question}</p>

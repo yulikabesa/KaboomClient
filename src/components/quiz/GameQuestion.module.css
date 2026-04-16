@@ -70,3 +70,8 @@
     padding: 4vh 3vh 0 3vh;
     box-sizing: border-box;
 }
+
+.double-score {
+    padding-top: 2vh;
+    height: 98vh !important;
+}

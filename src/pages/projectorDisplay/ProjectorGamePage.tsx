@@ -14,6 +14,7 @@ const ProjectorGamePage = () => {
 
   const [status, setStatus] = useState(initialPhase);
   const [question, setQuestion] = useState(initialData?.question || "");
+  const [scoringWeight, setScoringWeight] = useState(initialData?.scoringWeight || "");
   const [answerTexts, setAnswerTexts] = useState<string[]>([]);
 
   const [showIntroQuestion, setShowIntroQuestion] = useState(true);
@@ -39,10 +40,12 @@ const ProjectorGamePage = () => {
       switch (state.phase) {
         case "question":
           setQuestion(state.data?.question ?? "");
+          setScoringWeight(state.data?.scoringWeight ?? 1);
           break;
         case "answers":
           setAnswerTexts(state.data?.answers ?? []);
           setTimeLeft(state.data?.timeLimit ?? 20);
+          setScoringWeight(state.data?.scoringWeight ?? 1);
           break;
 
         case "results":
@@ -98,6 +101,7 @@ const ProjectorGamePage = () => {
           currentQuestion={1} // todo get from server
           questionCount={2} // todo get from server
           duration={INTRO_DURATION}
+          scoringWeight={scoringWeight}
         />
       )}
       {(status === "answers" || status === "results") && (
