@@ -37,6 +37,7 @@ const ProjectorGamePage = () => {
     const handler = (state: any) => {
       console.log("state", state);
       setStatus(state.phase);
+      // לאפס כמה ענו ולאפס גרף
       switch (state.phase) {
         case "question":
           setQuestion(state.data?.question ?? "");
@@ -46,6 +47,9 @@ const ProjectorGamePage = () => {
           setAnswerTexts(state.data?.answers ?? []);
           setTimeLeft(state.data?.timeLimit ?? 20);
           setScoringWeight(state.data?.scoringWeight ?? 1);
+          // reset variables
+          SetPlayerAnsweredNum(0);
+          setAnswerDistributionArrray(new Array(state.data?.answers?.length ?? 2).fill(0));
           break;
 
         case "results":
