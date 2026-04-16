@@ -14,7 +14,7 @@ const AnswerFeedback: React.FC<{ wasCorrect: boolean; currentRank: number | null
             <div className={divClass}>
                 <img className={classes.symbol} src={symbol} alt={title} />
             </div>
-            {props.currentRank && <p className={classes.text}>מקום {props.currentRank} אחרי מתן גרשון</p>}
+            {props.currentRank ? <p className={classes.text}>מקום {props.currentRank} אחרי מתן גרשון</p> : ''}
             {/* todo change this text to what is received from server */}
         </div>
     );

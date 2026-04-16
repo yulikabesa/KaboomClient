@@ -88,7 +88,7 @@ const GameQuestion: React.FC<{
         answersCount={props.answerTexts.length}
         answerTexts={props.answerTexts}
         onAnswerClick={(i) => console.log(i)}
-        {...(props.showAnswer ? { correctAnswerIndex: 1 } : {})}
+        {...(props.showAnswer ? { correctAnswerIndex: props.correctAnswerIndex } : {})}
       />
     </>
   );
