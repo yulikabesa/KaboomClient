@@ -57,7 +57,7 @@ const PlayerGamePage = () => {
           } else {
             setStatus("wrong");
           }
-          setCurrentRank(state.data.currentRank + 1);
+          setCurrentRank(state.data?.currentRank ?? null);
           // setPoints(state.data.points);
           break;
         default:

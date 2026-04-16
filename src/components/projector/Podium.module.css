@@ -1,0 +1,36 @@
+.container {
+    width: fit-content;
+}
+
+.name {
+    color: white;
+    font-weight: 600;
+    font-size: 2vmax;
+    text-align: center;
+    width: 10vw;
+    min-width: 140px;
+    margin-bottom: 1vh;
+}
+
+.purple-rectangle {
+    background-color: #6643B6;
+    width: 10vw;
+    min-width: 140px;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.points {
+    color: white;
+    font-weight: 800;
+    font-size: 1.5vmax;
+}
+
+.rank {
+    width: 60%;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+}
