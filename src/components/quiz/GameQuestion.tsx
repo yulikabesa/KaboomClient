@@ -16,6 +16,7 @@ const GameQuestion: React.FC<{
   showAnswer: boolean;
   correctAnswerIndex: number;
   answerDistributionArrray: number[];
+  scoringWeight: number;
 }> = (props) => {
   const socket = useSocket();
   const onClickHandler = () => {
@@ -40,11 +41,18 @@ const GameQuestion: React.FC<{
   };
   return (
     <>
-      <DoubleScore className={classes["double-score"]} />
+      {props.scoringWeight === 2 && (
+        <DoubleScore className={classes["double-score"]} />
+      )}
       <div className={classes["top-container"]}>
         <div className={classes["question"]}>{props.question}</div>
         {props.showAnswer ? (
-          <div className={classes["shorten-time-btn"]} onClick={moveToLeaderboard}>הבא</div>
+          <div
+            className={classes["shorten-time-btn"]}
+            onClick={moveToLeaderboard}
+          >
+            הבא
+          </div>
         ) : (
           <div className={classes["shorten-time-btn"]} onClick={onClickHandler}>
             קיצור זמנים

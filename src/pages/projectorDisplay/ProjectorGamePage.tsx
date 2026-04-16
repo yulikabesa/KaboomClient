@@ -111,6 +111,7 @@ const ProjectorGamePage = () => {
           timeLeft={timeLeft}
           setTimeLeft={setTimeLeft}
           answerTexts={answerTexts}
+          scoringWeight={scoringWeight}
           duration={duration}
           showAnswer={showResults}
           correctAnswerIndex={correctAnswerIndex} // todo get from server
