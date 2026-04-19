@@ -37,7 +37,6 @@ const ProjectorGamePage = () => {
 
     const handler = (state: any) => {
       console.log("state", state);
-      setStatus(state.phase);
       // לאפס כמה ענו ולאפס גרף
       switch (state.phase) {
         case "question":
@@ -68,6 +67,7 @@ const ProjectorGamePage = () => {
           SetRankingArray(state.data);
           break;
       }
+      setStatus(state.phase);
     };
 
     socket.on("game-state", handler);
@@ -82,7 +82,7 @@ const ProjectorGamePage = () => {
         type: "reveal-answers",
         payload: {},
       });
-    }, INTRO_DURATION * 1000);
+    }, INTRO_DURATION * 1000 - 1.5);
 
     return () => clearTimeout(timer);
   }, [status, socket]);
