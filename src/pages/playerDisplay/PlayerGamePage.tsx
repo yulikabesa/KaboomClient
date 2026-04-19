@@ -14,7 +14,8 @@ type GameStatus =
   | "answers"
   | "loading"
   | "correct"
-  | "wrong";
+  | "wrong"
+  | "podium";
 
 const PlayerGamePage = () => {
   const location = useLocation();
@@ -60,6 +61,9 @@ const PlayerGamePage = () => {
           setCurrentRank(state.data?.currentRank ?? null);
           // setPoints(state.data.points);
           break;
+        case "podium":
+          setCurrentRank(state.data?.currentRank ?? null);
+          break;
         default:
           setStatus(state.phase as GameStatus);
           break;
@@ -91,7 +95,7 @@ const PlayerGamePage = () => {
       {status === "loading" && <Loading />}
       {status === "correct" && <AnswerFeedback wasCorrect={true} currentRank={currentRank} />}
       {status === "wrong" && <AnswerFeedback wasCorrect={false} currentRank={currentRank} />}
-      {/* {status === "podium" && } */}
+      {status === "podium" && <div style={{color: 'white'}}>-מקום {currentRank}-</div>}
       <PlayerCard
         name={localStorage.getItem("nickname") || "Guest"}
         points={points}
