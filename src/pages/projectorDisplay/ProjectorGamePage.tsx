@@ -20,8 +20,6 @@ const ProjectorGamePage = () => {
   );
   const [answerTexts, setAnswerTexts] = useState<string[]>([]);
 
-  const [showIntroQuestion, setShowIntroQuestion] = useState(true);
-
   const [playerAnsweredNum, SetPlayerAnsweredNum] = useState(0);
   const [duration, setDuration] = useState(20);
   const [timeLeft, setTimeLeft] = useState(20);
@@ -79,14 +77,11 @@ const ProjectorGamePage = () => {
   useEffect(() => {
     if (status !== "question" || !socket) return;
 
-    setShowIntroQuestion(true);
-
     const timer = setTimeout(() => {
       socket.emit("game-event", {
         type: "reveal-answers",
         payload: {},
       });
-      setShowIntroQuestion(false);
     }, INTRO_DURATION * 1000);
 
     return () => clearTimeout(timer);
@@ -106,7 +101,7 @@ const ProjectorGamePage = () => {
 
   return (
     <>
-      {status === "question" && showIntroQuestion && (
+      {status === "question"  && (
         <Question
           question={question}
           currentQuestion={1} // todo get from server
