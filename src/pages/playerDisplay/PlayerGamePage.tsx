@@ -63,6 +63,7 @@ const PlayerGamePage = () => {
           break;
         case "podium":
           setCurrentRank(state.data?.currentRank ?? null);
+          setStatus("podium");
           break;
         default:
           setStatus(state.phase as GameStatus);
