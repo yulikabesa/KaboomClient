@@ -38,6 +38,7 @@
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
+  border-radius: 4px;
 }
 
 .rank1 {
@@ -62,7 +63,7 @@
 }
 
 .rank {
-  width: 5vw;
+  width: 50%;
   margin-top: 3vh;
   margin-bottom: 3vh;
 }

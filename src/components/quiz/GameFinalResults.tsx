@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Podium from "../projector/podium";
 import classes from "./GameFinalResults.module.css";
-import confetti from 'canvas-confetti';
+import confetti from "canvas-confetti";
 
 type result = {
-  name: string;
-  points: number;
+  nickname: string;
+  score: number;
   rank: number;
 };
 
@@ -38,20 +38,33 @@ const GameFinalResults: React.FC<{
       <div className={classes["btn"]}>משחק חדש</div>
       <div className={classes["container"]}>
         <Podium
-          name={props.results[2].name}
-          points={props.results[2].points}
-          rank={props.results[2].rank}
+          name={props.results[2].nickname}
+          points={props.results[2].score}
+          rank={3}
         />
         <Podium
-          name={props.results[0].name}
-          points={props.results[0].points}
-          rank={props.results[0].rank}
+          name={props.results[0].nickname}
+          points={props.results[0].score}
+          rank={1}
         />
         <Podium
-          name={props.results[1].name}
-          points={props.results[1].points}
-          rank={props.results[1].rank}
+          name={props.results[1].nickname}
+          points={props.results[1].score}
+          rank={2}
         />
+      </div>
+      <div className={classes["lower-places-container"]}>
+        {props.results.slice(3).map((ranknfo, index) => (
+          <div className={classes["rank-div"]} key={index}>
+            <div className={classes["right-side-items"]}>
+              <span className={classes.bolder}>{index + 4}</span>
+              <span>{ranknfo.nickname}</span>
+            </div>
+            <div className={classes["left-side-items"]}>
+              <span className={classes.bolder}>{ranknfo.score}</span>
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );
