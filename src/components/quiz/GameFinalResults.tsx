@@ -6,7 +6,6 @@ import confetti from "canvas-confetti";
 type result = {
   nickname: string;
   score: number;
-  rank: number;
 };
 
 const GameFinalResults: React.FC<{
@@ -37,21 +36,27 @@ const GameFinalResults: React.FC<{
       <div className={classes["score-title"]}>ניקוד</div>
       <div className={classes["btn"]}>משחק חדש</div>
       <div className={classes["container"]}>
-        <Podium
-          name={props.results[2].nickname}
-          points={props.results[2].score}
-          rank={3}
-        />
-        <Podium
-          name={props.results[0].nickname}
-          points={props.results[0].score}
-          rank={1}
-        />
-        <Podium
-          name={props.results[1].nickname}
-          points={props.results[1].score}
-          rank={2}
-        />
+        {props.results.length >= 3 && (
+          <Podium
+            name={props.results[2].nickname}
+            points={props.results[2].score}
+            rank={3}
+          />
+        )}
+        {props.results.length >= 1 && (
+          <Podium
+            name={props.results[0].nickname}
+            points={props.results[0].score}
+            rank={1}
+          />
+        )}
+        {props.results.length >= 2 && (
+          <Podium
+            name={props.results[1].nickname}
+            points={props.results[1].score}
+            rank={2}
+          />
+        )}
       </div>
       <div className={classes["lower-places-container"]}>
         {props.results.slice(3).map((ranknfo, index) => (

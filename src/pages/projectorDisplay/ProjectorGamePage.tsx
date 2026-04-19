@@ -4,6 +4,7 @@ import GameQuestion from "../../components/quiz/GameQuestion";
 import Question from "../../components/quiz/Question";
 import { useLocation } from "react-router-dom";
 import Leaderboard from "../../components/projector/Leaderboard";
+import GameFinalResults from "../../components/quiz/GameFinalResults";
 
 const ProjectorGamePage = () => {
   const INTRO_DURATION = 5;
@@ -14,13 +15,15 @@ const ProjectorGamePage = () => {
 
   const [status, setStatus] = useState(initialPhase);
   const [question, setQuestion] = useState(initialData?.question || "");
-  const [scoringWeight, setScoringWeight] = useState(initialData?.scoringWeight || "");
+  const [scoringWeight, setScoringWeight] = useState(
+    initialData?.scoringWeight || "",
+  );
   const [answerTexts, setAnswerTexts] = useState<string[]>([]);
 
   const [showIntroQuestion, setShowIntroQuestion] = useState(true);
 
   const [playerAnsweredNum, SetPlayerAnsweredNum] = useState(0);
-  const duration = 20;
+  const [duration, setDuration] = useState(20);
   const [timeLeft, setTimeLeft] = useState(20);
   const showResults = timeLeft === 0;
 
@@ -46,10 +49,13 @@ const ProjectorGamePage = () => {
         case "answers":
           setAnswerTexts(state.data?.answers ?? []);
           setTimeLeft(state.data?.timeLimit ?? 20);
+          setDuration(state.data?.timeLimit ?? 20);
           setScoringWeight(state.data?.scoringWeight ?? 1);
           // reset variables
           SetPlayerAnsweredNum(0);
-          setAnswerDistributionArrray(new Array(state.data?.answers?.length ?? 2).fill(0));
+          setAnswerDistributionArrray(
+            new Array(state.data?.answers?.length ?? 2).fill(0),
+          );
           break;
 
         case "results":
@@ -60,6 +66,7 @@ const ProjectorGamePage = () => {
           break;
 
         case "leaderboard":
+        case "podium":
           SetRankingArray(state.data);
           break;
       }
@@ -118,11 +125,14 @@ const ProjectorGamePage = () => {
           scoringWeight={scoringWeight}
           duration={duration}
           showAnswer={showResults}
-          correctAnswerIndex={correctAnswerIndex} // todo get from server
-          answerDistributionArrray={answerDistributionArrray} // todo get from server
+          correctAnswerIndex={correctAnswerIndex} 
+          answerDistributionArrray={answerDistributionArrray} 
         />
       )}
       {status === "leaderboard" && <Leaderboard rankingArray={rankingArray} />}
+      {status === "podium" && <GameFinalResults
+        results={rankingArray}
+      />}
     </>
   );
 };

@@ -88,10 +88,10 @@ const PlayerGamePage = () => {
         />
       )}
       {status === "question" && <CountDown initialSeconds={5} />}
-      {/* to change answersCount number to receive from server later */}
       {status === "loading" && <Loading />}
       {status === "correct" && <AnswerFeedback wasCorrect={true} currentRank={currentRank} />}
       {status === "wrong" && <AnswerFeedback wasCorrect={false} currentRank={currentRank} />}
+      {/* {status === "podium" && } */}
       <PlayerCard
         name={localStorage.getItem("nickname") || "Guest"}
         points={points}
