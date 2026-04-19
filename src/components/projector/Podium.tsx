@@ -4,7 +4,7 @@ import bronze from "../../assets/bronze.svg";
 import silver from "../../assets/silver.svg";
 import gold from "../../assets/gold.svg";
 
-const Podium: React.FC<{ name: string; rank: 1 | 2 | 3; points: number }> = (
+const Podium: React.FC<{ name: string; rank: number; points: number }> = (
   props,
 ) => {
   let rankSymbol;
@@ -21,9 +21,11 @@ const Podium: React.FC<{ name: string; rank: 1 | 2 | 3; points: number }> = (
   }
 
   return (
-    <div className={classes['container']}>
-      <div className={classes["name"]}>{props.name}</div>
-      <div className={classes["purple-rectangle"]}>
+    <div className={`${classes["container"]} ${classes[`container${props.rank}`]}`}>
+      <div className={`${classes["name"]} ${props.rank === 1 && classes['first-place-width']}`}>{props.name}</div>
+      <div
+        className={`${classes["purple-rectangle"]} ${classes[`rank${props.rank}`]}`}
+      >
         <img className={classes["rank"]} src={rankSymbol} alt="rank" />
         <p className={classes["points"]}>{props.points} </p>
       </div>

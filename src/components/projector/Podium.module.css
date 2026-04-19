@@ -1,36 +1,77 @@
 .container {
-    width: fit-content;
+  width: fit-content;
+  transform: translateY(100vh);
+}
+
+.container1 {
+  animation: moveUp 1s ease 2s forwards;
+}
+
+.container2 {
+  animation: moveUp 1s ease 1s forwards;
+  z-index: -1;
+}
+
+.container3 {
+  animation: moveUp 1s ease forwards;
 }
 
 .name {
-    color: white;
-    font-weight: 600;
-    font-size: 2vmax;
-    text-align: center;
-    width: 10vw;
-    min-width: 140px;
-    margin-bottom: 1vh;
+  color: white;
+  font-weight: 600;
+  font-size: 2vmax;
+  text-align: center;
+  width: 10vw;
+  min-width: 140px;
+  margin-bottom: 1vh;
+}
+
+.first-place-width {
+  width: 12vw;
 }
 
 .purple-rectangle {
-    background-color: #6643B6;
-    width: 10vw;
-    min-width: 140px;
-    height: 60vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-sizing: border-box;
+  background-color: #6643b6;
+  width: 10vw;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.rank1 {
+  height: 60vh;
+  width: 12vw;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  clip-path: inset(0 -15px 0 -15px);
+}
+
+.rank2 {
+  height: 54vh;
+}
+
+.rank3 {
+  height: 45vh;
 }
 
 .points {
-    color: white;
-    font-weight: 800;
-    font-size: 1.5vmax;
+  color: white;
+  font-weight: 800;
+  font-size: 1.5vmax;
 }
 
 .rank {
-    width: 60%;
-    margin-top: 3vh;
-    margin-bottom: 3vh;
+  width: 5vw;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+}
+
+@keyframes moveUp {
+  from {
+    transform: translateY(100vh);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
