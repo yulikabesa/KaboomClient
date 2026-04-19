@@ -1,0 +1,38 @@
+.score-title {
+    background-color: white;
+    width: 100vw;
+    padding: 2vh;
+    text-align: center;
+    font-weight: 700;
+    color: #333333;
+    font-size: clamp(22px, 2.2vmax, 26px);
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.btn {
+    background-color: white;
+    text-align: center;
+    font-weight: 600;
+    padding: 1vh 2vh;
+    border-radius: 4px;
+    width: fit-content;
+    height: fit-content;
+    font-size: clamp(12px, 1vmax, 22px);
+    margin-top: 4vh;
+    margin-left: 4vh;
+    display: block;
+    margin-right: auto;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
