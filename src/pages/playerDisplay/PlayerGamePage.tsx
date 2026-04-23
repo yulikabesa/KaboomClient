@@ -63,6 +63,7 @@ const PlayerGamePage = () => {
           break;
         case "podium":
           setCurrentRank(state.data?.currentRank ?? null);
+          setPoints(state.data.points);
           setStatus("podium");
           break;
         default:
@@ -96,7 +97,7 @@ const PlayerGamePage = () => {
       {status === "loading" && <Loading />}
       {status === "correct" && <AnswerFeedback wasCorrect={true} currentRank={currentRank} />}
       {status === "wrong" && <AnswerFeedback wasCorrect={false} currentRank={currentRank} />}
-      {status === "podium" && <FinalRank currentRank={currentRank} />}
+      {status === "podium" && <FinalRank currentRank={currentRank} points={points} />}
       <PlayerCard
         name={localStorage.getItem("nickname") || "Guest"}
         points={points}
