@@ -7,6 +7,7 @@ import WaitingForHost from "../../components/player/WaitingForHost";
 import { useSocket } from "../../store/SocketContext";
 import { useLocation } from "react-router-dom";
 import CountDown from "../../components/player/CountDown";
+import FinalRank from "../../components/player/FinalRank";
 
 type GameStatus =
   | "lobby"
@@ -33,8 +34,7 @@ const PlayerGamePage = () => {
     socket.emit("game-event", {
       type: "submit-answer",
       payload: {
-        answer: [answerIndex],
-        pin: localStorage.getItem("kaboom-pin-recovery"),
+        answer: [answerIndex]
       },
     });
   };
@@ -96,7 +96,7 @@ const PlayerGamePage = () => {
       {status === "loading" && <Loading />}
       {status === "correct" && <AnswerFeedback wasCorrect={true} currentRank={currentRank} />}
       {status === "wrong" && <AnswerFeedback wasCorrect={false} currentRank={currentRank} />}
-      {status === "podium" && <div style={{color: 'white'}}>-מקום {currentRank}-</div>}
+      {status === "podium" && <FinalRank currentRank={currentRank} />}
       <PlayerCard
         name={localStorage.getItem("nickname") || "Guest"}
         points={points}

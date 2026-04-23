@@ -29,9 +29,7 @@ const Leaderboard: React.FC<{ rankingArray: Rank[] }> = (props) => {
     if (!socket) return;
     socket.emit("game-event", {
       type: "next-question",
-      payload: {
-        pin: JSON.parse(localStorage.getItem("lobby")!).gamePin,
-      },
+      payload: null,
     });
   };
   return (

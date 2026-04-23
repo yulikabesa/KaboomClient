@@ -25,18 +25,14 @@ const GameQuestion: React.FC<{
     if (!socket) return;
     socket.emit("game-event", {
       type: "end-question",
-      payload: {
-        pin: JSON.parse(localStorage.getItem("lobby")!).gamePin,
-      },
+      payload: null,
     });
   };
   const moveToLeaderboard = () => {
     if (!socket) return;
     socket.emit("game-event", {
       type: "show-leaderboard",
-      payload: {
-        pin: JSON.parse(localStorage.getItem("lobby")!).gamePin,
-      },
+      payload: null,
     });
   };
   return (

@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.rank-place {
+  font-size: clamp(40px, 3.2vmax, 60px);
+}
+
+.place {
+  color: white;
+  font-weight: 900;
+}
+
+.hyphen {
+  color: #8a7de0;
+  letter-spacing: -5px;
+}
+
+.points-container {
+}

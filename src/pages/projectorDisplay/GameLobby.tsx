@@ -43,9 +43,7 @@ const GameLobby: React.FC = () => {
     });
     socket.emit("game-event", {
       type: "start-game",
-      payload: {
-        pin: lobby.gamePin,
-      },
+      payload: null,
     });
   };
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Podium from "../projector/podium";
+import Podium from "../projector/Podium";
 import classes from "./GameFinalResults.module.css";
 import confetti from "canvas-confetti";
 
