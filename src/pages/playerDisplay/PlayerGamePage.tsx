@@ -25,7 +25,7 @@ const PlayerGamePage = () => {
 
   const [status, setStatus] = useState<GameStatus>(initialPhase);
   const [answersCount, setAnswersCount] = useState(0);
-  const [points, setPoints] = useState("0");
+  const [points, setPoints] = useState(0);
   const [currentRank, setCurrentRank] = useState(0);
 
   const socket = useSocket();

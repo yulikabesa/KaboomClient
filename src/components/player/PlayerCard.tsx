@@ -2,7 +2,7 @@ import classes from './PlayerCard.module.css';
 import soldierProfilePic from '../../assets/soldierProfilePic.svg';
 import type React from 'react';
 
-const PlayerCard: React.FC<{name: string; points: string;}> = (props) => {
+const PlayerCard: React.FC<{name: string; points: number;}> = (props) => {
     return (
         <div className={classes['container']}>
             <img className={classes['player-photo']} src={soldierProfilePic} alt='player picture' />
