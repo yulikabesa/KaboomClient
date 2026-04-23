@@ -63,7 +63,7 @@ const PlayerGamePage = () => {
           break;
         case "podium":
           setCurrentRank(state.data?.currentRank ?? null);
-          setPoints(state.data.points);
+          setPoints(state.data.score ?? 0);
           setStatus("podium");
           break;
         default:
