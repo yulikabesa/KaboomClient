@@ -75,7 +75,6 @@ const JoinGamePage: React.FC = () => {
     setError(""); // clear error
 
     // join game
-    // const socket = connectSocket();
     // Emit event to join gam
     socket.emit("game-event", {
       type: "join-game",
@@ -85,10 +84,10 @@ const JoinGamePage: React.FC = () => {
       },
     });
 
-    socket.once("game-state", (state: { phase: string; data: any }) => {
+    socket.once("game-state", () => {
       localStorage.setItem("kaboom-pin-recovery", pin);
       localStorage.setItem("nickname", nickname);
-      navigate("/game", { replace: true, state });
+      navigate("/game", { replace: true });
     });
   };
 

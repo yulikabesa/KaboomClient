@@ -5,7 +5,6 @@ import Loading from "../../components/player/Loading";
 import AnswerFeedback from "../../components/player/AnswerFeedback";
 import WaitingForHost from "../../components/player/WaitingForHost";
 import { useSocket } from "../../store/SocketContext";
-import { useLocation } from "react-router-dom";
 import CountDown from "../../components/player/CountDown";
 import FinalRank from "../../components/player/FinalRank";
 
@@ -19,11 +18,7 @@ type GameStatus =
   | "podium";
 
 const PlayerGamePage = () => {
-  const location = useLocation();
-  const initialData = location.state.data;
-  const initialPhase = location.state.phase;
-
-  const [status, setStatus] = useState<GameStatus>(initialPhase);
+  const [status, setStatus] = useState<GameStatus>("loading");
   const [answersCount, setAnswersCount] = useState(0);
   const [points, setPoints] = useState(0);
   const [currentRank, setCurrentRank] = useState(0);
@@ -34,7 +29,7 @@ const PlayerGamePage = () => {
     socket.emit("game-event", {
       type: "submit-answer",
       payload: {
-        answer: [answerIndex]
+        answer: [answerIndex],
       },
     });
   };
@@ -79,6 +74,14 @@ const PlayerGamePage = () => {
     };
   }, [socket, status]);
 
+  useEffect(() => {
+    if (!socket) return;
+    socket.emit("game-event", {
+      type: "get-game-state",
+      payload: {},
+    });
+  }, []);
+
   return (
     <>
       {status === "lobby" && (
@@ -95,9 +98,15 @@ const PlayerGamePage = () => {
       )}
       {status === "question" && <CountDown initialSeconds={5} />}
       {status === "loading" && <Loading />}
-      {status === "correct" && <AnswerFeedback wasCorrect={true} currentRank={currentRank} />}
-      {status === "wrong" && <AnswerFeedback wasCorrect={false} currentRank={currentRank} />}
-      {status === "podium" && <FinalRank currentRank={currentRank} points={points} />}
+      {status === "correct" && (
+        <AnswerFeedback wasCorrect={true} currentRank={currentRank} />
+      )}
+      {status === "wrong" && (
+        <AnswerFeedback wasCorrect={false} currentRank={currentRank} />
+      )}
+      {status === "podium" && (
+        <FinalRank currentRank={currentRank} points={points} />
+      )}
       <PlayerCard
         name={localStorage.getItem("nickname") || "Guest"}
         points={points}
