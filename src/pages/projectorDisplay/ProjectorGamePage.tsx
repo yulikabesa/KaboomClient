@@ -2,21 +2,17 @@ import { useEffect, useState } from "react";
 import { useSocket } from "../../store/SocketContext";
 import GameQuestion from "../../components/quiz/GameQuestion";
 import Question from "../../components/quiz/Question";
-import { useLocation } from "react-router-dom";
 import Leaderboard from "../../components/projector/Leaderboard";
 import GameFinalResults from "../../components/quiz/GameFinalResults";
+import Loading from "../../components/player/Loading";
 
 const ProjectorGamePage = () => {
   const INTRO_DURATION = 5;
 
-  const location = useLocation();
-  const initialData = location.state.data;
-  const initialPhase = location.state.phase;
-
-  const [status, setStatus] = useState(initialPhase);
-  const [question, setQuestion] = useState(initialData?.question || "");
+  const [status, setStatus] = useState("loading");
+  const [question, setQuestion] = useState("");
   const [scoringWeight, setScoringWeight] = useState(
-    initialData?.scoringWeight || "",
+    1,
   );
   const [answerTexts, setAnswerTexts] = useState<string[]>([]);
 
@@ -45,6 +41,7 @@ const ProjectorGamePage = () => {
           break;
         case "answers":
           setAnswerTexts(state.data?.answers ?? []);
+          setQuestion(state.data?.question ?? "");
           setTimeLeft(state.data?.timeLimit ?? 20);
           setDuration(state.data?.timeLimit ?? 20);
           setScoringWeight(state.data?.scoringWeight ?? 1);
@@ -56,6 +53,7 @@ const ProjectorGamePage = () => {
           break;
 
         case "results":
+          // setQuestion(state.data?.question ?? ""); in case of refresh i need the question too
           setAnswerTexts(state.data?.answers ?? []);
           setAnswerDistributionArrray(state.data?.distribution ?? []);
           SetCorrectAnswerIndex(state.data?.correctAnswers?.[0]);
@@ -77,12 +75,15 @@ const ProjectorGamePage = () => {
   useEffect(() => {
     if (status !== "question" || !socket) return;
 
-    const timer = setTimeout(() => {
-      socket.emit("game-event", {
-        type: "reveal-answers",
-        payload: {},
-      });
-    }, INTRO_DURATION * 1000 - 1.5);
+    const timer = setTimeout(
+      () => {
+        socket.emit("game-event", {
+          type: "reveal-answers",
+          payload: {},
+        });
+      },
+      INTRO_DURATION * 1000 - 1.5,
+    );
 
     return () => clearTimeout(timer);
   }, [status, socket]);
@@ -99,9 +100,18 @@ const ProjectorGamePage = () => {
     return () => socket.off("answer-progress", progressHandler);
   }, [socket]);
 
+  useEffect(() => {
+    if (!socket) return;
+    socket.emit("game-event", {
+      type: "get-game-state",
+      payload: {},
+    });
+  }, []);
+
   return (
     <>
-      {status === "question"  && (
+      {status === "loading" && <Loading />}
+      {status === "question" && (
         <Question
           question={question}
           currentQuestion={1} // todo get from server
@@ -120,14 +130,12 @@ const ProjectorGamePage = () => {
           scoringWeight={scoringWeight}
           duration={duration}
           showAnswer={showResults}
-          correctAnswerIndex={correctAnswerIndex} 
-          answerDistributionArrray={answerDistributionArrray} 
+          correctAnswerIndex={correctAnswerIndex}
+          answerDistributionArrray={answerDistributionArrray}
         />
       )}
       {status === "leaderboard" && <Leaderboard rankingArray={rankingArray} />}
-      {status === "podium" && <GameFinalResults
-        results={rankingArray}
-      />}
+      {status === "podium" && <GameFinalResults results={rankingArray} />}
     </>
   );
 };

@@ -5,7 +5,7 @@ const Loading = () => {
     return (
         <div className={classes['centering']}>
             <img className={classes['spin']} src={loading} alt="loading" />
-            <p className={classes['text']}>בואנה מהיר</p>
+            {/* <p className={classes['text']}>בואנה מהיר</p> */}
         </div>
     )
 }

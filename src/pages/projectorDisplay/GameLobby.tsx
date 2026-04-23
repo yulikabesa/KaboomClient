@@ -33,13 +33,10 @@ const GameLobby: React.FC = () => {
 
   const startGame = () => {
     if (!socket || !lobby) return;
-    socket.once("game-state", (state: { phase: string; data: any }) => {
-      if (state.phase === "question") {
-        navigate("/hostGame", {
-          replace: true,
-          state,
-        });
-      }
+    socket.once("game-started", () => {
+      navigate("/hostGame", {
+        replace: true,
+      });
     });
     socket.emit("game-event", {
       type: "start-game",
