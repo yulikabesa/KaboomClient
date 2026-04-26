@@ -7,7 +7,9 @@ const ProductsList: React.FC<{ products: number[] }> = (props) => {
   return (
     <div className={classes["product-list"]}>
       {props.products.map((product, index) => (
-        <ProductDisplay key={index} isLoading={true} />
+        <div>
+          <ProductDisplay key={index} isLoading={true} />
+        </div>
       ))}
     </div>
   );

@@ -1,5 +1,7 @@
 import type React from "react";
 import classes from "./ProductDisplay.module.css";
+import editIcon from "../assets/editIcon.svg";
+import gameIcon from "../assets/gameIcon.svg";
 
 const ProductDisplay: React.FC<{ isLoading: boolean }> = (props) => {
   return (
@@ -22,6 +24,16 @@ const ProductDisplay: React.FC<{ isLoading: boolean }> = (props) => {
         <>
           <div className={classes.testImg}>
             <p className={classes["question-num"]}>10 שאלות</p>
+            <div className={classes.hoverOverlay}>
+              <div className={`${classes["option-btn"]} ${classes['top-radius']}`}>
+                <span>לשחק</span>
+                <img src={gameIcon} />
+              </div>
+              <div className={`${classes["option-btn"]} ${classes['bottom-radius']}`}>
+                <span>לערוך</span>
+                <img src={editIcon} />
+              </div>
+            </div>
           </div>
           <div className={classes["product-title"]}>כותרת</div>
           <div className={classes["product-course"]}>קורס</div>

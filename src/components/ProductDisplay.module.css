@@ -1,11 +1,51 @@
 .container {
   padding: 0.6vw;
+  position: relative;
   width: fit-content;
 }
 
 .container:hover {
   background-color: #ffffff;
   border-radius: 10px;
+  transition: opacity 0.2s ease;
+}
+
+.hoverOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  color: black;
+  font-weight: 600;
+  opacity: 0;
+  border-radius: 8px;
+  transition: opacity 0.2s ease;
+}
+
+.option-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 1vh;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.top-radius {
+  border-radius: 8px 8px 0 0;
+}
+
+.bottom-radius {
+  border-radius: 0 0 8px 8px;
+}
+
+.option-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.container:hover .hoverOverlay {
+  opacity: 1;
 }
 
 .img {
@@ -35,7 +75,6 @@
   position: relative;
   overflow: hidden;
 }
-
 
 .question-num {
   position: absolute;
@@ -75,7 +114,8 @@
   border-radius: 10px;
 }
 
-.skeleton::after, .img::after {
+.skeleton::after,
+.img::after {
   content: "";
   position: absolute;
   top: 0;

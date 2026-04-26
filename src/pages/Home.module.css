@@ -38,5 +38,5 @@
 .sub-title {
   font-weight: 600;
   font-size: clamp(14px, 1vmax, 18px);
-  margin-top: 2vh;
+  margin-top: 0.5vh;
 }
