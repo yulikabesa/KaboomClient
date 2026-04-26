@@ -13,6 +13,7 @@ import PlayerGamePage from "./pages/playerDisplay/PlayerGamePage";
 import { SocketProvider } from "./store/SocketContext";
 import Login from "./pages/Login";
 import ProjectorGamePage from "./pages/projectorDisplay/ProjectorGamePage";
+import Home from "./pages/Home";
 
 const App = () => {
   // const authCtx = useContext(AuthContext);
@@ -30,6 +31,10 @@ const App = () => {
         },
         {
           path: "/home",
+          element: <Home />,
+        },
+        {
+          path: "/join",
           element: <JoinGamePage />,
         },
         {
