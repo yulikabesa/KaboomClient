@@ -1,6 +1,5 @@
 import NavigationMenu from "../components/NavigationMenu";
 import classes from "./Home.module.css";
-import ProductDisplay from "../components/productDisplay";
 import { useState } from "react";
 import ProductsList from "../components/ProductsList";
 const Home = () => {
