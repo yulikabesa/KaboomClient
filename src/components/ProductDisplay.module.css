@@ -1,0 +1,123 @@
+.container {
+  padding: 0.6vw;
+  width: fit-content;
+}
+
+.container:hover {
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.img {
+  position: relative;
+  width: 14vw;
+  min-width: 100px;
+  height: 9vw;
+  border-radius: 5px;
+
+  background: #c0c0c0;
+
+  /* needed for shimmer layer */
+  position: relative;
+  overflow: hidden;
+}
+
+/* to delete */
+.testImg {
+  position: relative;
+  width: 14vw;
+  min-width: 150px;
+  height: 9vw;
+  border-radius: 5px;
+  background: #c0c0c0;
+
+  /* needed for shimmer layer */
+  position: relative;
+  overflow: hidden;
+}
+
+
+.question-num {
+  position: absolute;
+  bottom: 0.8vh;
+  right: 0.8vh;
+  font-weight: 600;
+  background-color: #0f0f0f4d;
+  font-size: clamp(12px, 0.5vmax, 16px);
+  padding: 0.3vh 0.6vh;
+  border-radius: 4px;
+}
+
+.product-course {
+  color: #b4b4b4;
+  font-size: clamp(11px, 0.4vmax, 15px);
+}
+
+.product-title {
+  color: white;
+  font-weight: 600;
+  font-size: clamp(14px, 0.5vmax, 18px);
+}
+
+.container:hover .product-course {
+  color: rgba(0, 0, 0, 0.684);
+}
+
+.container:hover .product-title {
+  color: black;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #c0c0c0;
+  margin-top: 0.8vh;
+  border-radius: 10px;
+}
+
+.skeleton::after, .img::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  height: 100%;
+  width: 150%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  animation: shimmer 1.2s infinite;
+}
+
+/* for the skeleton text */
+
+.product-title-loading {
+  width: 6vw;
+  height: 1.5vh;
+}
+
+.product-course-loading {
+  width: 4vw;
+  height: 1.5vh;
+}
+
+.question-num-loading {
+  background-color: #0f0f0f4d;
+  position: absolute;
+  bottom: 0.8vh;
+  right: 0.8vh;
+  width: 4vw;
+  height: 2vh;
+  border-radius: 10px;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 150%;
+  }
+}

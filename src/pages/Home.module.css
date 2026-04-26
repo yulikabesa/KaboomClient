@@ -1,10 +1,42 @@
 .background {
-    height: 100vh;
-    width: 100vw;
-    background-image: url('../../src/assets/homeBackground.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: white;
-    text-align: center;
+  height: fit-content;
+  width: 100vw;
+  background-image: url("../../src/assets/homeBackground.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+}
+
+.container {
+  margin: auto;
+  width: 86vw;
+}
+
+.question-marks-div {
+  text-align: center;
+  margin-top: 4vh;
+  width: 100%;
+  aspect-ratio: 50 / 7;
+  background-image: url("../../src/assets/questionMarksBackground.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.2vmax;
+}
+
+.tilted-title {
+  font-weight: 900;
+  font-size: clamp(18px, 2vmax, 26px);
+  transform: rotate(4deg);
+}
+
+.sub-title {
+  font-weight: 600;
+  font-size: clamp(14px, 1vmax, 18px);
+  margin-top: 2vh;
 }
