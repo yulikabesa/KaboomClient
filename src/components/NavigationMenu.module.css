@@ -1,0 +1,56 @@
+.header {
+  width: 100vw;
+  height: 6vh;
+  background-color: #3a1182;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 4vh;
+  padding-right: 4vh;
+  font-size: 1.7vmin;
+  box-sizing: border-box;
+}
+
+.logo {
+  height: 3vh;
+  width: auto;
+  padding: 0;
+  margin: 0;
+}
+
+.header ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 2vh;
+  align-items: baseline;
+}
+
+.header a {
+    display: inline-block;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.2rem 0.8rem;
+  width: fit-content;
+  border-radius: 3px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.white-btn {
+  color: black;
+  background-color: white;
+  box-shadow: 0 3px 0 0 #D9D9D9;
+}
+
+.blue-btn {
+  color: white;
+  background-color: #0542b9;
+  box-shadow: 0 3px 0 0 #04389D;
+}
+
+.header a:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 transparent;
+}

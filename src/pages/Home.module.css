@@ -1,0 +1,10 @@
+.background {
+    height: 100vh;
+    width: 100vw;
+    background-image: url('../../src/assets/homeBackground.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    text-align: center;
+}
