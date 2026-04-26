@@ -1,11 +1,27 @@
 .background {
-  height: fit-content;
+  height: 100%;
   width: 100vw;
   background-image: url("../../src/assets/homeBackground.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   color: white;
+}
+
+.background::after {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  pointer-events: none;
+
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 0, 0, 0.6)
+  );
 }
 
 .container {
@@ -26,7 +42,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.2vmax;
+  gap: 0.5vmax;
 }
 
 .tilted-title {
@@ -39,4 +55,8 @@
   font-weight: 600;
   font-size: clamp(14px, 1vmax, 18px);
   margin-top: 0.5vh;
+}
+
+.space {
+  height: 2vh;
 }

@@ -22,6 +22,7 @@ const Home = () => {
         <ProductsList products={[1, 2, 5, 5]} />
         {/* todo change products to receive from server */}
       </div>
+      <div className={classes.space} />
     </div>
   );
 };
