@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Podium from "../projector/Podium";
 import classes from "./GameFinalResults.module.css";
 import confetti from "canvas-confetti";
+import { useNavigate } from "react-router-dom";
 
 type result = {
   nickname: string;
@@ -11,6 +12,7 @@ type result = {
 const GameFinalResults: React.FC<{
   results: result[];
 }> = (props) => {
+  const navigate = useNavigate();
   const fireCannons = () => {
     confetti({
       particleCount: 300,
@@ -26,6 +28,7 @@ const GameFinalResults: React.FC<{
     });
   };
   useEffect(() => {
+    localStorage.removeItem("lobby");
     const timer = setTimeout(() => {
       fireCannons();
     }, 2500);
@@ -34,7 +37,12 @@ const GameFinalResults: React.FC<{
   return (
     <>
       <div className={classes["score-title"]}>ניקוד</div>
-      <div className={classes["btn"]}>משחק חדש</div>
+      <div
+        className={classes["btn"]}
+        onClick={() => navigate("/home", { replace: true })}
+      >
+        משחק חדש
+      </div>
       <div className={classes["container"]}>
         {props.results.length >= 3 && (
           <Podium

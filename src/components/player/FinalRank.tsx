@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classes from "./FinalRank.module.css";
 import gold from "../../assets/gold.svg";
 import silver from "../../assets/silver.svg";
 import bronze from "../../assets/bronze.svg";
 import forth from "../../assets/4th.svg";
 
-const FinalRank: React.FC<{ currentRank: number; points: number }> = (props) => {
+const FinalRank: React.FC<{ currentRank: number; points: number }> = (
+  props,
+) => {
   const rankImgArray = [gold, silver, bronze, forth];
+
+  useEffect(() => {
+    localStorage.removeItem("kaboom-pin-recovery");
+    localStorage.removeItem("nickname");
+  }, []);
+
   return (
     <div className={classes["container"]}>
       {props.currentRank <= 4 && (
