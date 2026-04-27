@@ -27,11 +27,11 @@ const ProductDisplay: React.FC<{ isLoading: boolean }> = (props) => {
             <div className={classes.hoverOverlay}>
               <div className={`${classes["option-btn"]} ${classes['top-radius']}`}>
                 <span>לשחק</span>
-                <img src={gameIcon} />
+                <img src={gameIcon} className={classes.icon} />
               </div>
               <div className={`${classes["option-btn"]} ${classes['bottom-radius']}`}>
                 <span>לערוך</span>
-                <img src={editIcon} />
+                <img src={editIcon} className={classes.icon} />
               </div>
             </div>
           </div>

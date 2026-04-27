@@ -2,9 +2,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  gap: 1vw 2.5vw;
-  margin-top: 0.5vh;
-  margin-bottom: 0.5vh;
+  gap: 3vh 2.5vw;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
 }
 
 .reveal {

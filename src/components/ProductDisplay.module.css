@@ -30,6 +30,11 @@
   padding: 1vh;
   cursor: pointer;
   transition: background-color 0.15s ease;
+  font-size: clamp(12px, 1vmax, 20px);
+}
+
+.icon {
+  width: 28%;
 }
 
 .top-radius {
@@ -66,7 +71,7 @@
 .testImg {
   position: relative;
   width: 14vw;
-  min-width: 150px;
+  min-width: 100px;
   height: 9vw;
   border-radius: 5px;
   background: #c0c0c0;
@@ -82,20 +87,20 @@
   right: 0.8vh;
   font-weight: 600;
   background-color: #0f0f0f4d;
-  font-size: clamp(12px, 0.5vmax, 16px);
+  font-size: clamp(12px, 0.9vmax, 20px);
   padding: 0.3vh 0.6vh;
   border-radius: 4px;
 }
 
 .product-course {
   color: #b4b4b4;
-  font-size: clamp(11px, 0.4vmax, 15px);
+  font-size: clamp(12px, 0.7vmax, 15px);
 }
 
 .product-title {
   color: white;
   font-weight: 600;
-  font-size: clamp(14px, 0.5vmax, 18px);
+  font-size: clamp(12px, 1vmax, 20px);
 }
 
 .container:hover .product-course {

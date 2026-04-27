@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import classes from "./ProductList.module.css";
-import ProductDisplay from "./productDisplay";
+import ProductDisplay from "./ProductDisplay";
 
 const ProductsList: React.FC<{ products: number[] }> = (props) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
