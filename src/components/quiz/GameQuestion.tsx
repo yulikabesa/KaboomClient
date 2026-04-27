@@ -17,6 +17,7 @@ const GameQuestion: React.FC<{
   correctAnswerIndex: number;
   answerDistributionArrray: number[];
   scoringWeight: number;
+  questionImage: string;
 }> = (props) => {
   const socket = useSocket();
   const onClickHandler = () => {
@@ -72,6 +73,7 @@ const GameQuestion: React.FC<{
             </p>
             <p className={classes["players-answered-text"]}>ענו</p>
           </div>
+          {props.questionImage !== "" && <img className={classes['question-img']} src={props.questionImage} alt="imageee for question" />}
           <CountdownCircle
             duration={props.duration}
             timeLeft={props.timeLeft}
