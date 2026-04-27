@@ -35,17 +35,22 @@
   cursor: pointer;
 }
 
+.wrapper {
+  display: flex;
+  justify-content: flex-start;
+  width: 120px;
+}
+
 .players-answered-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 120px;
-  /* align-items: flex-start; */
-  text-align: center;
+  align-items: center;
   font-weight: 500;
   color: white;
   line-height: 1;
 }
+
 
 .question-img {
   height: 30vh;

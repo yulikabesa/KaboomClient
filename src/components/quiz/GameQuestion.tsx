@@ -67,13 +67,21 @@ const GameQuestion: React.FC<{
         </div>
       ) : (
         <div className={classes["answered-and-time-container"]}>
-          <div className={classes["players-answered-container"]}>
-            <p className={classes["players-answered-num"]}>
-              {props.playerAnsweredNum}
-            </p>
-            <p className={classes["players-answered-text"]}>ענו</p>
+          <div className={classes.wrapper}>
+            <div className={classes["players-answered-container"]}>
+              <p className={classes["players-answered-num"]}>
+                {props.playerAnsweredNum}
+              </p>
+              <p className={classes["players-answered-text"]}>ענו</p>
+            </div>
           </div>
-          {props.questionImage !== "" && <img className={classes['question-img']} src={props.questionImage} alt="imageee for question" />}
+          {props.questionImage !== "" && (
+            <img
+              className={classes["question-img"]}
+              src={props.questionImage}
+              alt="imageee for question"
+            />
+          )}
           <CountdownCircle
             duration={props.duration}
             timeLeft={props.timeLeft}
@@ -86,7 +94,9 @@ const GameQuestion: React.FC<{
         answersCount={props.answerTexts.length}
         answerTexts={props.answerTexts}
         onAnswerClick={(i) => console.log(i)}
-        {...(props.showAnswer ? { correctAnswerIndex: props.correctAnswerIndex } : {})}
+        {...(props.showAnswer
+          ? { correctAnswerIndex: props.correctAnswerIndex }
+          : {})}
       />
     </>
   );
