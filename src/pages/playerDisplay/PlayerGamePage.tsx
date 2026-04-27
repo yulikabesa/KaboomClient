@@ -65,7 +65,7 @@ const PlayerGamePage = () => {
           setStatus(state.phase as GameStatus);
           break;
       }
-      if (state.data.score){
+      if (state.data?.score){
         setPoints(state.data.score);
       }
     };

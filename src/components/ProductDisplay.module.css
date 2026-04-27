@@ -4,53 +4,60 @@
   width: fit-content;
 }
 
-.container:hover {
-  background-color: #ffffff;
-  border-radius: 10px;
-  transition: opacity 0.2s ease;
-}
-
 .hoverOverlay {
   position: absolute;
+  width: 100%;
+  height: 100%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  color: black;
+  background-color: transparent;
+  color: white;
   font-weight: 600;
   opacity: 0;
-  border-radius: 8px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  z-index: 1;
   transition: opacity 0.2s ease;
+}
+
+.testImg:hover .hoverOverlay {
+  opacity: 1;
 }
 
 .option-btn {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 70%;
   gap: 6px;
   padding: 1vh;
   cursor: pointer;
-  transition: background-color 0.15s ease;
   font-size: clamp(12px, 1vmax, 20px);
 }
 
+.blue-btn {
+  background-color: #0542b9;
+  box-shadow: 0 3px 0 0 #04389D;
+  border-radius: 5px;
+  height: 4vh;
+}
+
+.blue-btn:hover {
+  background-color: #053caa;
+}
+
+.blue-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 transparent;
+}
+
 .icon {
-  width: 28%;
-}
-
-.top-radius {
-  border-radius: 8px 8px 0 0;
-}
-
-.bottom-radius {
-  border-radius: 0 0 8px 8px;
-}
-
-.option-btn:hover {
-  background-color: #f0f0f0;
-}
-
-.container:hover .hoverOverlay {
-  opacity: 1;
+  width: 16%;
 }
 
 .img {
@@ -79,7 +86,25 @@
   /* needed for shimmer layer */
   position: relative;
   overflow: hidden;
+
+  background-size: cover;
+  background-position: center;
 }
+
+/* dark tint layer */
+.testImg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0); /* start transparent */
+  transition: opacity 0.2s ease;
+}
+
+/* on hover → add tint */
+.testImg:hover::after {
+  background: rgba(0, 0, 0, 0.707);
+}
+
 
 .question-num {
   position: absolute;
@@ -101,14 +126,6 @@
   color: white;
   font-weight: 600;
   font-size: clamp(12px, 1vmax, 20px);
-}
-
-.container:hover .product-course {
-  color: rgba(0, 0, 0, 0.684);
-}
-
-.container:hover .product-title {
-  color: black;
 }
 
 .skeleton {
