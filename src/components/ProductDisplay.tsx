@@ -5,6 +5,7 @@ import gameIcon from "../assets/gameIcon.svg";
 import { useSocket } from "../store/SocketContext";
 import { useNavigate } from "react-router-dom";
 import { useLobby } from "../store/LobbyContext";
+import { useState } from "react";
 
 const ProductDisplay: React.FC<{
   isLoading: boolean;
@@ -14,13 +15,17 @@ const ProductDisplay: React.FC<{
   questionsNum: number;
   productId: string;
 }> = (props) => {
-
   const navigate = useNavigate();
   const { setLobby } = useLobby();
   const socket = useSocket();
 
+  const [isCreating, setIsCreating] = useState(false);
+
   const onClickHandler = () => {
-    if (!socket) return;
+    if (!socket || isCreating) return;
+
+    setIsCreating(true);
+
     // Emit event to create game
     socket.emit("game-event", {
       type: "create-game-session",
@@ -37,6 +42,11 @@ const ProductDisplay: React.FC<{
       });
       navigate("/lobby");
     });
+
+    // fallback
+    setTimeout(() => {
+      setIsCreating(false);
+    }, 5000);
   };
   return (
     <div className={classes.container}>
@@ -66,6 +76,11 @@ const ProductDisplay: React.FC<{
             <div className={classes.hoverOverlay}>
               <div
                 onClick={onClickHandler}
+                style={{
+                  pointerEvents: isCreating ? "none" : "auto",
+                  opacity: isCreating ? 0.6 : 1,
+                  cursor: isCreating ? "not-allowed" : "pointer",
+                }}
                 className={`${classes["option-btn"]} ${classes["blue-btn"]}`}
               >
                 <span>לשחק</span>
