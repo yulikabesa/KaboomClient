@@ -73,9 +73,7 @@
   overflow: hidden;
 }
 
-/* to delete */
 .testImg {
-  position: relative;
   width: 14vw;
   min-width: 100px;
   height: 9vw;

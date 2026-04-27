@@ -3,6 +3,7 @@ import classes from "./Home.module.css";
 import { useState } from "react";
 import ProductsList from "../components/ProductsList";
 const Home = () => {
+  // todo get products from server
   const [products, setProducts] = useState([3, 4, 3, 1, 3, 4, 3, 2]);
   return (
     <>

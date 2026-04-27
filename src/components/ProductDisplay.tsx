@@ -2,8 +2,42 @@ import type React from "react";
 import classes from "./ProductDisplay.module.css";
 import editIcon from "../assets/editIcon.svg";
 import gameIcon from "../assets/gameIcon.svg";
+import { useSocket } from "../store/SocketContext";
+import { useNavigate } from "react-router-dom";
+import { useLobby } from "../store/LobbyContext";
 
-const ProductDisplay: React.FC<{ isLoading: boolean; coverImage: string; title: string; course: string; questionsNum: number; }> = (props) => {
+const ProductDisplay: React.FC<{
+  isLoading: boolean;
+  coverImage: string;
+  title: string;
+  course: string;
+  questionsNum: number;
+  productId: string;
+}> = (props) => {
+
+  const navigate = useNavigate();
+  const { setLobby } = useLobby();
+  const socket = useSocket();
+
+  const onClickHandler = () => {
+    if (!socket) return;
+    // Emit event to create game
+    socket.emit("game-event", {
+      type: "create-game-session",
+      payload: { quizId: props.productId },
+    });
+
+    // Listen for the game-created event only once
+    socket.once("game-created", ({ pin }: { pin: string }) => {
+      console.log("Game created with pin:", pin);
+      setLobby({
+        gamePin: pin,
+        players: [],
+        quizId: props.productId,
+      });
+      navigate("/lobby");
+    });
+  };
   return (
     <div className={classes.container}>
       {props.isLoading ? (
@@ -26,9 +60,12 @@ const ProductDisplay: React.FC<{ isLoading: boolean; coverImage: string; title: 
             className={classes.testImg}
             style={{ backgroundImage: `url(${props.coverImage})` }}
           >
-            <p className={classes["question-num"]}>{props.questionsNum} שאלות</p>
+            <p className={classes["question-num"]}>
+              {props.questionsNum} שאלות
+            </p>
             <div className={classes.hoverOverlay}>
               <div
+                onClick={onClickHandler}
                 className={`${classes["option-btn"]} ${classes["blue-btn"]}`}
               >
                 <span>לשחק</span>

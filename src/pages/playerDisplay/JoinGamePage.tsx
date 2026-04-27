@@ -1,7 +1,6 @@
 import classes from "./JoinGamePage.module.css";
 import kaboomLogo from "../../assets/kaboomLogo.png";
 import React, { useState } from "react";
-import { MyKabooms } from "../projectorDisplay/MyKabooms";
 import { useSocket } from "../../store/SocketContext";
 import { useNavigate } from "react-router-dom";
 
@@ -126,7 +125,6 @@ const JoinGamePage: React.FC = () => {
           {error && <p className={classes["error-text"]}>{error}</p>}
         </form>
       </div>
-      <MyKabooms />
       <div className={classes["info"]}>
         <p className={classes["info-text"]}>
           צור את ה”קאבום” שלך בקלות דרך Kaboom.com/create
