@@ -42,7 +42,7 @@ const PlayerGamePage = () => {
         case "answers":
           if (state.data.hasAnswered) setStatus("loading");
           else {
-            setAnswersCount(state.data.answers.length);
+            setAnswersCount(state.data.answerOptions.length);
             setStatus(state.phase as GameStatus);
           }
           break;

@@ -8,7 +8,7 @@ export const MyKabooms = () => {
   const socket = useSocket();
 
   const createGameSession = () => {
-    const quizIdClicked = "69e081ae5ad739b15ff25ab2";
+    const quizIdClicked = "69eefe75464d77b9e5d82348";
 
     // Emit event to create game
     socket.emit("game-event", {

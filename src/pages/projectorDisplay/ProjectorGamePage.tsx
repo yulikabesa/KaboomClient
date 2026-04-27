@@ -36,25 +36,25 @@ const ProjectorGamePage = () => {
       // לאפס כמה ענו ולאפס גרף
       switch (state.phase) {
         case "question":
-          setQuestion(state.data?.question ?? "");
+          setQuestion(state.data?.questionText ?? "");
           setScoringWeight(state.data?.scoringWeight ?? 1);
           break;
         case "answers":
-          setAnswerTexts(state.data?.answers ?? []);
-          setQuestion(state.data?.question ?? "");
+          setAnswerTexts(state.data?.answerOptions ?? []);
+          setQuestion(state.data?.questionText ?? "");
           setTimeLeft(state.data?.timeLimit ?? 20);
           setDuration(state.data?.timeLimit ?? 20);
           setScoringWeight(state.data?.scoringWeight ?? 1);
           // reset variables
           SetPlayerAnsweredNum(0);
           setAnswerDistributionArrray(
-            new Array(state.data?.answers?.length ?? 2).fill(0),
+            new Array(state.data?.answerOptions?.length ?? 2).fill(0),
           );
           break;
 
         case "results":
           // setQuestion(state.data?.question ?? ""); in case of refresh i need the question too
-          setAnswerTexts(state.data?.answers ?? []);
+          setAnswerTexts(state.data?.answerOptions ?? []);
           setAnswerDistributionArrray(state.data?.distribution ?? []);
           SetCorrectAnswerIndex(state.data?.correctAnswers?.[0]);
           setTimeLeft(0);
