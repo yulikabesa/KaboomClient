@@ -55,7 +55,7 @@ const ProjectorGamePage = () => {
           break;
 
         case "results":
-          // setQuestion(state.data?.question ?? ""); in case of refresh i need the question too
+          setQuestion(state.data?.questionText ?? ""); 
           setAnswerTexts(state.data?.answerOptions ?? []);
           setAnswerDistributionArrray(state.data?.distribution ?? []);
           SetCorrectAnswerIndex(state.data?.correctAnswers?.[0]);
