@@ -25,6 +25,7 @@
 }
 
 .container {
+  padding-top: 6vh;
   margin: auto;
   width: 86vw;
 }
@@ -55,8 +56,4 @@
   font-weight: 600;
   font-size: clamp(14px, 1vmax, 18px);
   margin-top: 0.5vh;
-}
-
-.space {
-  height: 2vh;
 }
