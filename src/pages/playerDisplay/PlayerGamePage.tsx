@@ -7,6 +7,7 @@ import WaitingForHost from "../../components/player/WaitingForHost";
 import { useSocket } from "../../store/SocketContext";
 import CountDown from "../../components/player/CountDown";
 import FinalRank from "../../components/player/FinalRank";
+import classes from "./JoinGamePage.module.css";
 
 type GameStatus =
   | "lobby"
@@ -86,7 +87,7 @@ const PlayerGamePage = () => {
   }, []);
 
   return (
-    <>
+    <div className={classes.background}>
       {status === "lobby" && (
         <WaitingForHost
           nickname={localStorage.getItem("nickname") || "Guest"}
@@ -114,7 +115,7 @@ const PlayerGamePage = () => {
         name={localStorage.getItem("nickname") || "Guest"}
         points={points}
       />
-    </>
+    </div>
   );
 };
 

@@ -5,6 +5,7 @@ import Question from "../../components/quiz/Question";
 import Leaderboard from "../../components/projector/Leaderboard";
 import GameFinalResults from "../../components/quiz/GameFinalResults";
 import Loading from "../../components/player/Loading";
+import classes from "./GameLobby.module.css";
 
 const ProjectorGamePage = () => {
   const INTRO_DURATION = 5;
@@ -111,7 +112,7 @@ const ProjectorGamePage = () => {
   }, []);
 
   return (
-    <>
+    <div className={classes.background} >
       {status === "loading" && <Loading />}
       {status === "question" && (
         <Question
@@ -139,7 +140,7 @@ const ProjectorGamePage = () => {
       )}
       {status === "leaderboard" && <Leaderboard rankingArray={rankingArray} />}
       {status === "podium" && <GameFinalResults results={rankingArray} />}
-    </>
+    </div>
   );
 };
 
