@@ -7,7 +7,7 @@ const Home = () => {
   const [products, setProducts] = useState([3, 4, 3, 1, 3, 4, 3, 2]);
   return (
     <>
-      <NavigationMenu />
+      <NavigationMenu variant="home" />
       <div className={classes.background}>
         <div className={classes.container}>
           <div className={classes["question-marks-div"]}>

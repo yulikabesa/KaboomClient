@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import NotFound from "./pages/NotFound";
 import JoinGamePage from "./pages/playerDisplay/JoinGamePage";
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 import GameLobby from "./pages/projectorDisplay/GameLobby";
 import { LobbyProvider } from "./store/LobbyContext";
 import PlayerGamePage from "./pages/playerDisplay/PlayerGamePage";
@@ -14,6 +14,7 @@ import { SocketProvider } from "./store/SocketContext";
 import Login from "./pages/Login";
 import ProjectorGamePage from "./pages/projectorDisplay/ProjectorGamePage";
 import Home from "./pages/Home";
+import Create from "./pages/Create";
 
 const App = () => {
   // const authCtx = useContext(AuthContext);
@@ -34,6 +35,10 @@ const App = () => {
           element: <Home />,
         },
         {
+          path: "/create",
+          element: <Create />,
+        },
+        {
           path: "/join",
           element: <JoinGamePage />,
         },
@@ -52,7 +57,7 @@ const App = () => {
         {
           path: "/hostGame",
           element: <ProjectorGamePage />,
-        }
+        },
       ],
     },
     {
@@ -66,7 +71,8 @@ const App = () => {
       <LobbyProvider>
         <RouterProvider router={router} />
       </LobbyProvider>
-    </SocketProvider>);
+    </SocketProvider>
+  );
 };
 
 export default App;
