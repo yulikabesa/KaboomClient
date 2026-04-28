@@ -82,31 +82,37 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={submitHandler} className={classes.form}>
-      <div className={classes.control}>
-        <label htmlFor="email">אימייל</label>
-        <input
-          type="email"
-          id="email"
-          value={enteredEmail}
-          onChange={emailChangeHandler}
-        />
-      </div>
-      <div className={classes.control}>
-        <label htmlFor="password">סיסמא</label>
-        <input
-          type="password"
-          id="password"
-          value={enteredPassword}
-          onChange={passwordChangeHandler}
-        />
-      </div>
-      <div>
-        {!isLoading && <button type="submit" className={classes['login-btn']}>התחבר</button>}
-        {isLoading && <p>loading...</p>}
-        {isError && <p>email or password is incorrect</p>}
-      </div>
-    </form>
+    <div className={classes.background}>
+      <form onSubmit={submitHandler} className={classes.form}>
+        <div className={classes.control}>
+          <label htmlFor="email">אימייל</label>
+          <input
+            type="email"
+            id="email"
+            value={enteredEmail}
+            onChange={emailChangeHandler}
+          />
+        </div>
+        <div className={classes.control}>
+          <label htmlFor="password">סיסמא</label>
+          <input
+            type="password"
+            id="password"
+            value={enteredPassword}
+            onChange={passwordChangeHandler}
+          />
+        </div>
+        <div>
+          {!isLoading && (
+            <button type="submit" className={classes["login-btn"]}>
+              התחבר
+            </button>
+          )}
+          {isLoading && <p>loading...</p>}
+          {isError && <p>email or password is incorrect</p>}
+        </div>
+      </form>
+    </div>
   );
 };
 

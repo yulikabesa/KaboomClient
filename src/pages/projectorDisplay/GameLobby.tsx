@@ -45,7 +45,7 @@ const GameLobby: React.FC = () => {
   };
 
   return (
-    <div className={classes["page"]}>
+    <div className={`${classes["page"]} ${classes["background"]}`}>
       <div className={classes["top-info"]}>
         <div className={classes["right-rectangle"]}>
           <img

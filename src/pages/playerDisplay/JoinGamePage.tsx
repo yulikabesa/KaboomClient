@@ -91,7 +91,7 @@ const JoinGamePage: React.FC = () => {
   };
 
   return (
-    <>
+    <div className={classes.background}>
       <div className={classes["parent-div"]}>
         <img src={kaboomLogo} alt="kaboom logo" />
         <form className={classes["child-div"]} onSubmit={handleSubmit}>
@@ -133,7 +133,7 @@ const JoinGamePage: React.FC = () => {
           זכויות שמורות לארטק מדור טכנולוגיות למידה
         </p>
       </div>
-    </>
+    </div>
   );
 };
 
