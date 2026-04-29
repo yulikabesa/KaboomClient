@@ -1,0 +1,47 @@
+.container {
+  position: relative;
+  width: 20vw;
+  height: 20vw;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  white-space: pre-line;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.open .center {
+  background-color: #e0e0e0;
+}
+
+.container:not(.open) .center:hover {
+  background-color: #411e88 !important;
+  color: white;
+}
+
+.item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.selectable {
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+
+.selectable:hover {
+  background-color: #e0e0e0;
+}
+
+.selected {
+  background-color: #411e88;
+  color: white;
+  cursor: pointer;
+}
