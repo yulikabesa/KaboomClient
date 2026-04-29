@@ -3,6 +3,7 @@ import classes from "./Create.module.css";
 import QuestionSlide from "../components/create/QuestionSlide";
 import { useState, type ChangeEvent } from "react";
 import QuestionSlideList from "../components/create/QuestionSlideList";
+import ImageInput from "../components/create/ImageInput";
 
 export type QuestionType = {
   questionText: string;
@@ -27,6 +28,7 @@ const Create = () => {
   ]);
   const [currentQuestionEdited, setCurrentQuestionEdited] = useState(0);
   const [questionTextInput, setQuestionTextInput] = useState("");
+  const [selectedImage, setSelectedImage] = useState("");
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestionTextInput(e.target.value);
@@ -58,6 +60,15 @@ const Create = () => {
     setCurrentQuestionEdited(questions.length);
     setQuestionTextInput("");
   };
+
+  const handleImageChange = (file: string) => {
+    setSelectedImage(file);
+    setQuestions((prev) => {
+      prev[currentQuestionEdited].questionImage = selectedImage;
+      return prev;
+    });
+  };
+
   return (
     <div className={classes.background}>
       <NavigationMenu variant="create" />
@@ -70,6 +81,7 @@ const Create = () => {
           value={questionTextInput}
           onChange={handleQuestionTextInputChange}
         />
+        <ImageInput value={selectedImage} onChange={handleImageChange} />
       </div>
       {/* question navigator */}
       <div className={classes["question-navigator"]}>
