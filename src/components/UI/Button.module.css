@@ -1,0 +1,29 @@
+.btn {
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  width: fit-content;
+  border-radius: 3px;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+  padding: 0.2rem 0.8rem;
+}
+
+.btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 transparent;
+}
+
+.white-btn {
+  color: black;
+  background-color: white;
+  box-shadow: 0 3px 0 0 #d9d9d9;
+}
+
+.blue-btn {
+  color: white;
+  background-color: #0542b9;
+  box-shadow: 0 3px 0 0 #04389d;
+}
