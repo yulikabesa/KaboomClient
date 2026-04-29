@@ -26,12 +26,12 @@ const Create = () => {
   ]);
   const [currentQuestionEdited, setCurrentQuestionEdited] = useState(0);
   const [questionTextInput, setQuestionTextInput] = useState("");
-  
+
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestionTextInput(e.target.value);
-    setQuestions((prev)=> {
-        prev[currentQuestionEdited].questionText = e.target.value;
-        return prev;
+    setQuestions((prev) => {
+      prev[currentQuestionEdited].questionText = e.target.value;
+      return prev;
     });
   };
 
@@ -50,6 +50,7 @@ const Create = () => {
       ];
     });
     setCurrentQuestionEdited(questions.length);
+    setQuestionTextInput("");
   };
   return (
     <div className={classes.background}>
@@ -81,7 +82,10 @@ const Create = () => {
               backgroundColor:
                 currentQuestionEdited === index ? "#ECF4FB" : "transparent",
             }}
-            onClick={() => setCurrentQuestionEdited(index)}
+            onClick={() => {
+              setCurrentQuestionEdited(index);
+              setQuestionTextInput(questions[index].questionText);
+            }}
           >
             {index + 1} שאלה
             <QuestionHistory
