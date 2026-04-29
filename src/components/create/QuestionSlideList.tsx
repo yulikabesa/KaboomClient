@@ -1,6 +1,9 @@
 import React from "react";
 import type { QuestionType } from "../../pages/Create";
 import QuestionSlide from "./QuestionSlide";
+import copyIcon from "../../assets/grayCopyIcon.svg";
+import deleteIcon from "../../assets/grayDeleteIcon.svg";
+import classes from "./QuestionSlideList.module.css";
 
 const QuestionSlideList: React.FC<{
   questions: QuestionType[];
@@ -12,30 +15,29 @@ const QuestionSlideList: React.FC<{
       {props.questions.map((question: QuestionType, index) => (
         <div
           key={index}
+          className={classes.container}
           style={{
-            width: "100%",
-            color: "#6E6E6E",
-            paddingTop: "2vh",
-            paddingBottom: "2vh",
-            cursor: "pointer",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
             backgroundColor:
               props.currentQuestionEdited === index ? "#ECF4FB" : "transparent",
           }}
           onClick={() => props.handleQuestionEditedChange(index)}
         >
-          {index + 1} שאלה
-          <QuestionSlide
-            key={index}
-            questionImage={question.questionImage}
-            questionText={question.questionText}
-            timeLimit={question.timeLimit}
-            isCurrentlyEdited={
-              props.currentQuestionEdited === index ? true : false
-            }
-          />
+          <div className={classes["question-num"]}>{index + 1} שאלה</div>
+          <div className={classes['icons-and-slide-container']}>
+            <div className={classes["icons-container"]}>
+              <img src={copyIcon} />
+              <img src={deleteIcon} />
+            </div>
+            <QuestionSlide
+              key={index}
+              questionImage={question.questionImage}
+              questionText={question.questionText}
+              timeLimit={question.timeLimit}
+              isCurrentlyEdited={
+                props.currentQuestionEdited === index ? true : false
+              }
+            />
+          </div>
         </div>
       ))}
     </>

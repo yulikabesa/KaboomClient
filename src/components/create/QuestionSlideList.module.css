@@ -1,0 +1,31 @@
+.container {
+  width: 100%;
+  color: #6e6e6e;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.question-num {
+  text-align: right;
+  width: 100%;
+}
+
+.icons-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+  gap: 2vh;
+}
+
+.icons-and-slide-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5vw;
+}
+
