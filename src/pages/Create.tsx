@@ -1,9 +1,10 @@
 import NavigationMenu from "../components/NavigationMenu";
 import classes from "./Create.module.css";
-import QuestionHistory from "../components/create/QuestionHistory";
+import QuestionSlide from "../components/create/QuestionSlide";
 import { useState, type ChangeEvent } from "react";
+import QuestionSlideList from "../components/create/QuestionSlideList";
 
-type QuestionType = {
+export type QuestionType = {
   questionText: string;
   answerOptions: string[];
   correctIndexes: number[];
@@ -16,7 +17,7 @@ const Create = () => {
   // דוגמא לשאלות
   const [questions, setQuestions] = useState<QuestionType[]>([
     {
-      questionText: "מה אתה עושה כשאתה קם בבוקר?",
+      questionText: "?",
       answerOptions: ["this", "that"],
       correctIndexes: [1],
       timeLimit: 20,
@@ -33,6 +34,11 @@ const Create = () => {
       prev[currentQuestionEdited].questionText = e.target.value;
       return prev;
     });
+  };
+
+  const handleQuestionEditedChange = (index: number) => {
+    setCurrentQuestionEdited(index);
+    setQuestionTextInput(questions[index].questionText);
   };
 
   const addEmptyQuestion = () => {
@@ -67,36 +73,11 @@ const Create = () => {
       </div>
       {/* question navigator */}
       <div className={classes["question-navigator"]}>
-        {questions.map((question: QuestionType, index) => (
-          <div
-            key={index}
-            style={{
-              width: "100%",
-              color: "#6E6E6E",
-              paddingTop: "2vh",
-              paddingBottom: "2vh",
-              cursor: "pointer",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              backgroundColor:
-                currentQuestionEdited === index ? "#ECF4FB" : "transparent",
-            }}
-            onClick={() => {
-              setCurrentQuestionEdited(index);
-              setQuestionTextInput(questions[index].questionText);
-            }}
-          >
-            {index + 1} שאלה
-            <QuestionHistory
-              key={index}
-              questionImage={question.questionImage}
-              questionText={question.questionText}
-              timeLimit={question.timeLimit}
-              isCurrentlyEdited={currentQuestionEdited === index ? true : false}
-            />
-          </div>
-        ))}
+        <QuestionSlideList
+          currentQuestionEdited={currentQuestionEdited}
+          handleQuestionEditedChange={handleQuestionEditedChange}
+          questions={questions}
+        />
         <div className={classes["blue-btn"]} onClick={addEmptyQuestion}>
           הוסף שאלה
         </div>

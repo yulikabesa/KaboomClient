@@ -1,8 +1,8 @@
-import classes from "./QuestionHistory.module.css";
+import classes from "./QuestionSlide.module.css";
 import exampleToChange from "../../assets/kaboomBackground.png";
 import type React from "react";
 
-const QuestionHistory: React.FC<{
+const QuestionSlide: React.FC<{
   questionText: string;
   timeLimit: number;
   questionImage: string;
@@ -27,4 +27,4 @@ const QuestionHistory: React.FC<{
   );
 };
 
-export default QuestionHistory;
+export default QuestionSlide;
