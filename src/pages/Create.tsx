@@ -1,8 +1,8 @@
 import NavigationMenu from "../components/NavigationMenu";
 import classes from "./Create.module.css";
-import QuestionSlide from "../components/create/QuestionSlide";
-import { useState, type ChangeEvent } from "react";
+import React, { useState, type ChangeEvent } from "react";
 import QuestionSlideList from "../components/create/QuestionSlideList";
+import SecondsCircleLayout from "../components/create/SecondsCircleLayout";
 
 export type QuestionType = {
   questionText: string;
@@ -13,31 +13,36 @@ export type QuestionType = {
   questionImage: string;
 };
 
-const Create = () => {
+const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
   // דוגמא לשאלות
-  const [questions, setQuestions] = useState<QuestionType[]>([
-    {
-      questionText: "?",
-      answerOptions: ["this", "that"],
-      correctIndexes: [1],
-      timeLimit: 20,
-      scoringWeight: 1,
-      questionImage: "xx",
-    },
-  ]);
-  const [currentQuestionEdited, setCurrentQuestionEdited] = useState(0);
-  const [questionTextInput, setQuestionTextInput] = useState("");
+  const [questions, setQuestions] = useState<QuestionType[]>(
+    props.questions ?? [
+      {
+        questionText: "",
+        answerOptions: ["", "", "", "", "", ""],
+        correctIndexes: [0],
+        timeLimit: 20,
+        scoringWeight: 1,
+        questionImage: "xx",
+      },
+    ],
+  );
+  const [currentQuestionBeingEdited, setCurrentQuestionBeingEdited] = useState(0);
+  const [questionTextInput, setQuestionTextInput] = useState(
+    questions[0]?.questionText,
+  );
+  const [center, setCenter] = useState("20");
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestionTextInput(e.target.value);
     setQuestions((prev) => {
-      prev[currentQuestionEdited].questionText = e.target.value;
+      prev[currentQuestionBeingEdited].questionText = e.target.value;
       return prev;
     });
   };
 
-  const handleQuestionEditedChange = (index: number) => {
-    setCurrentQuestionEdited(index);
+  const handleQuestionBeingEditedChange = (index: number) => {
+    setCurrentQuestionBeingEdited(index);
     setQuestionTextInput(questions[index].questionText);
   };
 
@@ -55,7 +60,7 @@ const Create = () => {
         },
       ];
     });
-    setCurrentQuestionEdited(questions.length);
+    setCurrentQuestionBeingEdited(questions.length);
     setQuestionTextInput("");
   };
   return (
@@ -70,12 +75,17 @@ const Create = () => {
           value={questionTextInput}
           onChange={handleQuestionTextInputChange}
         />
+        <SecondsCircleLayout
+          items={["20", "30", "60", "90", "120", "240", "5", "10"]}
+          center={center}
+          setCenter={setCenter}
+        />
       </div>
-      {/* question navigator */}
-      <div className={classes["question-navigator"]}>
+      {/* questions slides */}
+      <div className={classes["questions-slides"]}>
         <QuestionSlideList
-          currentQuestionEdited={currentQuestionEdited}
-          handleQuestionEditedChange={handleQuestionEditedChange}
+          currentQuestionEdited={currentQuestionBeingEdited}
+          handleQuestionEditedChange={handleQuestionBeingEditedChange}
           questions={questions}
         />
         <div className={classes["blue-btn"]} onClick={addEmptyQuestion}>
