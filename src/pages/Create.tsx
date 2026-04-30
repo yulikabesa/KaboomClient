@@ -89,6 +89,7 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
           className={classes["question-text-input"]}
           value={questionTextInput}
           onChange={handleQuestionTextInputChange}
+          maxLength={72}
         />
         <SecondsCircleLayout
           items={[20, 30, 60, 90, 120, 240, 5, 10]}
