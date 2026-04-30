@@ -27,8 +27,22 @@ const QuestionSlideList: React.FC<{
           <div className={classes["question-num"]}>{index + 1} שאלה</div>
           <div className={classes["icons-and-slide-container"]}>
             <div className={classes["icons-container"]}>
-              <img className={classes.icon} src={copyIcon} onClick={() => props.onSlideCopyClick} />
-              <img className={classes.icon} src={deleteIcon} onClick={() => props.onSlideDeleteClick} />
+              <img
+                className={classes.icon}
+                src={copyIcon}
+                onClick={(e: React.MouseEvent<HTMLImageElement>) => {
+                  e.stopPropagation(); // stops onSlideClick from happening
+                  props.onSlideCopyClick;
+                }}
+              />
+              <img
+                className={classes.icon}
+                src={deleteIcon}
+                onClick={(e: React.MouseEvent<HTMLImageElement>) => {
+                  e.stopPropagation(); // stops onSlideClick from happening
+                  props.onSlideDeleteClick;
+                }}
+              />
             </div>
             <QuestionSlide
               key={index}
