@@ -1,7 +1,9 @@
+import { useState, type ChangeEvent } from "react";
+import Button from "../UI/Button";
+import ImageCrop from "./ImageCrop";
 import uploadIcon from "../../assets/uploadIcon.svg";
 import deleteIcon from "../../assets/deleteIcon.svg";
-
-import { type ChangeEvent } from "react";
+import cropIcon from "../../assets/cropIcon.svg";
 import classes from "./ImageInput.module.css";
 
 interface ImageInputProps {
@@ -10,6 +12,9 @@ interface ImageInputProps {
 }
 
 const ImageInput: React.FC<ImageInputProps> = (props) => {
+  const [imageCropDisplay, setImageCropDisplay] = useState(false);
+  const [cropValue, setCropValue] = useState(0);
+
   const uploadImageHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -28,31 +33,60 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
     props.onChange("");
   };
 
+  const toggleImageCrop = () => {
+    setImageCropDisplay((prev) => !prev);
+  };
+
+  const cropValueChangeHandler = (newValue: number) => {
+    setCropValue(newValue);
+  };
+
   return (
     <>
       {props.value ? (
-        <div className={`${classes["image-select"]} ${classes["selected"]}`}>
-          <img className={classes["image"]} src={props.value} />
-          <span className={classes["actions"]}>
-            <button className={classes["round-btn"]} onClick={removeImageHandler}>
-              <img src={deleteIcon} />
-            </button>
-            <button className={classes["round-btn"]}>
-              {/* <img src={deleteIcon} /> */}
-            </button>
-            <button className={classes["round-btn"]}>
-              {/* <img src={deleteIcon} /> */}
-            </button>
-          </span>
-        </div>
+        <>
+          <div className={`${classes["image-select"]} ${classes["selected"]}`}>
+            <img className={classes["image"]} src={props.value} />
+            <span className={classes["actions"]}>
+              <button
+                className={classes["round-btn"]}
+                onClick={removeImageHandler}
+              >
+                <img src={deleteIcon} />
+              </button>
+              <button className={classes["round-btn"]}>
+                <img src={cropIcon} onClick={toggleImageCrop} />
+              </button>
+              <button className={classes["round-btn"]}>
+                {/* <img src={} /> */}
+              </button>
+            </span>
+          </div>
+          {imageCropDisplay && (
+            <ImageCrop
+              src={props.value}
+              closeOverlay={toggleImageCrop}
+              cropValue={cropValue}
+              setCropValue={cropValueChangeHandler}
+            />
+          )}
+        </>
       ) : (
         <div className={classes["image-select"]}>
           <div className={classes["wrapper"]}>
             <img className={classes["icon"]} src={uploadIcon} />
-            <p className={classes["title"]}>העלת תמונה</p>
+            <p className={classes["title"]}>העלאת תמונה</p>
             <p>רוצה להוסיף תמונה? גרור, העלה או בחר אחת מושלמת מהמאגר שלנו</p>
           </div>
           <input type="file" accept="image/*" onChange={uploadImageHandler} />
+          <span>
+            <Button style="white" className={classes[""]}>
+              העלה
+            </Button>
+            <Button style="blue" className={classes[""]}>
+              מאגר
+            </Button>
+          </span>
         </div>
       )}
     </>

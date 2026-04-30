@@ -1,0 +1,20 @@
+.image-container {
+  width: 68%;
+  /* height: auto; */
+  aspect-ratio: 3/2;
+  margin: 1rem auto;
+  background-color: #d9d9d9;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.image-select p {
+  font-size: clamp(12px, 1vmax, 20px);
+  margin: 0%;
+}

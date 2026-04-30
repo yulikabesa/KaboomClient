@@ -1,8 +1,9 @@
 .image-select {
   position: relative;
-  width: 32vmax;
-  height: 20vmax;
-  margin: 2rem auto;
+  /* width: 33vw; */
+  height: 22vw;
+  aspect-ratio: 3/2;
+  margin: 1rem auto;
   background-color: #3a1182;
   color: white;
   text-align: center;
