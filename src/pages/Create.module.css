@@ -45,7 +45,7 @@
   width: 90%;
   text-align: center;
   border-radius: 5px;
-  box-shadow: 0 3px 0 0 #DADADA;
+  box-shadow: 0 3px 0 0 #dadada;
   font-weight: 600;
   color: black;
   font-size: clamp(14px, 2vmax, 24px);
@@ -71,4 +71,73 @@
 .blue-btn:active {
   transform: translateY(3px);
   box-shadow: 0 0 0 transparent;
+}
+
+.slider-wrap {
+  position: relative;
+  width: 8vw;
+  min-width: 100px;
+  --thumb: 53px;
+  --steps: 2;
+  direction: ltr;
+}
+
+.range-thumb-label {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  white-space: nowrap;
+  font-weight: 700;
+  left: calc(
+    (var(--index) / var(--steps)) * (100% - var(--thumb)) + (var(--thumb) / 2)
+  );
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  cursor: pointer;
+  height: 20px;
+  background: transparent;
+  background:
+    radial-gradient(circle at center, #b2b2b2 6px, transparent 6.1px) left 50% /
+      12px 12px no-repeat,
+    radial-gradient(circle at center, #b2b2b2 6px, transparent 6.1px) right
+      50% / 12px 12px no-repeat;
+}
+
+/* Chrome, Safari, Edge */
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #b2b2b2;
+  height: 2px;
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-track {
+  background: #b2b2b2;
+  height: 2px;
+}
+
+/* Chrome, Safari, Edge */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 40px;
+  width: 53px;
+  background: white;
+  border-radius: 25px;
+  margin-top: -19px;
+  box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-thumb {
+  -webkit-appearance: none;
+  height: 40px;
+  width: 53px;
+  background: white;
+  border-radius: 25px;
+  margin-top: -19px;
+  box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
 }

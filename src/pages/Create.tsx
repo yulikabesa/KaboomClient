@@ -32,6 +32,8 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
   const [questionTextInput, setQuestionTextInput] = useState(
     questions[0]?.questionText,
   );
+  const options = [0.5, 1, 2];
+  const [scoringWeight, setScoringWeight] = useState(1);
   const [timeLimitInput, setTimeLimitInput] = useState(questions[0]?.timeLimit);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -91,6 +93,22 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
           onChange={handleQuestionTextInputChange}
           maxLength={72}
         />
+        <div
+          className={classes["slider-wrap"]}
+          style={{ "--index": options.indexOf(scoringWeight) } as React.CSSProperties}
+        >
+          <input
+            type="range"
+            min={0}
+            max={options.length - 1}
+            step={1}
+            value={options.indexOf(scoringWeight)}
+            onChange={(e) => {
+              setScoringWeight(options[Number(e.target.value)]);
+            }}
+          />
+          <div className={classes["range-thumb-label"]}>X{scoringWeight}</div>
+        </div>
         <SecondsCircleLayout
           items={[20, 30, 60, 90, 120, 240, 5, 10]}
           center={timeLimitInput}
