@@ -1,6 +1,6 @@
 import SecondsCircle from "./SecondsCircle";
 import classes from "./SecondsCircleLayout.module.css";
-import React, { useState, type Dispatch, type SetStateAction } from 'react';
+import React, { useState } from 'react';
 
 const SecondsCircleLayout: React.FC<{
   center: number;
