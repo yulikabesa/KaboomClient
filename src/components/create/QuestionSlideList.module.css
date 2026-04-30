@@ -22,10 +22,14 @@
   gap: 2vh;
 }
 
-.icons-and-slide-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5vw;
+.icons-and-slide-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5vw;
 }
 
+.icon:hover {
+  filter: brightness(1.5);
+  transition: 0.3s;
+}

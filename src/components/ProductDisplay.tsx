@@ -86,7 +86,7 @@ const ProductDisplay: React.FC<{
                 <span>לשחק</span>
                 <img src={gameIcon} className={classes.icon} />
               </div>
-              <div className={`${classes["option-btn"]} `}>
+              <div className={`${classes["option-btn"]} ${classes["transparent-btn"]}`}>
                 <span>לערוך</span>
                 <img src={editIcon} className={classes.icon} />
               </div>
