@@ -31,7 +31,7 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
   const [questionTextInput, setQuestionTextInput] = useState(
     questions[0]?.questionText,
   );
-  const [center, setCenter] = useState(20);
+  const [timeLimitInput, setTimeLimitInput] = useState(20);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestionTextInput(e.target.value);
@@ -42,7 +42,7 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
   };
 
   const handleQuestionTimeLimitChange = (timeLimit: number) => {
-    setCenter(timeLimit);
+    setTimeLimitInput(timeLimit);
     setQuestions((prev) => {
       prev[currentQuestionBeingEdited].timeLimit = timeLimit;
       return prev;
@@ -52,7 +52,7 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
   const handleQuestionBeingEditedChange = (index: number) => {
     setCurrentQuestionBeingEdited(index);
     setQuestionTextInput(questions[index].questionText);
-    setCenter(questions[index].timeLimit);
+    setTimeLimitInput(questions[index].timeLimit);
   };
 
   const handleSlideCopyClick = (index: number) => {
@@ -79,7 +79,7 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
     });
     setCurrentQuestionBeingEdited(questions.length);
     setQuestionTextInput("");
-    setCenter(20);
+    setTimeLimitInput(20);
   };
   return (
     <div className={classes.background}>
@@ -95,7 +95,7 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
         />
         <SecondsCircleLayout
           items={[20, 30, 60, 90, 120, 240, 5, 10]}
-          center={center}
+          center={timeLimitInput}
           onCenterChange={handleQuestionTimeLimitChange}
         />
       </div>
