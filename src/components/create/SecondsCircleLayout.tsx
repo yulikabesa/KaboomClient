@@ -3,10 +3,10 @@ import classes from "./SecondsCircleLayout.module.css";
 import React, { useState, type Dispatch, type SetStateAction } from 'react';
 
 const SecondsCircleLayout: React.FC<{
-  center: string;
-  setCenter: Dispatch<SetStateAction<string>>;
-  items: string[];
-}> = ({ center, setCenter, items }) => {
+  center: number;
+  items: number[];
+  onCenterChange: (newCenter: number) => void;
+}> = ({ center, items, onCenterChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const radius = isOpen ? 5.5 : 0;
 
@@ -45,7 +45,7 @@ const SecondsCircleLayout: React.FC<{
               pointerEvents: isOpen ? "auto" : "none",
             }}
             onClick={() => {
-              setCenter(sec);
+              onCenterChange(sec);
               setIsOpen(false);
             }}
           />

@@ -3,7 +3,7 @@ import classes from "./SecondsCircle.module.css";
 
 const SecondsCircle: React.FC<{
   size: "big" | "small";
-  seconds: string;
+  seconds: number | string;
   className?: string;
   style?: React.CSSProperties;
   onClick?: () => void;

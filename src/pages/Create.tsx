@@ -31,7 +31,7 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
   const [questionTextInput, setQuestionTextInput] = useState(
     questions[0]?.questionText,
   );
-  const [center, setCenter] = useState("20");
+  const [center, setCenter] = useState(20);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestionTextInput(e.target.value);
@@ -41,9 +41,26 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
     });
   };
 
+  const handleQuestionTimeLimitChange = (timeLimit: number) => {
+    setCenter(timeLimit);
+    setQuestions((prev) => {
+      prev[currentQuestionBeingEdited].timeLimit = timeLimit;
+      return prev;
+    });
+  };
+
   const handleQuestionBeingEditedChange = (index: number) => {
     setCurrentQuestionBeingEdited(index);
     setQuestionTextInput(questions[index].questionText);
+    setCenter(questions[index].timeLimit);
+  };
+
+  const handleSlideCopyClick = (index: number) => {
+
+  };
+
+  const handleSlideDeleteClick = (index: number) => {
+
   };
 
   const addEmptyQuestion = () => {
@@ -62,6 +79,7 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
     });
     setCurrentQuestionBeingEdited(questions.length);
     setQuestionTextInput("");
+    setCenter(20);
   };
   return (
     <div className={classes.background}>
@@ -76,16 +94,18 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
           onChange={handleQuestionTextInputChange}
         />
         <SecondsCircleLayout
-          items={["20", "30", "60", "90", "120", "240", "5", "10"]}
+          items={[20, 30, 60, 90, 120, 240, 5, 10]}
           center={center}
-          setCenter={setCenter}
+          onCenterChange={handleQuestionTimeLimitChange}
         />
       </div>
       {/* questions slides */}
       <div className={classes["questions-slides"]}>
         <QuestionSlideList
           currentQuestionEdited={currentQuestionBeingEdited}
-          handleQuestionEditedChange={handleQuestionBeingEditedChange}
+          onSlideClick={handleQuestionBeingEditedChange}
+          onSlideCopyClick={handleSlideCopyClick}
+          onSlideDeleteClick={handleSlideDeleteClick}
           questions={questions}
         />
         <div className={classes["blue-btn"]} onClick={addEmptyQuestion}>

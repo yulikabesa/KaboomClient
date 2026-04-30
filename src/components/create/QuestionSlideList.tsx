@@ -8,7 +8,9 @@ import classes from "./QuestionSlideList.module.css";
 const QuestionSlideList: React.FC<{
   questions: QuestionType[];
   currentQuestionEdited: number;
-  handleQuestionEditedChange: (index: number) => void;
+  onSlideClick: (index: number) => void;
+  onSlideCopyClick: (index: number) => void;
+  onSlideDeleteClick: (index: number) => void;
 }> = (props) => {
   return (
     <>
@@ -20,13 +22,13 @@ const QuestionSlideList: React.FC<{
             backgroundColor:
               props.currentQuestionEdited === index ? "#ECF4FB" : "transparent",
           }}
-          onClick={() => props.handleQuestionEditedChange(index)}
+          onClick={() => props.onSlideClick(index)}
         >
           <div className={classes["question-num"]}>{index + 1} שאלה</div>
-          <div className={classes['icons-and-slide-container']}>
+          <div className={classes["icons-and-slide-container"]}>
             <div className={classes["icons-container"]}>
-              <img src={copyIcon} />
-              <img src={deleteIcon} />
+              <img src={copyIcon} onClick={() => props.onSlideCopyClick} />
+              <img src={deleteIcon} onClick={() => props.onSlideDeleteClick} />
             </div>
             <QuestionSlide
               key={index}
