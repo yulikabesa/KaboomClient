@@ -27,11 +27,12 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
       },
     ],
   );
-  const [currentQuestionBeingEdited, setCurrentQuestionBeingEdited] = useState(0);
+  const [currentQuestionBeingEdited, setCurrentQuestionBeingEdited] =
+    useState(0);
   const [questionTextInput, setQuestionTextInput] = useState(
     questions[0]?.questionText,
   );
-  const [timeLimitInput, setTimeLimitInput] = useState(20);
+  const [timeLimitInput, setTimeLimitInput] = useState(questions[0]?.timeLimit);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestionTextInput(e.target.value);
@@ -55,13 +56,9 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
     setTimeLimitInput(questions[index].timeLimit);
   };
 
-  const handleSlideCopyClick = (index: number) => {
+  const handleSlideCopyClick = (index: number) => {};
 
-  };
-
-  const handleSlideDeleteClick = (index: number) => {
-
-  };
+  const handleSlideDeleteClick = (index: number) => {};
 
   const addEmptyQuestion = () => {
     setQuestions((prev) => {
