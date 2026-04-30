@@ -24,35 +24,44 @@ const QuestionSlideList: React.FC<{
           }}
           onClick={() => props.onSlideClick(index)}
         >
-          <div className={classes["question-num"]}>{index + 1} שאלה</div>
           <div className={classes["icons-and-slide-container"]}>
-            <div className={classes["icons-container"]}>
-              <img
-                className={classes.icon}
-                src={copyIcon}
-                onClick={(e: React.MouseEvent<HTMLImageElement>) => {
-                  e.stopPropagation(); // stops onSlideClick from happening
-                  props.onSlideCopyClick;
-                }}
-              />
-              <img
-                className={classes.icon}
-                src={deleteIcon}
-                onClick={(e: React.MouseEvent<HTMLImageElement>) => {
-                  e.stopPropagation(); // stops onSlideClick from happening
-                  props.onSlideDeleteClick;
-                }}
+            <div className={classes["icons-and-number-container"]}>
+              <div
+                className={`${classes["question-num"]} ${classes["center-text"]}`}
+              >
+                {index + 1}
+              </div>
+              <div className={classes["icons-container"]}>
+                <img
+                  className={classes.icon}
+                  src={copyIcon}
+                  onClick={(e: React.MouseEvent<HTMLImageElement>) => {
+                    e.stopPropagation(); // stops onSlideClick from happening
+                    props.onSlideCopyClick;
+                  }}
+                />
+                <img
+                  className={classes.icon}
+                  src={deleteIcon}
+                  onClick={(e: React.MouseEvent<HTMLImageElement>) => {
+                    e.stopPropagation(); // stops onSlideClick from happening
+                    props.onSlideDeleteClick;
+                  }}
+                />
+              </div>
+            </div>
+            <div className={classes["column-flex"]}>
+              <div className={classes["question-num"]}>שאלה</div>
+              <QuestionSlide
+                key={index}
+                questionImage={question.questionImage}
+                questionText={question.questionText}
+                timeLimit={question.timeLimit}
+                isCurrentlyEdited={
+                  props.currentQuestionEdited === index ? true : false
+                }
               />
             </div>
-            <QuestionSlide
-              key={index}
-              questionImage={question.questionImage}
-              questionText={question.questionText}
-              timeLimit={question.timeLimit}
-              isCurrentlyEdited={
-                props.currentQuestionEdited === index ? true : false
-              }
-            />
           </div>
         </div>
       ))}
