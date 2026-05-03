@@ -3,13 +3,14 @@ import classes from "./ProductList.module.css";
 import ProductDisplay from "./ProductDisplay";
 import defaultCover from "../assets/defaultCoverPhoto.png";
 
-type questionType = {
+export type questionType = {
   questionText: string;
   answerOptions: string[];
   correctIndexes: number[];
   scoringWeight: number;
   timeLimit: number;
-  _id: string;
+  _id?: string;
+  questionImage? : string;
 };
 
 type sharedWithType = {
@@ -72,6 +73,7 @@ const ProductsList: React.FC<{
             questionsNum={product.questions?.length}
             title={product.title}
             productId={product._id}
+            questions={product.questions}
           />
         </div>
       ))}

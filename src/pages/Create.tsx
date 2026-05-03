@@ -3,20 +3,15 @@ import classes from "./Create.module.css";
 import React, { useState, type ChangeEvent } from "react";
 import QuestionSlideList from "../components/create/QuestionSlideList";
 import SecondsCircleLayout from "../components/create/SecondsCircleLayout";
+import type { questionType } from "../components/ProductsList";
+import { useLocation } from "react-router-dom";
 
-export type QuestionType = {
-  questionText: string;
-  answerOptions: string[];
-  correctIndexes: number[];
-  timeLimit: number;
-  scoringWeight: 0.5 | 1 | 2;
-  questionImage: string;
-};
-
-const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
+const Create: React.FC<{}> = () => {
+  const location = useLocation();
+  const data = location.state;
   // דוגמא לשאלות
-  const [questions, setQuestions] = useState<QuestionType[]>(
-    props.questions ?? [
+  const [questions, setQuestions] = useState<questionType[]>(
+    data ?? [
       {
         questionText: "",
         answerOptions: ["", "", "", "", "", ""],
@@ -68,8 +63,8 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
       newQuestions.splice(currentQuestionBeingEdited, 1);
       return newQuestions;
     });
-    if(currentQuestionBeingEdited === questions.length -1){
-        setCurrentQuestionBeingEdited(questions.length - 2);
+    if (currentQuestionBeingEdited === questions.length - 1) {
+      setCurrentQuestionBeingEdited(questions.length - 2);
     }
   };
 

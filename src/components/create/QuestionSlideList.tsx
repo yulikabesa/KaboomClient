@@ -1,12 +1,13 @@
 import React from "react";
-import type { QuestionType } from "../../pages/Create";
 import QuestionSlide from "./QuestionSlide";
 import copyIcon from "../../assets/grayCopyIcon.svg";
 import deleteIcon from "../../assets/grayDeleteIcon.svg";
 import classes from "./QuestionSlideList.module.css";
+import type { questionType } from "../ProductsList";
+import defaultCover from "../../assets/defaultCoverPhoto.png";
 
 const QuestionSlideList: React.FC<{
-  questions: QuestionType[];
+  questions: questionType[];
   currentQuestionEdited: number;
   onSlideClick: (index: number) => void;
   onSlideCopyClick: () => void;
@@ -14,7 +15,7 @@ const QuestionSlideList: React.FC<{
 }> = (props) => {
   return (
     <>
-      {props.questions.map((question: QuestionType, index) => (
+      {props.questions.map((question: questionType, index) => (
         <div
           key={index}
           className={classes.container}
@@ -74,7 +75,7 @@ const QuestionSlideList: React.FC<{
               </div>
               <QuestionSlide
                 key={index}
-                questionImage={question.questionImage}
+                questionImage={question.questionImage ?? defaultCover}
                 questionText={question.questionText}
                 timeLimit={question.timeLimit}
                 isCurrentlyEdited={
