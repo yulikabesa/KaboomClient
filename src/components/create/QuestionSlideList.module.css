@@ -14,7 +14,7 @@
   width: 100%;
 }
 
-.column-flex {
+.question-and-slide-container {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -41,7 +41,7 @@
   gap: 2vh;
 }
 
-.icons-and-slide-container {
+.all-items-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;

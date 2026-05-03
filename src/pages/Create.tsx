@@ -58,9 +58,20 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
     setTimeLimitInput(questions[index].timeLimit);
   };
 
-  const handleSlideCopyClick = (index: number) => {};
+  const handleCurrentSlideCopyClick = () => {
+    // todo
+  };
 
-  const handleSlideDeleteClick = (index: number) => {};
+  const handleCurrentSlideDeleteClick = () => {
+    setQuestions((prev) => {
+      const newQuestions = [...prev];
+      newQuestions.splice(currentQuestionBeingEdited, 1);
+      return newQuestions;
+    });
+    if(currentQuestionBeingEdited === questions.length -1){
+        setCurrentQuestionBeingEdited(questions.length - 2);
+    }
+  };
 
   const addEmptyQuestion = () => {
     setQuestions((prev) => {
@@ -95,7 +106,9 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
         />
         <div
           className={classes["slider-wrap"]}
-          style={{ "--index": options.indexOf(scoringWeight) } as React.CSSProperties}
+          style={
+            { "--index": options.indexOf(scoringWeight) } as React.CSSProperties
+          }
         >
           <input
             type="range"
@@ -120,8 +133,8 @@ const Create: React.FC<{ questions?: QuestionType[] }> = (props) => {
         <QuestionSlideList
           currentQuestionEdited={currentQuestionBeingEdited}
           onSlideClick={handleQuestionBeingEditedChange}
-          onSlideCopyClick={handleSlideCopyClick}
-          onSlideDeleteClick={handleSlideDeleteClick}
+          onSlideCopyClick={handleCurrentSlideCopyClick}
+          onSlideDeleteClick={handleCurrentSlideDeleteClick}
           questions={questions}
         />
         <div className={classes["blue-btn"]} onClick={addEmptyQuestion}>

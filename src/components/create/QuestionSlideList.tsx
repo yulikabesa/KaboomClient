@@ -9,8 +9,8 @@ const QuestionSlideList: React.FC<{
   questions: QuestionType[];
   currentQuestionEdited: number;
   onSlideClick: (index: number) => void;
-  onSlideCopyClick: (index: number) => void;
-  onSlideDeleteClick: (index: number) => void;
+  onSlideCopyClick: () => void;
+  onSlideDeleteClick: () => void;
 }> = (props) => {
   return (
     <>
@@ -24,20 +24,32 @@ const QuestionSlideList: React.FC<{
           }}
           onClick={() => props.onSlideClick(index)}
         >
-          <div className={classes["icons-and-slide-container"]}>
+          <div className={classes["all-items-wrapper"]}>
             <div className={classes["icons-and-number-container"]}>
               <div
                 className={`${classes["question-num"]} ${classes["center-text"]}`}
+                style={{
+                  color:
+                    props.currentQuestionEdited === index ? "black" : "#6e6e6e",
+                }}
               >
                 {index + 1}
               </div>
-              <div className={classes["icons-container"]}>
+              <div
+                className={classes["icons-container"]}
+                style={{
+                  visibility:
+                    props.currentQuestionEdited === index
+                      ? "visible"
+                      : "hidden",
+                }}
+              >
                 <img
                   className={classes.icon}
                   src={copyIcon}
                   onClick={(e: React.MouseEvent<HTMLImageElement>) => {
                     e.stopPropagation(); // stops onSlideClick from happening
-                    props.onSlideCopyClick;
+                    props.onSlideCopyClick();
                   }}
                 />
                 <img
@@ -45,13 +57,21 @@ const QuestionSlideList: React.FC<{
                   src={deleteIcon}
                   onClick={(e: React.MouseEvent<HTMLImageElement>) => {
                     e.stopPropagation(); // stops onSlideClick from happening
-                    props.onSlideDeleteClick;
+                    props.onSlideDeleteClick();
                   }}
                 />
               </div>
             </div>
-            <div className={classes["column-flex"]}>
-              <div className={classes["question-num"]}>שאלה</div>
+            <div className={classes["question-and-slide-container"]}>
+              <div
+                className={classes["question-num"]}
+                style={{
+                  color:
+                    props.currentQuestionEdited === index ? "black" : "#6e6e6e",
+                }}
+              >
+                שאלה
+              </div>
               <QuestionSlide
                 key={index}
                 questionImage={question.questionImage}
