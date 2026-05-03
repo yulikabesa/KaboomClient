@@ -81,7 +81,7 @@ const Create = () => {
           value={questionTextInput}
           onChange={handleQuestionTextInputChange}
         />
-        <ImageInput value={selectedImage} onChange={handleImageChange} />
+        <ImageInput image={selectedImage} setImage={handleImageChange} />
       </div>
       {/* question navigator */}
       <div className={classes["question-navigator"]}>

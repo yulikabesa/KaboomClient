@@ -1,19 +1,20 @@
-import { useState, type ChangeEvent } from "react";
+import { use, useState, type ChangeEvent } from "react";
 import Button from "../UI/Button";
 import ImageCrop from "./ImageCrop";
+import type { Crop } from "react-image-crop";
 import uploadIcon from "../../assets/uploadIcon.svg";
 import deleteIcon from "../../assets/deleteIcon.svg";
 import cropIcon from "../../assets/cropIcon.svg";
 import classes from "./ImageInput.module.css";
 
 interface ImageInputProps {
-  value: string;
-  onChange: (file: string) => void;
+  image: string;
+  setImage: (file: string) => void;
 }
 
 const ImageInput: React.FC<ImageInputProps> = (props) => {
   const [imageCropDisplay, setImageCropDisplay] = useState(false);
-  const [cropValue, setCropValue] = useState(0);
+  const [crop, setCrop] = useState<Crop>();
 
   const uploadImageHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -25,28 +26,28 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
         // });
         return;
       }
-      props.onChange(URL.createObjectURL(file));
+      props.setImage(URL.createObjectURL(file));
     }
   };
 
   const removeImageHandler = () => {
-    props.onChange("");
+    props.setImage("");
   };
 
   const toggleImageCrop = () => {
     setImageCropDisplay((prev) => !prev);
   };
 
-  const cropValueChangeHandler = (newValue: number) => {
-    setCropValue(newValue);
+  const cropChangeHandler = (value: Crop) => {
+    setCrop(value);
   };
 
   return (
     <>
-      {props.value ? (
+      {props.image ? (
         <>
           <div className={`${classes["image-select"]} ${classes["selected"]}`}>
-            <img className={classes["image"]} src={props.value} />
+            <img className={classes["image"]} src={props.image} />
             <span className={classes["actions"]}>
               <button
                 className={classes["round-btn"]}
@@ -64,10 +65,10 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
           </div>
           {imageCropDisplay && (
             <ImageCrop
-              src={props.value}
+              src={props.image}
               closeOverlay={toggleImageCrop}
-              cropValue={cropValue}
-              setCropValue={cropValueChangeHandler}
+              cropValue={crop}
+              setCropValue={cropChangeHandler}
             />
           )}
         </>
