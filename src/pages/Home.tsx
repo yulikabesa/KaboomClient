@@ -1,10 +1,43 @@
 import NavigationMenu from "../components/NavigationMenu";
 import classes from "./Home.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductsList from "../components/ProductsList";
+import axios from "axios";
 const Home = () => {
   // todo get products from server
-  const [products, setProducts] = useState([3, 4, 3, 1, 3, 4, 3, 2]);
+  const [createdProducts, setCreatedProducts] = useState([]);
+  const [sharedProducts, setSharedProducts] = useState([]);
+  const [myCourseProducts, setMyCourseProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // to delete and get it from localStorae or context
+  const userId = "69dcbda7e2af6ecb8203b547";
+
+  useEffect(() => {
+    const fetchQuizzes = async () => {
+      if (!userId) return;
+      setIsLoading(true);
+
+      try {
+        const [createdRes, sharedRes] = await Promise.all([
+          axios.get(`http://localhost:3000/quiz/owner/${userId}`),
+          axios.get(`http://localhost:3000/quiz/shared/${userId}`),
+        ]);
+        setCreatedProducts(createdRes.data);
+        setSharedProducts(sharedRes.data);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          console.error("Error fetching quizzes:", error.message);
+        } else {
+          console.error("Unexpected error:", error);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchQuizzes();
+  }, []);
+
   return (
     <>
       <NavigationMenu variant="home" />
@@ -17,11 +50,11 @@ const Home = () => {
             </p>
           </div>
           <p className={classes["sub-title"]}>תוצרים שיצרתי</p>
-          <ProductsList products={[1, 2, 3, 4, 5]} />
+          <ProductsList isLoading={isLoading} products={createdProducts} />
           <p className={classes["sub-title"]}>התוצרים ששותפו איתי</p>
-          <ProductsList products={products} />
+          <ProductsList isLoading={isLoading} products={sharedProducts} />
           <p className={classes["sub-title"]}>תוצרים של הקורס שלי</p>
-          <ProductsList products={[1, 2, 5, 5]} />
+          <ProductsList isLoading={isLoading} products={myCourseProducts} />
           {/* todo change products to receive from server */}
         </div>
       </div>
