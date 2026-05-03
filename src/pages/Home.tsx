@@ -1,13 +1,14 @@
 import NavigationMenu from "../components/NavigationMenu";
 import classes from "./Home.module.css";
 import { useEffect, useState } from "react";
-import ProductsList from "../components/ProductsList";
+import ProductsList, { type productType } from "../components/ProductsList";
 import axios from "axios";
+
 const Home = () => {
   // todo get products from server
-  const [createdProducts, setCreatedProducts] = useState([]);
-  const [sharedProducts, setSharedProducts] = useState([]);
-  const [myCourseProducts, setMyCourseProducts] = useState([]);
+  const [createdProducts, setCreatedProducts] = useState<productType[]>([]);
+  const [sharedProducts, setSharedProducts] = useState<productType[]>([]);
+  const [myCourseProducts, setMyCourseProducts] = useState<productType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // to delete and get it from localStorae or context
@@ -25,14 +26,13 @@ const Home = () => {
         ]);
         setCreatedProducts(createdRes.data);
         setSharedProducts(sharedRes.data);
+        setIsLoading(false);
       } catch (error) {
         if (axios.isAxiosError(error)) {
           console.error("Error fetching quizzes:", error.message);
         } else {
           console.error("Unexpected error:", error);
         }
-      } finally {
-        setIsLoading(false);
       }
     };
     fetchQuizzes();

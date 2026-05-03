@@ -10,7 +10,7 @@ export type questionType = {
   scoringWeight: number;
   timeLimit: number;
   _id?: string;
-  questionImage? : string;
+  questionImage?: string;
 };
 
 type sharedWithType = {
@@ -19,7 +19,7 @@ type sharedWithType = {
   _id: string;
 };
 
-type productType = {
+export type productType = {
   coverImage: string;
   owner: string;
   title: string;
@@ -63,20 +63,34 @@ const ProductsList: React.FC<{
 
   return (
     <div ref={containerRef} className={classes["product-list"]}>
-      {props.products.map((product, index) => (
-        <div className={classes.reveal} key={index}>
-          <ProductDisplay
-            isLoading={false}
-            // todo change cover image to product.something
-            coverImage={defaultCover}
-            course="קורס"
-            questionsNum={product.questions?.length}
-            title={product.title}
-            productId={product._id}
-            questions={product.questions}
-          />
-        </div>
-      ))}
+      {!props.isLoading
+        ? props.products.map((product, index) => (
+            <div className={classes.reveal} key={index}>
+              <ProductDisplay
+                isLoading={false}
+                // todo change cover image to product.something
+                coverImage={defaultCover}
+                course="קורס"
+                questionsNum={product.questions?.length}
+                title={product.title}
+                productId={product._id}
+                questions={product.questions}
+              />
+            </div>
+          ))
+        : Array.from({ length: 5 }, (_, i) => (
+            <div>
+              <ProductDisplay
+                isLoading={true}
+                coverImage={defaultCover}
+                course=""
+                questionsNum={0}
+                title={""}
+                productId={""}
+                questions={[]}
+              />
+            </div>
+          ))}
     </div>
   );
 };
