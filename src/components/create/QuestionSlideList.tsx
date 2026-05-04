@@ -75,7 +75,7 @@ const QuestionSlideList: React.FC<{
               </div>
               <QuestionSlide
                 key={index}
-                questionImage={question.questionImage ?? defaultCover}
+                questionImage={question.questionImage ?? ""}
                 questionText={question.questionText}
                 timeLimit={question.timeLimit}
                 isCurrentlyEdited={

@@ -18,7 +18,7 @@ const Create: React.FC<{}> = () => {
         correctIndexes: [0],
         timeLimit: 20,
         scoringWeight: 1,
-        questionImage: "xx",
+        questionImage: "",
       },
     ],
   );
@@ -74,7 +74,7 @@ const Create: React.FC<{}> = () => {
         ...prev,
         {
           questionText: "",
-          answerOptions: [],
+          answerOptions: ["", "", "", "", "", ""],
           correctIndexes: [],
           timeLimit: 20,
           scoringWeight: 1,
