@@ -16,7 +16,7 @@ const QuestionSlide: React.FC<{
         border: props.isCurrentlyEdited ? "2px solid #3E6CC4" : "none",
       }}
     >
-      <p className={classes.title}>{props.questionText}</p>
+      <p className={classes.title}>{props.questionText || "\u00A0"}</p>
       <div className={classes["middle-items"]}>
         {props.questionImage !== "" && (
           <img src={exampleToChange} className={classes["question-image"]} />
