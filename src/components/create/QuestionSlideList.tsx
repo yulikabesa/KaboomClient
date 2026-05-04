@@ -81,6 +81,8 @@ const QuestionSlideList: React.FC<{
                 isCurrentlyEdited={
                   props.currentQuestionEdited === index ? true : false
                 }
+                answersCount={question.answerOptions.length}
+                correctAnswerIndexes={question.correctIndexes}
               />
             </div>
           </div>
