@@ -89,12 +89,10 @@
   height: 9vw;
   border-radius: 5px;
   background: #c0c0c0;
-
-  /* needed for shimmer layer */
   position: relative;
   overflow: hidden;
-
-  background-size: cover;
+  display: block;
+  background-size: 101% 101%;
   background-position: center;
 }
 

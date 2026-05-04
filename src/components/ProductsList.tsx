@@ -68,9 +68,8 @@ const ProductsList: React.FC<{
             <div className={classes.reveal} key={index}>
               <ProductDisplay
                 isLoading={false}
-                // todo change cover image to product.something
-                coverImage={defaultCover}
-                course="קורס"
+                coverImage={product.coverImage === "" ? defaultCover : product.coverImage}
+                course={product.tags.length === 1 ? product.tags[0] : product.tags.join(", ")}
                 questionsNum={product.questions?.length}
                 title={product.title}
                 productId={product._id}
@@ -79,7 +78,7 @@ const ProductsList: React.FC<{
             </div>
           ))
         : Array.from({ length: 5 }, (_, i) => (
-            <div>
+            <div key={i}>
               <ProductDisplay
                 isLoading={true}
                 coverImage={defaultCover}
