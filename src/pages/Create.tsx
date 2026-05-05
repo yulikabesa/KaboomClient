@@ -10,22 +10,23 @@ import AnswerOptionsInputList from "../components/create/AnswerOptionsInputList"
 const Create: React.FC<{}> = () => {
   const location = useLocation();
   const data = location.state;
+
+  const createEmptyQuestion = (): questionType => ({
+    questionText: "",
+    answerOptions: ["", ""],
+    correctIndexes: [0],
+    timeLimit: 20,
+    scoringWeight: 1,
+    questionImage: "",
+  });
+  
   const [questions, setQuestions] = useState<questionType[]>(
-    data ?? [
-      {
-        questionText: "",
-        answerOptions: ["", ""],
-        correctIndexes: [0],
-        timeLimit: 20,
-        scoringWeight: 1,
-        questionImage: "",
-      },
-    ],
+    data ?? [createEmptyQuestion()],
   );
   const [currentQuestionBeingEdited, setCurrentQuestionBeingEdited] =
     useState(0);
   const scoringWeightOptions = [0.5, 1, 2];
-  const currentQuestion = questions[currentQuestionBeingEdited];
+  const currentQuestion = questions[currentQuestionBeingEdited] ;
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -91,15 +92,6 @@ const Create: React.FC<{}> = () => {
     // todo
   };
 
-  const createEmptyQuestion = (): questionType => ({
-    questionText: "",
-    answerOptions: ["", ""],
-    correctIndexes: [0],
-    timeLimit: 20,
-    scoringWeight: 1,
-    questionImage: "",
-  });
-
   const handleCurrentSlideDeleteClick = () => {
     setQuestions((prev) => {
       let newQuestions = [...prev];
@@ -158,7 +150,7 @@ const Create: React.FC<{}> = () => {
             max={scoringWeightOptions.length - 1}
             step={1}
             value={scoringWeightOptions.indexOf(currentQuestion.scoringWeight)}
-            onChange={(e) => handleQuestionScoringWeightChange(e)}
+            onChange={handleQuestionScoringWeightChange}
           />
           <div className={classes["range-thumb-label"]}>
             X{currentQuestion.scoringWeight}
