@@ -10,7 +10,6 @@ import AnswerOptionsInputList from "../components/create/AnswerOptionsInputList"
 const Create: React.FC<{}> = () => {
   const location = useLocation();
   const data = location.state;
-  // דוגמא לשאלות
   const [questions, setQuestions] = useState<questionType[]>(
     data ?? [
       {
@@ -25,24 +24,11 @@ const Create: React.FC<{}> = () => {
   );
   const [currentQuestionBeingEdited, setCurrentQuestionBeingEdited] =
     useState(0);
-  const [questionTextInput, setQuestionTextInput] = useState(
-    questions[0]?.questionText,
-  );
-  const [answerOptions, setAnswerOptions] = useState(
-    questions[0]?.answerOptions,
-  );
-  const [correctIndexes, setCorrectIndexes] = useState(
-    questions[0]?.correctIndexes,
-  );
   const scoringWeightOptions = [0.5, 1, 2];
-  const [scoringWeight, setScoringWeight] = useState(
-    questions[0]?.scoringWeight,
-  );
-  const [timeLimitInput, setTimeLimitInput] = useState(questions[0]?.timeLimit);
+  const currentQuestion = questions[currentQuestionBeingEdited];
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setQuestionTextInput(value);
     setQuestions((prev) => {
       const updated = [...prev];
       const q = updated[currentQuestionBeingEdited];
@@ -55,7 +41,6 @@ const Create: React.FC<{}> = () => {
   };
 
   const handleQuestionTimeLimitChange = (timeLimit: number) => {
-    setTimeLimitInput(timeLimit);
     setQuestions((prev) => {
       const updated = [...prev];
       const q = updated[currentQuestionBeingEdited];
@@ -72,7 +57,6 @@ const Create: React.FC<{}> = () => {
   ) => {
     const index = +e.target.value;
     const weight = scoringWeightOptions[index];
-    setScoringWeight(weight);
     setQuestions((prev) => {
       const updated = [...prev];
       const q = updated[currentQuestionBeingEdited];
@@ -85,10 +69,9 @@ const Create: React.FC<{}> = () => {
   };
 
   const handleQuestionCorrectIndexesChange = (index: number) => {
-    const newCorrectIndexes = correctIndexes.includes(index)
-      ? correctIndexes.filter((i) => i !== index)
-      : [...correctIndexes, index];
-    setCorrectIndexes(newCorrectIndexes);
+    const newCorrectIndexes = currentQuestion.correctIndexes.includes(index)
+      ? currentQuestion.correctIndexes.filter((i) => i !== index)
+      : [...currentQuestion.correctIndexes, index];
     setQuestions((prev) => {
       const updated = [...prev];
       const q = updated[currentQuestionBeingEdited];
@@ -102,48 +85,48 @@ const Create: React.FC<{}> = () => {
 
   const handleQuestionBeingEditedChange = (index: number) => {
     setCurrentQuestionBeingEdited(index);
-    setQuestionTextInput(questions[index].questionText);
-    setTimeLimitInput(questions[index].timeLimit);
-    setScoringWeight(questions[index].scoringWeight);
-    setAnswerOptions(questions[index].answerOptions);
-    setCorrectIndexes(questions[index].correctIndexes);
   };
 
   const handleCurrentSlideCopyClick = () => {
     // todo
   };
 
+  const createEmptyQuestion = (): questionType => ({
+    questionText: "",
+    answerOptions: ["", ""],
+    correctIndexes: [0],
+    timeLimit: 20,
+    scoringWeight: 1,
+    questionImage: "",
+  });
+
   const handleCurrentSlideDeleteClick = () => {
     setQuestions((prev) => {
-      const newQuestions = [...prev];
+      let newQuestions = [...prev];
       newQuestions.splice(currentQuestionBeingEdited, 1);
+
+      // prevent empty
+      if (newQuestions.length === 0) {
+        newQuestions = [createEmptyQuestion()];
+      }
+
+      setCurrentQuestionBeingEdited((prevIndex) => {
+        if (prevIndex >= newQuestions.length) {
+          return newQuestions.length - 1;
+        }
+        return prevIndex;
+      });
+
       return newQuestions;
     });
-    if (currentQuestionBeingEdited === questions.length - 1) {
-      setCurrentQuestionBeingEdited(questions.length - 2);
-    }
   };
 
   const addEmptyQuestion = () => {
     setQuestions((prev) => {
-      return [
-        ...prev,
-        {
-          questionText: "",
-          answerOptions: ["", ""],
-          correctIndexes: [0],
-          timeLimit: 20,
-          scoringWeight: 1,
-          questionImage: "",
-        },
-      ];
+      const newQuestions = [...prev, createEmptyQuestion()];
+      setCurrentQuestionBeingEdited(newQuestions.length - 1);
+      return newQuestions;
     });
-    setCurrentQuestionBeingEdited(questions.length);
-    setQuestionTextInput("");
-    setScoringWeight(1);
-    setTimeLimitInput(20);
-    setCorrectIndexes([0]);
-    setAnswerOptions(["", ""]);
   };
 
   return (
@@ -155,7 +138,7 @@ const Create: React.FC<{}> = () => {
           type="text"
           placeholder="הקלד כאן את השאלה שלך…"
           className={classes["question-text-input"]}
-          value={questionTextInput}
+          value={currentQuestion.questionText}
           onChange={handleQuestionTextInputChange}
           maxLength={72}
         />
@@ -163,7 +146,9 @@ const Create: React.FC<{}> = () => {
           className={classes["slider-wrap"]}
           style={
             {
-              "--index": scoringWeightOptions.indexOf(scoringWeight),
+              "--index": scoringWeightOptions.indexOf(
+                currentQuestion.scoringWeight,
+              ),
             } as React.CSSProperties
           }
         >
@@ -172,23 +157,26 @@ const Create: React.FC<{}> = () => {
             min={0}
             max={scoringWeightOptions.length - 1}
             step={1}
-            value={scoringWeightOptions.indexOf(scoringWeight)}
+            value={scoringWeightOptions.indexOf(currentQuestion.scoringWeight)}
             onChange={(e) => handleQuestionScoringWeightChange(e)}
           />
-          <div className={classes["range-thumb-label"]}>X{scoringWeight}</div>
+          <div className={classes["range-thumb-label"]}>
+            X{currentQuestion.scoringWeight}
+          </div>
         </div>
         <SecondsCircleLayout
           items={[20, 30, 60, 90, 120, 240, 5, 10]}
-          center={timeLimitInput}
+          center={currentQuestion.timeLimit}
           onCenterChange={handleQuestionTimeLimitChange}
         />
         <AnswerOptionsInputList
-          correctAnswerIndexes={correctIndexes}
+          correctAnswerIndexes={currentQuestion.correctIndexes}
           answersCount={6}
-          answerTexts={answerOptions}
+          answerTexts={currentQuestion.answerOptions}
           onAnswerClick={(index) => handleQuestionCorrectIndexesChange(index)}
         />
       </div>
+
       {/* questions slides */}
       <div className={classes["questions-slides"]}>
         <QuestionSlideList
