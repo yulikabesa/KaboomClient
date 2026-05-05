@@ -5,8 +5,8 @@
   grid-auto-flow: row;
   grid-auto-rows: 1fr;
   box-sizing: border-box;
-  column-gap: 0.8vh;
-  row-gap: 0.8vh;
+  column-gap: 0.5vh;
+  row-gap: 0.5vh;
   padding: 1vh;
   box-sizing: border-box;
   height: 40%;

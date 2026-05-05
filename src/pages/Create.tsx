@@ -5,6 +5,7 @@ import QuestionSlideList from "../components/create/QuestionSlideList";
 import SecondsCircleLayout from "../components/create/SecondsCircleLayout";
 import type { questionType } from "../components/ProductsList";
 import { useLocation } from "react-router-dom";
+import AnswerOptionsInputList from "../components/create/AnswerOptionsInputList";
 
 const Create: React.FC<{}> = () => {
   const location = useLocation();
@@ -14,7 +15,7 @@ const Create: React.FC<{}> = () => {
     data ?? [
       {
         questionText: "",
-        answerOptions: ["", "", "", "", "", ""],
+        answerOptions: ["", ""],
         correctIndexes: [0],
         timeLimit: 20,
         scoringWeight: 1,
@@ -27,8 +28,16 @@ const Create: React.FC<{}> = () => {
   const [questionTextInput, setQuestionTextInput] = useState(
     questions[0]?.questionText,
   );
-  const options = [0.5, 1, 2];
-  const [scoringWeight, setScoringWeight] = useState(1);
+  const [answerOptions, setAnswerOptions] = useState(
+    questions[0]?.answerOptions,
+  );
+  const [correctIndexes, setCorrectIndexes] = useState(
+    questions[0]?.correctIndexes,
+  );
+  const scoringWeightOptions = [0.5, 1, 2];
+  const [scoringWeight, setScoringWeight] = useState(
+    questions[0]?.scoringWeight,
+  );
   const [timeLimitInput, setTimeLimitInput] = useState(questions[0]?.timeLimit);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -47,10 +56,35 @@ const Create: React.FC<{}> = () => {
     });
   };
 
+  const handleQuestionScoringWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setScoringWeight(scoringWeightOptions[+e.target.value]);
+    setQuestions((prev) => {
+      prev[currentQuestionBeingEdited].scoringWeight = +e.target.value;
+      return prev;
+    });
+  };
+
+  const handleQuestionCorrectIndexesChange = (index: number) => {
+    setQuestions((prev) => {
+      const updated = [...prev];
+      const q = updated[currentQuestionBeingEdited];
+      updated[currentQuestionBeingEdited] = {
+        ...q,
+        correctIndexes: q.correctIndexes.includes(index)
+          ? q.correctIndexes.filter((i) => i !== index)
+          : [...q.correctIndexes, index],
+      };
+      return updated;
+    });
+  };
+
   const handleQuestionBeingEditedChange = (index: number) => {
     setCurrentQuestionBeingEdited(index);
     setQuestionTextInput(questions[index].questionText);
     setTimeLimitInput(questions[index].timeLimit);
+    setScoringWeight(questions[index].scoringWeight);
+    setAnswerOptions(questions[index].answerOptions);
+    setCorrectIndexes(questions[index].correctIndexes);
   };
 
   const handleCurrentSlideCopyClick = () => {
@@ -74,8 +108,8 @@ const Create: React.FC<{}> = () => {
         ...prev,
         {
           questionText: "",
-          answerOptions: ["", "", "", "", "", ""],
-          correctIndexes: [],
+          answerOptions: ["", ""],
+          correctIndexes: [0],
           timeLimit: 20,
           scoringWeight: 1,
           questionImage: "",
@@ -84,8 +118,10 @@ const Create: React.FC<{}> = () => {
     });
     setCurrentQuestionBeingEdited(questions.length);
     setQuestionTextInput("");
+    setScoringWeight(1);
     setTimeLimitInput(20);
   };
+
   return (
     <div className={classes.background}>
       <NavigationMenu variant="create" />
@@ -102,18 +138,18 @@ const Create: React.FC<{}> = () => {
         <div
           className={classes["slider-wrap"]}
           style={
-            { "--index": options.indexOf(scoringWeight) } as React.CSSProperties
+            {
+              "--index": scoringWeightOptions.indexOf(scoringWeight),
+            } as React.CSSProperties
           }
         >
           <input
             type="range"
             min={0}
-            max={options.length - 1}
+            max={scoringWeightOptions.length - 1}
             step={1}
-            value={options.indexOf(scoringWeight)}
-            onChange={(e) => {
-              setScoringWeight(options[Number(e.target.value)]);
-            }}
+            value={scoringWeightOptions.indexOf(scoringWeight)}
+            onChange={(e) => handleQuestionScoringWeightChange(e)}
           />
           <div className={classes["range-thumb-label"]}>X{scoringWeight}</div>
         </div>
@@ -121,6 +157,12 @@ const Create: React.FC<{}> = () => {
           items={[20, 30, 60, 90, 120, 240, 5, 10]}
           center={timeLimitInput}
           onCenterChange={handleQuestionTimeLimitChange}
+        />
+        <AnswerOptionsInputList
+          correctAnswerIndexes={correctIndexes}
+          answersCount={6}
+          answerTexts={answerOptions}
+          onAnswerClick={(index) => handleQuestionCorrectIndexesChange(index)}
         />
       </div>
       {/* questions slides */}

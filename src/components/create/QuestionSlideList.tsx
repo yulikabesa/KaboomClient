@@ -4,7 +4,6 @@ import copyIcon from "../../assets/grayCopyIcon.svg";
 import deleteIcon from "../../assets/grayDeleteIcon.svg";
 import classes from "./QuestionSlideList.module.css";
 import type { questionType } from "../ProductsList";
-import defaultCover from "../../assets/defaultCoverPhoto.png";
 
 const QuestionSlideList: React.FC<{
   questions: questionType[];
