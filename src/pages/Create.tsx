@@ -41,38 +41,60 @@ const Create: React.FC<{}> = () => {
   const [timeLimitInput, setTimeLimitInput] = useState(questions[0]?.timeLimit);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuestionTextInput(e.target.value);
+    const value = e.target.value;
+    setQuestionTextInput(value);
     setQuestions((prev) => {
-      prev[currentQuestionBeingEdited].questionText = e.target.value;
-      return prev;
+      const updated = [...prev];
+      const q = updated[currentQuestionBeingEdited];
+      updated[currentQuestionBeingEdited] = {
+        ...q,
+        questionText: value,
+      };
+      return updated;
     });
   };
 
   const handleQuestionTimeLimitChange = (timeLimit: number) => {
     setTimeLimitInput(timeLimit);
     setQuestions((prev) => {
-      prev[currentQuestionBeingEdited].timeLimit = timeLimit;
-      return prev;
+      const updated = [...prev];
+      const q = updated[currentQuestionBeingEdited];
+      updated[currentQuestionBeingEdited] = {
+        ...q,
+        timeLimit,
+      };
+      return updated;
     });
   };
 
-  const handleQuestionScoringWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setScoringWeight(scoringWeightOptions[+e.target.value]);
-    setQuestions((prev) => {
-      prev[currentQuestionBeingEdited].scoringWeight = +e.target.value;
-      return prev;
-    });
-  };
-
-  const handleQuestionCorrectIndexesChange = (index: number) => {
+  const handleQuestionScoringWeightChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const index = +e.target.value;
+    const weight = scoringWeightOptions[index];
+    setScoringWeight(weight);
     setQuestions((prev) => {
       const updated = [...prev];
       const q = updated[currentQuestionBeingEdited];
       updated[currentQuestionBeingEdited] = {
         ...q,
-        correctIndexes: q.correctIndexes.includes(index)
-          ? q.correctIndexes.filter((i) => i !== index)
-          : [...q.correctIndexes, index],
+        scoringWeight: weight,
+      };
+      return updated;
+    });
+  };
+
+  const handleQuestionCorrectIndexesChange = (index: number) => {
+    const newCorrectIndexes = correctIndexes.includes(index)
+      ? correctIndexes.filter((i) => i !== index)
+      : [...correctIndexes, index];
+    setCorrectIndexes(newCorrectIndexes);
+    setQuestions((prev) => {
+      const updated = [...prev];
+      const q = updated[currentQuestionBeingEdited];
+      updated[currentQuestionBeingEdited] = {
+        ...q,
+        correctIndexes: newCorrectIndexes,
       };
       return updated;
     });
@@ -120,6 +142,8 @@ const Create: React.FC<{}> = () => {
     setQuestionTextInput("");
     setScoringWeight(1);
     setTimeLimitInput(20);
+    setCorrectIndexes([0]);
+    setAnswerOptions(["", ""]);
   };
 
   return (
