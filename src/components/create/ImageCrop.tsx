@@ -1,16 +1,32 @@
-import ReactCrop, { type Crop } from "react-image-crop";
-import "react-image-crop/dist/ReactCrop.css";
+import { useState, type ChangeEvent } from "react";
+import Cropper from "react-easy-crop";
 import Overlay from "../UI/Overlay";
 import classes from "./ImageCrop.module.css";
+import Button from "../UI/Button";
+
+export interface AreaPixels {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 interface ImageCropProps {
-  src: string;
-  cropValue?: Crop;
-  setCropValue: (value: Crop) => void;
+  image: string;
+  onCropComplete: (areaPixels: AreaPixels | null) => void;
+  onSaveCropped: () => void;
   closeOverlay: () => void;
 }
 
 const ImageCrop: React.FC<ImageCropProps> = (props) => {
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+
+  const handleSaveCropped = () => {
+    props.onSaveCropped();
+    props.closeOverlay();
+  }
+
   return (
     <Overlay
       title="חתוך את התמונה"
@@ -18,23 +34,36 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
       button={true}
     >
       <div className={classes["image-container"]}>
-        <ReactCrop
-          crop={props.cropValue}
+        <Cropper
+          // classes={{ cropAreaClassName: classes["crop-area"] }}
+          image={props.image}
+          zoomWithScroll={false}
           aspect={3 / 2}
-          onChange={(c) => props.setCropValue(c)}
-        >
-          <img src={props.src} className={classes["image"]} />
-        </ReactCrop>
+          onCropComplete={(area, areaPixels) => props.onCropComplete(areaPixels)}
+          crop={crop}
+          zoom={zoom}
+          onCropChange={(crop) => {
+            setCrop(crop);
+          }}
+          onZoomChange={(zoom) => {
+            setZoom(zoom);
+          }}
+        />
       </div>
-      {/* <input
+      <input
         type="range"
-        value={props.cropValue}
-        min={0}
-        max={100}
+        value={zoom}
+        step={0.1}
+        min={1}
+        max={10}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          props.setCropValue(Number(event.target.value));
+          setZoom(Number(event.target.value));
         }}
-      /> */}
+      />
+      <Button style="white" onClick={props.closeOverlay}>סגור</Button>
+      <Button style="blue" onClick={handleSaveCropped}>
+        שמור
+      </Button>
     </Overlay>
   );
 };

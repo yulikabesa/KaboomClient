@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import classes from "./Button.module.css";
 
 interface ButtonProps extends PropsWithChildren {
+  onClick?: any;
   className?: string;
   style: "blue" | "white";
   to?: string;
@@ -17,7 +18,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       {props.children}
     </Link>
   ) : (
-    <div
+    <div onClick={props.onClick}
       className={`${classes["btn"]} ${props.style ? classes[`${props.style}-btn`] : ""} ${props.className ? classes[props.className] : ""}`}
     >
       {props.children}

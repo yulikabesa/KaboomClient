@@ -1,9 +1,10 @@
-import NavigationMenu from "../components/NavigationMenu";
-import classes from "./Create.module.css";
-import QuestionSlide from "../components/create/QuestionSlide";
 import { useState, type ChangeEvent } from "react";
+import NavigationMenu from "../components/NavigationMenu";
 import QuestionSlideList from "../components/create/QuestionSlideList";
 import ImageInput from "../components/create/ImageInput";
+import type { AreaPixels } from "../components/create/ImageCrop";
+import { getCroppedImg } from "../utils/cropImage";
+import classes from "./Create.module.css";
 
 export type QuestionType = {
   questionText: string;
@@ -29,6 +30,10 @@ const Create = () => {
   const [currentQuestionEdited, setCurrentQuestionEdited] = useState(0);
   const [questionTextInput, setQuestionTextInput] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
+  const [imagePreview, setImagePreview] = useState("");
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<AreaPixels | null>(
+    null,
+  );
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestionTextInput(e.target.value);
@@ -63,10 +68,34 @@ const Create = () => {
 
   const handleImageChange = (file: string) => {
     setSelectedImage(file);
+    setImagePreview(file);
     setQuestions((prev) => {
       prev[currentQuestionEdited].questionImage = selectedImage;
       return prev;
     });
+  };
+
+  const handleCropComplete = (areaPixels: AreaPixels | null) => {
+    setCroppedAreaPixels(areaPixels);
+  };
+
+  const handleSaveCropped = async () => {
+    if (!selectedImage || !croppedAreaPixels) return;
+
+    const cropped = await getCroppedImg(selectedImage, croppedAreaPixels);
+    if (cropped) setImagePreview(cropped);
+  };
+
+  const handleDone = async () => {
+    // send to backend
+    const payload = {
+      imageUrl: selectedImage,
+      croppedAreaPixels,
+      // optionally also send cropped
+      // ... other fields
+    };
+
+    console.log("Payload:", payload);
   };
 
   return (
@@ -81,7 +110,13 @@ const Create = () => {
           value={questionTextInput}
           onChange={handleQuestionTextInputChange}
         />
-        <ImageInput image={selectedImage} setImage={handleImageChange} />
+        <ImageInput
+          imageSrc={selectedImage}
+          imagePreview={imagePreview}
+          setImage={handleImageChange}
+          handleCropComplete={handleCropComplete}
+          handleSaveCropped={handleSaveCropped}
+        />
       </div>
       {/* question navigator */}
       <div className={classes["question-navigator"]}>

@@ -1,20 +1,21 @@
-import { use, useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent } from "react";
 import Button from "../UI/Button";
-import ImageCrop from "./ImageCrop";
-import type { Crop } from "react-image-crop";
+import ImageCrop, { type AreaPixels } from "./ImageCrop";
 import uploadIcon from "../../assets/uploadIcon.svg";
 import deleteIcon from "../../assets/deleteIcon.svg";
 import cropIcon from "../../assets/cropIcon.svg";
 import classes from "./ImageInput.module.css";
 
 interface ImageInputProps {
-  image: string;
+  imageSrc: string;
+  imagePreview: string;
   setImage: (file: string) => void;
+  handleCropComplete: (areaPixels: AreaPixels | null) => void;
+  handleSaveCropped: () => void;
 }
 
 const ImageInput: React.FC<ImageInputProps> = (props) => {
   const [imageCropDisplay, setImageCropDisplay] = useState(false);
-  const [crop, setCrop] = useState<Crop>();
 
   const uploadImageHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -38,16 +39,12 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
     setImageCropDisplay((prev) => !prev);
   };
 
-  const cropChangeHandler = (value: Crop) => {
-    setCrop(value);
-  };
-
   return (
     <>
-      {props.image ? (
+      {props.imagePreview ? (
         <>
           <div className={`${classes["image-select"]} ${classes["selected"]}`}>
-            <img className={classes["image"]} src={props.image} />
+            <img className={classes["image"]} src={props.imagePreview} />
             <span className={classes["actions"]}>
               <button
                 className={classes["round-btn"]}
@@ -65,10 +62,10 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
           </div>
           {imageCropDisplay && (
             <ImageCrop
-              src={props.image}
+              image={props.imageSrc}
               closeOverlay={toggleImageCrop}
-              cropValue={crop}
-              setCropValue={cropChangeHandler}
+              onCropComplete={props.handleCropComplete}
+              onSaveCropped={props.handleSaveCropped}
             />
           )}
         </>
