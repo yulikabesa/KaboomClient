@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent, type MouseEvent } from "react";
 import Button from "../UI/Button";
 import uploadIcon from "../../assets/uploadIcon.svg";
 import deleteIcon from "../../assets/deleteIcon.svg";
@@ -23,10 +23,7 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
     const file = event.target.files?.[0];
     if (file) {
       if (!file.type.startsWith("image/")) {
-        // event.target.value = "";
-        // setError({
-        //   message: "Please select an image file.",
-        // });
+        event.target.value = "";
         return;
       }
       props.setImage(URL.createObjectURL(file));
@@ -55,7 +52,7 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
         <>
           <div className={`${classes["image-select"]} ${classes["selected"]}`}>
             <img className={classes["image"]} src={props.imagePreview} />
-            <span className={classes["actions"]}>
+            <div className={classes["actions"]}>
               <button
                 className={classes["round-btn"]}
                 onClick={removeImageHandler}
@@ -68,7 +65,7 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
               <button className={classes["round-btn"]}>
                 {/* <img src={} /> */}
               </button>
-            </span>
+            </div>
           </div>
           {imageCropDisplay && (
             <ImageCrop
@@ -86,20 +83,32 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
         </>
       ) : (
         <div className={classes["image-select"]}>
-          <div className={classes["wrapper"]}>
+          <input
+            id="file-upload"
+            type="file"
+            accept="image/*"
+            onChange={uploadImageHandler}
+          />
+          <label htmlFor="file-upload" className={classes["wrapper"]}>
             <img className={classes["icon"]} src={uploadIcon} />
             <p className={classes["title"]}>העלאת תמונה</p>
             <p>רוצה להוסיף תמונה? גרור, העלה או בחר אחת מושלמת מהמאגר שלנו</p>
-          </div>
-          <input type="file" accept="image/*" onChange={uploadImageHandler} />
-          <span>
-            <Button style="white" className={classes[""]}>
-              העלה
-            </Button>
-            <Button style="blue" className={classes[""]}>
-              מאגר
-            </Button>
-          </span>
+            <div className={classes["input-actions"]}>
+              <Button style="white" className={classes[""]}>
+                העלה
+              </Button>
+              <Button
+                style="blue"
+                className={classes[""]}
+                onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                  e.preventDefault(); 
+                  e.stopPropagation();
+                }}
+              >
+                מאגר
+              </Button>
+            </div>
+          </label>
         </div>
       )}
     </>

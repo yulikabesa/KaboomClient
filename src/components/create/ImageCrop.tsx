@@ -49,22 +49,26 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
           initialCroppedAreaPixels={props.croppedAreaPixels ?? undefined}
         />
       </div>
-      <input
-        type="range"
-        value={zoom}
-        step={0.1}
-        min={1}
-        max={10}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          setZoom(Number(event.target.value));
-        }}
-      />
-      <Button style="white" onClick={props.closeOverlay}>
-        סגור
-      </Button>
-      <Button style="blue" onClick={handleSaveCropped}>
-        שמור
-      </Button>
+      <div className={classes["zoom-input"]}>
+        <input
+          type="range"
+          value={zoom}
+          step={0.1}
+          min={1}
+          max={10}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => {
+            setZoom(Number(event.target.value));
+          }}
+        />
+      </div>
+      <div className={classes["actions"]}>
+        <Button style="white" onClick={props.closeOverlay}>
+          סגור
+        </Button>
+        <Button style="blue" onClick={handleSaveCropped}>
+          שמור
+        </Button>
+      </div>
     </Overlay>
   );
 };

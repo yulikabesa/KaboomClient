@@ -6,5 +6,45 @@
   background-color: #d9d9d9;
   text-align: center;
   border-radius: 4px;
-  /* overflow: hidden; */
+}
+
+.zoom-input {
+  width: 30%;
+}
+
+.zoom-input input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: #888888;
+  border-radius: 8px;
+  color: transparent;
+  cursor: pointer;
+}
+
+.zoom-input input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #d9d9d9;
+  cursor: pointer;
+}
+
+.zoom-input input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #d9d9d9;
+  cursor: pointer;
+}
+
+.zoom-input input[type="range"]:focus {
+  outline: none;
+}
+
+.actions {
+
 }

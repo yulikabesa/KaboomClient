@@ -33,7 +33,7 @@
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 2vh;
+  /* gap: 2vh; */
   align-items: baseline;
 }
 
