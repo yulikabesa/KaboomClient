@@ -62,7 +62,7 @@ const AnswerOptionsInputList: React.FC<Props> = ({
   return (
     <div className={classes.container}>
       {Array.from({ length: answersCount }).map((_, i) => {
-        const isCorrect = correctAnswerIndexes.includes(i);
+        const isCorrect = correctAnswerIndexes?.includes(i) || false;
         return (
           <div
             key={i}
@@ -71,7 +71,7 @@ const AnswerOptionsInputList: React.FC<Props> = ({
               {
                 "--bg-color": options[i].color,
                 "--hover-color": options[i].colorOnHover,
-                "box-shadow": `0 3px 0 0 ${options[i].shadowColor}`,
+                "boxShadow": `0 3px 0 0 ${options[i].shadowColor}`,
                 border: `1px solid ${options[i].shadowColor}`,
                 filter:
                   (answerTexts[i] ?? "") === "" && i > 1

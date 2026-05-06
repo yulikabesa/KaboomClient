@@ -14,9 +14,15 @@ const Create: React.FC<{}> = () => {
   const location = useLocation();
   const data = location.state;
 
+  console.log(data);
+  const initialQuestions =
+  Array.isArray(data) && data.length > 0
+    ? data
+    : [createEmptyQuestion()];
+
   const [questions, dispatch] = React.useReducer(
     questionsReducer,
-    data ?? [createEmptyQuestion],
+    initialQuestions,
   );
 
   const [currentQuestionBeingEdited, setCurrentQuestionBeingEdited] =
