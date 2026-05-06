@@ -3,53 +3,40 @@ import classes from "./Create.module.css";
 import React, { useState, type ChangeEvent } from "react";
 import QuestionSlideList from "../components/create/QuestionSlideList";
 import SecondsCircleLayout from "../components/create/SecondsCircleLayout";
-import type { questionType } from "../components/ProductsList";
 import { useLocation } from "react-router-dom";
 import AnswerOptionsInputList from "../components/create/AnswerOptionsInputList";
+import {
+  questionsReducer,
+  createEmptyQuestion,
+} from "../reducers/questionsReducer";
 
 const Create: React.FC<{}> = () => {
   const location = useLocation();
   const data = location.state;
 
-  const createEmptyQuestion = (): questionType => ({
-    questionText: "",
-    answerOptions: ["", ""],
-    correctIndexes: [0],
-    timeLimit: 20,
-    scoringWeight: 1,
-    questionImage: "",
-  });
-  
-  const [questions, setQuestions] = useState<questionType[]>(
-    data ?? [createEmptyQuestion()],
+  const [questions, dispatch] = React.useReducer(
+    questionsReducer,
+    data ?? [createEmptyQuestion],
   );
+
   const [currentQuestionBeingEdited, setCurrentQuestionBeingEdited] =
     useState(0);
   const scoringWeightOptions = [0.5, 1, 2];
-  const currentQuestion = questions[currentQuestionBeingEdited] ;
+  const currentQuestion = questions[currentQuestionBeingEdited];
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setQuestions((prev) => {
-      const updated = [...prev];
-      const q = updated[currentQuestionBeingEdited];
-      updated[currentQuestionBeingEdited] = {
-        ...q,
-        questionText: value,
-      };
-      return updated;
+    dispatch({
+      type: "SET_QUESTION_TEXT",
+      index: currentQuestionBeingEdited,
+      value: e.target.value,
     });
   };
 
   const handleQuestionTimeLimitChange = (timeLimit: number) => {
-    setQuestions((prev) => {
-      const updated = [...prev];
-      const q = updated[currentQuestionBeingEdited];
-      updated[currentQuestionBeingEdited] = {
-        ...q,
-        timeLimit,
-      };
-      return updated;
+    dispatch({
+      type: "SET_TIME_LIMIT",
+      index: currentQuestionBeingEdited,
+      value: timeLimit,
     });
   };
 
@@ -58,29 +45,19 @@ const Create: React.FC<{}> = () => {
   ) => {
     const index = +e.target.value;
     const weight = scoringWeightOptions[index];
-    setQuestions((prev) => {
-      const updated = [...prev];
-      const q = updated[currentQuestionBeingEdited];
-      updated[currentQuestionBeingEdited] = {
-        ...q,
-        scoringWeight: weight,
-      };
-      return updated;
+
+    dispatch({
+      type: "SET_SCORING_WEIGHT",
+      index: currentQuestionBeingEdited,
+      value: weight,
     });
   };
 
-  const handleQuestionCorrectIndexesChange = (index: number) => {
-    const newCorrectIndexes = currentQuestion.correctIndexes.includes(index)
-      ? currentQuestion.correctIndexes.filter((i) => i !== index)
-      : [...currentQuestion.correctIndexes, index];
-    setQuestions((prev) => {
-      const updated = [...prev];
-      const q = updated[currentQuestionBeingEdited];
-      updated[currentQuestionBeingEdited] = {
-        ...q,
-        correctIndexes: newCorrectIndexes,
-      };
-      return updated;
+  const handleQuestionCorrectIndexesChange = (value: number) => {
+    dispatch({
+      type: "TOGGLE_CORRECT_INDEX",
+      index: currentQuestionBeingEdited,
+      value,
     });
   };
 
@@ -89,36 +66,25 @@ const Create: React.FC<{}> = () => {
   };
 
   const handleCurrentSlideCopyClick = () => {
-    // todo
+    dispatch({
+      type: "COPY_QUESTION",
+      index: currentQuestionBeingEdited,
+    });
+
+    setCurrentQuestionBeingEdited((prev) => prev + 1);
   };
 
   const handleCurrentSlideDeleteClick = () => {
-    setQuestions((prev) => {
-      let newQuestions = [...prev];
-      newQuestions.splice(currentQuestionBeingEdited, 1);
-
-      // prevent empty
-      if (newQuestions.length === 0) {
-        newQuestions = [createEmptyQuestion()];
-      }
-
-      setCurrentQuestionBeingEdited((prevIndex) => {
-        if (prevIndex >= newQuestions.length) {
-          return newQuestions.length - 1;
-        }
-        return prevIndex;
-      });
-
-      return newQuestions;
+    dispatch({
+      type: "DELETE_QUESTION",
+      index: currentQuestionBeingEdited,
     });
+    setCurrentQuestionBeingEdited((prev) => Math.max(0, prev - 1));
   };
 
   const addEmptyQuestion = () => {
-    setQuestions((prev) => {
-      const newQuestions = [...prev, createEmptyQuestion()];
-      setCurrentQuestionBeingEdited(newQuestions.length - 1);
-      return newQuestions;
-    });
+    dispatch({ type: "ADD_QUESTION" });
+    setCurrentQuestionBeingEdited(questions.length);
   };
 
   return (
