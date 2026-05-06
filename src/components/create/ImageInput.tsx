@@ -1,16 +1,18 @@
 import { useState, type ChangeEvent } from "react";
 import Button from "../UI/Button";
-import ImageCrop, { type AreaPixels } from "./ImageCrop";
 import uploadIcon from "../../assets/uploadIcon.svg";
 import deleteIcon from "../../assets/deleteIcon.svg";
 import cropIcon from "../../assets/cropIcon.svg";
+import ImageCrop from "./ImageCrop";
+import type { Area } from "react-easy-crop";
 import classes from "./ImageInput.module.css";
 
 interface ImageInputProps {
   imageSrc: string;
   imagePreview: string;
+  croppedAreaPixels: Area | null;
   setImage: (file: string) => void;
-  handleCropComplete: (areaPixels: AreaPixels | null) => void;
+  handleCropComplete: (areaPixels: Area | null) => void;
   handleSaveCropped: () => void;
 }
 
@@ -39,6 +41,14 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
     setImageCropDisplay((prev) => !prev);
   };
 
+  // const handleCropChange = (crop: Point) => {
+  //   setCrop(crop);
+  // };
+
+  // const handleZoomChange = (zoom: number) => {
+  //   setZoom(zoom);
+  // };
+
   return (
     <>
       {props.imagePreview ? (
@@ -63,9 +73,14 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
           {imageCropDisplay && (
             <ImageCrop
               image={props.imageSrc}
+              croppedAreaPixels={props.croppedAreaPixels}
               closeOverlay={toggleImageCrop}
               onCropComplete={props.handleCropComplete}
               onSaveCropped={props.handleSaveCropped}
+              // onCropChange={handleCropChange}
+              // onZoomChange={handleZoomChange}
+              // zoom={zoom}
+              // crop={crop}
             />
           )}
         </>

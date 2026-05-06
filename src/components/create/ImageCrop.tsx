@@ -1,21 +1,19 @@
 import { useState, type ChangeEvent } from "react";
-import Cropper from "react-easy-crop";
+import Cropper, { type Area } from "react-easy-crop";
 import Overlay from "../UI/Overlay";
 import classes from "./ImageCrop.module.css";
 import Button from "../UI/Button";
 
-export interface AreaPixels {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
 interface ImageCropProps {
   image: string;
-  onCropComplete: (areaPixels: AreaPixels | null) => void;
+  croppedAreaPixels: Area | null;
+  onCropComplete: (areaPixels: Area | null) => void;
   onSaveCropped: () => void;
   closeOverlay: () => void;
+  // onCropChange: (crop: Point) => void;
+  // onZoomChange: (zoom: number) => void;
+  // zoom: number;
+  // crop: Point;
 }
 
 const ImageCrop: React.FC<ImageCropProps> = (props) => {
@@ -25,7 +23,7 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
   const handleSaveCropped = () => {
     props.onSaveCropped();
     props.closeOverlay();
-  }
+  };
 
   return (
     <Overlay
@@ -39,15 +37,16 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
           image={props.image}
           zoomWithScroll={false}
           aspect={3 / 2}
-          onCropComplete={(area, areaPixels) => props.onCropComplete(areaPixels)}
+          onCropComplete={(area, areaPixels) =>
+            props.onCropComplete(areaPixels)
+          }
           crop={crop}
           zoom={zoom}
-          onCropChange={(crop) => {
-            setCrop(crop);
-          }}
-          onZoomChange={(zoom) => {
-            setZoom(zoom);
-          }}
+          // onCropChange={(location) => props.onCropChange(location)}
+          // onZoomChange={(zoom) => props.onZoomChange(zoom)}
+          onCropChange={(crop) => setCrop(crop)}
+          onZoomChange={(zoom) => setZoom(zoom)}
+          initialCroppedAreaPixels={props.croppedAreaPixels ?? undefined}
         />
       </div>
       <input
@@ -60,7 +59,9 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
           setZoom(Number(event.target.value));
         }}
       />
-      <Button style="white" onClick={props.closeOverlay}>סגור</Button>
+      <Button style="white" onClick={props.closeOverlay}>
+        סגור
+      </Button>
       <Button style="blue" onClick={handleSaveCropped}>
         שמור
       </Button>

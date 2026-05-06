@@ -2,8 +2,8 @@ import { useState, type ChangeEvent } from "react";
 import NavigationMenu from "../components/NavigationMenu";
 import QuestionSlideList from "../components/create/QuestionSlideList";
 import ImageInput from "../components/create/ImageInput";
-import type { AreaPixels } from "../components/create/ImageCrop";
 import { getCroppedImg } from "../utils/cropImage";
+import type { Area } from "react-easy-crop";
 import classes from "./Create.module.css";
 
 export type QuestionType = {
@@ -31,9 +31,7 @@ const Create = () => {
   const [questionTextInput, setQuestionTextInput] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<AreaPixels | null>(
-    null,
-  );
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestionTextInput(e.target.value);
@@ -69,13 +67,14 @@ const Create = () => {
   const handleImageChange = (file: string) => {
     setSelectedImage(file);
     setImagePreview(file);
+    setCroppedAreaPixels(null);
     setQuestions((prev) => {
       prev[currentQuestionEdited].questionImage = selectedImage;
       return prev;
     });
   };
 
-  const handleCropComplete = (areaPixels: AreaPixels | null) => {
+  const handleCropComplete = (areaPixels: Area | null) => {
     setCroppedAreaPixels(areaPixels);
   };
 
@@ -114,6 +113,7 @@ const Create = () => {
           imageSrc={selectedImage}
           imagePreview={imagePreview}
           setImage={handleImageChange}
+          croppedAreaPixels={croppedAreaPixels}
           handleCropComplete={handleCropComplete}
           handleSaveCropped={handleSaveCropped}
         />

@@ -1,8 +1,8 @@
-import type { AreaPixels } from "../components/create/ImageCrop";
+import type { Area } from "react-easy-crop";
 
 export const getCroppedImg = async (
   imageSrc: string,
-  pixelCrop: AreaPixels,
+  pixelCrop: Area,
 ) => {
   const image = new Image();
   image.src = imageSrc;
