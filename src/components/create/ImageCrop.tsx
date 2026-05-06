@@ -33,7 +33,6 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
     >
       <div className={classes["image-container"]}>
         <Cropper
-          // classes={{ cropAreaClassName: classes["crop-area"] }}
           image={props.image}
           zoomWithScroll={false}
           aspect={3 / 2}
