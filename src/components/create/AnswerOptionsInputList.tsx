@@ -63,7 +63,7 @@ const AnswerOptionsInputList: React.FC<Props> = ({
     <div className={classes.container}>
       {Array.from({ length: answersCount }).map((_, i) => {
         const isCorrect = correctAnswerIndexes?.includes(i) || false;
-        const isNotActive = (answerTexts[i] ?? "") === "" && i > 1;
+        const isDisabledAnswerOption = (answerTexts[i] ?? "") === "" && i > 1;
         return (
           <div
             key={i}
@@ -74,14 +74,14 @@ const AnswerOptionsInputList: React.FC<Props> = ({
                 "--hover-color": options[i].colorOnHover,
                 boxShadow: `0 3px 0 0 ${options[i].shadowColor}`,
                 border: `1px solid ${options[i].shadowColor}`,
-                filter: isNotActive ? "brightness(0.75)" : "brightness(1)",
+                filter: isDisabledAnswerOption ? "brightness(0.75)" : "brightness(1)",
               } as React.CSSProperties
             }
           >
             <span
-              className={`${classes.resultSign} ${isCorrect && classes.correct} ${!isNotActive && classes["hover-enabled"]}`}
+              className={`${classes.resultSign} ${isCorrect && classes.correct} ${!isDisabledAnswerOption && classes["hover-enabled"]}`}
               onClick={() => {
-                if (!isNotActive) onAnswerClick(i);
+                if (!isDisabledAnswerOption) onAnswerClick(i);
               }}
             />
 
