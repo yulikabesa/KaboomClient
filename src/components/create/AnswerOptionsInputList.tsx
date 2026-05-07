@@ -86,7 +86,7 @@ const AnswerOptionsInputList: React.FC<Props> = ({
                 boxShadow: `0 3px 0 0 ${options[i].shadowColor}`,
                 border: `1px solid ${options[i].shadowColor}`,
                 filter: isDisabledAnswerOption
-                  ? "brightness(0.75)"
+                  ? "brightness(0.65)"
                   : "brightness(1)",
               } as React.CSSProperties
             }
