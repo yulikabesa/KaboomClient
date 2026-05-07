@@ -125,6 +125,7 @@ const Create: React.FC<{}> = () => {
         >
           <input
             type="range"
+            className={classes['input-range']}
             min={0}
             max={scoringWeightOptions.length - 1}
             step={1}

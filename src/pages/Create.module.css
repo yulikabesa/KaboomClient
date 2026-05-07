@@ -74,6 +74,7 @@
 }
 
 .slider-wrap {
+  color: black;
   position: relative;
   width: 8vw;
   min-width: 100px;
@@ -94,7 +95,7 @@
   );
 }
 
-input[type="range"] {
+.input-range {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
@@ -109,19 +110,19 @@ input[type="range"] {
 }
 
 /* Chrome, Safari, Edge */
-input[type="range"]::-webkit-slider-runnable-track {
+.input-range::-webkit-slider-runnable-track {
   background: #b2b2b2;
   height: 2px;
 }
 
 /* Firefox */
-input[type="range"]::-moz-range-track {
+.input-range::-moz-range-track {
   background: #b2b2b2;
   height: 2px;
 }
 
 /* Chrome, Safari, Edge */
-input[type="range"]::-webkit-slider-thumb {
+.input-range::-webkit-slider-thumb {
   -webkit-appearance: none;
   height: 40px;
   width: 53px;
@@ -132,7 +133,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 /* Firefox */
-input[type="range"]::-moz-range-thumb {
+.input-range::-moz-range-thumb {
   -webkit-appearance: none;
   height: 40px;
   width: 53px;
@@ -140,4 +141,25 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 25px;
   margin-top: -19px;
   box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* Chrome, Safari, Edge, and Opera */
+.input-range:hover::-webkit-slider-thumb {
+  background-color: #E0E0E0;
+  cursor: pointer;
+}
+
+/* Firefox */
+.input-range:hover::-moz-range-thumb {
+  background-color: #E0E0E0;
+  cursor: pointer;
+}
+
+/* 3. Active state (while clicking and dragging) */
+.input-range:active::-webkit-slider-thumb {
+  background: #411E88; 
+}
+
+.input-range:active + .range-thumb-label {
+  color: white;
 }
