@@ -74,10 +74,18 @@
   position: absolute;
 }
 
+.resultSign:hover {
+  background-color: rgba(255, 255, 255, 0.314);
+}
+
 .correct {
-  background-color: #7CBC4F;
+  background-color: #7cbc4f;
   background-image: url(../../assets//correctSignForAnswerInput.svg);
-  background-size: 80%;  
+  background-size: 80%;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.correct:hover {
+  background-color: #67a13e;
 }
