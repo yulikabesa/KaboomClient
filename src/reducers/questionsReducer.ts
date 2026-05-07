@@ -8,7 +8,13 @@ export type QuestionsAction =
   | { type: "ADD_QUESTION" }
   | { type: "DELETE_QUESTION"; index: number }
   | { type: "COPY_QUESTION"; index: number }
-  | { type: "SET_QUESTIONS"; value: questionType[] };
+  | { type: "SET_QUESTIONS"; value: questionType[] }
+  | {
+      type: "SET_ANSWER_OPTION";
+      questionIndex: number;
+      answerIndex: number;
+      value: string;
+    };
 
 export const createEmptyQuestion = (): questionType => ({
   questionText: "",
@@ -62,6 +68,21 @@ export function questionsReducer(
       updated[action.index] = {
         ...q,
         correctIndexes: newCorrectIndexes,
+      };
+
+      return updated;
+    }
+
+    case "SET_ANSWER_OPTION": {
+      const updated = [...state];
+      const question = updated[action.questionIndex];
+
+      const newAnswerOptions = [...question.answerOptions];
+      newAnswerOptions[action.answerIndex] = action.value;
+
+      updated[action.questionIndex] = {
+        ...question,
+        answerOptions: newAnswerOptions,
       };
 
       return updated;

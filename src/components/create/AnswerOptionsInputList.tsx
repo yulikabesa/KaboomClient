@@ -9,12 +9,14 @@ import classes from "./AnswerOptionsInputList.module.css";
 
 type Props = {
   onAnswerClick: (answerIndex: number) => void;
+  onAnswerTextChange: (answerIndex: number, value: string) => void;
   answerTexts: string[];
   correctAnswerIndexes: number[];
 };
 
 const AnswerOptionsInputList: React.FC<Props> = ({
   onAnswerClick,
+  onAnswerTextChange,
   answerTexts,
   correctAnswerIndexes,
 }) => {
@@ -57,11 +59,22 @@ const AnswerOptionsInputList: React.FC<Props> = ({
     },
   ];
 
+  const lastFilledIndex = answerTexts.reduce(
+    (last, text, index) => ((text ?? "").trim() !== "" ? index : last),
+    1,
+  );
+
+  // always enable AnswerOptions in pairs: 2, 4, 6...
+  const enabledAnswersCount = Math.min(
+    options.length,
+    Math.max(2, Math.ceil((lastFilledIndex + 1) / 2) * 2),
+  );
+
   return (
     <div className={classes.container}>
       {Array.from({ length: options.length }).map((_, i) => {
         const isCorrect = correctAnswerIndexes?.includes(i) || false;
-        const isDisabledAnswerOption = (answerTexts[i] ?? "") === "" && i > 1;
+        const isDisabledAnswerOption = i >= enabledAnswersCount;
         return (
           <div
             key={i}
@@ -92,6 +105,7 @@ const AnswerOptionsInputList: React.FC<Props> = ({
                 placeholder="תשובה"
                 className={classes.answerText}
                 value={answerTexts[i] ?? ""}
+                onChange={(e) => onAnswerTextChange(i, e.target.value)}
               />
             </div>
           </div>

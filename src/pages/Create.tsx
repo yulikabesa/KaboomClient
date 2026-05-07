@@ -16,9 +16,7 @@ const Create: React.FC<{}> = () => {
 
   console.log(data);
   const initialQuestions =
-  Array.isArray(data) && data.length > 0
-    ? data
-    : [createEmptyQuestion()];
+    Array.isArray(data) && data.length > 0 ? data : [createEmptyQuestion()];
 
   const [questions, dispatch] = React.useReducer(
     questionsReducer,
@@ -63,6 +61,15 @@ const Create: React.FC<{}> = () => {
     dispatch({
       type: "TOGGLE_CORRECT_INDEX",
       index: currentQuestionBeingEdited,
+      value,
+    });
+  };
+
+  const handleAnswerTextChange = (answerIndex: number, value: string) => {
+    dispatch({
+      type: "SET_ANSWER_OPTION",
+      questionIndex: currentQuestionBeingEdited,
+      answerIndex,
       value,
     });
   };
@@ -137,6 +144,7 @@ const Create: React.FC<{}> = () => {
           correctAnswerIndexes={currentQuestion.correctIndexes}
           answerTexts={currentQuestion.answerOptions}
           onAnswerClick={(index) => handleQuestionCorrectIndexesChange(index)}
+          onAnswerTextChange={handleAnswerTextChange}
         />
       </div>
 
