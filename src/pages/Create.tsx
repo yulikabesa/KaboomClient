@@ -135,7 +135,6 @@ const Create: React.FC<{}> = () => {
         />
         <AnswerOptionsInputList
           correctAnswerIndexes={currentQuestion.correctIndexes}
-          answersCount={6}
           answerTexts={currentQuestion.answerOptions}
           onAnswerClick={(index) => handleQuestionCorrectIndexesChange(index)}
         />

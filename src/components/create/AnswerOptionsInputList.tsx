@@ -8,14 +8,12 @@ import UpsideDownTriangle from "../shapes/UpsideDownTriangle";
 import classes from "./AnswerOptionsInputList.module.css";
 
 type Props = {
-  answersCount: number;
   onAnswerClick: (answerIndex: number) => void;
   answerTexts: string[];
   correctAnswerIndexes: number[];
 };
 
 const AnswerOptionsInputList: React.FC<Props> = ({
-  answersCount,
   onAnswerClick,
   answerTexts,
   correctAnswerIndexes,
@@ -61,7 +59,7 @@ const AnswerOptionsInputList: React.FC<Props> = ({
 
   return (
     <div className={classes.container}>
-      {Array.from({ length: answersCount }).map((_, i) => {
+      {Array.from({ length: options.length }).map((_, i) => {
         const isCorrect = correctAnswerIndexes?.includes(i) || false;
         const isDisabledAnswerOption = (answerTexts[i] ?? "") === "" && i > 1;
         return (
@@ -74,7 +72,9 @@ const AnswerOptionsInputList: React.FC<Props> = ({
                 "--hover-color": options[i].colorOnHover,
                 boxShadow: `0 3px 0 0 ${options[i].shadowColor}`,
                 border: `1px solid ${options[i].shadowColor}`,
-                filter: isDisabledAnswerOption ? "brightness(0.75)" : "brightness(1)",
+                filter: isDisabledAnswerOption
+                  ? "brightness(0.75)"
+                  : "brightness(1)",
               } as React.CSSProperties
             }
           >
