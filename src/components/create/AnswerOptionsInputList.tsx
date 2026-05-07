@@ -71,7 +71,7 @@ const AnswerOptionsInputList: React.FC<Props> = ({
               {
                 "--bg-color": options[i].color,
                 "--hover-color": options[i].colorOnHover,
-                "boxShadow": `0 3px 0 0 ${options[i].shadowColor}`,
+                boxShadow: `0 3px 0 0 ${options[i].shadowColor}`,
                 border: `1px solid ${options[i].shadowColor}`,
                 filter:
                   (answerTexts[i] ?? "") === "" && i > 1
@@ -82,7 +82,9 @@ const AnswerOptionsInputList: React.FC<Props> = ({
           >
             <span
               className={`${classes.resultSign} ${isCorrect && classes.correct}`}
-              onClick={() => onAnswerClick(i)}
+              onClick={() => {
+                if (!((answerTexts[i] ?? "") === "" && i > 1)) onAnswerClick(i);
+              }}
             />
 
             <div className={classes.contentRight}>
