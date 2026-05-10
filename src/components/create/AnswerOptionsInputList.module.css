@@ -57,11 +57,12 @@
 
 /* right-side group (text + shape) */
 .contentRight {
+  width: 100%;
   display: flex;
   align-items: center;
   flex-direction: row-reverse;
   gap: 2vh;
-  margin-left: auto;
+  margin-left: 5vh;
   height: 100%;
 }
 
