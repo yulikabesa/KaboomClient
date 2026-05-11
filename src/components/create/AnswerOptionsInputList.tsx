@@ -59,10 +59,7 @@ const AnswerOptionsInputList: React.FC<Props> = ({
     },
   ];
 
-  const lastFilledIndex = answerTexts.reduce(
-    (last, text, index) => ((text ?? "").trim() !== "" ? index : last),
-    1,
-  );
+  const lastFilledIndex = answerTexts.length - 1;
 
   // always enable AnswerOptions in pairs: 2, 4, 6...
   const enabledAnswersCount = Math.min(

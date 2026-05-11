@@ -78,11 +78,29 @@ export function questionsReducer(
       const question = updated[action.questionIndex];
 
       const newAnswerOptions = [...question.answerOptions];
+
+      // update value
       newAnswerOptions[action.answerIndex] = action.value;
+
+      // remove trailing empty answers
+      while (
+        newAnswerOptions.length > 0 &&
+        (newAnswerOptions[newAnswerOptions.length - 1] ?? "").trim() === ""
+      ) {
+        newAnswerOptions.pop();
+      }
+
+      // remove correct indexes that no longer exist
+      const newCorrectIndexes = question.correctIndexes.filter(
+        (index) =>
+          index < newAnswerOptions.length &&
+          (newAnswerOptions[index] ?? "").trim() !== "",
+      );
 
       updated[action.questionIndex] = {
         ...question,
         answerOptions: newAnswerOptions,
+        correctIndexes: newCorrectIndexes,
       };
 
       return updated;
