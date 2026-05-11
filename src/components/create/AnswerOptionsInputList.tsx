@@ -59,12 +59,13 @@ const AnswerOptionsInputList: React.FC<Props> = ({
     },
   ];
 
-  const lastFilledIndex = answerTexts.length - 1;
-
-  // always enable AnswerOptions in pairs: 2, 4, 6...
+  const filledCount = answerTexts.filter(
+    (text) => (text ?? "").trim() !== "",
+  ).length;
+  
   const enabledAnswersCount = Math.min(
     options.length,
-    Math.max(2, Math.ceil((lastFilledIndex + 1) / 2) * 2),
+    Math.max(2, filledCount % 2 === 0 ? filledCount + 2 : filledCount + 1),
   );
 
   return (
@@ -102,6 +103,7 @@ const AnswerOptionsInputList: React.FC<Props> = ({
                 placeholder="תשובה"
                 className={classes.answerText}
                 value={answerTexts[i] ?? ""}
+                disabled={isDisabledAnswerOption}
                 onChange={(e) => onAnswerTextChange(i, e.target.value)}
               />
             </div>
