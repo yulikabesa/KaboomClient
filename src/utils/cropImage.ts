@@ -1,24 +1,24 @@
 import type { Area } from "react-easy-crop";
 
-export const getCroppedImg = async (
-  imageSrc: string,
-  pixelCrop: Area,
-) => {
-  const image = new Image();
-  image.src = imageSrc;
+const createImage = (url: string) =>
+  new Promise((resolve, reject) => {
+    const image = new Image();
+    image.addEventListener("load", () => resolve(image));
+    image.addEventListener("error", (error) => reject(error));
+    image.src = url;
+  });
 
-  // Wait for image to load
-  await new Promise((resolve) => (image.onload = resolve));
-
+export default async function getCroppedImg(imageSrc: string, pixelCrop: Area) {
+  const image = (await createImage(imageSrc)) as CanvasImageSource;
   const canvas = document.createElement("canvas");
   canvas.width = pixelCrop.width;
   canvas.height = pixelCrop.height;
   const ctx = canvas.getContext("2d");
 
-  if (!ctx) {
-    return;
-  }
+  if (!ctx) return;
 
+  // ctx.fillStyle = "#ffffff";
+  // ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(
     image,
     pixelCrop.x,
@@ -31,6 +31,13 @@ export const getCroppedImg = async (
     pixelCrop.height,
   );
 
-  // Return as a base64 string
-  return canvas.toDataURL("image/jpeg");
-};
+  // As Base64 string
+  // return canvas.toDataURL('image/png');
+
+  // As a blob
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((file) => {
+      if (file) resolve(URL.createObjectURL(file));
+    }, "image/png");
+  });
+}

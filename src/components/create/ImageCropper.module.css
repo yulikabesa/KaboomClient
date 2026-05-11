@@ -1,3 +1,9 @@
+.align-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .image-container {
   width: 68%;
   aspect-ratio: 3/2;
@@ -46,5 +52,4 @@
 }
 
 .actions {
-
 }

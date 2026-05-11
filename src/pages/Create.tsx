@@ -2,7 +2,7 @@ import { useState, type ChangeEvent } from "react";
 import NavigationMenu from "../components/NavigationMenu";
 import QuestionSlideList from "../components/create/QuestionSlideList";
 import ImageInput from "../components/create/ImageInput";
-import { getCroppedImg } from "../utils/cropImage";
+import getCroppedImg from "../utils/cropImage";
 import type { Area } from "react-easy-crop";
 import classes from "./Create.module.css";
 
@@ -81,7 +81,7 @@ const Create = () => {
   const handleSaveCropped = async () => {
     if (!selectedImage || !croppedAreaPixels) return;
 
-    const cropped = await getCroppedImg(selectedImage, croppedAreaPixels);
+    const cropped = await getCroppedImg(selectedImage, croppedAreaPixels) as string;
     if (cropped) setImagePreview(cropped);
   };
 

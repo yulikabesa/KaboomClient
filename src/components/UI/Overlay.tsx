@@ -26,7 +26,9 @@ const OverlayCard: React.FC<OverlayProps> = (props) => {
           </div>
         )}
       </header>
-      <div className={classes["content"]}>{props.children}</div>
+      <div className={`${classes["content"]} ${props.className}`}>
+        {props.children}
+      </div>
     </div>
   );
 };

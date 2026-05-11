@@ -1,8 +1,10 @@
 import { useState, type ChangeEvent } from "react";
 import Cropper, { type Area } from "react-easy-crop";
 import Overlay from "../UI/Overlay";
-import classes from "./ImageCrop.module.css";
+import classes from "./ImageCropper.module.css";
 import Button from "../UI/Button";
+
+const minZoom = 0.4;
 
 interface ImageCropProps {
   image: string;
@@ -30,22 +32,23 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
       title="חתוך את התמונה"
       closeOverlay={props.closeOverlay}
       button={true}
+      className={classes["align-content"]}
     >
       <div className={classes["image-container"]}>
         <Cropper
+          restrictPosition={false}
+          minZoom={minZoom}
           image={props.image}
-          zoomWithScroll={false}
           aspect={3 / 2}
           onCropComplete={(area, areaPixels) =>
             props.onCropComplete(areaPixels)
           }
           crop={crop}
           zoom={zoom}
-          // onCropChange={(location) => props.onCropChange(location)}
-          // onZoomChange={(zoom) => props.onZoomChange(zoom)}
-          onCropChange={(crop) => setCrop(crop)}
-          onZoomChange={(zoom) => setZoom(zoom)}
+          onCropChange={setCrop}
+          onZoomChange={setZoom}
           initialCroppedAreaPixels={props.croppedAreaPixels ?? undefined}
+          objectFit="cover"
         />
       </div>
       <div className={classes["zoom-input"]}>
@@ -53,8 +56,8 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
           type="range"
           value={zoom}
           step={0.1}
-          min={1}
-          max={10}
+          min={minZoom}
+          max={3}
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             setZoom(Number(event.target.value));
           }}

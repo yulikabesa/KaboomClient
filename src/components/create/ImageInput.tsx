@@ -3,7 +3,7 @@ import Button from "../UI/Button";
 import uploadIcon from "../../assets/uploadIcon.svg";
 import deleteIcon from "../../assets/deleteIcon.svg";
 import cropIcon from "../../assets/cropIcon.svg";
-import ImageCrop from "./ImageCrop";
+import ImageCropper from "./ImageCropper";
 import type { Area } from "react-easy-crop";
 import classes from "./ImageInput.module.css";
 
@@ -68,7 +68,7 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
             </div>
           </div>
           {imageCropDisplay && (
-            <ImageCrop
+            <ImageCropper
               image={props.imageSrc}
               croppedAreaPixels={props.croppedAreaPixels}
               closeOverlay={toggleImageCrop}
@@ -101,7 +101,7 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
                 style="blue"
                 className={classes[""]}
                 onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                  e.preventDefault(); 
+                  e.preventDefault();
                   e.stopPropagation();
                 }}
               >
