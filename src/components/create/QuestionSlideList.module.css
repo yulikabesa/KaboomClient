@@ -51,4 +51,5 @@
 .icon:hover {
   filter: brightness(1.5);
   transition: 0.3s;
+  cursor: pointer;
 }

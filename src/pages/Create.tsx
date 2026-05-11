@@ -109,8 +109,12 @@ const Create: React.FC<{}> = () => {
       sourceIndex: result.source.index,
       destinationIndex: result.destination.index,
     });
-    
+
     setCurrentQuestionBeingEdited(result.destination.index);
+  };
+
+  const onDragStart = (result: any) => {
+    setCurrentQuestionBeingEdited(result.source.index);
   };
 
   return (
@@ -173,6 +177,7 @@ const Create: React.FC<{}> = () => {
           onSlideDeleteClick={handleCurrentSlideDeleteClick}
           questions={questions}
           onDragEnd={onDragEnd}
+          onDragStart={onDragStart}
         />
         <div className={classes["blue-btn"]} onClick={addEmptyQuestion}>
           הוסף שאלה

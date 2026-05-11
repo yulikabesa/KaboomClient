@@ -26,7 +26,6 @@ const DraggableQuestionItem: React.FC<Props> = ({
     <Draggable
       draggableId={question._id}
       index={index}
-      isDragDisabled={!isActive}
     >
       {(provided) => (
         <div

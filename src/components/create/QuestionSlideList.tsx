@@ -10,6 +10,7 @@ type Props = {
   onSlideCopyClick: () => void;
   onSlideDeleteClick: () => void;
   onDragEnd: (result: any) => void;
+  onDragStart: (result: any) => void;
 };
 
 const QuestionSlideList: React.FC<Props> = ({
@@ -19,9 +20,10 @@ const QuestionSlideList: React.FC<Props> = ({
   onSlideCopyClick,
   onSlideDeleteClick,
   onDragEnd,
+  onDragStart,
 }) => {
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
       <Droppable droppableId="questions-list">
         {(provided) => (
           <div
