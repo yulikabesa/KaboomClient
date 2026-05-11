@@ -128,15 +128,13 @@ export function questionsReducer(
     case "COPY_QUESTION": {
       const updated = [...state];
       const originalQuestion = updated[action.index];
-
       const copy: questionType = {
         ...originalQuestion,
+        _id: crypto.randomUUID(),
         answerOptions: [...originalQuestion.answerOptions],
         correctIndexes: [...originalQuestion.correctIndexes],
       };
-
       updated.splice(action.index + 1, 0, copy);
-
       return updated;
     }
 
