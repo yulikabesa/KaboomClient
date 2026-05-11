@@ -62,7 +62,7 @@ const AnswerOptionsInputList: React.FC<Props> = ({
   const filledCount = answerTexts.filter(
     (text) => (text ?? "").trim() !== "",
   ).length;
-  
+
   const enabledAnswersCount = Math.min(
     options.length,
     Math.max(2, filledCount % 2 === 0 ? filledCount + 2 : filledCount + 1),
@@ -99,6 +99,7 @@ const AnswerOptionsInputList: React.FC<Props> = ({
             <div className={classes.contentRight}>
               {options[i].shape}
               <input
+                id={`answer-${i}`}
                 type="text"
                 placeholder="תשובה"
                 className={classes.answerText}

@@ -15,6 +15,7 @@ const NavigationMenu: React.FC<{ variant: "home" | "create" }> = (props) => {
         <div className={classes["input-container"]}>
           <img src={settingsIcon} className={classes["input-icon"]} alt="icon" />
           <input
+            id="quiz-name"
             type="text"
             className={classes["quiz-name-input"]}
             placeholder="שם החידון"

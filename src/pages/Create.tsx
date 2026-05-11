@@ -14,7 +14,6 @@ const Create: React.FC<{}> = () => {
   const location = useLocation();
   const data = location.state;
 
-  console.log(data);
   const initialQuestions =
     Array.isArray(data) && data.length > 0 ? data : [createEmptyQuestion()];
 
@@ -106,6 +105,7 @@ const Create: React.FC<{}> = () => {
       {/* question editing */}
       <div className={classes["question-editing"]}>
         <input
+          id="question-text"
           type="text"
           placeholder="הקלד כאן את השאלה שלך…"
           className={classes["question-text-input"]}
@@ -124,8 +124,9 @@ const Create: React.FC<{}> = () => {
           }
         >
           <input
+            id="question-scoring-weight"
             type="range"
-            className={classes['input-range']}
+            className={classes["input-range"]}
             min={0}
             max={scoringWeightOptions.length - 1}
             step={1}
