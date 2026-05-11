@@ -99,6 +99,20 @@ const Create: React.FC<{}> = () => {
     setCurrentQuestionBeingEdited(questions.length);
   };
 
+  const onDragEnd = (result: any) => {
+    if (!result.destination) return;
+
+    if (result.destination.index === result.source.index) return;
+
+    dispatch({
+      type: "REORDER_QUESTIONS",
+      sourceIndex: result.source.index,
+      destinationIndex: result.destination.index,
+    });
+    
+    setCurrentQuestionBeingEdited(result.destination.index);
+  };
+
   return (
     <div className={classes.background}>
       <NavigationMenu variant="create" />
@@ -158,6 +172,7 @@ const Create: React.FC<{}> = () => {
           onSlideCopyClick={handleCurrentSlideCopyClick}
           onSlideDeleteClick={handleCurrentSlideDeleteClick}
           questions={questions}
+          onDragEnd={onDragEnd}
         />
         <div className={classes["blue-btn"]} onClick={addEmptyQuestion}>
           הוסף שאלה

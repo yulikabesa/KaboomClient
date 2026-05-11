@@ -14,9 +14,15 @@ export type QuestionsAction =
       questionIndex: number;
       answerIndex: number;
       value: string;
+    }
+  | {
+      type: "REORDER_QUESTIONS";
+      sourceIndex: number;
+      destinationIndex: number;
     };
 
 export const createEmptyQuestion = (): questionType => ({
+  _id: crypto.randomUUID(),
   questionText: "",
   answerOptions: ["", ""],
   correctIndexes: [0],
@@ -102,6 +108,16 @@ export function questionsReducer(
         answerOptions: newAnswerOptions,
         correctIndexes: newCorrectIndexes,
       };
+
+      return updated;
+    }
+
+    case "REORDER_QUESTIONS": {
+      const updated = [...state];
+
+      const [removed] = updated.splice(action.sourceIndex, 1);
+
+      updated.splice(action.destinationIndex, 0, removed);
 
       return updated;
     }

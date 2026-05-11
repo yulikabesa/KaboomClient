@@ -9,7 +9,7 @@ export type questionType = {
   correctIndexes: number[];
   scoringWeight: number;
   timeLimit: number;
-  _id?: string;
+  _id: string;
   questionImage?: string;
 };
 
