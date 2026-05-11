@@ -1,12 +1,14 @@
 import classes from "./QuestionSlide.module.css";
-import exampleToChange from "../../assets/kaboomBackground.png";
 import type React from "react";
+import SlideAnswerOptionsList from "./SlideAnswerOptionsList";
 
 const QuestionSlide: React.FC<{
   questionText: string;
   timeLimit: number;
   questionImage: string;
   isCurrentlyEdited: boolean;
+  answersCount: number;
+  correctAnswerIndexes : number[];
 }> = (props) => {
   return (
     <div
@@ -16,13 +18,14 @@ const QuestionSlide: React.FC<{
         border: props.isCurrentlyEdited ? "2px solid #3E6CC4" : "none",
       }}
     >
-      <p className={classes.title}>{props.questionText}</p>
+      <p className={classes.title}>{props.questionText || "\u00A0"}</p>
       <div className={classes["middle-items"]}>
         {props.questionImage !== "" && (
-          <img src={exampleToChange} className={classes["question-image"]} />
+          <img src={props.questionImage} className={classes["question-image"]} />
         )}
         <div className={classes["question-time"]}>{props.timeLimit}</div>
       </div>
+      <SlideAnswerOptionsList answersCount={props.answersCount} correctAnswerIndexes={props.correctAnswerIndexes} />
     </div>
   );
 };

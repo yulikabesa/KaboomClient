@@ -6,6 +6,7 @@ import { useSocket } from "../store/SocketContext";
 import { useNavigate } from "react-router-dom";
 import { useLobby } from "../store/LobbyContext";
 import { useState } from "react";
+import type { questionType } from "./ProductsList";
 
 const ProductDisplay: React.FC<{
   isLoading: boolean;
@@ -14,6 +15,7 @@ const ProductDisplay: React.FC<{
   course: string;
   questionsNum: number;
   productId: string;
+  questions: questionType[];
 }> = (props) => {
   const navigate = useNavigate();
   const { setLobby } = useLobby();
@@ -47,6 +49,10 @@ const ProductDisplay: React.FC<{
     setTimeout(() => {
       setIsCreating(false);
     }, 5000);
+  };
+
+  const onEditClick = () => {
+    navigate("/create", { state: props.questions });
   };
   return (
     <div className={classes.container}>
@@ -86,7 +92,10 @@ const ProductDisplay: React.FC<{
                 <span>לשחק</span>
                 <img src={gameIcon} className={classes.icon} />
               </div>
-              <div className={`${classes["option-btn"]} `}>
+              <div
+                onClick={onEditClick}
+                className={`${classes["option-btn"]} ${classes["transparent-btn"]}`}
+              >
                 <span>לערוך</span>
                 <img src={editIcon} className={classes.icon} />
               </div>

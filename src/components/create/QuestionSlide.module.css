@@ -1,6 +1,5 @@
 .container {
   width: 14vw;
-  min-width: 160px;
   height: 18vh;
   display: flex;
   flex-direction: column;
@@ -11,27 +10,38 @@
   text-align: center;
   font-size: clamp(12px, 0.7vmax, 20px);
   padding: 0.5vw 1vw;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .middle-items {
-  display: flex;
-  justify-content: center;
+  position: relative;
+  height: 6vh;
+   display: flex;
   align-items: center;
-  gap: 2vh;
 }
 
 .question-image {
-    width: 40%;
+  width: 40%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .question-time {
+  position: absolute;
+  left: 1vw;
+
   border-radius: 50%;
   width: 4vh;
   height: 4vh;
-  border: 2px solid #E5E5E5;
+  border: 2px solid #e5e5e5;
   font-weight: 900;
   color: #949494;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
 }

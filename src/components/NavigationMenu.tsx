@@ -8,24 +8,21 @@ import Button from "./UI/Button";
 const NavigationMenu: React.FC<{ variant: "home" | "create" }> = (props) => {
   return (
     <header className={classes.header}>
-      <div className={classes["right-side-items"]}>
-        <Link to="/">
-          <img src={kaboomLogo} className={classes.logo} />
-        </Link>
-        {props.variant === "create" && (
-          <div className={classes["input-container"]}>
-            <img
-              src={settingsIcon}
-              className={classes["input-icon"]}
-              alt="icon"
-            />
-            <input
-              type="text"
-              className={classes["quiz-name-input"]}
-              placeholder="שם החידון"
-            />
-          </div>
-        )}
+      <div className={classes['right-side-items']}>
+      <Link to="/">
+        <img src={kaboomLogo} className={classes.logo} />
+      </Link>
+      {props.variant === "create" && (
+        <div className={classes["input-container"]}>
+          <img src={settingsIcon} className={classes["input-icon"]} alt="icon" />
+          <input
+            id="quiz-name"
+            type="text"
+            className={classes["quiz-name-input"]}
+            placeholder="שם החידון"
+          />
+        </div>
+      )}
       </div>
       <nav>
         <ul>
