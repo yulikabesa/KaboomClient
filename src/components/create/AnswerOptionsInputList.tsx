@@ -90,9 +90,14 @@ const AnswerOptionsInputList: React.FC<Props> = ({
             }
           >
             <span
-              className={`${classes.resultSign} ${isCorrect && classes.correct} ${!isDisabledAnswerOption && classes["hover-enabled"]}`}
+              className={`${classes.resultSign} ${isCorrect && classes.correct} ${!isDisabledAnswerOption && answerTexts[i] !== "" && answerTexts[i] !== undefined && classes["hover-enabled"]}`}
               onClick={() => {
-                if (!isDisabledAnswerOption) onAnswerClick(i);
+                if (
+                  !isDisabledAnswerOption &&
+                  answerTexts[i] !== "" &&
+                  answerTexts[i] !== undefined
+                )
+                  onAnswerClick(i);
               }}
             />
 
