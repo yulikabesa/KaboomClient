@@ -1,8 +1,9 @@
 .container {
   position: relative;
-  width: 20vw;
-  height: 20vw;
+  width: clamp(80px, 20vw, 200px);
+  height: clamp(80px, 20vw, 200px);
   justify-self: center;
+  min-width: 0;
 }
 
 .center {
