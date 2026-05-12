@@ -12,6 +12,7 @@ import {
   questionsReducer,
   createEmptyQuestion,
 } from "../reducers/questionsReducer";
+import RangeInput from "../components/create/RangeInput";
 
 const Create: React.FC<{}> = () => {
   const location = useLocation();
@@ -171,32 +172,12 @@ const Create: React.FC<{}> = () => {
           maxLength={72}
         />
         <div className={classes["flex"]}>
-          <div
-            className={classes["slider-wrap"]}
-            style={
-              {
-                "--index": scoringWeightOptions.indexOf(
-                  currentQuestion.scoringWeight,
-                ),
-              } as React.CSSProperties
+          <RangeInput
+            scoringWeight={currentQuestion.scoringWeight}
+            handleQuestionScoringWeightChange={
+              handleQuestionScoringWeightChange
             }
-          >
-            <input
-              id="question-scoring-weight"
-              type="range"
-              className={classes["input-range"]}
-              min={0}
-              max={scoringWeightOptions.length - 1}
-              step={1}
-              value={scoringWeightOptions.indexOf(
-                currentQuestion.scoringWeight,
-              )}
-              onChange={handleQuestionScoringWeightChange}
-            />
-            <div className={classes["range-thumb-label"]}>
-              X{currentQuestion.scoringWeight}
-            </div>
-          </div>
+          />
           <ImageInput
             imageSrc={selectedImage}
             imagePreview={imagePreview}
