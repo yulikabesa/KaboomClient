@@ -8,10 +8,8 @@
   column-gap: 1vh;
   row-gap: 1vh;
   padding: 3vh 4vh;
-  height: 34vh;
-  position: absolute;
   width: 83vw;
-  bottom: 0;
+  flex-grow: 1;
 }
 
 .answer-option {
