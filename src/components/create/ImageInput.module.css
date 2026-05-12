@@ -84,3 +84,7 @@
 .input-actions {
   margin: 0.4rem;
 }
+
+.input-actions > * {
+  margin: 0 1%;
+}

@@ -18,13 +18,18 @@
 
 .right-side-items {
   display: flex;
-  gap: 2%;
   height: 60%;
   width: 50%;
 }
 
+.header nav {
+  width: 50%;
+  height: 60%;
+}
+
+.header li,
 .right-side-items > * {
-  margin: 0 2%;
+  margin: 0 1%;
 }
 
 .logo {
@@ -37,6 +42,7 @@
   padding: 0;
   display: flex;
   align-items: baseline;
+  justify-content: end;
 }
 
 .input-container {

@@ -9,7 +9,6 @@
     transform 0.15s ease,
     box-shadow 0.15s ease;
   padding: 0.2rem 0.8rem;
-  margin: 0.4rem;
   font-size: clamp(12px, 1vmax, 20px);
 }
 
