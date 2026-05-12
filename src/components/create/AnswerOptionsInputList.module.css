@@ -7,8 +7,7 @@
   box-sizing: border-box;
   column-gap: 1vh;
   row-gap: 1vh;
-  padding: 3vh 4vh;
-  width: 83vw;
+  width: 100%;
   flex-grow: 1;
 }
 
