@@ -170,48 +170,52 @@ const Create: React.FC<{}> = () => {
           onChange={handleQuestionTextInputChange}
           maxLength={72}
         />
-        <div
-          className={classes["slider-wrap"]}
-          style={
-            {
-              "--index": scoringWeightOptions.indexOf(
+        <div className={classes["flex"]}>
+          <div
+            className={classes["slider-wrap"]}
+            style={
+              {
+                "--index": scoringWeightOptions.indexOf(
+                  currentQuestion.scoringWeight,
+                ),
+              } as React.CSSProperties
+            }
+          >
+            <input
+              id="question-scoring-weight"
+              type="range"
+              className={classes["input-range"]}
+              min={0}
+              max={scoringWeightOptions.length - 1}
+              step={1}
+              value={scoringWeightOptions.indexOf(
                 currentQuestion.scoringWeight,
-              ),
-            } as React.CSSProperties
-          }
-        >
-          <input
-            id="question-scoring-weight"
-            type="range"
-            className={classes["input-range"]}
-            min={0}
-            max={scoringWeightOptions.length - 1}
-            step={1}
-            value={scoringWeightOptions.indexOf(currentQuestion.scoringWeight)}
-            onChange={handleQuestionScoringWeightChange}
-          />
-          <div className={classes["range-thumb-label"]}>
-            X{currentQuestion.scoringWeight}
+              )}
+              onChange={handleQuestionScoringWeightChange}
+            />
+            <div className={classes["range-thumb-label"]}>
+              X{currentQuestion.scoringWeight}
+            </div>
           </div>
+          <ImageInput
+            imageSrc={selectedImage}
+            imagePreview={imagePreview}
+            setImage={handleImageChange}
+            croppedAreaPixels={croppedAreaPixels}
+            handleCropComplete={handleCropComplete}
+            handleSaveCropped={handleSaveCropped}
+          />
+          <SecondsCircleLayout
+            items={[20, 30, 60, 90, 120, 240, 5, 10]}
+            center={currentQuestion.timeLimit}
+            onCenterChange={handleQuestionTimeLimitChange}
+          />
         </div>
-        <SecondsCircleLayout
-          items={[20, 30, 60, 90, 120, 240, 5, 10]}
-          center={currentQuestion.timeLimit}
-          onCenterChange={handleQuestionTimeLimitChange}
-        />
         <AnswerOptionsInputList
           correctAnswerIndexes={currentQuestion.correctIndexes}
           answerTexts={currentQuestion.answerOptions}
           onAnswerClick={(index) => handleQuestionCorrectIndexesChange(index)}
           onAnswerTextChange={handleAnswerTextChange}
-        />
-        <ImageInput
-          imageSrc={selectedImage}
-          imagePreview={imagePreview}
-          setImage={handleImageChange}
-          croppedAreaPixels={croppedAreaPixels}
-          handleCropComplete={handleCropComplete}
-          handleSaveCropped={handleSaveCropped}
         />
       </div>
 

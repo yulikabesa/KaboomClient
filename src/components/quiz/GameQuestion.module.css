@@ -51,9 +51,9 @@
   line-height: 1;
 }
 
-
 .question-img {
   height: 30vh;
+  /* aspect-ratio: 3/2; */
 }
 
 .players-answered-num {
