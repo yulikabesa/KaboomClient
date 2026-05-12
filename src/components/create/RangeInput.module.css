@@ -6,7 +6,7 @@
   --thumb: 53px;
   --steps: 2;
   direction: ltr;
-  justify-self: center;
+  /* justify-self: center; */
 }
 
 .range-thumb-label {

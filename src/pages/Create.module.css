@@ -5,8 +5,20 @@
   align-items: center;
   flex: 1;
 }
+
 .center {
+  position: relative;
   justify-self: center;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.center p {
+  left: 50%;
+  transform: translate(-50%, -180%);
+  position: absolute;
+  text-align: center;
 }
 
 .background {

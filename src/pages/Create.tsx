@@ -172,12 +172,15 @@ const Create: React.FC<{}> = () => {
           maxLength={72}
         />
         <div className={classes["flex"]}>
-          <RangeInput
-            scoringWeight={currentQuestion.scoringWeight}
-            handleQuestionScoringWeightChange={
-              handleQuestionScoringWeightChange
-            }
-          />
+          <div className={classes.center}>
+            <p>ניקוד</p>
+            <RangeInput
+              scoringWeight={currentQuestion.scoringWeight}
+              handleQuestionScoringWeightChange={
+                handleQuestionScoringWeightChange
+              }
+            />
+          </div>
           <ImageInput
             imageSrc={selectedImage}
             imagePreview={imagePreview}
@@ -186,11 +189,14 @@ const Create: React.FC<{}> = () => {
             handleCropComplete={handleCropComplete}
             handleSaveCropped={handleSaveCropped}
           />
-          <SecondsCircleLayout
-            items={[20, 30, 60, 90, 120, 240, 5, 10]}
-            center={currentQuestion.timeLimit}
-            onCenterChange={handleQuestionTimeLimitChange}
-          />
+          <div className={classes.center}>
+            <p>כמות זמן</p>
+            <SecondsCircleLayout
+              items={[20, 30, 60, 90, 120, 240, 5, 10]}
+              center={currentQuestion.timeLimit}
+              onCenterChange={handleQuestionTimeLimitChange}
+            />
+          </div>
         </div>
         <AnswerOptionsInputList
           correctAnswerIndexes={currentQuestion.correctIndexes}
