@@ -32,7 +32,7 @@ const Create: React.FC<{}> = () => {
   const currentQuestion = questions[currentQuestionBeingEdited];
 
   const [selectedImage, setSelectedImage] = useState("");
-  const [imagePreview, setImagePreview] = useState("");
+//   const [imagePreview, setImagePreview] = useState("");
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -109,9 +109,13 @@ const Create: React.FC<{}> = () => {
 
   const handleImageChange = (file: string) => {
     setSelectedImage(file);
-    setImagePreview(file);
     setCroppedAreaPixels(null);
     // todo: set in reducer
+    dispatch({
+      type: "SET_IMAGE",
+      index: currentQuestionBeingEdited,
+      value: file,
+    });
   };
 
   const handleCropComplete = (areaPixels: Area | null) => {
@@ -125,19 +129,13 @@ const Create: React.FC<{}> = () => {
       selectedImage,
       croppedAreaPixels,
     )) as string;
-    if (cropped) setImagePreview(cropped);
+    if (cropped)
+      dispatch({
+        type: "SET_IMAGE",
+        index: currentQuestionBeingEdited,
+        value: cropped,
+      });
   };
-
-  // const handleDone = async () => {
-  //   // send to backend
-  //   const payload = {
-  //     imageUrl: selectedImage,
-  //     croppedAreaPixels,
-  //     // optionally also send cropped
-  //     // ... other fields
-  //   };
-  //   console.log("Payload:", payload);
-  // };
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
@@ -183,7 +181,7 @@ const Create: React.FC<{}> = () => {
           </div>
           <ImageInput
             imageSrc={selectedImage}
-            imagePreview={imagePreview}
+            imagePreview={currentQuestion.questionImage}
             setImage={handleImageChange}
             croppedAreaPixels={croppedAreaPixels}
             handleCropComplete={handleCropComplete}
