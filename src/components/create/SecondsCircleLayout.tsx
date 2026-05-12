@@ -1,6 +1,6 @@
 import SecondsCircle from "./SecondsCircle";
 import classes from "./SecondsCircleLayout.module.css";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const SecondsCircleLayout: React.FC<{
   center: number;
@@ -12,18 +12,6 @@ const SecondsCircleLayout: React.FC<{
 
   return (
     <div className={`${classes.container} ${isOpen ? classes.open : ""}`}>
-      {/* Center */}
-      <SecondsCircle
-        size="big"
-        seconds={`${center}\nשניות`}
-        className={classes.center}
-        style={{ cursor: "pointer",
-            backgroundColor: isOpen ? "#E0E0E0" : "white",
-            transition: "background-color 0.2s ease",
-         }}
-        onClick={() => setIsOpen((prev) => !prev)}
-      />
-
       {/* Surrounding */}
       {items.map((sec, index) => {
         const angle = (index / items.length) * 2 * Math.PI;
@@ -51,6 +39,18 @@ const SecondsCircleLayout: React.FC<{
           />
         );
       })}
+      {/* Center */}
+      <SecondsCircle
+        size="big"
+        seconds={`${center}\nשניות`}
+        className={classes.center}
+        style={{
+          cursor: "pointer",
+          backgroundColor: isOpen ? "#E0E0E0" : "white",
+          transition: "background-color 0.2s ease",
+        }}
+        onClick={() => setIsOpen((prev) => !prev)}
+      />
     </div>
   );
 };
