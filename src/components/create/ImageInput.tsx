@@ -14,6 +14,10 @@ interface ImageInputProps {
   setImage: (file: string) => void;
   handleCropComplete: (areaPixels: Area | null) => void;
   handleSaveCropped: () => void;
+  crop: { x: number; y: number };
+  zoom: number;
+  setCrop: (crop: { x: number; y: number }) => void;
+  setZoom: (zoom: number) => void;
 }
 
 const ImageInput: React.FC<ImageInputProps> = (props) => {
@@ -77,14 +81,14 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
           {imageCropDisplay && (
             <ImageCropper
               image={props.imageSrc}
+              crop={props.crop}
+              zoom={props.zoom}
+              setCrop={props.setCrop}
+              setZoom={props.setZoom}
               croppedAreaPixels={props.croppedAreaPixels}
               closeOverlay={toggleImageCrop}
               onCropComplete={props.handleCropComplete}
               onSaveCropped={props.handleSaveCropped}
-              // onCropChange={handleCropChange}
-              // onZoomChange={handleZoomChange}
-              // zoom={zoom}
-              // crop={crop}
             />
           )}
         </>

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import classes from "./ProductList.module.css";
 import ProductDisplay from "./ProductDisplay";
 import defaultCover from "../assets/defaultCoverPhoto.png";
+import type { Area } from "react-easy-crop";
 
 export type questionType = {
   questionText: string;
@@ -11,6 +12,13 @@ export type questionType = {
   timeLimit: number;
   _id: string;
   questionImage?: string;
+  originalQuestionImage?: string;
+  crop?: {
+    x: number;
+    y: number;
+  };
+  zoom?: number;
+  croppedAreaPixels?: Area | null;
 };
 
 type sharedWithType = {
@@ -68,8 +76,14 @@ const ProductsList: React.FC<{
             <div className={classes.reveal} key={index}>
               <ProductDisplay
                 isLoading={false}
-                coverImage={product.coverImage === "" ? defaultCover : product.coverImage}
-                course={product.tags.length === 1 ? product.tags[0] : product.tags.join(", ")}
+                coverImage={
+                  product.coverImage === "" ? defaultCover : product.coverImage
+                }
+                course={
+                  product.tags.length === 1
+                    ? product.tags[0]
+                    : product.tags.join(", ")
+                }
                 questionsNum={product.questions?.length}
                 title={product.title}
                 productId={product._id}

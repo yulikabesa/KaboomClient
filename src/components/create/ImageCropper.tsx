@@ -12,16 +12,13 @@ interface ImageCropProps {
   onCropComplete: (areaPixels: Area | null) => void;
   onSaveCropped: () => void;
   closeOverlay: () => void;
-  // onCropChange: (crop: Point) => void;
-  // onZoomChange: (zoom: number) => void;
-  // zoom: number;
-  // crop: Point;
+  crop: { x: number; y: number };
+  zoom: number;
+  setCrop: (crop: { x: number; y: number }) => void;
+  setZoom: (zoom: number) => void;
 }
 
 const ImageCrop: React.FC<ImageCropProps> = (props) => {
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
-
   const handleSaveCropped = () => {
     props.onSaveCropped();
     props.closeOverlay();
@@ -43,23 +40,22 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
           onCropComplete={(area, areaPixels) =>
             props.onCropComplete(areaPixels)
           }
-          crop={crop}
-          zoom={zoom}
-          onCropChange={setCrop}
-          onZoomChange={setZoom}
-          initialCroppedAreaPixels={props.croppedAreaPixels ?? undefined}
+          crop={props.crop}
+          zoom={props.zoom}
+          onCropChange={props.setCrop}
+          onZoomChange={props.setZoom}
           objectFit="cover"
         />
       </div>
       <div className={classes["zoom-input"]}>
         <input
           type="range"
-          value={zoom}
+          value={props.zoom}
           step={0.1}
           min={minZoom}
           max={3}
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            setZoom(Number(event.target.value));
+            props.setZoom(Number(event.target.value));
           }}
         />
       </div>

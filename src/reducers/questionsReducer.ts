@@ -1,10 +1,16 @@
+import type { Area } from "react-easy-crop";
 import type { questionType } from "../components/ProductsList";
 
 export type QuestionsAction =
   | { type: "SET_QUESTION_TEXT"; index: number; value: string }
   | { type: "SET_TIME_LIMIT"; index: number; value: number }
   | { type: "SET_SCORING_WEIGHT"; index: number; value: number }
-  | { type: "SET_IMAGE"; index: number; value: string;}
+  | { type: "SET_IMAGE"; index: number; value: string }
+  | { type: "SET_ORIGINAL_IMAGE"; index: number; value: string }
+  | { type: "SET_CROP"; index: number; value: { x: number; y: number } }
+  | { type: "SET_ZOOM"; index: number; value: number }
+  | { type: "SET_CROPPED_AREA_PIXELS"; index: number; value: Area | null }
+  | { type: "SET_ORIGINAL_IMAGE"; index: number; value: string }
   | { type: "TOGGLE_CORRECT_INDEX"; index: number; value: number }
   | { type: "ADD_QUESTION" }
   | { type: "DELETE_QUESTION"; index: number }
@@ -30,6 +36,10 @@ export const createEmptyQuestion = (): questionType => ({
   timeLimit: 20,
   scoringWeight: 1,
   questionImage: "",
+  originalQuestionImage: "",
+  crop: { x: 0, y: 0 },
+  zoom: 1,
+  croppedAreaPixels: null,
 });
 
 export function questionsReducer(
@@ -70,6 +80,47 @@ export function questionsReducer(
         ...updated[action.index],
         questionImage: action.value,
       };
+      return updated;
+    }
+
+    case "SET_ORIGINAL_IMAGE": {
+      const updated = [...state];
+      updated[action.index] = {
+        ...updated[action.index],
+        originalQuestionImage: action.value,
+      };
+      return updated;
+    }
+    case "SET_CROP": {
+      const updated = [...state];
+
+      updated[action.index] = {
+        ...updated[action.index],
+        crop: action.value,
+      };
+
+      return updated;
+    }
+
+    case "SET_ZOOM": {
+      const updated = [...state];
+
+      updated[action.index] = {
+        ...updated[action.index],
+        zoom: action.value,
+      };
+
+      return updated;
+    }
+
+    case "SET_CROPPED_AREA_PIXELS": {
+      const updated = [...state];
+
+      updated[action.index] = {
+        ...updated[action.index],
+        croppedAreaPixels: action.value,
+      };
+
       return updated;
     }
 

@@ -30,8 +30,6 @@ const Create: React.FC<{}> = () => {
     useState(0);
   const scoringWeightOptions = [0.5, 1, 2];
   const currentQuestion = questions[currentQuestionBeingEdited];
-  
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -106,24 +104,50 @@ const Create: React.FC<{}> = () => {
   };
 
   const handleImageChange = (file: string) => {
-    setCroppedAreaPixels(null);
+    dispatch({
+      type: "SET_ORIGINAL_IMAGE",
+      index: currentQuestionBeingEdited,
+      value: file,
+    });
     dispatch({
       type: "SET_IMAGE",
       index: currentQuestionBeingEdited,
       value: file,
     });
+    dispatch({
+      type: "SET_CROP",
+      index: currentQuestionBeingEdited,
+      value: { x: 0, y: 0 },
+    });
+    dispatch({
+      type: "SET_ZOOM",
+      index: currentQuestionBeingEdited,
+      value: 1,
+    });
+    dispatch({
+      type: "SET_CROPPED_AREA_PIXELS",
+      index: currentQuestionBeingEdited,
+      value: null,
+    });
   };
 
   const handleCropComplete = (areaPixels: Area | null) => {
-    setCroppedAreaPixels(areaPixels);
+    dispatch({
+      type: "SET_CROPPED_AREA_PIXELS",
+      index: currentQuestionBeingEdited,
+      value: areaPixels,
+    });
   };
 
   const handleSaveCropped = async () => {
-    if (!currentQuestion.questionImage || !croppedAreaPixels) return;
-
+    if (
+      !currentQuestion.originalQuestionImage ||
+      !currentQuestion.croppedAreaPixels
+    )
+      return;
     const cropped = (await getCroppedImg(
-      currentQuestion.questionImage,
-      croppedAreaPixels,
+      currentQuestion.originalQuestionImage,
+      currentQuestion.croppedAreaPixels,
     )) as string;
     if (cropped)
       dispatch({
@@ -176,10 +200,26 @@ const Create: React.FC<{}> = () => {
             />
           </div>
           <ImageInput
-            imageSrc={currentQuestion.questionImage}
+            imageSrc={currentQuestion.originalQuestionImage}
             imagePreview={currentQuestion.questionImage}
             setImage={handleImageChange}
-            croppedAreaPixels={croppedAreaPixels}
+            croppedAreaPixels={currentQuestion.croppedAreaPixels}
+            crop={currentQuestion.crop}
+            zoom={currentQuestion.zoom}
+            setCrop={(crop) =>
+              dispatch({
+                type: "SET_CROP",
+                index: currentQuestionBeingEdited,
+                value: crop,
+              })
+            }
+            setZoom={(zoom) =>
+              dispatch({
+                type: "SET_ZOOM",
+                index: currentQuestionBeingEdited,
+                value: zoom,
+              })
+            }
             handleCropComplete={handleCropComplete}
             handleSaveCropped={handleSaveCropped}
           />
