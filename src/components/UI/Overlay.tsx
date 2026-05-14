@@ -22,7 +22,7 @@ const OverlayCard: React.FC<OverlayProps> = (props) => {
         {props.button && (
           // todo: fix
           <div className={classes["btn"]} onClick={props.closeOverlay}>
-            {/* <img src={closeIcon} /> */}
+            <img src={closeIcon} />
           </div>
         )}
       </header>

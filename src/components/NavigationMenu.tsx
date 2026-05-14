@@ -5,7 +5,7 @@ import type React from "react";
 import settingsIcon from "../assets/settingsIcon.svg";
 import Button from "./UI/Button";
 
-const NavigationMenu: React.FC<{ variant: "home" | "create" }> = (props) => {
+const NavigationMenu: React.FC<{ variant: "home" | "create"; onSettingsClick? : () => void; }> = (props) => {
   return (
     <header className={classes.header}>
       <div className={classes['right-side-items']}>
@@ -14,7 +14,7 @@ const NavigationMenu: React.FC<{ variant: "home" | "create" }> = (props) => {
       </Link>
       {props.variant === "create" && (
         <div className={classes["input-container"]}>
-          <img src={settingsIcon} className={classes["input-icon"]} alt="icon" />
+          <img src={settingsIcon} className={classes["input-icon"]} alt="icon" onClick={props.onSettingsClick} />
           <input
             id="quiz-name"
             type="text"

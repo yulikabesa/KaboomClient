@@ -13,6 +13,7 @@ import {
   createEmptyQuestion,
 } from "../reducers/questionsReducer";
 import RangeInput from "../components/create/RangeInput";
+import Overlay from "../components/UI/Overlay";
 
 const Create: React.FC<{}> = () => {
   const location = useLocation();
@@ -30,6 +31,8 @@ const Create: React.FC<{}> = () => {
     useState(0);
   const scoringWeightOptions = [0.5, 1, 2];
   const currentQuestion = questions[currentQuestionBeingEdited];
+
+  const [settingsDisplay, setSettingsDisplay] = useState(false);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -175,9 +178,13 @@ const Create: React.FC<{}> = () => {
     setCurrentQuestionBeingEdited(result.source.index);
   };
 
+  const toggleSettings = () => {
+    setSettingsDisplay((prev) => !prev);
+  };
+
   return (
     <div className={classes.background}>
-      <NavigationMenu variant="create" />
+      <NavigationMenu variant="create" onSettingsClick={toggleSettings}/>
       {/* question editing */}
       <div className={classes["question-editing"]}>
         <input
@@ -255,6 +262,8 @@ const Create: React.FC<{}> = () => {
           הוסף שאלה
         </div>
       </div>
+
+      {settingsDisplay && <Overlay title="הגדרות" closeOverlay={toggleSettings} button={true}/>}
     </div>
   );
 };
