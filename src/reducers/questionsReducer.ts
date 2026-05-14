@@ -4,7 +4,7 @@ export type QuestionsAction =
   | { type: "SET_QUESTION_TEXT"; index: number; value: string }
   | { type: "SET_TIME_LIMIT"; index: number; value: number }
   | { type: "SET_SCORING_WEIGHT"; index: number; value: number }
-  | { type: "SET_IMAGE"; index: number; value: string }
+  | { type: "SET_IMAGE"; index: number; value: string;}
   | { type: "TOGGLE_CORRECT_INDEX"; index: number; value: number }
   | { type: "ADD_QUESTION" }
   | { type: "DELETE_QUESTION"; index: number }

@@ -30,9 +30,6 @@ const Create: React.FC<{}> = () => {
     useState(0);
   const scoringWeightOptions = [0.5, 1, 2];
   const currentQuestion = questions[currentQuestionBeingEdited];
-
-  const [selectedImage, setSelectedImage] = useState("");
-//   const [imagePreview, setImagePreview] = useState("");
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -108,9 +105,7 @@ const Create: React.FC<{}> = () => {
   };
 
   const handleImageChange = (file: string) => {
-    setSelectedImage(file);
     setCroppedAreaPixels(null);
-    // todo: set in reducer
     dispatch({
       type: "SET_IMAGE",
       index: currentQuestionBeingEdited,
@@ -123,10 +118,10 @@ const Create: React.FC<{}> = () => {
   };
 
   const handleSaveCropped = async () => {
-    if (!selectedImage || !croppedAreaPixels) return;
+    if (!currentQuestion.questionImage || !croppedAreaPixels) return;
 
     const cropped = (await getCroppedImg(
-      selectedImage,
+      currentQuestion.questionImage,
       croppedAreaPixels,
     )) as string;
     if (cropped)
@@ -180,7 +175,7 @@ const Create: React.FC<{}> = () => {
             />
           </div>
           <ImageInput
-            imageSrc={selectedImage}
+            imageSrc={currentQuestion.questionImage}
             imagePreview={currentQuestion.questionImage}
             setImage={handleImageChange}
             croppedAreaPixels={croppedAreaPixels}
