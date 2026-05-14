@@ -13,7 +13,7 @@ import {
   createEmptyQuestion,
 } from "../reducers/questionsReducer";
 import RangeInput from "../components/create/RangeInput";
-import Overlay from "../components/UI/Overlay";
+import Settings from "../components/create/Settings";
 
 const Create: React.FC<{}> = () => {
   const location = useLocation();
@@ -184,7 +184,7 @@ const Create: React.FC<{}> = () => {
 
   return (
     <div className={classes.background}>
-      <NavigationMenu variant="create" onSettingsClick={toggleSettings}/>
+      <NavigationMenu variant="create" onSettingsClick={toggleSettings} />
       {/* question editing */}
       <div className={classes["question-editing"]}>
         <input
@@ -263,7 +263,7 @@ const Create: React.FC<{}> = () => {
         </div>
       </div>
 
-      {settingsDisplay && <Overlay title="הגדרות" closeOverlay={toggleSettings} button={true}/>}
+      {settingsDisplay && <Settings closeOverlay={toggleSettings} />}
     </div>
   );
 };
