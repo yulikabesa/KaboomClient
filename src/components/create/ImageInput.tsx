@@ -26,11 +26,15 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
         event.target.value = "";
         return;
       }
-      props.setImage(URL.createObjectURL(file));
+      const imageUrl = URL.createObjectURL(file);
+      props.setImage(imageUrl);
     }
   };
 
   const removeImageHandler = () => {
+    if (props.imagePreview.startsWith("blob:")) {
+      URL.revokeObjectURL(props.imagePreview);
+    }
     props.setImage("");
   };
 
@@ -59,8 +63,11 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
               >
                 <img src={deleteIcon} />
               </button>
-              <button className={classes["round-btn"]}>
-                <img src={cropIcon} onClick={toggleImageCrop} />
+              <button
+                className={classes["round-btn"]}
+                onClick={toggleImageCrop}
+              >
+                <img src={cropIcon} />
               </button>
               <button className={classes["round-btn"]}>
                 {/* <img src={} /> */}

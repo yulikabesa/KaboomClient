@@ -30,6 +30,7 @@ const Create: React.FC<{}> = () => {
     useState(0);
   const scoringWeightOptions = [0.5, 1, 2];
   const currentQuestion = questions[currentQuestionBeingEdited];
+  
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
