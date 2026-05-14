@@ -24,18 +24,7 @@ const Settings: React.FC<{
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
-        <p className={classes.title}>תיאור</p> <p>{`(אופצונלי)`}</p>
-        <div className={classes["input-wrapper"]}>
-          <span className={classes["counter"]}>
-            {description.length}/{DESCRIPTION_MAX}
-          </span>
-          <input
-            type="text"
-            placeholder="תאר את החידון שלך"
-            maxLength={DESCRIPTION_MAX}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
+        <p className={classes.title}>תמונה</p> <p>{`(אופצונלי)`}</p>
         <div className={classes["side-to-side-box"]}>
           <p className={classes.title}>משותפים</p>
           <p className={classes.title}>תגיות</p>
