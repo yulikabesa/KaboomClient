@@ -6,29 +6,31 @@ const Settings: React.FC<{
   closeOverlay: () => void;
 }> = (props) => {
   const TITLE_MAX = 50;
-  const DESCRIPTION_MAX = 500;
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
   return (
     <Overlay title="הגדרות" closeOverlay={props.closeOverlay} button={true}>
       <div className={classes.container}>
-        <p className={classes.title}>כותרת</p>
-        <div className={`${classes["input-wrapper"]} ${classes["half-width"]}`}>
-          <span className={classes["counter"]}>
-            {title.length}/{TITLE_MAX}
-          </span>
-          <input
-            type="text"
-            placeholder="מה שם החידון שלך?"
-            maxLength={TITLE_MAX}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+        <div>
+          <p className={classes.title}>כותרת</p>
+          <div
+            className={`${classes["input-wrapper"]} ${classes["half-width"]}`}
+          >
+            <span className={classes["counter"]}>
+              {title.length}/{TITLE_MAX}
+            </span>
+            <input
+              type="text"
+              placeholder="מה שם החידון שלך?"
+              maxLength={TITLE_MAX}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
         </div>
-        <p className={classes.title}>תמונה</p> <p>{`(אופצונלי)`}</p>
-        <div className={classes["side-to-side-box"]}>
-          <p className={classes.title}>משותפים</p>
-          <p className={classes.title}>תגיות</p>
+        <div>
+          <p className={classes.title}>תמונה</p> <p>{`(אופצונלי)`}</p>
         </div>
+        <p className={classes.title}>משותפים</p>
+        <p className={classes.title}>תגיות</p>
       </div>
     </Overlay>
   );
