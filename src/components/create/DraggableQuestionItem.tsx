@@ -57,7 +57,7 @@ const DraggableQuestionItem: React.FC<Props> = ({
                 שאלה
               </div>
               <QuestionSlide
-                questionImage={question.questionImage ?? ""}
+                questionImage={question.questionImage?.image ?? ""}
                 questionText={question.questionText}
                 timeLimit={question.timeLimit}
                 isCurrentlyEdited={isActive}

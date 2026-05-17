@@ -46,14 +46,6 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
     setImageCropDisplay((prev) => !prev);
   };
 
-  // const handleCropChange = (crop: Point) => {
-  //   setCrop(crop);
-  // };
-
-  // const handleZoomChange = (zoom: number) => {
-  //   setZoom(zoom);
-  // };
-
   return (
     <>
       {props.imagePreview ? (

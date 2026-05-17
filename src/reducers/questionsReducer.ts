@@ -35,11 +35,13 @@ export const createEmptyQuestion = (): questionType => ({
   correctIndexes: [0],
   timeLimit: 20,
   scoringWeight: 1,
-  questionImage: "",
-  originalQuestionImage: "",
-  crop: { x: 0, y: 0 },
-  zoom: 1,
-  croppedAreaPixels: null,
+  questionImage: {
+    image: "",
+    src: "",
+    crop: { x: 0, y: 0 },
+    zoom: 1,
+    croppedAreaPixels: null,
+  },
 });
 
 export function questionsReducer(
@@ -76,27 +78,32 @@ export function questionsReducer(
 
     case "SET_IMAGE": {
       const updated = [...state];
+      const questionImage = updated[action.index].questionImage;
+
       updated[action.index] = {
         ...updated[action.index],
-        questionImage: action.value,
+        questionImage: { ...questionImage, image: action.value },
       };
       return updated;
     }
 
     case "SET_ORIGINAL_IMAGE": {
       const updated = [...state];
+      const questionImage = updated[action.index].questionImage;
+
       updated[action.index] = {
         ...updated[action.index],
-        originalQuestionImage: action.value,
+        questionImage: { ...questionImage, src: action.value },
       };
       return updated;
     }
     case "SET_CROP": {
       const updated = [...state];
+      const questionImage = updated[action.index].questionImage;
 
       updated[action.index] = {
         ...updated[action.index],
-        crop: action.value,
+        questionImage: { ...questionImage, crop: action.value },
       };
 
       return updated;
@@ -104,10 +111,11 @@ export function questionsReducer(
 
     case "SET_ZOOM": {
       const updated = [...state];
+      const questionImage = updated[action.index].questionImage;
 
       updated[action.index] = {
         ...updated[action.index],
-        zoom: action.value,
+        questionImage: { ...questionImage, zoom: action.value },
       };
 
       return updated;
@@ -115,10 +123,11 @@ export function questionsReducer(
 
     case "SET_CROPPED_AREA_PIXELS": {
       const updated = [...state];
+      const questionImage = updated[action.index].questionImage;
 
       updated[action.index] = {
         ...updated[action.index],
-        croppedAreaPixels: action.value,
+        questionImage: { ...questionImage, croppedAreaPixels: action.value },
       };
 
       return updated;

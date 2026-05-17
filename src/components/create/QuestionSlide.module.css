@@ -1,6 +1,8 @@
 .container {
-  width: 14vw;
-  height: 18vh;
+  /* width: 14vw;
+  height: 18vh; */
+  width: 12rem;
+  height: 8rem;
   display: flex;
   flex-direction: column;
 }
@@ -20,7 +22,7 @@
 .middle-items {
   position: relative;
   height: 6vh;
-   display: flex;
+  display: flex;
   align-items: center;
 }
 

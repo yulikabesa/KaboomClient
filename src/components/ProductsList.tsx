@@ -2,23 +2,22 @@ import React, { useEffect, useRef } from "react";
 import classes from "./ProductList.module.css";
 import ProductDisplay from "./ProductDisplay";
 import defaultCover from "../assets/defaultCoverPhoto.png";
-import type { Area } from "react-easy-crop";
+import type { Area, Point } from "react-easy-crop";
 
 export type questionType = {
+  _id: string;
   questionText: string;
   answerOptions: string[];
   correctIndexes: number[];
   scoringWeight: number;
   timeLimit: number;
-  _id: string;
-  questionImage?: string;
-  originalQuestionImage?: string;
-  crop?: {
-    x: number;
-    y: number;
+  questionImage?: {
+    image?: string;
+    src?: string;
+    crop?: Point;
+    zoom?: number;
+    croppedAreaPixels?: Area | null;
   };
-  zoom?: number;
-  croppedAreaPixels?: Area | null;
 };
 
 type sharedWithType = {

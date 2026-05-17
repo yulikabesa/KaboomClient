@@ -31,6 +31,7 @@ const Create: React.FC<{}> = () => {
     useState(0);
   const scoringWeightOptions = [0.5, 1, 2];
   const currentQuestion = questions[currentQuestionBeingEdited];
+  const { questionImage } = currentQuestion;
 
   const [settingsDisplay, setSettingsDisplay] = useState(false);
 
@@ -144,13 +145,13 @@ const Create: React.FC<{}> = () => {
 
   const handleSaveCropped = async () => {
     if (
-      !currentQuestion.originalQuestionImage ||
-      !currentQuestion.croppedAreaPixels
+      !questionImage.src ||
+      !questionImage.croppedAreaPixels
     )
       return;
     const cropped = (await getCroppedImg(
-      currentQuestion.originalQuestionImage,
-      currentQuestion.croppedAreaPixels,
+      questionImage.src,
+      questionImage.croppedAreaPixels,
     )) as string;
     if (cropped)
       dispatch({
@@ -207,12 +208,12 @@ const Create: React.FC<{}> = () => {
             />
           </div>
           <ImageInput
-            imageSrc={currentQuestion.originalQuestionImage}
-            imagePreview={currentQuestion.questionImage}
+            imageSrc={questionImage.src}
+            imagePreview={questionImage.image}
             setImage={handleImageChange}
-            croppedAreaPixels={currentQuestion.croppedAreaPixels}
-            crop={currentQuestion.crop}
-            zoom={currentQuestion.zoom}
+            croppedAreaPixels={questionImage.croppedAreaPixels}
+            crop={questionImage.crop}
+            zoom={questionImage.zoom}
             setCrop={(crop) =>
               dispatch({
                 type: "SET_CROP",
