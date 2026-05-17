@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  color: #7d7d7d;
+  font-weight: 600;
+}
+
+.column-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.row-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1vw;
+}
+
+.bigger-text {
+  font-size: clamp(12px, 1.2vmax, 16px);
+}
+
+.smaller-text {
+  font-size: clamp(10px, 1vmax, 14px);
+}

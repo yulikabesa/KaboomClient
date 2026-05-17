@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Overlay from "../UI/Overlay";
 import classes from "./Settings.module.css";
+import SharedWith from "./SharedWith";
 
 const Settings: React.FC<{
   closeOverlay: () => void;
@@ -12,9 +13,7 @@ const Settings: React.FC<{
       <div className={classes.container}>
         <div>
           <p className={classes.title}>כותרת</p>
-          <div
-            className={`${classes["input-wrapper"]} ${classes["half-width"]}`}
-          >
+          <div className={classes["input-wrapper"]}>
             <span className={classes["counter"]}>
               {title.length}/{TITLE_MAX}
             </span>
@@ -27,9 +26,17 @@ const Settings: React.FC<{
           </div>
         </div>
         <div>
-          <p className={classes.title}>תמונה</p> <p>{`(אופצונלי)`}</p>
+          <p className={classes.title}>תמונה</p>{" "}
+          <p className={classes.brackets}>{`(אופציונלי)`}</p>
         </div>
-        <p className={classes.title}>משותפים</p>
+        <div>
+          <p className={classes.title}>משותפים</p>
+          <SharedWith
+            email="idf@dsjlos.idf"
+            fullName="נגה זאבי"
+            permission="בעלים"
+          />
+        </div>
         <p className={classes.title}>תגיות</p>
       </div>
     </Overlay>
