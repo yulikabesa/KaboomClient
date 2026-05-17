@@ -3,11 +3,14 @@ import Overlay from "../UI/Overlay";
 import classes from "./Settings.module.css";
 import SharedWith from "./SharedWith";
 
+export type permissionType = "בעלים" | "עריכה" | "צפייה";
+
 const Settings: React.FC<{
   closeOverlay: () => void;
 }> = (props) => {
   const TITLE_MAX = 50;
   const [title, setTitle] = useState("");
+  const [permission, setPermission] = useState<permissionType>("צפייה");
   return (
     <Overlay title="הגדרות" closeOverlay={props.closeOverlay} button={true}>
       <div className={classes.container}>
@@ -34,7 +37,14 @@ const Settings: React.FC<{
           <SharedWith
             email="idf@dsjlos.idf"
             fullName="נגה זאבי"
-            permission="בעלים"
+            permission={permission}
+            setPermission={setPermission}
+          />
+          <SharedWith
+            email="idf@dsjlos.idf"
+            fullName="נגה זאבי"
+            permission={"בעלים"}
+            setPermission={setPermission}
           />
         </div>
         <p className={classes.title}>תגיות</p>

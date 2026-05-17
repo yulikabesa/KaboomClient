@@ -5,6 +5,12 @@
   justify-content: space-between;
   color: #7d7d7d;
   font-weight: 600;
+  padding: 0.7rem;
+  box-sizing: border-box;
+}
+
+.container:hover {
+  background-color: #eeeeee;
 }
 
 .column-flex {
@@ -25,4 +31,63 @@
 
 .smaller-text {
   font-size: clamp(10px, 1vmax, 14px);
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  font-size: clamp(12px, 1.2vmax, 16px);
+}
+
+.permission {
+  all: unset;
+  padding: 0.7rem;
+  box-sizing: border-box;
+}
+
+.changable-permission {
+  all: unset;
+  padding: 0.7rem;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+}
+
+.changable-permission:hover::after,
+.dropdown:hover .changable-permission::after {
+  content: "▼";
+  font-size: 10px;
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.dropdown:hover .changable-permission {
+  background-color: #dfdfdf;
+  padding-left: 20px;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  min-width: 100%;
+  z-index: 100;
+}
+
+.dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: #f6f6f6;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
 }
