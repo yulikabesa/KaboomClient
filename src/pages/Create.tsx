@@ -208,12 +208,12 @@ const Create: React.FC<{}> = () => {
             />
           </div>
           <ImageInput
-            imageSrc={questionImage.src}
-            imagePreview={questionImage.image}
+            imageSrc={questionImage?.src}
+            imagePreview={questionImage?.image}
             setImage={handleImageChange}
-            croppedAreaPixels={questionImage.croppedAreaPixels}
-            crop={questionImage.crop}
-            zoom={questionImage.zoom}
+            croppedAreaPixels={questionImage?.croppedAreaPixels}
+            crop={questionImage?.crop}
+            zoom={questionImage?.zoom}
             setCrop={(crop) =>
               dispatch({
                 type: "SET_CROP",
