@@ -42,7 +42,7 @@
 
 .value {
   line-height: 1;
-  font-weight: 600;
+  font-weight: 500;
   font-size: clamp(12px, 1vmax, 20px);
 }
 

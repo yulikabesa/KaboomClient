@@ -13,7 +13,7 @@
   transform: translate(-50%, -50%);
   background-color: transparent;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   opacity: 0;
   border-radius: 5px;
   display: flex;
@@ -114,7 +114,7 @@
   position: absolute;
   bottom: 0.8vh;
   right: 0.8vh;
-  font-weight: 600;
+  font-weight: 500;
   background-color: #0f0f0f4d;
   font-size: clamp(12px, 0.9vmax, 20px);
   padding: 0.3vh 0.6vh;
@@ -128,7 +128,7 @@
 
 .product-title {
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   font-size: clamp(12px, 1vmax, 20px);
 }
 

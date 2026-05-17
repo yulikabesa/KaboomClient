@@ -54,7 +54,7 @@
 }
 
 .sub-title {
-  font-weight: 600;
+  font-weight: 500;
   font-size: clamp(16px, 1.2vmax, 20px);
   margin-top: 0.5vh;
 }

@@ -33,7 +33,7 @@
 }
 
 .title {
-    font-weight: 600;
+    font-weight: 500;
     font-size: clamp(28px, 2vmax, 40px);
 }
 
