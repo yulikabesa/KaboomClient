@@ -6,8 +6,8 @@
   color: black;
   background-color: white;
   text-align: center;
-  font-weight: 600;
-  padding: 0.5vw;
+  font-weight: 500;
+  padding: 0.6rem;
   position: absolute;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   transition:

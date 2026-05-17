@@ -70,7 +70,7 @@ const CountdownCircle: React.FC<Props> = ({ duration, timeLeft, setTimeLeft }) =
                     alignItems: "center",
                     justifyContent: "center",
                     fontSize: "3.2vmax",
-                    fontWeight: "600",
+                    fontWeight: "500",
                     color: "white"
                 }}
             >

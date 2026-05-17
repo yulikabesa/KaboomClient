@@ -8,16 +8,13 @@ const SecondsCircleLayout: React.FC<{
   onCenterChange: (newCenter: number) => void;
 }> = ({ center, items, onCenterChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const radius = isOpen ? 5.5 : 0;
+  const radius = isOpen ? "clamp(60px, 8vw, 90px)" : "0px";
 
   return (
     <div className={`${classes.container} ${isOpen ? classes.open : ""}`}>
       {/* Surrounding */}
       {items.map((sec, index) => {
         const angle = (index / items.length) * 2 * Math.PI;
-
-        const x = radius * Math.cos(angle);
-        const y = radius * Math.sin(angle);
 
         return (
           <SecondsCircle
@@ -28,7 +25,7 @@ const SecondsCircleLayout: React.FC<{
               center === sec ? classes.selected : classes.selectable
             }`}
             style={{
-              transform: `translate(-50%, -50%) translate(${x}vw, ${y}vw)`,
+              transform: `translate(-50%, -50%) translate(calc(${radius} * ${Math.cos(angle)}), calc(${radius} * ${Math.sin(angle)}))`,
               opacity: isOpen ? 1 : 0,
               pointerEvents: isOpen ? "auto" : "none",
             }}
