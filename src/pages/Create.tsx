@@ -144,11 +144,7 @@ const Create: React.FC<{}> = () => {
   };
 
   const handleSaveCropped = async () => {
-    if (
-      !questionImage.src ||
-      !questionImage.croppedAreaPixels
-    )
-      return;
+    if (!questionImage.src || !questionImage.croppedAreaPixels) return;
     const cropped = (await getCroppedImg(
       questionImage.src,
       questionImage.croppedAreaPixels,
@@ -199,7 +195,7 @@ const Create: React.FC<{}> = () => {
         />
         <div className={classes["flex"]}>
           <div className={classes.center}>
-            <p>ניקוד</p>
+            <p className={classes["semi-bold"]}>ניקוד</p>
             <RangeInput
               scoringWeight={currentQuestion.scoringWeight}
               handleQuestionScoringWeightChange={
@@ -232,7 +228,7 @@ const Create: React.FC<{}> = () => {
             handleSaveCropped={handleSaveCropped}
           />
           <div className={classes.center}>
-            <p>כמות זמן</p>
+            <p className={classes["semi-bold"]}>כמות זמן</p>
             <SecondsCircleLayout
               items={[20, 30, 60, 90, 120, 240, 5, 10]}
               center={currentQuestion.timeLimit}
