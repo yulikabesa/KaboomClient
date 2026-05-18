@@ -1,6 +1,7 @@
 import profilePic from "../../assets/profilePic.svg";
 import classes from "./SharedWith.module.css";
 import type { permissionType } from "./Settings";
+import { useState } from "react";
 
 const SharedWith: React.FC<{
   name: string;
@@ -8,6 +9,7 @@ const SharedWith: React.FC<{
   permission: permissionType;
   setPermission: (email: string, newPermission: permissionType) => void;
 }> = (props) => {
+  const [open, setOpen] = useState(false);
   return (
     <div className={classes.container}>
       <div className={classes["row-flex"]}>
@@ -24,11 +26,17 @@ const SharedWith: React.FC<{
               ? classes["changable-permission"]
               : classes["permission"]
           }
+          style={{ backgroundColor: open ? "#dfdfdf" : "" }}
+          onClick={() => setOpen((prev) => !prev)}
         >
           {props.permission}
         </button>
         {props.permission !== "בעלים" && (
-          <div className={classes["dropdown-menu"]}>
+          <div
+            className={`${classes["dropdown-menu"]} ${
+              open ? classes.open : ""
+            }`}
+          >
             <div
               className={classes["dropdown-item"]}
               onClick={() => props.setPermission(props.email, "צפייה")}
