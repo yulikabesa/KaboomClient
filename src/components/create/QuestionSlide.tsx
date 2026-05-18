@@ -8,7 +8,7 @@ const QuestionSlide: React.FC<{
   questionImage: string;
   isCurrentlyEdited: boolean;
   answersCount: number;
-  correctAnswerIndexes : number[];
+  correctAnswerIndexes: number[];
 }> = (props) => {
   return (
     <div
@@ -21,11 +21,19 @@ const QuestionSlide: React.FC<{
       <p className={classes.title}>{props.questionText || "\u00A0"}</p>
       <div className={classes["middle-items"]}>
         {props.questionImage !== "" && (
-          <img src={props.questionImage} className={classes["question-image"]} />
+          <div className={classes["image-container"]}>
+            <img
+              src={props.questionImage}
+              className={classes["question-image"]}
+            />
+          </div>
         )}
         <div className={classes["question-time"]}>{props.timeLimit}</div>
       </div>
-      <SlideAnswerOptionsList answersCount={props.answersCount} correctAnswerIndexes={props.correctAnswerIndexes} />
+      <SlideAnswerOptionsList
+        answersCount={props.answersCount}
+        correctAnswerIndexes={props.correctAnswerIndexes}
+      />
     </div>
   );
 };
