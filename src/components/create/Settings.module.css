@@ -40,6 +40,31 @@
   display: inline-block;
 }
 
+.shared-with-div {
+  direction: ltr;
+  max-height: 165px;
+  overflow-y: auto;
+}
+
+.shared-with-div::-webkit-scrollbar {
+  width: 10px;
+}
+
+.shared-with-div::-webkit-scrollbar-track {
+  background: #d9d9d9;
+  border-radius: 7px;
+}
+
+.shared-with-div::-webkit-scrollbar-thumb {
+  background: #888888;
+  border-radius: 10px;
+  border: 2px solid #d9d9d9;
+}
+
+.shared-with-div::-webkit-scrollbar-thumb:hover {
+  background: #666565;
+}
+
 .brackets {
   font-size: clamp(12px, 0.8vmax, 14px);
   font-weight: 600;

@@ -3,17 +3,17 @@ import classes from "./SharedWith.module.css";
 import type { permissionType } from "./Settings";
 
 const SharedWith: React.FC<{
-  fullName: string;
+  name: string;
   email: string;
   permission: permissionType;
-  setPermission: React.Dispatch<React.SetStateAction<permissionType>>;
+  setPermission: (email: string, newPermission: permissionType) => void;
 }> = (props) => {
   return (
     <div className={classes.container}>
       <div className={classes["row-flex"]}>
         <img src={profilePic} />
         <div className={classes["column-flex"]}>
-          <p className={classes["bigger-text"]}>{props.fullName}</p>
+          <p className={classes["bigger-text"]}>{props.name}</p>
           <p className={classes["smaller-text"]}>{props.email}</p>
         </div>
       </div>
@@ -31,14 +31,14 @@ const SharedWith: React.FC<{
           <div className={classes["dropdown-menu"]}>
             <div
               className={classes["dropdown-item"]}
-              onClick={() => props.setPermission("צפייה")}
+              onClick={() => props.setPermission(props.email, "צפייה")}
             >
               צפייה
             </div>
 
             <div
               className={classes["dropdown-item"]}
-              onClick={() => props.setPermission("עריכה")}
+              onClick={() => props.setPermission(props.email, "עריכה")}
             >
               עריכה
             </div>

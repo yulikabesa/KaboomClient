@@ -2,13 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import classes from "./SearchBar.module.css";
 import { Search } from "lucide-react";
+import type { sharedWithType } from "./Settings";
 
 type UserDetails = {
   name: string;
   email: string;
 };
 
-const SearchBar = () => {
+const SearchBar: React.FC<{
+  onItemClick: (newUser: sharedWithType) => void;
+}> = (props) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<UserDetails[]>([]);
   const [loading, setLoading] = useState(false);
@@ -58,7 +61,7 @@ const SearchBar = () => {
         <Search size={18} className={classes["search-icon"]} />
         <input
           type="text"
-          placeholder="Search users..."
+          placeholder="הכנס מייל או שם..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
@@ -67,7 +70,13 @@ const SearchBar = () => {
       {results.length > 0 && (
         <ul className={classes["results-list"]}>
           {results.map((user, index) => (
-            <li key={index} className={classes["result-item"]}>
+            <li
+              key={index}
+              className={classes["result-item"]}
+              onClick={() =>
+                props.onItemClick({ ...user, permission: "צפייה" })
+              }
+            >
               <span>{user.name}</span>
               <small>{user.email}</small>
             </li>
