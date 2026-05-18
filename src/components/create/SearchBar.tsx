@@ -14,7 +14,7 @@ const SearchBar: React.FC<{
 }> = (props) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<UserDetails[]>([]);
-  const [loading, setLoading] = useState(false);
+//   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (query.trim().length <= 2) {
@@ -34,7 +34,7 @@ const SearchBar: React.FC<{
   }, [query]);
 
   const fetchServerData = async (searchTerm: string, signal: AbortSignal) => {
-    setLoading(true);
+    // setLoading(true);
     try {
       const response = await axios.get("http://localhost:3000/user/search", {
         params: { q: searchTerm },
@@ -51,7 +51,7 @@ const SearchBar: React.FC<{
         console.error("Unexpected error:", error);
       }
     } finally {
-      setLoading(false);
+    //   setLoading(false);
     }
   };
 

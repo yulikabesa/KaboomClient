@@ -1,6 +1,6 @@
 import SecondsCircle from "./SecondsCircle";
 import classes from "./SecondsCircleLayout.module.css";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const SecondsCircleLayout: React.FC<{
   center: number;
@@ -10,8 +10,28 @@ const SecondsCircleLayout: React.FC<{
   const [isOpen, setIsOpen] = useState(false);
   const radius = isOpen ? "clamp(60px, 8vw, 90px)" : "0px";
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className={`${classes.container} ${isOpen ? classes.open : ""}`}>
+    <div
+      ref={containerRef}
+      className={`${classes.container} ${isOpen ? classes.open : ""}`}
+    >
       {/* Surrounding */}
       {items.map((sec, index) => {
         const angle = (index / items.length) * 2 * Math.PI;
