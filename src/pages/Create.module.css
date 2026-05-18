@@ -59,6 +59,18 @@
   box-sizing: border-box;
 }
 
+.questions-slides::-webkit-scrollbar {
+  width: 6px;
+}
+
+.questions-slides::-webkit-scrollbar-thumb {
+  background: #ccc;
+}
+
+.questions-slides::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
 .questions-slides > * {
   flex: 0 0 auto;
 }
