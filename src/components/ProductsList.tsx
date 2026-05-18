@@ -11,13 +11,15 @@ export type questionType = {
   correctIndexes: number[];
   scoringWeight: number;
   timeLimit: number;
-  questionImage?: {
-    image?: string;
-    src?: string;
-    crop?: Point;
-    zoom?: number;
-    croppedAreaPixels?: Area | null;
-  };
+  questionImage?: questionImageType;
+};
+
+export type questionImageType = {
+  image?: string;
+  src?: string;
+  crop?: Point;
+  zoom?: number;
+  croppedAreaPixels?: Area | null;
 };
 
 type sharedWithType = {

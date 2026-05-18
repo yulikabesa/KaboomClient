@@ -108,38 +108,30 @@ const Create: React.FC<{}> = () => {
   };
 
   const handleImageChange = (file: string) => {
+    const updates = {
+      src: file,
+      image: file,
+      crop: { x: 0, y: 0 },
+      zoom: 1,
+      croppedAreaPixels: null,
+    };
+
     dispatch({
-      type: "SET_ORIGINAL_IMAGE",
-      index: currentQuestionBeingEdited,
-      value: file,
-    });
-    dispatch({
-      type: "SET_IMAGE",
-      index: currentQuestionBeingEdited,
-      value: file,
-    });
-    dispatch({
-      type: "SET_CROP",
-      index: currentQuestionBeingEdited,
-      value: { x: 0, y: 0 },
-    });
-    dispatch({
-      type: "SET_ZOOM",
-      index: currentQuestionBeingEdited,
-      value: 1,
-    });
-    dispatch({
-      type: "SET_CROPPED_AREA_PIXELS",
-      index: currentQuestionBeingEdited,
-      value: null,
+      type: "SET_IMAGE_DETAILS",
+      payload: {
+        index: currentQuestionBeingEdited,
+        updates: updates,
+      },
     });
   };
 
   const handleCropComplete = (areaPixels: Area | null) => {
     dispatch({
-      type: "SET_CROPPED_AREA_PIXELS",
-      index: currentQuestionBeingEdited,
-      value: areaPixels,
+      type: "SET_IMAGE_DETAILS",
+      payload: {
+        index: currentQuestionBeingEdited,
+        updates: { croppedAreaPixels: areaPixels },
+      },
     });
   };
 
@@ -151,9 +143,11 @@ const Create: React.FC<{}> = () => {
     )) as string;
     if (cropped)
       dispatch({
-        type: "SET_IMAGE",
-        index: currentQuestionBeingEdited,
-        value: cropped,
+        type: "SET_IMAGE_DETAILS",
+        payload: {
+          index: currentQuestionBeingEdited,
+          updates: { image: cropped },
+        },
       });
   };
 
@@ -212,16 +206,20 @@ const Create: React.FC<{}> = () => {
             zoom={questionImage?.zoom}
             setCrop={(crop) =>
               dispatch({
-                type: "SET_CROP",
-                index: currentQuestionBeingEdited,
-                value: crop,
+                type: "SET_IMAGE_DETAILS",
+                payload: {
+                  index: currentQuestionBeingEdited,
+                  updates: { crop },
+                },
               })
             }
             setZoom={(zoom) =>
               dispatch({
-                type: "SET_ZOOM",
-                index: currentQuestionBeingEdited,
-                value: zoom,
+                type: "SET_IMAGE_DETAILS",
+                payload: {
+                  index: currentQuestionBeingEdited,
+                  updates: { zoom },
+                },
               })
             }
             handleCropComplete={handleCropComplete}

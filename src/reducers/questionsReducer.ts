@@ -1,16 +1,16 @@
-import type { Area } from "react-easy-crop";
-import type { questionType } from "../components/ProductsList";
+import type {
+  questionImageType,
+  questionType,
+} from "../components/ProductsList";
 
 export type QuestionsAction =
   | { type: "SET_QUESTION_TEXT"; index: number; value: string }
   | { type: "SET_TIME_LIMIT"; index: number; value: number }
   | { type: "SET_SCORING_WEIGHT"; index: number; value: number }
-  | { type: "SET_IMAGE"; index: number; value: string }
-  | { type: "SET_ORIGINAL_IMAGE"; index: number; value: string }
-  | { type: "SET_CROP"; index: number; value: { x: number; y: number } }
-  | { type: "SET_ZOOM"; index: number; value: number }
-  | { type: "SET_CROPPED_AREA_PIXELS"; index: number; value: Area | null }
-  | { type: "SET_ORIGINAL_IMAGE"; index: number; value: string }
+  | {
+      type: "SET_IMAGE_DETAILS";
+      payload: { index: number; updates: questionImageType };
+    }
   | { type: "TOGGLE_CORRECT_INDEX"; index: number; value: number }
   | { type: "ADD_QUESTION" }
   | { type: "DELETE_QUESTION"; index: number }
@@ -76,58 +76,15 @@ export function questionsReducer(
       return updated;
     }
 
-    case "SET_IMAGE": {
+    case "SET_IMAGE_DETAILS": {
       const updated = [...state];
-      const questionImage = updated[action.index].questionImage;
+      const updates = action.payload.updates;
+      let question = updated[action.payload.index];
+      const questionImage = question.questionImage;
 
-      updated[action.index] = {
-        ...updated[action.index],
-        questionImage: { ...questionImage, image: action.value },
-      };
-      return updated;
-    }
-
-    case "SET_ORIGINAL_IMAGE": {
-      const updated = [...state];
-      const questionImage = updated[action.index].questionImage;
-
-      updated[action.index] = {
-        ...updated[action.index],
-        questionImage: { ...questionImage, src: action.value },
-      };
-      return updated;
-    }
-    case "SET_CROP": {
-      const updated = [...state];
-      const questionImage = updated[action.index].questionImage;
-
-      updated[action.index] = {
-        ...updated[action.index],
-        questionImage: { ...questionImage, crop: action.value },
-      };
-
-      return updated;
-    }
-
-    case "SET_ZOOM": {
-      const updated = [...state];
-      const questionImage = updated[action.index].questionImage;
-
-      updated[action.index] = {
-        ...updated[action.index],
-        questionImage: { ...questionImage, zoom: action.value },
-      };
-
-      return updated;
-    }
-
-    case "SET_CROPPED_AREA_PIXELS": {
-      const updated = [...state];
-      const questionImage = updated[action.index].questionImage;
-
-      updated[action.index] = {
-        ...updated[action.index],
-        questionImage: { ...questionImage, croppedAreaPixels: action.value },
+      updated[action.payload.index] = {
+        ...question,
+        questionImage: { ...questionImage, ...updates },
       };
 
       return updated;
