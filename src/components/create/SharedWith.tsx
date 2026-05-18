@@ -1,0 +1,52 @@
+import profilePic from "../../assets/profilePic.svg";
+import classes from "./SharedWith.module.css";
+import type { permissionType } from "./Settings";
+
+const SharedWith: React.FC<{
+  fullName: string;
+  email: string;
+  permission: permissionType;
+  setPermission: React.Dispatch<React.SetStateAction<permissionType>>;
+}> = (props) => {
+  return (
+    <div className={classes.container}>
+      <div className={classes["row-flex"]}>
+        <img src={profilePic} />
+        <div className={classes["column-flex"]}>
+          <p className={classes["bigger-text"]}>{props.fullName}</p>
+          <p className={classes["smaller-text"]}>{props.email}</p>
+        </div>
+      </div>
+      <div className={classes.dropdown}>
+        <button
+          className={
+            props.permission !== "בעלים"
+              ? classes["changable-permission"]
+              : classes["permission"]
+          }
+        >
+          {props.permission}
+        </button>
+        {props.permission !== "בעלים" && (
+          <div className={classes["dropdown-menu"]}>
+            <div
+              className={classes["dropdown-item"]}
+              onClick={() => props.setPermission("צפייה")}
+            >
+              צפייה
+            </div>
+
+            <div
+              className={classes["dropdown-item"]}
+              onClick={() => props.setPermission("עריכה")}
+            >
+              עריכה
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default SharedWith;

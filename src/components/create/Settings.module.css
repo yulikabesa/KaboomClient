@@ -2,11 +2,12 @@
   padding: 2vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .title {
-  font-weight: 600;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
 }
 
 .input-wrapper {
@@ -22,6 +23,7 @@
   border-radius: 7px;
   box-sizing: border-box;
   width: 100%;
+  font-weight: 600;
 }
 
 .counter {
@@ -32,4 +34,13 @@
   font-size: 0.75rem;
   color: gray;
   pointer-events: none;
+}
+
+.container div p {
+  display: inline-block;
+}
+
+.brackets {
+  font-size: clamp(12px, 0.8vmax, 14px);
+  font-weight: 600;
 }
