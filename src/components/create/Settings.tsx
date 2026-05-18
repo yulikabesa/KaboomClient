@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Overlay from "../UI/Overlay";
 import classes from "./Settings.module.css";
 import SharedWith from "./SharedWith";
+import SearchBar from "./SearchBar";
 
 export type permissionType = "בעלים" | "עריכה" | "צפייה";
 
@@ -46,6 +47,7 @@ const Settings: React.FC<{
             permission={"בעלים"}
             setPermission={setPermission}
           />
+          <SearchBar />
         </div>
         <p className={classes.title}>תגיות</p>
       </div>
