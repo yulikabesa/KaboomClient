@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classes from "./SearchBar.module.css";
 import { Search } from "lucide-react";
 import type { sharedWithType } from "./Settings";
@@ -14,15 +14,30 @@ const SearchBar: React.FC<{
 }> = (props) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<UserDetails[]>([]);
-//   const [loading, setLoading] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Close results when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setResults([]);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
-    if (query.trim().length <= 2) {
+    if (query.trim().length <= 1) {
       setResults([]);
       return;
     }
     const controller = new AbortController();
-
     const delayDebounceFn = setTimeout(() => {
       fetchServerData(query, controller.signal);
     }, 500);
@@ -34,7 +49,6 @@ const SearchBar: React.FC<{
   }, [query]);
 
   const fetchServerData = async (searchTerm: string, signal: AbortSignal) => {
-    // setLoading(true);
     try {
       const response = await axios.get("http://localhost:3000/user/search", {
         params: { q: searchTerm },
@@ -50,13 +64,11 @@ const SearchBar: React.FC<{
       } else {
         console.error("Unexpected error:", error);
       }
-    } finally {
-    //   setLoading(false);
     }
   };
 
   return (
-    <div className={classes["search-container"]}>
+    <div className={classes["search-container"]} ref={containerRef}>
       <div className={classes["input-wrapper"]}>
         <Search size={18} className={classes["search-icon"]} />
         <input
