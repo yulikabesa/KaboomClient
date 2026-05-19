@@ -10,11 +10,13 @@ export type sharedWithType = {
   email: string;
   permission: permissionType;
 };
+
 const Settings: React.FC<{
   closeOverlay: () => void;
+  quizName: string;
+  setQuizName: React.Dispatch<React.SetStateAction<string>>;
 }> = (props) => {
-  const TITLE_MAX = 50;
-  const [title, setTitle] = useState("");
+  const QUIZ_NAME_MAX = 50;
   const sharedWithExample: sharedWithType[] = [
     {
       name: "נגה זאבי",
@@ -55,13 +57,14 @@ const Settings: React.FC<{
           <p className={classes.title}>כותרת</p>
           <div className={classes["input-wrapper"]}>
             <span className={classes["counter"]}>
-              {title.length}/{TITLE_MAX}
+              {props.quizName.length}/{QUIZ_NAME_MAX}
             </span>
             <input
               type="text"
               placeholder="מה שם החידון שלך?"
-              maxLength={TITLE_MAX}
-              onChange={(e) => setTitle(e.target.value)}
+              maxLength={QUIZ_NAME_MAX}
+              value={props.quizName}
+              onChange={(e) => props.setQuizName(e.target.value)}
             />
           </div>
         </div>

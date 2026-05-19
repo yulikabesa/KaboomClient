@@ -67,6 +67,8 @@
 .dropdown-item {
   padding: 10px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: clamp(10px, 1vmax, 14px);
 }
 
 .dropdown-item:hover {

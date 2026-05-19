@@ -34,6 +34,7 @@ const Create: React.FC<{}> = () => {
   const { questionImage } = currentQuestion;
 
   const [settingsDisplay, setSettingsDisplay] = useState(false);
+  const [quizName, setQuizName] = useState("");
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -175,7 +176,12 @@ const Create: React.FC<{}> = () => {
 
   return (
     <div className={classes.background}>
-      <NavigationMenu variant="create" onSettingsClick={toggleSettings} />
+      <NavigationMenu
+        variant="create"
+        onSettingsClick={toggleSettings}
+        quizName={quizName}
+        setQuizName={setQuizName}
+      />
       {/* question editing */}
       <div className={classes["question-editing"]}>
         <input
@@ -258,7 +264,7 @@ const Create: React.FC<{}> = () => {
         </div>
       </div>
 
-      {settingsDisplay && <Settings closeOverlay={toggleSettings} />}
+      {settingsDisplay && <Settings closeOverlay={toggleSettings} quizName={quizName} setQuizName={setQuizName} />}
     </div>
   );
 };
