@@ -43,14 +43,16 @@
 
 .permission {
   all: unset;
-  padding: 0.7rem;
+  padding: 0.5rem;
   box-sizing: border-box;
 }
 
 .changable-permission {
   all: unset;
-  padding: 0.7rem;
+  padding: 0.5rem;
   box-sizing: border-box;
+  /* width: 70px; */
+  /* needs width to prevent moving */
   position: relative;
   cursor: pointer;
 }
@@ -65,12 +67,26 @@
 }
 
 .dropdown-item {
-  padding: 10px;
+  padding: 0.5rem;
   cursor: pointer;
   font-weight: 600;
   font-size: clamp(10px, 1vmax, 14px);
+
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .dropdown-item:hover {
   background: #f6f6f6;
+}
+
+.correct-sign {
+  color: #0b57d0;
+  width: 20px;
+  min-width: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -69,6 +69,8 @@ const SharedWith: React.FC<{
           }}
         >
           {props.permission}
+          {props.permission !== "בעלים" && !open && "⏷"}
+          {props.permission !== "בעלים" && open && "⏶"}
         </button>
         {props.permission !== "בעלים" &&
           open &&
@@ -93,7 +95,10 @@ const SharedWith: React.FC<{
                   setOpen(false);
                 }}
               >
-                צפייה
+                <span className={classes["correct-sign"]}>
+                  {props.permission === "צפייה" && "✓"}
+                </span>
+                <span>צפייה</span>
               </div>
 
               <div
@@ -104,7 +109,10 @@ const SharedWith: React.FC<{
                   setOpen(false);
                 }}
               >
-                עריכה
+                <span className={classes["correct-sign"]}>
+                  {props.permission === "עריכה" && "✓"}
+                </span>
+                <span>עריכה</span>
               </div>
             </div>,
             document.getElementById("overlay")!,
