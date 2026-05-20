@@ -68,6 +68,9 @@ const SearchBar: React.FC<{
       } else {
         setResults(response.data.data?.tags || []);
       }
+      if (query.trim().length > 1 && results.length === 0) {
+        setResults([{ name: "לא נמצאו תוצאות" }]);
+      }
     } catch (error) {
       if (axios.isCancel(error)) {
         return;
