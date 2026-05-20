@@ -55,7 +55,6 @@
   box-sizing: border-box;
   width: 4rem;
   text-align: center;
-  /* needs width to prevent moving */
   position: relative;
   cursor: pointer;
 }

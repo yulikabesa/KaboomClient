@@ -13,8 +13,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
-  min-width: 360px;
+  width: fit-content;
+  min-width: 50vw;
 }
 
 .header {

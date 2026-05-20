@@ -9,11 +9,17 @@ type UserDetails = {
   email: string;
 };
 
+type TagDetails = {
+  name: string;
+};
+
 const SearchBar: React.FC<{
-  onItemClick: (newUser: sharedWithType) => void;
+  onItemClick: (newUser: sharedWithType | TagDetails) => void;
+  placeHolder: string;
+  searchFor: "tag" | "user";
 }> = (props) => {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<UserDetails[]>([]);
+  const [results, setResults] = useState<UserDetails[] | TagDetails[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Close results when clicking outside
@@ -50,11 +56,18 @@ const SearchBar: React.FC<{
 
   const fetchServerData = async (searchTerm: string, signal: AbortSignal) => {
     try {
-      const response = await axios.get("http://localhost:3000/user/search", {
-        params: { q: searchTerm },
-        signal,
-      });
-      setResults(response.data.data?.users || []);
+      const response = await axios.get(
+        `http://localhost:3000/${props.searchFor}/search`,
+        {
+          params: { q: searchTerm },
+          signal,
+        },
+      );
+      if (props.searchFor === "user") {
+        setResults(response.data.data?.users || []);
+      } else {
+        setResults(response.data.data?.tags || []);
+      }
     } catch (error) {
       if (axios.isCancel(error)) {
         return;
@@ -73,7 +86,7 @@ const SearchBar: React.FC<{
         <Search size={18} className={classes["search-icon"]} />
         <input
           type="text"
-          placeholder="הכנס מייל או שם..."
+          placeholder={props.placeHolder}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
@@ -90,7 +103,7 @@ const SearchBar: React.FC<{
               }
             >
               <span>{user.name}</span>
-              <small>{user.email}</small>
+              {"email" in user && user.email && <small>{user.email}</small>}
             </li>
           ))}
         </ul>

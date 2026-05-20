@@ -3,6 +3,7 @@ import Overlay from "../UI/Overlay";
 import classes from "./Settings.module.css";
 import SharedWith from "./SharedWith";
 import SearchBar from "./SearchBar";
+import Tag from "./Tag";
 
 export type permissionType = "בעלים" | "עריכה" | "צפייה";
 export type sharedWithType = {
@@ -29,8 +30,12 @@ const Settings: React.FC<{
       permission: "צפייה",
     },
   ];
+  const tagsExample = ["קורס 10", "קורס 15"];
+
   const [sharedWith, setSharedWith] =
     useState<sharedWithType[]>(sharedWithExample);
+
+  const [tags, setTags] = useState<string[]>(tagsExample);
 
   const changePermissionHandle = (
     email: string,
@@ -41,6 +46,10 @@ const Settings: React.FC<{
         user.email === email ? { ...user, permission: newPermission } : user,
       ),
     );
+  };
+
+  const deleteTagHandle = (tagToDelete: string) => {
+    setTags(tags.filter((tag) => tag !== tagToDelete));
   };
 
   const addNewSharedUserHandle = (newUser: sharedWithType) => {
@@ -85,9 +94,25 @@ const Settings: React.FC<{
               />
             ))}
           </div>
-          <SearchBar onItemClick={addNewSharedUserHandle} />
+          <SearchBar
+            onItemClick={addNewSharedUserHandle}
+            placeHolder="הכנס מייל או שם..."
+            searchFor="user"
+          />
         </div>
-        <p className={classes.title}>תגיות</p>
+        <div>
+          <p className={classes.title}>תגיות</p>
+          <SearchBar
+            onItemClick={addNewSharedUserHandle}
+            placeHolder="איזה קורסים יכולים להשתמש בקהות שלך?"
+            searchFor="tag"
+          />
+          <div className={classes["shared-with-div"]}>
+            {tags.map((tag, index) => (
+              <Tag key={index} tag={tag} deleteTag={deleteTagHandle} />
+            ))}
+          </div>
+        </div>
       </div>
     </Overlay>
   );
