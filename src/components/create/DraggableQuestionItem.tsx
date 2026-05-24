@@ -34,7 +34,7 @@ const DraggableQuestionItem: React.FC<Props> = ({
           {...provided.dragHandleProps}
           className={classes.container}
           style={{
-            width: "fit-content",
+            width: "100%",
             backgroundColor: isActive ? "#ECF4FB" : "transparent",
             ...provided.draggableProps.style,
           }}
