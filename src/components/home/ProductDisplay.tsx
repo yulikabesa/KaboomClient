@@ -1,10 +1,10 @@
 import type React from "react";
 import classes from "./ProductDisplay.module.css";
-import editIcon from "../assets/editIcon.svg";
-import gameIcon from "../assets/gameIcon.svg";
-import { useSocket } from "../store/SocketContext";
+import editIcon from "../../assets/editIcon.svg";
+import gameIcon from "../../assets/gameIcon.svg";
+import { useSocket } from "../../store/SocketContext";
 import { useNavigate } from "react-router-dom";
-import { useLobby } from "../store/LobbyContext";
+import { useLobby } from "../../store/LobbyContext";
 import { useState } from "react";
 import type { questionType } from "./ProductsList";
 

@@ -1,9 +1,9 @@
 import classes from "./NavigationMenu.module.css";
 import { Link } from "react-router-dom";
-import kaboomLogo from "../assets/kaboomLogo.png";
+import kaboomLogo from "../../assets/kaboomLogo.png";
 import type React from "react";
-import settingsIcon from "../assets/settingsIcon.svg";
-import Button from "./UI/Button";
+import settingsIcon from "../../assets/settingsIcon.svg";
+import Button from "../UI/Button";
 
 const NavigationMenu: React.FC<{
   variant: "home" | "create";

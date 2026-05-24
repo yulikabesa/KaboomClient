@@ -1,5 +1,5 @@
 import React, { useState, type ChangeEvent } from "react";
-import NavigationMenu from "../components/NavigationMenu";
+import NavigationMenu from "../components/menu/NavigationMenu";
 import QuestionSlideList from "../components/create/Slides/QuestionSlideList";
 import ImageInput from "../components/create/Image/ImageInput";
 import getCroppedImg from "../utils/cropImage";

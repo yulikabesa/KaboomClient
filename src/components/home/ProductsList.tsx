@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import classes from "./ProductList.module.css";
 import ProductDisplay from "./ProductDisplay";
-import defaultCover from "../assets/defaultCoverPhoto.png";
+import defaultCover from "../../assets/defaultCoverPhoto.png";
 import type { Area, Point } from "react-easy-crop";
 
 export type questionType = {

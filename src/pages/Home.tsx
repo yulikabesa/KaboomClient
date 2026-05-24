@@ -1,7 +1,7 @@
-import NavigationMenu from "../components/NavigationMenu";
+import NavigationMenu from "../components/menu/NavigationMenu";
 import classes from "./Home.module.css";
 import { useEffect, useState } from "react";
-import ProductsList, { type productType } from "../components/ProductsList";
+import ProductsList, { type productType } from "../components/home/ProductsList";
 import axios from "axios";
 
 const Home = () => {
