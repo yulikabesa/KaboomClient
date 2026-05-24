@@ -20,17 +20,16 @@
     column-gap: 2vh;
     row-gap: 2vh;
     padding: 4vh;
-    height: 50vh;
-    position: absolute;
+    height: 40vh;
     width: 100vw;
-    bottom: 2vh;
 }
 
 .answer-option {
+    font-size: var(--fs-body-lg);
     direction: rtl;
     display: flex;
     align-items: center;
-    min-height: 0;
+    min-height: 3rem;
     background-color: var(--bg-color);
     transition: background-color 0.2s ease;
 }
@@ -62,13 +61,12 @@
 }
 
 .answer-option.projector svg {
-    width: 2vw;       /* reduce width */
-    height: 2vw;      /* reduce height to match */
+    width: 2vw;
+    height: 2vw;
 }
 /* text inside projector option */
 .answerText {
     font-weight: 700;
-    font-size: 1.8vmax;
 }
 
 /* right-side group (text + shape) */
@@ -77,12 +75,11 @@
     align-items: center;
     flex-direction: row-reverse;
     gap: 8px;
-    margin-left: auto; /* 👈 THIS fixes it */
+    margin-left: auto;
 }
 
 /* result icon on the LEFT */
 .resultSign {
-    font-size: 2vmax;
     display: flex;
     align-items: center;
 }

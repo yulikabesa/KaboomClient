@@ -8,11 +8,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 2%;
-  font-size: clamp(12px, 1vmax, 14px);
   box-sizing: border-box;
   position: fixed;
-  top: 0;
-  left: 0;
   z-index: 1;
 }
 

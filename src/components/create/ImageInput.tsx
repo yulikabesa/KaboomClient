@@ -95,7 +95,9 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
           <label htmlFor="file-upload" className={classes["wrapper"]}>
             <img className={classes["icon"]} src={uploadIcon} />
             <p className={classes["title"]}>העלאת תמונה</p>
-            <p>רוצה להוסיף תמונה? גרור, העלה או בחר אחת מושלמת מהמאגר שלנו</p>
+            <p className={classes["text"]}>
+              רוצה להוסיף תמונה? גרור, העלה או בחר אחת מושלמת מהמאגר שלנו
+            </p>
             <div className={classes["input-actions"]}>
               <Button style="white" className={classes[""]}>
                 העלה

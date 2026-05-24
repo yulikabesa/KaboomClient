@@ -51,7 +51,7 @@ const GameLobby: React.FC = () => {
           <img
             src={rightWhiteTextBackground}
             className={classes["image-container"]}
-            alt="kaboom logo"
+            // alt="kaboom logo"
           />
           <div className={classes["pin-text-overlay"]}>
             <p className={classes["pin-text"]}>קוד משחק:</p>
@@ -64,7 +64,7 @@ const GameLobby: React.FC = () => {
           <img
             src={leftWhiteTextBackground}
             className={classes["image-container"]}
-            alt="kaboom logo"
+            // alt="kaboom logo"
           />
           <div className={classes["text-overlay"]}>
             חפשו <span className={classes["bold"]}>KABOOM</span> או
@@ -79,7 +79,7 @@ const GameLobby: React.FC = () => {
         </div>
         <div className={classes["player-number-box"]}>
           {lobby.players.length.toString()}
-          <img src={personIcon} alt="kaboom logo" />
+          <img src={personIcon} alt="icon" />
         </div>
         <img
           className={classes["kaboom-logo"]}

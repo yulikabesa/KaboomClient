@@ -1,0 +1,37 @@
+button {
+  font-size: var(--fs-button);
+}
+
+p {
+  font-size: var(--fs-body);
+}
+
+h1 {
+  font-size: var(--fs-h1);
+  margin: 0;
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  margin: 0;
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  margin: 0;
+}
+
+h4 {
+  font-size: var(--fs-h4);
+  margin: 0;
+}
+
+h5 {
+  font-size: var(--fs-h5);
+  margin: 0;
+}
+
+h6 {
+  font-size: var(--fs-h6);
+  margin: 0;
+}

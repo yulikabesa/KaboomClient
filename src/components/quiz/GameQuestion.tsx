@@ -37,7 +37,7 @@ const GameQuestion: React.FC<{
     });
   };
   return (
-    <>
+    <div className={classes["flex"]}>
       {props.scoringWeight === 2 && (
         <DoubleScore className={classes["double-score"]} />
       )}
@@ -98,7 +98,7 @@ const GameQuestion: React.FC<{
           ? { correctAnswerIndex: props.correctAnswerIndex }
           : {})}
       />
-    </>
+    </div>
   );
 };
 

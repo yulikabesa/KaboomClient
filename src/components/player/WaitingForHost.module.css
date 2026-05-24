@@ -12,6 +12,7 @@
     background-repeat: no-repeat;
     color: white;
     text-align: center;
+    font-weight: 600;
 }
 
 .soldier-pic {
@@ -20,6 +21,6 @@
 }
 
 .nickname {
-    font-weight: 500;
-    font-size: clamp(28px, 2vmax, 40px);
+    font-weight: 700;
+    font-size: var(--fs-h4);
 }

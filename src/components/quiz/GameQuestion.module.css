@@ -1,3 +1,11 @@
+.flex {
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .top-container {
   display: flex;
   width: 100vw;
@@ -15,7 +23,7 @@
   text-align: center;
   padding: 1vh;
   border-radius: 4px;
-  font-size: clamp(20px, 2.1vmax, 30px);
+  font-size: var(--fs-h5);
 }
 
 .shorten-time-btn {
@@ -26,7 +34,6 @@
   border-radius: 4px;
   width: fit-content;
   height: fit-content;
-  font-size: clamp(12px, 1vmax, 22px);
   position: absolute;
   inset-inline-end: 4vh;
 }
@@ -57,11 +64,11 @@
 }
 
 .players-answered-num {
-  font-size: clamp(20px, 10vmax, 100px);
+  font-size: var(--fs-h1);
 }
 
 .players-answered-text {
-  font-size: clamp(30px, 3.2vmax, 50px);
+  font-size: var(--fs-h3);
   color: #b98ddb;
   font-weight: 600;
 }

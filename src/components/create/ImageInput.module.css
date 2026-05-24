@@ -20,7 +20,6 @@
 }
 
 .image-select p {
-  font-size: clamp(12px, 1vmax, 20px);
   margin: 0%;
 }
 
@@ -41,6 +40,10 @@
 
 .title {
   font-weight: bold;
+}
+
+.text {
+  font-size: var(--fs-body-sm);
 }
 
 .image {
