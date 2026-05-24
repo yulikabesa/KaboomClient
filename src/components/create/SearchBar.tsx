@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import classes from "./SearchBar.module.css";
 import { Search } from "lucide-react";
-import type { sharedWithType } from "./Settings";
 
 type UserDetails = {
   name: string;
@@ -13,11 +12,13 @@ type TagDetails = {
   name: string;
 };
 
-const SearchBar: React.FC<{
-  onItemClick: (newUser: sharedWithType | TagDetails) => void;
+type SearchBarProps<T> = {
+  onItemClick: (item: T) => void;
   placeHolder: string;
   searchFor: "tag" | "user";
-}> = (props) => {
+};
+
+const SearchBar = <T,>(props: SearchBarProps<T>) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<UserDetails[] | TagDetails[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -101,9 +102,16 @@ const SearchBar: React.FC<{
             <li
               key={index}
               className={classes["result-item"]}
-              onClick={() =>
-                props.onItemClick({ ...user, permission: "צפייה" })
-              }
+              onClick={() => {
+                if (props.searchFor === "user") {
+                  props.onItemClick({
+                    ...user,
+                    permission: "צפייה",
+                  } as T);
+                } else {
+                  props.onItemClick(user as T);
+                }
+              }}
             >
               <span>{user.name}</span>
               {"email" in user && user.email && <small>{user.email}</small>}
