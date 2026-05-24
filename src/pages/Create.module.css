@@ -27,12 +27,19 @@
   background-color: #f2f2f2;
 }
 
+.screen-items-flex {
+  overflow-y: hidden;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: row-reverse;
+  padding-top: 6vh;
+  box-sizing: border-box;
+}
+
 .question-editing {
-  position: absolute;
   height: 94vh;
-  width: 83vw;
-  left: 0;
-  bottom: 0;
+  flex: 1;
   padding: 3vh 2vw;
   display: flex;
   flex-direction: column;
@@ -44,12 +51,8 @@
 
 .questions-slides {
   background-color: white;
-  width: 17vw;
+  width: 240px;
   height: 94vh;
-  /* min-width: 200px; */
-  position: absolute;
-  bottom: 0;
-  right: 0;
   max-height: 94vh;
   overflow-y: auto;
   display: flex;
@@ -112,5 +115,5 @@
 }
 
 .semi-bold {
- font-weight: 600;
+  font-weight: 600;
 }

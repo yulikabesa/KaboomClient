@@ -182,89 +182,97 @@ const Create: React.FC<{}> = () => {
         quizName={quizName}
         setQuizName={setQuizName}
       />
-      {/* question editing */}
-      <div className={classes["question-editing"]}>
-        <input
-          id="question-text"
-          type="text"
-          placeholder="הקלד כאן את השאלה שלך…"
-          className={classes["question-text-input"]}
-          value={currentQuestion.questionText}
-          onChange={handleQuestionTextInputChange}
-          maxLength={72}
-        />
-        <div className={classes["flex"]}>
-          <div className={classes.center}>
-            <p className={classes["semi-bold"]}>ניקוד</p>
-            <RangeInput
-              scoringWeight={currentQuestion.scoringWeight}
-              handleQuestionScoringWeightChange={
-                handleQuestionScoringWeightChange
-              }
-            />
-          </div>
-          <ImageInput
-            imageSrc={questionImage?.src}
-            imagePreview={questionImage?.image}
-            setImage={handleImageChange}
-            croppedAreaPixels={questionImage?.croppedAreaPixels}
-            crop={questionImage?.crop}
-            zoom={questionImage?.zoom}
-            setCrop={(crop) =>
-              dispatch({
-                type: "SET_IMAGE_DETAILS",
-                payload: {
-                  index: currentQuestionBeingEdited,
-                  updates: { crop },
-                },
-              })
-            }
-            setZoom={(zoom) =>
-              dispatch({
-                type: "SET_IMAGE_DETAILS",
-                payload: {
-                  index: currentQuestionBeingEdited,
-                  updates: { zoom },
-                },
-              })
-            }
-            handleCropComplete={handleCropComplete}
-            handleSaveCropped={handleSaveCropped}
+      <div className={classes["screen-items-flex"]}>
+        {/* question editing */}
+        <div className={classes["question-editing"]}>
+          <input
+            id="question-text"
+            type="text"
+            placeholder="הקלד כאן את השאלה שלך…"
+            className={classes["question-text-input"]}
+            value={currentQuestion.questionText}
+            onChange={handleQuestionTextInputChange}
+            maxLength={72}
           />
-          <div className={classes.center}>
-            <p className={classes["semi-bold"]}>כמות זמן</p>
-            <SecondsCircleLayout
-              items={[20, 30, 60, 90, 120, 240, 5, 10]}
-              center={currentQuestion.timeLimit}
-              onCenterChange={handleQuestionTimeLimitChange}
+          <div className={classes["flex"]}>
+            <div className={classes.center}>
+              <p className={classes["semi-bold"]}>ניקוד</p>
+              <RangeInput
+                scoringWeight={currentQuestion.scoringWeight}
+                handleQuestionScoringWeightChange={
+                  handleQuestionScoringWeightChange
+                }
+              />
+            </div>
+            <ImageInput
+              imageSrc={questionImage?.src}
+              imagePreview={questionImage?.image}
+              setImage={handleImageChange}
+              croppedAreaPixels={questionImage?.croppedAreaPixels}
+              crop={questionImage?.crop}
+              zoom={questionImage?.zoom}
+              setCrop={(crop) =>
+                dispatch({
+                  type: "SET_IMAGE_DETAILS",
+                  payload: {
+                    index: currentQuestionBeingEdited,
+                    updates: { crop },
+                  },
+                })
+              }
+              setZoom={(zoom) =>
+                dispatch({
+                  type: "SET_IMAGE_DETAILS",
+                  payload: {
+                    index: currentQuestionBeingEdited,
+                    updates: { zoom },
+                  },
+                })
+              }
+              handleCropComplete={handleCropComplete}
+              handleSaveCropped={handleSaveCropped}
             />
+            <div className={classes.center}>
+              <p className={classes["semi-bold"]}>כמות זמן</p>
+              <SecondsCircleLayout
+                items={[20, 30, 60, 90, 120, 240, 5, 10]}
+                center={currentQuestion.timeLimit}
+                onCenterChange={handleQuestionTimeLimitChange}
+              />
+            </div>
+          </div>
+          <AnswerOptionsInputList
+            correctAnswerIndexes={currentQuestion.correctIndexes}
+            answerTexts={currentQuestion.answerOptions}
+            onAnswerClick={(index) => handleQuestionCorrectIndexesChange(index)}
+            onAnswerTextChange={handleAnswerTextChange}
+          />
+        </div>
+
+        {/* questions slides */}
+        <div className={classes["questions-slides"]}>
+          <QuestionSlideList
+            currentQuestionEdited={currentQuestionBeingEdited}
+            onSlideClick={handleQuestionBeingEditedChange}
+            onSlideCopyClick={handleCurrentSlideCopyClick}
+            onSlideDeleteClick={handleCurrentSlideDeleteClick}
+            questions={questions}
+            onDragEnd={onDragEnd}
+            onDragStart={onDragStart}
+          />
+          <div className={classes["blue-btn"]} onClick={addEmptyQuestion}>
+            הוסף שאלה
           </div>
         </div>
-        <AnswerOptionsInputList
-          correctAnswerIndexes={currentQuestion.correctIndexes}
-          answerTexts={currentQuestion.answerOptions}
-          onAnswerClick={(index) => handleQuestionCorrectIndexesChange(index)}
-          onAnswerTextChange={handleAnswerTextChange}
-        />
       </div>
 
-      {/* questions slides */}
-      <div className={classes["questions-slides"]}>
-        <QuestionSlideList
-          currentQuestionEdited={currentQuestionBeingEdited}
-          onSlideClick={handleQuestionBeingEditedChange}
-          onSlideCopyClick={handleCurrentSlideCopyClick}
-          onSlideDeleteClick={handleCurrentSlideDeleteClick}
-          questions={questions}
-          onDragEnd={onDragEnd}
-          onDragStart={onDragStart}
+      {settingsDisplay && (
+        <Settings
+          closeOverlay={toggleSettings}
+          quizName={quizName}
+          setQuizName={setQuizName}
         />
-        <div className={classes["blue-btn"]} onClick={addEmptyQuestion}>
-          הוסף שאלה
-        </div>
-      </div>
-
-      {settingsDisplay && <Settings closeOverlay={toggleSettings} quizName={quizName} setQuizName={setQuizName} />}
+      )}
     </div>
   );
 };
