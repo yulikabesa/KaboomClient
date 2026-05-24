@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Overlay from "../UI/Overlay";
+import Overlay from "../../UI/Overlay";
 import classes from "./Settings.module.css";
 import SharedWith from "./SharedWith";
 import SearchBar from "./SearchBar";

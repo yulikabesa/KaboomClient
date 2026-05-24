@@ -1,8 +1,8 @@
 import { useState, type ChangeEvent } from "react";
 import Cropper, { type Area } from "react-easy-crop";
-import Overlay from "../UI/Overlay";
+import Overlay from "../../UI/Overlay";
 import classes from "./ImageCropper.module.css";
-import Button from "../UI/Button";
+import Button from "../../UI/Button";
 
 const minZoom = 0.4;
 

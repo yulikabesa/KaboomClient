@@ -1,4 +1,4 @@
-import profilePic from "../../assets/profilePic.svg";
+import profilePic from "../../../assets/profilePic.svg";
 import classes from "./SharedWith.module.css";
 import type { permissionType } from "./Settings";
 import { useEffect, useRef, useState } from "react";

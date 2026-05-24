@@ -1,8 +1,8 @@
 import { useState, type ChangeEvent, type MouseEvent } from "react";
-import Button from "../UI/Button";
-import uploadIcon from "../../assets/uploadIcon.svg";
-import deleteIcon from "../../assets/deleteIcon.svg";
-import cropIcon from "../../assets/cropIcon.svg";
+import Button from "../../UI/Button";
+import uploadIcon from "../../../assets/uploadIcon.svg";
+import deleteIcon from "../../../assets/deleteIcon.svg";
+import cropIcon from "../../../assets/cropIcon.svg";
 import ImageCropper from "./ImageCropper";
 import type { Area } from "react-easy-crop";
 import classes from "./ImageInput.module.css";

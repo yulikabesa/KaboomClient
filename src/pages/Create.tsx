@@ -1,19 +1,19 @@
 import React, { useState, type ChangeEvent } from "react";
 import NavigationMenu from "../components/NavigationMenu";
-import QuestionSlideList from "../components/create/QuestionSlideList";
-import ImageInput from "../components/create/ImageInput";
+import QuestionSlideList from "../components/create/Slides/QuestionSlideList";
+import ImageInput from "../components/create/Image/ImageInput";
 import getCroppedImg from "../utils/cropImage";
 import type { Area } from "react-easy-crop";
 import classes from "./Create.module.css";
-import SecondsCircleLayout from "../components/create/SecondsCircleLayout";
+import SecondsCircleLayout from "../components/create/Inputs/SecondsCircleLayout";
 import { useLocation } from "react-router-dom";
-import AnswerOptionsInputList from "../components/create/AnswerOptionsInputList";
+import AnswerOptionsInputList from "../components/create/Inputs/AnswerOptionsInputList";
 import {
   questionsReducer,
   createEmptyQuestion,
 } from "../reducers/questionsReducer";
-import RangeInput from "../components/create/RangeInput";
-import Settings from "../components/create/Settings";
+import RangeInput from "../components/create/Inputs/RangeInput";
+import Settings from "../components/create/Settings/Settings";
 
 const Create: React.FC<{}> = () => {
   const location = useLocation();

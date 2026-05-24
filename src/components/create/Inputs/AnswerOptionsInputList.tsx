@@ -1,10 +1,10 @@
 import React from "react";
-import Diamond from "../shapes/Diamond";
-import Triangle from "../shapes/Triangle";
-import Square from "../shapes/Square";
-import Circle from "../shapes/Circle";
-import Pentagon from "../shapes/Pentagon";
-import UpsideDownTriangle from "../shapes/UpsideDownTriangle";
+import Diamond from "../../shapes/Diamond";
+import Triangle from "../../shapes/Triangle";
+import Square from "../../shapes/Square";
+import Circle from "../../shapes/Circle";
+import Pentagon from "../../shapes/Pentagon";
+import UpsideDownTriangle from "../../shapes/UpsideDownTriangle";
 import classes from "./AnswerOptionsInputList.module.css";
 
 type Props = {

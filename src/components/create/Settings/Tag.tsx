@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Tag.module.css";
-import TagIcon from "../../assets/courseIcon.svg";
+import TagIcon from "../../../assets/courseIcon.svg";
 
 const Tag: React.FC<{
   tag: string;

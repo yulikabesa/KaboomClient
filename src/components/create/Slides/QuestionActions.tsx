@@ -1,6 +1,6 @@
 import React from "react";
-import copyIcon from "../../assets/grayCopyIcon.svg";
-import deleteIcon from "../../assets/grayDeleteIcon.svg";
+import copyIcon from "../../../assets/grayCopyIcon.svg";
+import deleteIcon from "../../../assets/grayDeleteIcon.svg";
 import classes from "./QuestionSlideList.module.css";
 
 type Props = {
