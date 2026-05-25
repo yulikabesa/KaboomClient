@@ -25,7 +25,9 @@ const Settings: React.FC<{
   ) => {
     props.setSharedWith((prev: sharedWithType[]) =>
       prev.map((user: sharedWithType) =>
-        user.user.email === email ? { ...user, permission: newPermission } : user,
+        user.user.email === email
+          ? { ...user, permission: newPermission }
+          : user,
       ),
     );
   };
@@ -34,10 +36,35 @@ const Settings: React.FC<{
     props.setTags(props.tags.filter((tag) => tag !== tagToDelete));
   };
 
-  const addNewSharedUserHandle = (newUser: sharedWithType) => {
-    const exists = props.sharedWith.some((user) => user.user.email === newUser.user.email);
+  const addNewSharedUserHandle = (newUser: {
+    _id: string;
+    name: string;
+    email: string;
+    permission: permissionType;
+  }) => {
+    console.log(newUser);
+    const exists = props.sharedWith.some(
+      (user) => user.user.email === newUser.email,
+    );
     if (!exists) {
-      props.setSharedWith((prev) => [...prev, newUser]);
+      const newUserToAdd = {
+        permission: newUser.permission,
+        user: {
+          _id: newUser._id,
+          email: newUser.email,
+          name: newUser.name,
+        },
+      };
+      props.setSharedWith((prev) => [...prev, newUserToAdd]);
+    }
+  };
+
+  const addNewTagHandle = (newTag: { name: string; _id: string }) => {
+    console.log(newTag);
+    console.log(props.tags);
+    const exists = props.tags.some((tag) => tag === newTag.name);
+    if (!exists) {
+      props.setTags((prev) => [...prev, newTag.name]);
     }
   };
 
@@ -88,7 +115,7 @@ const Settings: React.FC<{
         <div>
           <p className={classes.title}>תגיות</p>
           <SearchBar
-            onItemClick={addNewSharedUserHandle}
+            onItemClick={addNewTagHandle}
             placeHolder="איזה קורסים יכולים להשתמש בקהות שלך?"
             searchFor="tag"
           />

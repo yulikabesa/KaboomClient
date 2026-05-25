@@ -26,6 +26,7 @@ const Home = () => {
         ]);
         setCreatedProducts(createdRes.data);
         setSharedProducts(sharedRes.data);
+        console.log(createdRes.data);
         setIsLoading(false);
       } catch (error) {
         if (axios.isAxiosError(error)) {
