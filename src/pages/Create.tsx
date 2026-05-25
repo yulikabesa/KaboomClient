@@ -16,6 +16,7 @@ import RangeInput from "../components/create/Inputs/RangeInput";
 import Settings from "../components/create/Settings/Settings";
 import type {
   productType,
+  questionImageType,
   sharedWithType,
 } from "../components/home/ProductsList";
 
@@ -45,6 +46,13 @@ const Create: React.FC<{}> = () => {
     data.sharedWith,
   );
   const [tags, setTags] = useState<string[]>(data.tags);
+  const [coverImage, setCoverImage] = useState<questionImageType>({
+    image: "",
+    src: "",
+    crop: { x: 0, y: 0 },
+    zoom: 1,
+    croppedAreaPixels: null,
+  });
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -241,7 +249,7 @@ const Create: React.FC<{}> = () => {
               }
               handleCropComplete={handleCropComplete}
               handleSaveCropped={handleSaveCropped}
-              variant="settings"
+              variant="question"
             />
             <div className={classes.center}>
               <p className={classes["semi-bold"]}>כמות זמן</p>
