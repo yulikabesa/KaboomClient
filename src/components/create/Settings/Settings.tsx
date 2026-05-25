@@ -4,6 +4,7 @@ import classes from "./Settings.module.css";
 import SharedWith from "./SharedWith";
 import SearchBar from "./SearchBar";
 import Tag from "./Tag";
+import ImageInput from "../Image/ImageInput";
 
 export type permissionType = "בעלים" | "עריכה" | "צפייה";
 export type sharedWithType = {
@@ -80,6 +81,9 @@ const Settings: React.FC<{
         <div>
           <p className={classes.title}>תמונה</p>{" "}
           <p className={classes.brackets}>{`(אופציונלי)`}</p>
+          <div>
+            {/* <ImageInput /> */}
+          </div>
         </div>
         <div>
           <p className={classes.title}>משותפים</p>

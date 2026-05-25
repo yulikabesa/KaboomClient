@@ -231,6 +231,7 @@ const Create: React.FC<{}> = () => {
               }
               handleCropComplete={handleCropComplete}
               handleSaveCropped={handleSaveCropped}
+              variant="settings"
             />
             <div className={classes.center}>
               <p className={classes["semi-bold"]}>כמות זמן</p>

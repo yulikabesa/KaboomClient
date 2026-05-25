@@ -18,6 +18,7 @@ interface ImageInputProps {
   zoom: number;
   setCrop: (crop: { x: number; y: number }) => void;
   setZoom: (zoom: number) => void;
+  variant: "settings" | "question";
 }
 
 const ImageInput: React.FC<ImageInputProps> = (props) => {
@@ -50,7 +51,9 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
     <>
       {props.imagePreview ? (
         <>
-          <div className={`${classes["image-select"]} ${classes["selected"]}`}>
+          <div
+            className={`${classes["image-select"]} ${classes["selected"]} ${classes[props.variant]}`}
+          >
             <img className={classes["image"]} src={props.imagePreview} />
             <div className={classes["actions"]}>
               <button
@@ -85,7 +88,7 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
           )}
         </>
       ) : (
-        <div className={classes["image-select"]}>
+        <div className={`${classes["image-select"]} ${classes[props.variant]}`}>
           <input
             id="file-upload"
             type="file"
@@ -99,12 +102,9 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
               רוצה להוסיף תמונה? גרור, העלה או בחר אחת מושלמת מהמאגר שלנו
             </p>
             <div className={classes["input-actions"]}>
-              <Button style="white" className={classes[""]}>
-                העלה
-              </Button>
+              <Button variant="white">העלה</Button>
               <Button
-                style="blue"
-                className={classes[""]}
+                variant="blue"
                 onClick={(e: MouseEvent<HTMLButtonElement>) => {
                   e.preventDefault();
                   e.stopPropagation();

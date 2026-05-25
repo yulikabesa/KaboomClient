@@ -40,22 +40,22 @@ const NavigationMenu: React.FC<{
         <ul>
           <li>
             {props.variant === "home" ? (
-              <Button style="white" to="/join">
+              <Button variant="white" to="/join">
                 לשחק
               </Button>
             ) : (
-              <Button style="white" to="/home">
+              <Button variant="white" to="/home">
                 לצאת
               </Button>
             )}
           </li>
           <li>
             {props.variant === "home" ? (
-              <Button style="blue" to="/create">
+              <Button variant="blue" to="/create">
                 ליצור
               </Button>
             ) : (
-              <Button style="blue">לשמור</Button>
+              <Button variant="blue">לשמור</Button>
             )}
           </li>
         </ul>
