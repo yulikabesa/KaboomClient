@@ -1,61 +1,42 @@
-import React, { useState } from "react";
+import React from "react";
 import Overlay from "../../UI/Overlay";
 import classes from "./Settings.module.css";
 import SharedWith from "./SharedWith";
 import SearchBar from "./SearchBar";
 import Tag from "./Tag";
+import type { sharedWithType } from "../../home/ProductsList";
 
 export type permissionType = "בעלים" | "עריכה" | "צפייה";
-export type sharedWithType = {
-  name: string;
-  email: string;
-  permission: permissionType;
-};
 
 const Settings: React.FC<{
   closeOverlay: () => void;
   quizName: string;
   setQuizName: React.Dispatch<React.SetStateAction<string>>;
+  tags: string[];
+  setTags: React.Dispatch<React.SetStateAction<string[]>>;
+  sharedWith: sharedWithType[];
+  setSharedWith: React.Dispatch<React.SetStateAction<sharedWithType[]>>;
 }> = (props) => {
   const QUIZ_NAME_MAX = 50;
-  const sharedWithExample: sharedWithType[] = [
-    {
-      name: "נגה זאבי",
-      email: "User@test.com",
-      permission: "בעלים",
-    },
-    {
-      name: "יעל קבסא",
-      email: "User2@test.com",
-      permission: "צפייה",
-    },
-  ];
-  const tagsExample = ["קורס 10", "קורס 15"];
-
-  const [sharedWith, setSharedWith] =
-    useState<sharedWithType[]>(sharedWithExample);
-
-  const [tags, setTags] = useState<string[]>(tagsExample);
-
   const changePermissionHandle = (
     email: string,
     newPermission: permissionType,
   ) => {
-    setSharedWith((prev: sharedWithType[]) =>
+    props.setSharedWith((prev: sharedWithType[]) =>
       prev.map((user: sharedWithType) =>
-        user.email === email ? { ...user, permission: newPermission } : user,
+        user.user.email === email ? { ...user, permission: newPermission } : user,
       ),
     );
   };
 
   const deleteTagHandle = (tagToDelete: string) => {
-    setTags(tags.filter((tag) => tag !== tagToDelete));
+    props.setTags(props.tags.filter((tag) => tag !== tagToDelete));
   };
 
   const addNewSharedUserHandle = (newUser: sharedWithType) => {
-    const exists = sharedWith.some((user) => user.email === newUser.email);
+    const exists = props.sharedWith.some((user) => user.user.email === newUser.user.email);
     if (!exists) {
-      setSharedWith((prev) => [...prev, newUser]);
+      props.setSharedWith((prev) => [...prev, newUser]);
     }
   };
 
@@ -84,11 +65,11 @@ const Settings: React.FC<{
         <div>
           <p className={classes.title}>משותפים</p>
           <div className={classes["shared-with-div"]}>
-            {sharedWith.map((user, index) => (
+            {props.sharedWith.map((user, index) => (
               <SharedWith
                 key={index}
-                email={user.email}
-                name={user.name}
+                email={user.user.email}
+                name={user.user.name}
                 permission={user.permission}
                 setPermission={changePermissionHandle}
               />
@@ -108,7 +89,7 @@ const Settings: React.FC<{
             searchFor="tag"
           />
           <div className={classes["shared-with-div"]}>
-            {tags.map((tag, index) => (
+            {props.tags.map((tag, index) => (
               <Tag key={index} tag={tag} deleteTag={deleteTagHandle} />
             ))}
           </div>

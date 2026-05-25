@@ -3,6 +3,7 @@ import classes from "./ProductList.module.css";
 import ProductDisplay from "./ProductDisplay";
 import defaultCover from "../../assets/defaultCoverPhoto.png";
 import type { Area, Point } from "react-easy-crop";
+import type { permissionType } from "../create/Settings/Settings";
 
 export type questionType = {
   _id: string;
@@ -22,10 +23,13 @@ export type questionImageType = {
   croppedAreaPixels?: Area | null;
 };
 
-type sharedWithType = {
-  permission: string;
-  user: string;
-  _id: string;
+export type sharedWithType = {
+  permission: permissionType;
+  user: {
+    _id: string;
+    name: string;
+    email: string;
+  };
 };
 
 export type productType = {
