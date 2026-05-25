@@ -6,16 +6,12 @@ import { useSocket } from "../../store/SocketContext";
 import { useNavigate } from "react-router-dom";
 import { useLobby } from "../../store/LobbyContext";
 import { useState } from "react";
-import type { questionType } from "./ProductsList";
+import type { productType } from "./ProductsList";
+import defaultCover from "../../assets/defaultCoverPhoto.png";
 
 const ProductDisplay: React.FC<{
   isLoading: boolean;
-  coverImage: string;
-  title: string;
-  course: string;
-  questionsNum: number;
-  productId: string;
-  questions: questionType[];
+  product: productType;
 }> = (props) => {
   const navigate = useNavigate();
   const { setLobby } = useLobby();
@@ -31,7 +27,7 @@ const ProductDisplay: React.FC<{
     // Emit event to create game
     socket.emit("game-event", {
       type: "create-game-session",
-      payload: { quizId: props.productId },
+      payload: { quizId: props.product._id },
     });
 
     // Listen for the game-created event only once
@@ -40,7 +36,7 @@ const ProductDisplay: React.FC<{
       setLobby({
         gamePin: pin,
         players: [],
-        quizId: props.productId,
+        quizId: props.product._id,
       });
       navigate("/lobby");
     });
@@ -52,7 +48,7 @@ const ProductDisplay: React.FC<{
   };
 
   const onEditClick = () => {
-    navigate("/create", { state: props.questions });
+    navigate("/create", { state: props.product });
   };
   return (
     <div className={classes.container}>
@@ -74,10 +70,12 @@ const ProductDisplay: React.FC<{
         <>
           <div
             className={classes.testImg}
-            style={{ backgroundImage: `url(${props.coverImage})` }}
+            style={{
+              backgroundImage: `url(${props.product.coverImage === "" ? defaultCover : props.product.coverImage})`,
+            }}
           >
             <p className={classes["question-num"]}>
-              {props.questionsNum} שאלות
+              {props.product.questions?.length ?? 0} שאלות
             </p>
             <div className={classes.hoverOverlay}>
               <div
@@ -101,8 +99,14 @@ const ProductDisplay: React.FC<{
               </div>
             </div>
           </div>
-          <div className={classes["product-title"]}>{props.title}</div>
-          <div className={classes["product-course"]}>{props.course}</div>
+          <div className={classes["product-title"]}>
+            {props.product.title ?? ""}
+          </div>
+          <div className={classes["product-course"]}>
+            {props.product.tags.length === 1
+              ? props.product.tags[0]
+              : props.product.tags.join(", ")}
+          </div>
         </>
       )}
     </div>

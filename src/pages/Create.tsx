@@ -14,27 +14,37 @@ import {
 } from "../reducers/questionsReducer";
 import RangeInput from "../components/create/Inputs/RangeInput";
 import Settings from "../components/create/Settings/Settings";
+import type {
+  productType,
+  sharedWithType,
+} from "../components/home/ProductsList";
 
 const Create: React.FC<{}> = () => {
   const location = useLocation();
-  const data = location.state;
+  const data: productType = location.state;
 
+  // states for questions and slides display
   const initialQuestions =
-    Array.isArray(data) && data.length > 0 ? data : [createEmptyQuestion()];
-
+    Array.isArray(data.questions) && data.questions.length > 0
+      ? data.questions
+      : [createEmptyQuestion()];
   const [questions, dispatch] = React.useReducer(
     questionsReducer,
     initialQuestions,
   );
-
   const [currentQuestionBeingEdited, setCurrentQuestionBeingEdited] =
     useState(0);
   const scoringWeightOptions = [0.5, 1, 2];
   const currentQuestion = questions[currentQuestionBeingEdited];
-  const { questionImage } = currentQuestion;
+  const questionImage = currentQuestion?.questionImage;
 
+  // states for settings
   const [settingsDisplay, setSettingsDisplay] = useState(false);
-  const [quizName, setQuizName] = useState("");
+  const [quizName, setQuizName] = useState(data.title);
+  const [sharedWith, setSharedWith] = useState<sharedWithType[]>(
+    data.sharedWith,
+  );
+  const [tags, setTags] = useState<string[]>(data.tags);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -137,7 +147,7 @@ const Create: React.FC<{}> = () => {
   };
 
   const handleSaveCropped = async () => {
-    if (!questionImage.src || !questionImage.croppedAreaPixels) return;
+    if (!questionImage?.src || !questionImage?.croppedAreaPixels) return;
     const cropped = (await getCroppedImg(
       questionImage.src,
       questionImage.croppedAreaPixels,
@@ -205,12 +215,12 @@ const Create: React.FC<{}> = () => {
               />
             </div>
             <ImageInput
-              imageSrc={questionImage?.src}
-              imagePreview={questionImage?.image}
+              imageSrc={questionImage?.src ?? ""}
+              imagePreview={questionImage?.image ?? ""}
               setImage={handleImageChange}
-              croppedAreaPixels={questionImage?.croppedAreaPixels}
-              crop={questionImage?.crop}
-              zoom={questionImage?.zoom}
+              croppedAreaPixels={questionImage?.croppedAreaPixels ?? null}
+              crop={questionImage?.crop ?? { x: 0, y: 0 }}
+              zoom={questionImage?.zoom ?? 1}
               setCrop={(crop) =>
                 dispatch({
                   type: "SET_IMAGE_DETAILS",
@@ -272,6 +282,10 @@ const Create: React.FC<{}> = () => {
           closeOverlay={toggleSettings}
           quizName={quizName}
           setQuizName={setQuizName}
+          sharedWith={sharedWith}
+          setSharedWith={setSharedWith}
+          tags={tags}
+          setTags={setTags}
         />
       )}
     </div>
