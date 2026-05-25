@@ -77,18 +77,7 @@ const ProductsList: React.FC<{
             <div className={classes.reveal} key={index}>
               <ProductDisplay
                 isLoading={false}
-                coverImage={
-                  product.coverImage === "" ? defaultCover : product.coverImage
-                }
-                course={
-                  product.tags.length === 1
-                    ? product.tags[0]
-                    : product.tags.join(", ")
-                }
-                questionsNum={product.questions?.length}
-                title={product.title}
-                productId={product._id}
-                questions={product.questions}
+                product={product}
               />
             </div>
           ))
@@ -96,12 +85,15 @@ const ProductsList: React.FC<{
             <div key={i}>
               <ProductDisplay
                 isLoading={true}
-                coverImage={defaultCover}
-                course=""
-                questionsNum={0}
-                title={""}
-                productId={""}
-                questions={[]}
+                product={{
+                  coverImage: defaultCover,
+                  owner: "",
+                  title: "",
+                  questions: [],
+                  sharedWith: [],
+                  tags: [],
+                  _id: "",
+                }}
               />
             </div>
           ))}
