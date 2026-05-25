@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Overlay from "../../UI/Overlay";
 import classes from "./Settings.module.css";
 import SharedWith from "./SharedWith";
@@ -20,6 +20,8 @@ const Settings: React.FC<{
   setSharedWith: React.Dispatch<React.SetStateAction<sharedWithType[]>>;
 }> = (props) => {
   const QUIZ_NAME_MAX = 50;
+  const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
+
   const changePermissionHandle = (
     email: string,
     newPermission: permissionType,
@@ -70,68 +72,97 @@ const Settings: React.FC<{
   };
 
   return (
-    <Overlay title="הגדרות" closeOverlay={props.closeOverlay} button={true}>
-      <div className={classes.container}>
-        <div>
-          <p className={classes.title}>כותרת</p>
-          <div className={classes["input-wrapper"]}>
-            <span className={classes["counter"]}>
-              {props.quizName.length}/{QUIZ_NAME_MAX}
-            </span>
-            <input
-              type="text"
-              placeholder="מה שם החידון שלך?"
-              maxLength={QUIZ_NAME_MAX}
-              value={props.quizName}
-              onChange={(e) => props.setQuizName(e.target.value)}
+    <>
+      <Overlay
+        elementId="overlay"
+        title="הגדרות"
+        closeOverlay={props.closeOverlay}
+        button={true}
+      >
+        <div className={classes.container}>
+          <div>
+            <p className={classes.title}>כותרת</p>
+            <div className={classes["input-wrapper"]}>
+              <span className={classes["counter"]}>
+                {props.quizName.length}/{QUIZ_NAME_MAX}
+              </span>
+              <input
+                type="text"
+                placeholder="מה שם החידון שלך?"
+                maxLength={QUIZ_NAME_MAX}
+                value={props.quizName}
+                onChange={(e) => props.setQuizName(e.target.value)}
+              />
+            </div>
+          </div>
+          <div>
+            <p className={classes.title}>תמונה</p>{" "}
+            <p className={classes.brackets}>{`(אופציונלי)`}</p>
+            <div>{/* <ImageInput /> */}</div>
+          </div>
+          <div>
+            <p className={classes.title}>משותפים</p>
+            <div className={classes["shared-with-div"]}>
+              {props.sharedWith.map((user, index) => (
+                <SharedWith
+                  key={index}
+                  email={user.user.email}
+                  name={user.user.name}
+                  permission={user.permission}
+                  setPermission={changePermissionHandle}
+                />
+              ))}
+            </div>
+            <SearchBar
+              onItemClick={addNewSharedUserHandle}
+              placeHolder="הכנס מייל או שם..."
+              searchFor="user"
             />
           </div>
-        </div>
-        <div>
-          <p className={classes.title}>תמונה</p>{" "}
-          <p className={classes.brackets}>{`(אופציונלי)`}</p>
           <div>
-            {/* <ImageInput /> */}
+            <p className={classes.title}>תגיות</p>
+            <SearchBar
+              onItemClick={addNewTagHandle}
+              placeHolder="איזה קורסים יכולים להשתמש בקהות שלך?"
+              searchFor="tag"
+            />
+            <div className={classes["shared-with-div"]}>
+              {props.tags.map((tag, index) => (
+                <Tag key={index} tag={tag} deleteTag={deleteTagHandle} />
+              ))}
+            </div>
           </div>
         </div>
-        <div>
-          <p className={classes.title}>משותפים</p>
-          <div className={classes["shared-with-div"]}>
-            {props.sharedWith.map((user, index) => (
-              <SharedWith
-                key={index}
-                email={user.user.email}
-                name={user.user.name}
-                permission={user.permission}
-                setPermission={changePermissionHandle}
-              />
-            ))}
-          </div>
-          <SearchBar
-            onItemClick={addNewSharedUserHandle}
-            placeHolder="הכנס מייל או שם..."
-            searchFor="user"
-          />
+        <div className={classes["buttons-flex"]}>
+          <Button variant="blue">שמור וצא</Button>
+          <Button
+            variant="red"
+            onClick={() => {
+              setShowDeleteOverlay((prev) => !prev);
+            }}
+          >
+            מחק שאלון
+          </Button>
         </div>
-        <div>
-          <p className={classes.title}>תגיות</p>
-          <SearchBar
-            onItemClick={addNewTagHandle}
-            placeHolder="איזה קורסים יכולים להשתמש בקהות שלך?"
-            searchFor="tag"
-          />
-          <div className={classes["shared-with-div"]}>
-            {props.tags.map((tag, index) => (
-              <Tag key={index} tag={tag} deleteTag={deleteTagHandle} />
-            ))}
+      </Overlay>
+      {showDeleteOverlay && (
+        <Overlay
+        cardClassName={classes.overOverlay}
+          title="אתה בטוח?"
+          elementId="overOverlay"
+          closeOverlay={() => setShowDeleteOverlay((prev) => !prev)}
+        >
+          <p className={classes.text}>
+            אתה בטוח שבא לך למחוק את השאלון?
+            <br /> אתה לא תוכל לשחזר את אותו.
+          </p>
+          <div className={classes["buttons-flex"]}>
+            <Button variant="blue">בטל</Button>
+            <Button variant="red">מחק</Button>
           </div>
-        </div>
-      </div>
-      <div className={classes["buttons-flex"]}>
-        <Button variant="blue">שמור וצא</Button>
-        <Button variant="red">מחק שאלון</Button>
-      </div>
-    </Overlay>
+        </Overlay>
+      )}
+    </>
   );
 };
 

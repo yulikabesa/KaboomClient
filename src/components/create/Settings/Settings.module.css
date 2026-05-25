@@ -77,3 +77,14 @@
   display: flex;
   justify-content: space-between;
 }
+
+.overOverlay {
+  width: 20vw;
+  min-width: 300px;
+  text-align: center;
+}
+
+.text {
+  padding: 4vh 2vh;
+  font-weight: 700;
+}
