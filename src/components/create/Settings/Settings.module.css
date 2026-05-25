@@ -69,3 +69,11 @@
   font-size: clamp(12px, 0.8vmax, 14px);
   font-weight: 600;
 }
+
+.buttons-flex {
+  padding: 0 2vh 2vh 2vh;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}

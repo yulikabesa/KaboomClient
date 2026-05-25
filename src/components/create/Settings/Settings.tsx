@@ -6,6 +6,7 @@ import SearchBar from "./SearchBar";
 import Tag from "./Tag";
 import ImageInput from "../Image/ImageInput";
 import type { sharedWithType } from "../../home/ProductsList";
+import Button from "../../UI/Button";
 
 export type permissionType = "בעלים" | "עריכה" | "צפייה";
 
@@ -125,6 +126,10 @@ const Settings: React.FC<{
             ))}
           </div>
         </div>
+      </div>
+      <div className={classes["buttons-flex"]}>
+        <Button variant="blue">שמור וצא</Button>
+        <Button variant="red">מחק שאלון</Button>
       </div>
     </Overlay>
   );
