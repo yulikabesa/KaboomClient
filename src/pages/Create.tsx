@@ -25,8 +25,8 @@ const Create: React.FC<{}> = () => {
 
   // states for questions and slides display
   const initialQuestions =
-    Array.isArray(data.questions) && data.questions.length > 0
-      ? data.questions
+    Array.isArray(data?.questions) && data?.questions.length > 0
+      ? data?.questions
       : [createEmptyQuestion()];
   const [questions, dispatch] = React.useReducer(
     questionsReducer,
@@ -40,11 +40,11 @@ const Create: React.FC<{}> = () => {
 
   // states for settings
   const [settingsDisplay, setSettingsDisplay] = useState(false);
-  const [quizName, setQuizName] = useState(data.title);
+  const [quizName, setQuizName] = useState(data?.title ?? "");
   const [sharedWith, setSharedWith] = useState<sharedWithType[]>(
-    data.sharedWith,
+    data?.sharedWith ?? []
   );
-  const [tags, setTags] = useState<string[]>(data.tags);
+  const [tags, setTags] = useState<string[]>(data?.tags ?? []);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({

@@ -111,6 +111,9 @@ const SearchBar = <T,>(props: SearchBarProps<T>) => {
                 } else {
                   props.onItemClick(user as T);
                 }
+
+                setResults([]);
+                setQuery("");
               }}
             >
               <span>{user.name}</span>
