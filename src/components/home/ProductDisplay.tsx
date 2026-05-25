@@ -48,7 +48,7 @@ const ProductDisplay: React.FC<{
   };
 
   const onEditClick = () => {
-    navigate("/create", { state: props.product.questions });
+    navigate("/create", { state: props.product });
   };
   return (
     <div className={classes.container}>
