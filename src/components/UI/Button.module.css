@@ -28,3 +28,9 @@
   background-color: #0542b9;
   box-shadow: 0 3px 0 0 #04389d;
 }
+
+.red-btn {
+  color: white;
+  background-color: #730000;
+  box-shadow: 0 3px 0 0 #400000;
+}

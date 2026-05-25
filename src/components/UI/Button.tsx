@@ -5,7 +5,7 @@ import classes from "./Button.module.css";
 interface ButtonProps extends PropsWithChildren {
   onClick?: any;
   className?: string;
-  variant: "blue" | "white";
+  variant: "blue" | "white" | "red";
   to?: string;
 }
 
