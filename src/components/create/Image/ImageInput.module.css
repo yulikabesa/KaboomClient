@@ -1,15 +1,26 @@
 .image-select {
   position: relative;
-  height: 20vw;
-  min-height: 200px;
   aspect-ratio: 3/2;
-  margin: 1rem auto;
   background-color: #3a1182;
   color: white;
   text-align: center;
   border-radius: 4px;
   justify-self: center;
-  min-width: 0;
+  margin: 1rem auto;
+}
+
+.question {
+  height: 20vw;
+  min-height: 150px;
+}
+
+.settings {
+  height: 10vw;
+  min-height: 120px;
+}
+
+.settings p {
+  display: none;
 }
 
 .image-select input {
@@ -24,9 +35,13 @@
 }
 
 .wrapper {
+  width: 100%;
+}
+
+.question .wrapper,
+.settings .icon {
   box-sizing: border-box;
   padding: 1rem;
-  width: 100%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -34,8 +49,12 @@
   cursor: pointer;
 }
 
-.icon {
+.question .icon {
   width: 20%;
+}
+
+.settings .icon {
+  width: 40%;
 }
 
 .title {
@@ -63,12 +82,17 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
-.actions {
+.question .actions {
   display: flex;
   position: absolute;
   bottom: 0;
   left: 0;
 }
+
+/* .settings .actions {
+  display: flex;
+  flex-direction: column;
+} */
 
 .round-btn img {
   width: 100%;
@@ -84,10 +108,32 @@
   background-color: #d9d9d9;
 }
 
-.input-actions {
+.question .input-actions {
   margin: 0.4rem;
 }
 
-.input-actions > * {
+.question .input-actions > * {
   margin: 0 1%;
+}
+
+.settings .input-actions,
+.settings .actions {
+  display: flex;
+  flex-direction: column-reverse;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.settings .actions {
+  right: 100%;
+}
+
+.settings .input-actions {
+  left: 120%;
+}
+
+.settings .input-actions > * {
+  margin: 10% 0;
+  width: auto;
 }

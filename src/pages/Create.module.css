@@ -47,6 +47,9 @@
   align-items: center;
   padding-top: 3vh;
   box-sizing: border-box;
+  
+  min-width: fit-content;
+  /* overflow-x: scroll; */
 }
 
 .questions-slides {
@@ -93,12 +96,13 @@
 }
 
 .blue-btn {
+  width: max-content;
   background-color: #1368ce;
   box-shadow: 0 3px 0 0 #04389d;
   border-radius: 5px;
   padding: 1vh 4vh;
   cursor: pointer;
-  font-size: clamp(12px, 1vmax, 20px);
+  font-size: var(--fs-button);
   color: white;
   font-weight: 700;
   margin-top: 2vh;

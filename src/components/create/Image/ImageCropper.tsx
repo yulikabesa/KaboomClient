@@ -60,10 +60,10 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
         />
       </div>
       <div className={classes["actions"]}>
-        <Button style="white" onClick={props.closeOverlay}>
+        <Button variant="white" onClick={props.closeOverlay}>
           סגור
         </Button>
-        <Button style="blue" onClick={handleSaveCropped}>
+        <Button variant="blue" onClick={handleSaveCropped}>
           שמור
         </Button>
       </div>
