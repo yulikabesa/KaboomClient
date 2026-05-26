@@ -43,8 +43,9 @@ const Create: React.FC<{}> = () => {
   const [settingsDisplay, setSettingsDisplay] = useState(false);
   const [quizName, setQuizName] = useState(data?.title ?? "");
   const [sharedWith, setSharedWith] = useState<sharedWithType[]>(
-    data?.sharedWith ?? []
+    data?.sharedWith ?? [],
   );
+  const [tags, setTags] = useState<string[]>(data?.tags ?? []);
   const [coverImage, setCoverImage] = useState<questionImageType>({
     image: "",
     src: "",
@@ -52,7 +53,6 @@ const Create: React.FC<{}> = () => {
     zoom: 1,
     croppedAreaPixels: null,
   });
-  const [tags, setTags] = useState<string[]>(data?.tags ?? []);
 
   const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -135,6 +135,9 @@ const Create: React.FC<{}> = () => {
       croppedAreaPixels: null,
     };
 
+    // if (variant === "settings") {
+    //   handleCoverImageUpdate(updates);
+    // } else
     dispatch({
       type: "SET_IMAGE_DETAILS",
       payload: {
@@ -145,29 +148,47 @@ const Create: React.FC<{}> = () => {
   };
 
   const handleCropComplete = (areaPixels: Area | null) => {
+    const updates = { croppedAreaPixels: areaPixels };
+    // if (variant === "settings") {
+    //   handleCoverImageUpdate(updates);
+    // } else
     dispatch({
       type: "SET_IMAGE_DETAILS",
       payload: {
         index: currentQuestionBeingEdited,
-        updates: { croppedAreaPixels: areaPixels },
+        updates,
       },
     });
   };
 
   const handleSaveCropped = async () => {
     if (!questionImage?.src || !questionImage?.croppedAreaPixels) return;
+
     const cropped = (await getCroppedImg(
       questionImage.src,
       questionImage.croppedAreaPixels,
     )) as string;
-    if (cropped)
+
+    const updates = { image: cropped };
+    if (cropped) {
+      // if (variant === "settings") {
+      //   handleCoverImageUpdate(updates);
+      // } else
       dispatch({
         type: "SET_IMAGE_DETAILS",
         payload: {
           index: currentQuestionBeingEdited,
-          updates: { image: cropped },
+          updates,
         },
       });
+    }
+  };
+
+  const handleCoverImageUpdate = (updates: Partial<questionImageType>) => {
+    setCoverImage((coverImage) => {
+      const updated = { ...coverImage, ...updates };
+      return updated;
+    });
   };
 
   const onDragEnd = (result: any) => {
@@ -294,6 +315,8 @@ const Create: React.FC<{}> = () => {
           setSharedWith={setSharedWith}
           tags={tags}
           setTags={setTags}
+          coverImage={coverImage}
+          // setCoverImage={handleCoverImageUpdate}
         />
       )}
     </div>

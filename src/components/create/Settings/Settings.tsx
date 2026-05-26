@@ -5,7 +5,10 @@ import SharedWith from "./SharedWith";
 import SearchBar from "./SearchBar";
 import Tag from "./Tag";
 import ImageInput from "../Image/ImageInput";
-import type { sharedWithType } from "../../home/ProductsList";
+import type {
+  questionImageType,
+  sharedWithType,
+} from "../../home/ProductsList";
 
 export type permissionType = "בעלים" | "עריכה" | "צפייה";
 
@@ -17,6 +20,8 @@ const Settings: React.FC<{
   setTags: React.Dispatch<React.SetStateAction<string[]>>;
   sharedWith: sharedWithType[];
   setSharedWith: React.Dispatch<React.SetStateAction<sharedWithType[]>>;
+  coverImage: questionImageType;
+  // setCoverImage: (updates: Partial<questionImageType>) => void;
 }> = (props) => {
   const QUIZ_NAME_MAX = 50;
   const changePermissionHandle = (
@@ -89,8 +94,20 @@ const Settings: React.FC<{
         <div>
           <p className={classes.title}>תמונה</p>{" "}
           <p className={classes.brackets}>{`(אופציונלי)`}</p>
-          <div>
-            {/* <ImageInput /> */}
+          <div className={classes["image-wrapper"]}>
+            <ImageInput
+              imageSrc={props.coverImage.src}
+              imagePreview={props.coverImage.image}
+              crop={props.coverImage.crop}
+              zoom={props.coverImage.zoom}
+              croppedAreaPixels={props.coverImage.croppedAreaPixels}
+              setImage={() => {}}
+              setCrop={() => {}}
+              setZoom={() => {}}
+              handleCropComplete={() => {}}
+              handleSaveCropped={() => {}}
+              variant="settings"
+            />
           </div>
         </div>
         <div>

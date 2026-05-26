@@ -16,11 +16,11 @@ export type questionType = {
 };
 
 export type questionImageType = {
-  image?: string;
-  src?: string;
-  crop?: Point;
-  zoom?: number;
-  croppedAreaPixels?: Area | null;
+  image: string;
+  src: string;
+  crop: Point;
+  zoom: number;
+  croppedAreaPixels: Area | null;
 };
 
 export type sharedWithType = {

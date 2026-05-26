@@ -15,7 +15,12 @@
   width: 100%;
 }
 
-.container input {
+.image-wrapper {
+  /* padding: 2%; */
+  background-color: #d9d9d9;
+}
+
+.container input[type="text"] {
   all: unset;
   border: solid 2px #afb2af;
   color: #afb2af;
@@ -36,7 +41,7 @@
   pointer-events: none;
 }
 
-.container div p {
+.container div p :not(.image-wrapper) {
   display: inline-block;
 }
 

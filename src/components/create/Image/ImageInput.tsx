@@ -11,9 +11,16 @@ interface ImageInputProps {
   imageSrc: string;
   imagePreview: string;
   croppedAreaPixels: Area | null;
-  setImage: (file: string) => void;
-  handleCropComplete: (areaPixels: Area | null) => void;
-  handleSaveCropped: () => void;
+  setImage: (
+    file: string,
+    // variant: string
+  ) => void;
+  handleCropComplete: (
+    areaPixels: Area | null,
+    // variant: string
+  ) => void;
+  handleSaveCropped: () // variant: string
+  => void;
   crop: { x: number; y: number };
   zoom: number;
   setCrop: (crop: { x: number; y: number }) => void;
@@ -32,7 +39,10 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
         return;
       }
       const imageUrl = URL.createObjectURL(file);
-      props.setImage(imageUrl);
+      props.setImage(
+        imageUrl,
+        // props.variant
+      );
     }
   };
 
@@ -40,7 +50,10 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
     if (props.imagePreview.startsWith("blob:")) {
       URL.revokeObjectURL(props.imagePreview);
     }
-    props.setImage("");
+    props.setImage(
+      "",
+      // props.variant
+    );
   };
 
   const toggleImageCrop = () => {
@@ -54,7 +67,13 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
           <div
             className={`${classes["image-select"]} ${classes["selected"]} ${classes[props.variant]}`}
           >
-            <img className={classes["image"]} src={props.imagePreview} />
+            <div className={classes["image-wrapper"]}>
+              <img
+                className={classes["image"]}
+                src={props.imagePreview}
+                alt="Preview"
+              />
+            </div>
             <div className={classes["actions"]}>
               <button
                 className={classes["round-btn"]}
@@ -68,9 +87,9 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
               >
                 <img src={cropIcon} />
               </button>
-              <button className={classes["round-btn"]}>
-                {/* <img src={} /> */}
-              </button>
+              {/* <button className={classes["round-btn"]}>
+                <img src={} />
+              </button> */}
             </div>
           </div>
           {imageCropDisplay && (
@@ -90,12 +109,15 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
       ) : (
         <div className={`${classes["image-select"]} ${classes[props.variant]}`}>
           <input
-            id="file-upload"
+            id={`file-upload-${props.variant}`}
             type="file"
             accept="image/*"
             onChange={uploadImageHandler}
           />
-          <label htmlFor="file-upload" className={classes["wrapper"]}>
+          <label
+            htmlFor={`file-upload-${props.variant}`}
+            className={classes["file-upload-wrapper"]}
+          >
             <img className={classes["icon"]} src={uploadIcon} />
             <p className={classes["title"]}>העלאת תמונה</p>
             <p className={classes["text"]}>

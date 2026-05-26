@@ -9,7 +9,7 @@ export type QuestionsAction =
   | { type: "SET_SCORING_WEIGHT"; index: number; value: number }
   | {
       type: "SET_IMAGE_DETAILS";
-      payload: { index: number; updates: questionImageType };
+      payload: { index: number; updates: Partial<questionImageType> };
     }
   | { type: "TOGGLE_CORRECT_INDEX"; index: number; value: number }
   | { type: "ADD_QUESTION" }
@@ -82,10 +82,11 @@ export function questionsReducer(
       let question = updated[action.payload.index];
       const questionImage = question.questionImage;
 
-      updated[action.payload.index] = {
-        ...question,
-        questionImage: { ...questionImage, ...updates },
-      };
+      if (questionImage)
+        updated[action.payload.index] = {
+          ...question,
+          questionImage: { ...questionImage, ...updates },
+        };
 
       return updated;
     }
