@@ -107,7 +107,21 @@ const Settings: React.FC<{
           <div>
             <p className={classes.title}>תמונה</p>{" "}
             <p className={classes.brackets}>{`(אופציונלי)`}</p>
-            <div>{/* <ImageInput /> */}</div>
+            <div className={classes["image-wrapper"]}>
+              <ImageInput
+                imageSrc={props.coverImage.src}
+                imagePreview={props.coverImage.image}
+                crop={props.coverImage.crop}
+                zoom={props.coverImage.zoom}
+                croppedAreaPixels={props.coverImage.croppedAreaPixels}
+                setImage={() => {}}
+                setCrop={() => {}}
+                setZoom={() => {}}
+                handleCropComplete={() => {}}
+                handleSaveCropped={() => {}}
+                variant="settings"
+              />
+            </div>
           </div>
           <div>
             <p className={classes.title}>משותפים</p>
@@ -128,26 +142,6 @@ const Settings: React.FC<{
               searchFor="user"
             />
           </div>
-        </div>
-        <div>
-          <p className={classes.title}>תמונה</p>{" "}
-          <p className={classes.brackets}>{`(אופציונלי)`}</p>
-          <div className={classes["image-wrapper"]}>
-            <ImageInput
-              imageSrc={props.coverImage.src}
-              imagePreview={props.coverImage.image}
-              crop={props.coverImage.crop}
-              zoom={props.coverImage.zoom}
-              croppedAreaPixels={props.coverImage.croppedAreaPixels}
-              setImage={() => {}}
-              setCrop={() => {}}
-              setZoom={() => {}}
-              handleCropComplete={() => {}}
-              handleSaveCropped={() => {}}
-              variant="settings"
-            />
-            </div>
-            </div>
           <div>
             <p className={classes.title}>תגיות</p>
             <SearchBar
@@ -161,6 +155,7 @@ const Settings: React.FC<{
               ))}
             </div>
           </div>
+        </div>
         <div className={classes["buttons-flex"]}>
           <Button variant="blue">שמור וצא</Button>
           <Button variant="red" onClick={changeShowDeleteOverlay}>
