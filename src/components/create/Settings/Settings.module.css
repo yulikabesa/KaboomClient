@@ -74,3 +74,22 @@
   font-size: clamp(12px, 0.8vmax, 14px);
   font-weight: 600;
 }
+
+.buttons-flex {
+  padding: 0 2vh 2vh 2vh;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.overOverlay {
+  width: 20vw;
+  min-width: 300px;
+  text-align: center;
+}
+
+.text {
+  padding: 4vh 2vh;
+  font-weight: 700;
+}

@@ -222,6 +222,22 @@ const Create: React.FC<{}> = () => {
         setQuizName={setQuizName}
       />
       <div className={classes["screen-items-flex"]}>
+        {/* questions slides */}
+        <div className={classes["questions-slides"]}>
+          <QuestionSlideList
+            currentQuestionEdited={currentQuestionBeingEdited}
+            onSlideClick={handleQuestionBeingEditedChange}
+            onSlideCopyClick={handleCurrentSlideCopyClick}
+            onSlideDeleteClick={handleCurrentSlideDeleteClick}
+            questions={questions}
+            onDragEnd={onDragEnd}
+            onDragStart={onDragStart}
+          />
+          <div className={classes["blue-btn"]} onClick={addEmptyQuestion}>
+            הוסף שאלה
+          </div>
+        </div>
+        
         {/* question editing */}
         <div className={classes["question-editing"]}>
           <input
@@ -287,22 +303,6 @@ const Create: React.FC<{}> = () => {
             onAnswerClick={(index) => handleQuestionCorrectIndexesChange(index)}
             onAnswerTextChange={handleAnswerTextChange}
           />
-        </div>
-
-        {/* questions slides */}
-        <div className={classes["questions-slides"]}>
-          <QuestionSlideList
-            currentQuestionEdited={currentQuestionBeingEdited}
-            onSlideClick={handleQuestionBeingEditedChange}
-            onSlideCopyClick={handleCurrentSlideCopyClick}
-            onSlideDeleteClick={handleCurrentSlideDeleteClick}
-            questions={questions}
-            onDragEnd={onDragEnd}
-            onDragStart={onDragStart}
-          />
-          <div className={classes["blue-btn"]} onClick={addEmptyQuestion}>
-            הוסף שאלה
-          </div>
         </div>
       </div>
 

@@ -64,14 +64,13 @@ const SearchBar = <T,>(props: SearchBarProps<T>) => {
           signal,
         },
       );
-      if (props.searchFor === "user") {
-        setResults(response.data.data?.users || []);
-      } else {
-        setResults(response.data.data?.tags || []);
-      }
-      if (query.trim().length > 1 && results.length === 0) {
-        setResults([{ name: "לא נמצאו תוצאות" }]);
-      }
+      const key = props.searchFor === "user" ? "users" : "tags";
+      const responseResults = response.data.data?.[key] || [];
+      setResults(
+        query.trim().length > 1 && responseResults.length === 0
+          ? [{ name: "לא נמצאו תוצאות" }]
+          : responseResults,
+      );
     } catch (error) {
       if (axios.isCancel(error)) {
         return;

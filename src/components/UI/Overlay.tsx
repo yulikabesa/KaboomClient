@@ -4,10 +4,12 @@ import closeIcon from "../../assets/closeIcon.svg";
 import classes from "./Overlay.module.css";
 
 interface OverlayProps extends PropsWithChildren {
+  cardClassName?: string;
   className?: string;
   title: string;
   button?: boolean;
   closeOverlay: () => void;
+  elementId: string;
 }
 
 const Backdrop: React.FC<{ onClick: () => void }> = (props) => {
@@ -16,7 +18,7 @@ const Backdrop: React.FC<{ onClick: () => void }> = (props) => {
 
 const OverlayCard: React.FC<OverlayProps> = (props) => {
   return (
-    <div className={classes["card"]}>
+    <div className={`${classes["card"]} ${props.cardClassName}`}>
       <header className={classes["header"]}>
         <p style={{fontWeight: '900'}}>{props.title}</p>
         {props.button && (
@@ -33,9 +35,9 @@ const OverlayCard: React.FC<OverlayProps> = (props) => {
   );
 };
 
-const portalElement: HTMLElement = document.getElementById("overlay")!;
 
 const Overlay: React.FC<OverlayProps> = (props) => {
+  const portalElement: HTMLElement = document.getElementById(props.elementId)!;
   return (
     <>
       {ReactDOM.createPortal(

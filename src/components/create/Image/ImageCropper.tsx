@@ -26,6 +26,7 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
 
   return (
     <Overlay
+      elementId="overlay"
       title="חתוך את התמונה"
       closeOverlay={props.closeOverlay}
       button={true}
