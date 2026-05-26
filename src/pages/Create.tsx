@@ -43,7 +43,7 @@ const Create: React.FC<{}> = () => {
   const [settingsDisplay, setSettingsDisplay] = useState(false);
   const [quizName, setQuizName] = useState(data?.title ?? "");
   const [sharedWith, setSharedWith] = useState<sharedWithType[]>(
-    data?.sharedWith ?? []
+    data?.sharedWith ?? [],
   );
   const [coverImage, setCoverImage] = useState<questionImageType>({
     image: "",
@@ -201,6 +201,22 @@ const Create: React.FC<{}> = () => {
         setQuizName={setQuizName}
       />
       <div className={classes["screen-items-flex"]}>
+        {/* questions slides */}
+        <div className={classes["questions-slides"]}>
+          <QuestionSlideList
+            currentQuestionEdited={currentQuestionBeingEdited}
+            onSlideClick={handleQuestionBeingEditedChange}
+            onSlideCopyClick={handleCurrentSlideCopyClick}
+            onSlideDeleteClick={handleCurrentSlideDeleteClick}
+            questions={questions}
+            onDragEnd={onDragEnd}
+            onDragStart={onDragStart}
+          />
+          <div className={classes["blue-btn"]} onClick={addEmptyQuestion}>
+            הוסף שאלה
+          </div>
+        </div>
+        
         {/* question editing */}
         <div className={classes["question-editing"]}>
           <input
@@ -266,22 +282,6 @@ const Create: React.FC<{}> = () => {
             onAnswerClick={(index) => handleQuestionCorrectIndexesChange(index)}
             onAnswerTextChange={handleAnswerTextChange}
           />
-        </div>
-
-        {/* questions slides */}
-        <div className={classes["questions-slides"]}>
-          <QuestionSlideList
-            currentQuestionEdited={currentQuestionBeingEdited}
-            onSlideClick={handleQuestionBeingEditedChange}
-            onSlideCopyClick={handleCurrentSlideCopyClick}
-            onSlideDeleteClick={handleCurrentSlideDeleteClick}
-            questions={questions}
-            onDragEnd={onDragEnd}
-            onDragStart={onDragStart}
-          />
-          <div className={classes["blue-btn"]} onClick={addEmptyQuestion}>
-            הוסף שאלה
-          </div>
         </div>
       </div>
 

@@ -4,7 +4,6 @@ import classes from "./Settings.module.css";
 import SharedWith from "./SharedWith";
 import SearchBar from "./SearchBar";
 import Tag from "./Tag";
-import ImageInput from "../Image/ImageInput";
 import type { sharedWithType } from "../../home/ProductsList";
 import Button from "../../UI/Button";
 
@@ -71,6 +70,10 @@ const Settings: React.FC<{
     }
   };
 
+  const changeShowDeleteOverlay = () => {
+    setShowDeleteOverlay((prev) => !prev);
+  };
+
   return (
     <>
       <Overlay
@@ -135,29 +138,26 @@ const Settings: React.FC<{
         </div>
         <div className={classes["buttons-flex"]}>
           <Button variant="blue">שמור וצא</Button>
-          <Button
-            variant="red"
-            onClick={() => {
-              setShowDeleteOverlay((prev) => !prev);
-            }}
-          >
+          <Button variant="red" onClick={changeShowDeleteOverlay}>
             מחק שאלון
           </Button>
         </div>
       </Overlay>
       {showDeleteOverlay && (
         <Overlay
-        cardClassName={classes.overOverlay}
+          cardClassName={classes.overOverlay}
           title="אתה בטוח?"
           elementId="overOverlay"
-          closeOverlay={() => setShowDeleteOverlay((prev) => !prev)}
+          closeOverlay={changeShowDeleteOverlay}
         >
           <p className={classes.text}>
             אתה בטוח שבא לך למחוק את השאלון?
             <br /> אתה לא תוכל לשחזר את אותו.
           </p>
           <div className={classes["buttons-flex"]}>
-            <Button variant="blue">בטל</Button>
+            <Button variant="blue" onClick={changeShowDeleteOverlay}>
+              בטל
+            </Button>
             <Button variant="red">מחק</Button>
           </div>
         </Overlay>

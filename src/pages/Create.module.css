@@ -32,7 +32,6 @@
   display: flex;
   width: 100vw;
   height: 100vh;
-  flex-direction: row-reverse;
   padding-top: 6vh;
   box-sizing: border-box;
 }
@@ -47,14 +46,14 @@
   align-items: center;
   padding-top: 3vh;
   box-sizing: border-box;
-  
   min-width: fit-content;
-  /* overflow-x: scroll; */
 }
 
 .questions-slides {
   background-color: white;
   width: 240px;
+  min-width: 240px;
+  flex-shrink: 0;
   height: 94vh;
   max-height: 94vh;
   overflow-y: auto;
