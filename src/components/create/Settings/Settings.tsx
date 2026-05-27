@@ -23,6 +23,7 @@ const Settings: React.FC<{
   setSharedWith: React.Dispatch<React.SetStateAction<sharedWithType[]>>;
   coverImage: questionImageType;
   // setCoverImage: (updates: Partial<questionImageType>) => void;
+  areAllFieldsFull: () => boolean;
 }> = (props) => {
   const QUIZ_NAME_MAX = 50;
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
@@ -37,6 +38,12 @@ const Settings: React.FC<{
           ? { ...user, permission: newPermission }
           : user,
       ),
+    );
+  };
+
+  const deleteSharedUserHandle = (indexToRemove: number) => {
+    props.setSharedWith((prev) =>
+      prev.filter((_, index) => index !== indexToRemove),
     );
   };
 
@@ -133,6 +140,8 @@ const Settings: React.FC<{
                   name={user.user.name}
                   permission={user.permission}
                   setPermission={changePermissionHandle}
+                  deleteSharedUser={deleteSharedUserHandle}
+                  index={index}
                 />
               ))}
             </div>
@@ -157,7 +166,12 @@ const Settings: React.FC<{
           </div>
         </div>
         <div className={classes["buttons-flex"]}>
-          <Button variant="blue">שמור וצא</Button>
+          <Button
+            variant="blue"
+            onClick={() => console.log(props.areAllFieldsFull())}
+          >
+            שמור וצא
+          </Button>
           <Button variant="red" onClick={changeShowDeleteOverlay}>
             מחק שאלון
           </Button>

@@ -8,6 +8,7 @@
 .title {
   font-weight: 700;
   margin-bottom: 0.2rem;
+  display: inline;
 }
 
 .input-wrapper {
@@ -27,6 +28,7 @@
   padding: 10px 12px 10px 3.5rem;
   border-radius: 7px;
   box-sizing: border-box;
+  min-width: 24vw;
   width: 100%;
   font-weight: 600;
 }
@@ -73,6 +75,7 @@
 .brackets {
   font-size: clamp(12px, 0.8vmax, 14px);
   font-weight: 600;
+  display: inline;
 }
 
 .buttons-flex {

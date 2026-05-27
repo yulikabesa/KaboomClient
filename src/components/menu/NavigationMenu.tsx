@@ -31,6 +31,7 @@ const NavigationMenu: React.FC<{
               className={classes["quiz-name-input"]}
               placeholder="שם החידון"
               value={props.quizName}
+              maxLength={50}
               onChange={(e) => props.setQuizName!(e.target.value)}
             />
           </div>

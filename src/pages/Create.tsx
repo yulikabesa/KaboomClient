@@ -213,6 +213,18 @@ const Create: React.FC<{}> = () => {
     setSettingsDisplay((prev) => !prev);
   };
 
+  const areAllFieldsFull = () => {
+    if (quizName === "") return false;
+    for (let i = 0; i < questions.length; i++) {
+      if (
+        questions[i].questionText === "" ||
+        questions[i].answerOptions.some((item) => !item)
+      )
+        return false;
+    }
+    return true;
+  };
+
   return (
     <div className={classes.background}>
       <NavigationMenu
@@ -237,7 +249,7 @@ const Create: React.FC<{}> = () => {
             הוסף שאלה
           </div>
         </div>
-        
+
         {/* question editing */}
         <div className={classes["question-editing"]}>
           <input
@@ -317,6 +329,7 @@ const Create: React.FC<{}> = () => {
           setTags={setTags}
           coverImage={coverImage}
           // setCoverImage={handleCoverImageUpdate}
+          areAllFieldsFull={areAllFieldsFull}
         />
       )}
     </div>

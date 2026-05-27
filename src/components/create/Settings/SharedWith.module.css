@@ -84,12 +84,19 @@
   background: #f6f6f6;
 }
 
-.correct-sign {
-  color: #0b57d0;
+.sign {
   width: 20px;
   min-width: 20px;
 
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.blue {
+  color: #0b57d0;
+}
+
+.red {
+  color: #e21b3c;
 }
