@@ -19,6 +19,7 @@ import type {
   questionImageType,
   sharedWithType,
 } from "../components/home/ProductsList";
+import axios from "axios";
 
 const Create: React.FC<{}> = () => {
   const location = useLocation();
@@ -225,6 +226,22 @@ const Create: React.FC<{}> = () => {
     return true;
   };
 
+  const deleteQuizHandler = async () => {
+    // todo
+    try {
+      if (data?._id) {
+        const response = await axios.delete(
+          `http://localhost:3000/quiz/${data._id}`,
+        );
+        console.log(response.data);
+      }
+      // redirect to home
+      // navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className={classes.background}>
       <NavigationMenu
@@ -330,6 +347,7 @@ const Create: React.FC<{}> = () => {
           coverImage={coverImage}
           // setCoverImage={handleCoverImageUpdate}
           areAllFieldsFull={areAllFieldsFull}
+          onQuizDelete={deleteQuizHandler}
         />
       )}
     </div>

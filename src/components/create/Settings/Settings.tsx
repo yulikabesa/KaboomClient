@@ -10,6 +10,7 @@ import type {
   sharedWithType,
 } from "../../home/ProductsList";
 import Button from "../../UI/Button";
+import DeleteQuizOverlay from "./DeleteQuizOverlay";
 
 export type permissionType = "בעלים" | "עריכה" | "צפייה";
 
@@ -24,6 +25,7 @@ const Settings: React.FC<{
   coverImage: questionImageType;
   // setCoverImage: (updates: Partial<questionImageType>) => void;
   areAllFieldsFull: () => boolean;
+  onQuizDelete: () => void;
 }> = (props) => {
   const QUIZ_NAME_MAX = 50;
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
@@ -178,23 +180,10 @@ const Settings: React.FC<{
         </div>
       </Overlay>
       {showDeleteOverlay && (
-        <Overlay
-          cardClassName={classes.overOverlay}
-          title="אתה בטוח?"
-          elementId="overOverlay"
-          closeOverlay={changeShowDeleteOverlay}
-        >
-          <p className={classes.text}>
-            אתה בטוח שבא לך למחוק את השאלון?
-            <br /> אתה לא תוכל לשחזר את אותו.
-          </p>
-          <div className={classes["buttons-flex"]}>
-            <Button variant="blue" onClick={changeShowDeleteOverlay}>
-              בטל
-            </Button>
-            <Button variant="red">מחק</Button>
-          </div>
-        </Overlay>
+        <DeleteQuizOverlay
+          onClose={changeShowDeleteOverlay}
+          onDelete={props.onQuizDelete}
+        />
       )}
     </>
   );
