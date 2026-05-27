@@ -78,3 +78,10 @@
   display: inline;
 }
 
+.buttons-flex {
+  padding: 0 2vh 2vh 2vh;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
