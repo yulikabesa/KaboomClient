@@ -14,7 +14,11 @@ import {
 } from "../reducers/questionsReducer";
 import RangeInput from "../components/create/Inputs/RangeInput";
 import Settings from "../components/create/Settings/Settings";
-import type { quizType, questionImageType, sharedWithType } from "../types/quiz";
+import type {
+  quizType,
+  questionImageType,
+  sharedWithType,
+} from "../types/quiz";
 import { deleteQuiz } from "../api/quizApi";
 
 const Create: React.FC<{}> = () => {
@@ -226,9 +230,10 @@ const Create: React.FC<{}> = () => {
 
   const deleteQuizHandler = async () => {
     try {
-      if (!data?._id) return;
-      const response = await deleteQuiz(data._id);
-      console.log(response);
+      if (data?._id) {
+        const response = await deleteQuiz(data._id);
+        console.log(response);
+      }
       navigate("/home");
     } catch (err) {
       console.error(err);
