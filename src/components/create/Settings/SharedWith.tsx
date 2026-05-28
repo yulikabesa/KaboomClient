@@ -1,6 +1,6 @@
 import profilePic from "../../../assets/profilePic.svg";
 import classes from "./SharedWith.module.css";
-import type { permissionType } from "./Settings";
+import type { permissionType } from "../../../types/quiz";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 

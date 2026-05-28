@@ -5,14 +5,10 @@ import SharedWith from "./SharedWith";
 import SearchBar from "./SearchBar";
 import Tag from "./Tag";
 import ImageInput from "../Image/ImageInput";
-import type {
-  questionImageType,
-  sharedWithType,
-} from "../../home/ProductsList";
+import type { questionImageType, sharedWithType } from "../../../types/quiz";
 import Button from "../../UI/Button";
 import DeleteQuizOverlay from "./DeleteQuizOverlay";
-
-export type permissionType = "בעלים" | "עריכה" | "צפייה";
+import type { permissionType } from "../../../types/quiz";
 
 const Settings: React.FC<{
   closeOverlay: () => void;

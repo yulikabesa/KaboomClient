@@ -3,15 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import classes from "./SearchBar.module.css";
 import { Search } from "lucide-react";
 import { searchData } from "../../../api/searchApi";
-
-type UserDetails = {
-  name: string;
-  email: string;
-};
-
-type TagDetails = {
-  name: string;
-};
+import type { UserDetails, TagDetails } from "../../../types/quiz";
 
 type SearchBarProps<T> = {
   onItemClick: (item: T) => void;

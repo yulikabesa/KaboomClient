@@ -14,11 +14,7 @@ import {
 } from "../reducers/questionsReducer";
 import RangeInput from "../components/create/Inputs/RangeInput";
 import Settings from "../components/create/Settings/Settings";
-import type {
-  productType,
-  questionImageType,
-  sharedWithType,
-} from "../components/home/ProductsList";
+import type { productType, questionImageType, sharedWithType } from "../types/quiz";
 import { deleteQuiz } from "../api/quizApi";
 
 const Create: React.FC<{}> = () => {
@@ -221,7 +217,7 @@ const Create: React.FC<{}> = () => {
     for (let i = 0; i < questions.length; i++) {
       if (
         questions[i].questionText === "" ||
-        questions[i].answerOptions.some((item) => !item)
+        questions[i].answerOptions.some((item: any) => !item)
       )
         return false;
     }

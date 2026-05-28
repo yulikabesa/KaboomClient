@@ -6,7 +6,7 @@ import { useSocket } from "../../store/SocketContext";
 import { useNavigate } from "react-router-dom";
 import { useLobby } from "../../store/LobbyContext";
 import { useState } from "react";
-import type { productType } from "./ProductsList";
+import type { productType } from "../../types/quiz";
 import defaultCover from "../../assets/defaultCoverPhoto.png";
 
 const ProductDisplay: React.FC<{

@@ -1,9 +1,8 @@
 import NavigationMenu from "../components/menu/NavigationMenu";
 import classes from "./Home.module.css";
 import { useEffect, useState } from "react";
-import ProductsList, {
-  type productType,
-} from "../components/home/ProductsList";
+import ProductsList from "../components/home/ProductsList";
+import type { productType } from "../types/quiz";
 import { getOwnerQuizzes, getSharedQuizzes } from "../api/quizApi";
 
 const Home = () => {
