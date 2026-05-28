@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import classes from "./ProductList.module.css";
-import ProductDisplay from "./ProductDisplay";
+import classes from "./QuizzesList.module.css";
+import QuizDisplay from "./QuizDisplay";
 import defaultCover from "../../assets/defaultCoverPhoto.png";
-import type { productType } from "../../types/quiz";
+import type { quizType } from "../../types/quiz";
 
-const ProductsList: React.FC<{
-  products: productType[];
+const QuizzesList: React.FC<{
+  quizzes: quizType[];
   isLoading: boolean;
 }> = (props) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -34,24 +34,24 @@ const ProductsList: React.FC<{
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, [props.products]);
+  }, [props.quizzes]);
 
   return (
     <div ref={containerRef} className={classes["product-list"]}>
       {!props.isLoading
-        ? props.products.map((product, index) => (
+        ? props.quizzes.map((quiz, index) => (
             <div className={classes.reveal} key={index}>
-              <ProductDisplay
+              <QuizDisplay
                 isLoading={false}
-                product={product}
+                quiz={quiz}
               />
             </div>
           ))
         : Array.from({ length: 5 }, (_, i) => (
             <div key={i}>
-              <ProductDisplay
+              <QuizDisplay
                 isLoading={true}
-                product={{
+                quiz={{
                   coverImage: defaultCover,
                   owner: "",
                   title: "",
@@ -67,4 +67,4 @@ const ProductsList: React.FC<{
   );
 };
 
-export default ProductsList;
+export default QuizzesList;

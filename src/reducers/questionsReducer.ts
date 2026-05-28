@@ -1,7 +1,7 @@
 import type {
   questionImageType,
   questionType,
-} from "../components/home/ProductsList";
+} from "../components/home/QuizzesList";
 
 export type QuestionsAction =
   | { type: "SET_QUESTION_TEXT"; index: number; value: string }

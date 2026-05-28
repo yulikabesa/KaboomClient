@@ -1,15 +1,15 @@
 import NavigationMenu from "../components/menu/NavigationMenu";
 import classes from "./Home.module.css";
 import { useEffect, useState } from "react";
-import ProductsList from "../components/home/ProductsList";
-import type { productType } from "../types/quiz";
+import QuizzesList from "../components/home/QuizzesList";
+import type { quizType } from "../types/quiz";
 import { getOwnerQuizzes, getSharedQuizzes } from "../api/quizApi";
 
 const Home = () => {
   // todo get products from server
-  const [createdProducts, setCreatedProducts] = useState<productType[]>([]);
-  const [sharedProducts, setSharedProducts] = useState<productType[]>([]);
-  const [myCourseProducts, setMyCourseProducts] = useState<productType[]>([]);
+  const [createdProducts, setCreatedProducts] = useState<quizType[]>([]);
+  const [sharedProducts, setSharedProducts] = useState<quizType[]>([]);
+  const [myCourseProducts, setMyCourseProducts] = useState<quizType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // to delete and get it from localStorae or context
@@ -47,11 +47,11 @@ const Home = () => {
             </p>
           </div>
           <p className={classes["sub-title"]}>תוצרים שיצרתי</p>
-          <ProductsList isLoading={isLoading} products={createdProducts} />
+          <QuizzesList isLoading={isLoading} quizzes={createdProducts} />
           <p className={classes["sub-title"]}>התוצרים ששותפו איתי</p>
-          <ProductsList isLoading={isLoading} products={sharedProducts} />
+          <QuizzesList isLoading={isLoading} quizzes={sharedProducts} />
           <p className={classes["sub-title"]}>תוצרים של הקורס שלי</p>
-          <ProductsList isLoading={isLoading} products={myCourseProducts} />
+          <QuizzesList isLoading={isLoading} quizzes={myCourseProducts} />
           {/* todo change products to receive from server */}
         </div>
       </div>

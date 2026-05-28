@@ -38,7 +38,7 @@ export type sharedWithType = {
   };
 };
 
-export type productType = {
+export type quizType = {
   coverImage: string;
   owner: string;
   title: string;

@@ -14,14 +14,14 @@ import {
 } from "../reducers/questionsReducer";
 import RangeInput from "../components/create/Inputs/RangeInput";
 import Settings from "../components/create/Settings/Settings";
-import type { productType, questionImageType, sharedWithType } from "../types/quiz";
+import type { quizType, questionImageType, sharedWithType } from "../types/quiz";
 import { deleteQuiz } from "../api/quizApi";
 
 const Create: React.FC<{}> = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
-  const data: productType = location.state;
+  const data: quizType = location.state;
 
   // states for questions and slides display
   const initialQuestions =
