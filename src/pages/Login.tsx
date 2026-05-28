@@ -4,6 +4,7 @@ import type { ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "./Login.module.css";
 import { loginUser } from "../api/userApi";
+import { useAuth } from "../store/AuthContext";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -11,6 +12,7 @@ const Login = () => {
   const [enteredPassword, setEnteredPassword] = useState("");
   const [enteredEmail, setEnteredEmail] = useState("");
   const navigate = useNavigate();
+  const { setAuthToken } = useAuth();
 
   const emailChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setEnteredEmail(event.target.value);
@@ -26,7 +28,7 @@ const Login = () => {
     try {
       const data = await loginUser(enteredEmail, enteredPassword);
       console.log(data);
-      localStorage.setItem("token", data.token);
+      setAuthToken(data.token);
       handleLogin();
     } catch (error) {
       console.error(error);

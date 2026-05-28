@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import QuizzesList from "../components/home/QuizzesList";
 import type { quizType } from "../types/quiz";
 import { getOwnerQuizzes, getSharedQuizzes } from "../api/quizApi";
+import { useAuth } from "../store/AuthContext";
 
 const Home = () => {
   // todo get products from server
@@ -12,8 +13,10 @@ const Home = () => {
   const [myCourseProducts, setMyCourseProducts] = useState<quizType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // to delete and get it from localStorae or context
-  const userId = "69dcbda7e2af6ecb8203b547";
+  const { user } = useAuth();
+  const userId = user?._id;
+
+  // const userId = "69dcbda7e2af6ecb8203b547";
 
   useEffect(() => {
     const fetchQuizzes = async () => {
