@@ -1,9 +1,9 @@
 import { useState } from "react";
 import type { SyntheticEvent } from "react";
 import type { ChangeEvent } from "react";
-import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import classes from "./Login.module.css";
+import { loginUser } from "../api/userApi";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,52 +21,21 @@ const Login = () => {
   };
 
   const sendPostRequest = async () => {
+    setIsLoading(true);
     setIsError(false);
     try {
-      // Send the POST request using await
-      const url = "http://localhost:3000/user/login";
-      let response;
-      try {
-        response = await axios.post(
-          url,
-          {
-            email: enteredEmail,
-            password: enteredPassword,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json", // This is the default, but explicitly shown here
-            },
-          },
-        );
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          const axiosError = error as AxiosError;
-          console.error("Error sending POST request:", axiosError.message);
-          if (axiosError.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.error("Status:", axiosError.response.status);
-            console.error("Data:", axiosError.response.data);
-          }
-        } else {
-          console.error("An unexpected error occurred:", error);
-        }
-        throw new Error(
-          error instanceof Error ? error.message : "An unknown error occurred",
-        );
-      }
-      setIsLoading(false);
-      console.log(response);
-      // todo add authcontext which saves token in local storage
-      localStorage.setItem("token", response.data.data.token);
+      const data = await loginUser(enteredEmail, enteredPassword);
+      console.log(data);
+      localStorage.setItem("token", data.token);
       handleLogin();
     } catch (error) {
+      console.error(error);
       setIsError(true);
+    } finally {
+      setIsLoading(false);
+      setEnteredPassword("");
+      setEnteredEmail("");
     }
-    setIsLoading(false);
-    setEnteredPassword("");
-    setEnteredEmail("");
   };
 
   const submitHandler = async (event: SyntheticEvent<HTMLFormElement>) => {

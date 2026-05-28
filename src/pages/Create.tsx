@@ -6,7 +6,7 @@ import getCroppedImg from "../utils/cropImage";
 import type { Area } from "react-easy-crop";
 import classes from "./Create.module.css";
 import SecondsCircleLayout from "../components/create/Inputs/SecondsCircleLayout";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AnswerOptionsInputList from "../components/create/Inputs/AnswerOptionsInputList";
 import {
   questionsReducer,
@@ -19,9 +19,11 @@ import type {
   questionImageType,
   sharedWithType,
 } from "../components/home/ProductsList";
-import axios from "axios";
+import { deleteQuiz } from "../api/quizApi";
 
 const Create: React.FC<{}> = () => {
+  const navigate = useNavigate();
+
   const location = useLocation();
   const data: productType = location.state;
 
@@ -227,16 +229,11 @@ const Create: React.FC<{}> = () => {
   };
 
   const deleteQuizHandler = async () => {
-    // todo
     try {
-      if (data?._id) {
-        const response = await axios.delete(
-          `http://localhost:3000/quiz/${data._id}`,
-        );
-        console.log(response.data);
-      }
-      // redirect to home
-      // navigate("/");
+      if (!data?._id) return;
+      const response = await deleteQuiz(data._id);
+      console.log(response);
+      navigate("/home");
     } catch (err) {
       console.error(err);
     }

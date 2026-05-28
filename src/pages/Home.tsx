@@ -1,8 +1,10 @@
 import NavigationMenu from "../components/menu/NavigationMenu";
 import classes from "./Home.module.css";
 import { useEffect, useState } from "react";
-import ProductsList, { type productType } from "../components/home/ProductsList";
-import axios from "axios";
+import ProductsList, {
+  type productType,
+} from "../components/home/ProductsList";
+import { getOwnerQuizzes, getSharedQuizzes } from "../api/quizApi";
 
 const Home = () => {
   // todo get products from server
@@ -18,22 +20,17 @@ const Home = () => {
     const fetchQuizzes = async () => {
       if (!userId) return;
       setIsLoading(true);
-
       try {
         const [createdRes, sharedRes] = await Promise.all([
-          axios.get(`http://localhost:3000/quiz/owner/${userId}`),
-          axios.get(`http://localhost:3000/quiz/shared/${userId}`),
+          getOwnerQuizzes(userId),
+          getSharedQuizzes(userId),
         ]);
-        setCreatedProducts(createdRes.data);
-        setSharedProducts(sharedRes.data);
-        console.log(createdRes.data);
-        setIsLoading(false);
+        setCreatedProducts(createdRes);
+        setSharedProducts(sharedRes);
       } catch (error) {
-        if (axios.isAxiosError(error)) {
-          console.error("Error fetching quizzes:", error.message);
-        } else {
-          console.error("Unexpected error:", error);
-        }
+        console.error("Error fetching quizzes:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchQuizzes();
