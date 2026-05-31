@@ -1,3 +1,4 @@
+import type { quizType } from "../types/quiz";
 import api from "./axios";
 
 export const getOwnerQuizzes = async (userId: string) => {
@@ -12,5 +13,10 @@ export const getSharedQuizzes = async (userId: string) => {
 
 export const deleteQuiz = async (quizId: string) => {
   const response = await api.delete(`/quiz/${quizId}`);
+  return response.data;
+};
+
+export const createQuiz = async (quiz: quizType) => {
+  const response = await api.post(`/quiz/`, quiz);
   return response.data;
 };

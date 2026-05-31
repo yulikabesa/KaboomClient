@@ -36,7 +36,7 @@ const QuizDisplay: React.FC<{
       setLobby({
         gamePin: pin,
         players: [],
-        quizId: props.quiz._id,
+        quizId: props.quiz._id ?? "",
       });
       navigate("/lobby");
     });

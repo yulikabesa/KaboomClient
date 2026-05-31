@@ -45,5 +45,5 @@ export type quizType = {
   questions: questionType[];
   sharedWith: sharedWithType[];
   tags: string[];
-  _id: string;
+  _id?: string;
 };
