@@ -20,3 +20,9 @@ export const createQuiz = async (quiz: quizType) => {
   const response = await api.post(`/quiz/`, quiz);
   return response.data;
 };
+
+export const updateQuiz = async (quizId: string | undefined, quiz: quizType) => {
+  if (!quizId) return "no quiz id";
+  const response = await api.patch(`/quiz/${quizId}`, quiz);
+  return response.data;
+};

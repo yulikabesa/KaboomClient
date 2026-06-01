@@ -18,9 +18,8 @@ import Create from "./pages/Create";
 import { AuthProvider } from "./store/AuthContext";
 
 const App = () => {
-  // const authCtx = useContext(AuthContext);
-  // const isLoggedIn = authCtx.isLoggedIn;
-  // const isAdmin = authCtx.isAdmin;
+  // const { user } = useAuth();
+    // const userId = user?._id;
 
   const router = createBrowserRouter([
     {

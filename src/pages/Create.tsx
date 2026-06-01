@@ -19,10 +19,13 @@ import type {
   questionImageType,
   sharedWithType,
 } from "../types/quiz";
-import { deleteQuiz } from "../api/quizApi";
+import { createQuiz, deleteQuiz, updateQuiz } from "../api/quizApi";
+import { useAuth } from "../store/AuthContext";
 
 const Create: React.FC<{}> = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const userId = user?._id;
 
   const location = useLocation();
   const data: quizType = location.state;
@@ -240,6 +243,31 @@ const Create: React.FC<{}> = () => {
     }
   };
 
+  const quizSaveClickHandler = async () => {
+    const cleanedQuestions = questions.map(
+      ({ _id, questionImage, ...question }) => ({
+        ...question,
+        questionImage: questionImage?.image ?? "",
+      }),
+    );
+    const quiz: quizType = {
+      coverImage: "",
+      owner: userId ?? "",
+      title: quizName,
+      questions: cleanedQuestions,
+      sharedWith,
+      tags,
+    };
+    try {
+      const response = data
+        ? await updateQuiz(data._id, quiz)
+        : await createQuiz(quiz);
+      console.log(response);
+    } catch (error) {
+      console.error("Error saving quiz:", error);
+    }
+  };
+
   return (
     <div className={classes.background}>
       <NavigationMenu
@@ -247,6 +275,7 @@ const Create: React.FC<{}> = () => {
         onSettingsClick={toggleSettings}
         quizName={quizName}
         setQuizName={setQuizName}
+        onQuizSave={quizSaveClickHandler}
       />
       <div className={classes["screen-items-flex"]}>
         {/* questions slides */}

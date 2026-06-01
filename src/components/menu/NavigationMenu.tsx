@@ -10,6 +10,7 @@ const NavigationMenu: React.FC<{
   onSettingsClick?: () => void;
   quizName?: string;
   setQuizName?: React.Dispatch<React.SetStateAction<string>>;
+  onQuizSave?: () => void;
 }> = (props) => {
   return (
     <header className={classes.header}>
@@ -56,7 +57,9 @@ const NavigationMenu: React.FC<{
                 ליצור
               </Button>
             ) : (
-              <Button variant="blue">לשמור</Button>
+              <Button variant="blue" onClick={props.onQuizSave}>
+                לשמור
+              </Button>
             )}
           </li>
         </ul>
