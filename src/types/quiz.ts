@@ -47,3 +47,7 @@ export type quizType = {
   tags: string[];
   _id?: string;
 };
+
+export type CreateQuizDto = Omit<quizType, "_id">;
+
+export type UpdateQuizDto = Omit<CreateQuizDto, "owner">;

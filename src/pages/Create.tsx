@@ -250,9 +250,8 @@ const Create: React.FC<{}> = () => {
         questionImage: questionImage?.image ?? "",
       }),
     );
-    const quiz: quizType = {
+    const quiz = {
       coverImage: "",
-      owner: userId ?? "",
       title: quizName,
       questions: cleanedQuestions,
       sharedWith,
@@ -261,7 +260,7 @@ const Create: React.FC<{}> = () => {
     try {
       const response = data
         ? await updateQuiz(data._id, quiz)
-        : await createQuiz(quiz);
+        : await createQuiz({ ...quiz, owner: userId ?? "" });
       console.log(response);
     } catch (error) {
       console.error("Error saving quiz:", error);
