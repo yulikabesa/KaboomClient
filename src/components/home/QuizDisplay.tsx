@@ -8,6 +8,7 @@ import { useLobby } from "../../store/LobbyContext";
 import { useState } from "react";
 import type { quizType } from "../../types/quiz";
 import defaultCover from "../../assets/defaultCoverPhoto.png";
+import { useAuth } from "../../store/AuthContext";
 
 const QuizDisplay: React.FC<{
   isLoading: boolean;
@@ -16,13 +17,21 @@ const QuizDisplay: React.FC<{
   const navigate = useNavigate();
   const { setLobby } = useLobby();
   const socket = useSocket();
+  const { user } = useAuth();
+  const userId = user?._id;
 
-  const [isCreating, setIsCreating] = useState(false);
+  const canEdit =
+    props.quiz?.owner === userId ||
+    props.quiz?.sharedWith?.some(
+      (shared) => shared.user._id === userId && shared.permission === "עריכה",
+    );
+
+  const [isCreatingGame, setIsCreatingGame] = useState(false);
 
   const onClickHandler = () => {
-    if (!socket || isCreating) return;
+    if (!socket || isCreatingGame) return;
 
-    setIsCreating(true);
+    setIsCreatingGame(true);
 
     // Emit event to create game
     socket.emit("game-event", {
@@ -43,7 +52,7 @@ const QuizDisplay: React.FC<{
 
     // fallback
     setTimeout(() => {
-      setIsCreating(false);
+      setIsCreatingGame(false);
     }, 5000);
   };
 
@@ -81,22 +90,24 @@ const QuizDisplay: React.FC<{
               <div
                 onClick={onClickHandler}
                 style={{
-                  pointerEvents: isCreating ? "none" : "auto",
-                  opacity: isCreating ? 0.6 : 1,
-                  cursor: isCreating ? "not-allowed" : "pointer",
+                  pointerEvents: isCreatingGame ? "none" : "auto",
+                  opacity: isCreatingGame ? 0.6 : 1,
+                  cursor: isCreatingGame ? "not-allowed" : "pointer",
                 }}
                 className={`${classes["option-btn"]} ${classes["blue-btn"]}`}
               >
                 <span>לשחק</span>
                 <img src={gameIcon} className={classes.icon} />
               </div>
-              <div
-                onClick={onEditClick}
-                className={`${classes["option-btn"]} ${classes["transparent-btn"]}`}
-              >
-                <span>לערוך</span>
-                <img src={editIcon} className={classes.icon} />
-              </div>
+              {canEdit && (
+                <div
+                  onClick={onEditClick}
+                  className={`${classes["option-btn"]} ${classes["transparent-btn"]}`}
+                >
+                  <span>לערוך</span>
+                  <img src={editIcon} className={classes.icon} />
+                </div>
+              )}
             </div>
           </div>
           <div className={classes["product-title"]}>

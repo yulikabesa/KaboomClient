@@ -264,6 +264,8 @@ const Create: React.FC<{}> = () => {
       console.log(response);
     } catch (error) {
       console.error("Error saving quiz:", error);
+    } finally {
+      navigate("/home");
     }
   };
 
@@ -374,6 +376,7 @@ const Create: React.FC<{}> = () => {
           // setCoverImage={handleCoverImageUpdate}
           areAllFieldsFull={areAllFieldsFull}
           onQuizDelete={deleteQuizHandler}
+          onQuizSave={quizSaveClickHandler}
         />
       )}
     </div>

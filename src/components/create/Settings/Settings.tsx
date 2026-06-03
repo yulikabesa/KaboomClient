@@ -22,6 +22,7 @@ const Settings: React.FC<{
   // setCoverImage: (updates: Partial<questionImageType>) => void;
   areAllFieldsFull: () => boolean;
   onQuizDelete: () => void;
+  onQuizSave: () => void;
 }> = (props) => {
   const QUIZ_NAME_MAX = 50;
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
@@ -166,7 +167,11 @@ const Settings: React.FC<{
         <div className={classes["buttons-flex"]}>
           <Button
             variant="blue"
-            onClick={() => console.log(props.areAllFieldsFull())}
+            onClick={() => {
+              // todo use the are all fields full with isGameable property
+              console.log(props.areAllFieldsFull());
+              props.onQuizSave();
+            }}
           >
             שמור וצא
           </Button>
