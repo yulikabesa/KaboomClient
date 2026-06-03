@@ -16,7 +16,7 @@ import type {
 import { createQuiz, deleteQuiz, updateQuiz } from "../api/quizApi";
 import { useAuth } from "../store/AuthContext";
 import { useQuestionEditor } from "../hooks/useQuestionEditor";
-import QuestionEditor from "../components/create/Inputs/QuestionEditor";
+import QuestionEditor from "../components/create/QuestionEdit/QuestionEditor";
 
 const Create: React.FC<{}> = () => {
   const navigate = useNavigate();
