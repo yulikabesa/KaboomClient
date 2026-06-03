@@ -1,4 +1,4 @@
-import React, { useState, type ChangeEvent } from "react";
+import React, { useState } from "react";
 import NavigationMenu from "../components/menu/NavigationMenu";
 import QuestionSlideList from "../components/create/Slides/QuestionSlideList";
 import ImageInput from "../components/create/Image/ImageInput";
@@ -19,6 +19,7 @@ import type {
 } from "../types/quiz";
 import { createQuiz, deleteQuiz, updateQuiz } from "../api/quizApi";
 import { useAuth } from "../store/AuthContext";
+import { useQuestionEditor } from "../hooks/useQuestionEditor";
 
 const Create: React.FC<{}> = () => {
   const navigate = useNavigate();
@@ -39,9 +40,18 @@ const Create: React.FC<{}> = () => {
   );
   const [currentQuestionBeingEdited, setCurrentQuestionBeingEdited] =
     useState(0);
-  const scoringWeightOptions = [0.5, 1, 2];
   const currentQuestion = questions[currentQuestionBeingEdited];
   const questionImage = currentQuestion?.questionImage;
+
+  // use question editing hook
+  const {
+    handleQuestionTextInputChange,
+    handleQuestionTimeLimitChange,
+    handleAnswerTextChange,
+    handleQuestionCorrectIndexesChange,
+    handleQuestionScoringWeightChange,
+    updateQuestionImage
+  } = useQuestionEditor(dispatch, currentQuestionBeingEdited);
 
   // states for settings
   const [settingsDisplay, setSettingsDisplay] = useState(false);
@@ -57,52 +67,6 @@ const Create: React.FC<{}> = () => {
     zoom: 1,
     croppedAreaPixels: null,
   });
-
-  const handleQuestionTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: "SET_QUESTION_TEXT",
-      index: currentQuestionBeingEdited,
-      value: e.target.value,
-    });
-  };
-
-  const handleQuestionTimeLimitChange = (timeLimit: number) => {
-    dispatch({
-      type: "SET_TIME_LIMIT",
-      index: currentQuestionBeingEdited,
-      value: timeLimit,
-    });
-  };
-
-  const handleQuestionScoringWeightChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const index = +e.target.value;
-    const weight = scoringWeightOptions[index];
-
-    dispatch({
-      type: "SET_SCORING_WEIGHT",
-      index: currentQuestionBeingEdited,
-      value: weight,
-    });
-  };
-
-  const handleQuestionCorrectIndexesChange = (value: number) => {
-    dispatch({
-      type: "TOGGLE_CORRECT_INDEX",
-      index: currentQuestionBeingEdited,
-      value,
-    });
-  };
-
-  const handleAnswerTextChange = (answerIndex: number, value: string) => {
-    dispatch({
-      type: "SET_ANSWER_OPTION",
-      questionIndex: currentQuestionBeingEdited,
-      answerIndex,
-      value,
-    });
-  };
 
   const handleQuestionBeingEditedChange = (index: number) => {
     setCurrentQuestionBeingEdited(index);
@@ -128,16 +92,6 @@ const Create: React.FC<{}> = () => {
   const addEmptyQuestion = () => {
     dispatch({ type: "ADD_QUESTION" });
     setCurrentQuestionBeingEdited(questions.length);
-  };
-
-  const updateQuestionImage = (updates: Partial<questionImageType>) => {
-    dispatch({
-      type: "SET_IMAGE_DETAILS",
-      payload: {
-        index: currentQuestionBeingEdited,
-        updates,
-      },
-    });
   };
 
   const updateCoverImage = (updates: Partial<questionImageType>) => {

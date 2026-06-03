@@ -12,7 +12,7 @@ export type TagDetails = {
 export type permissionType = "בעלים" | "עריכה" | "צפייה";
 
 export type questionType = {
-  _id: string;
+  _id?: string;
   questionText: string;
   answerOptions: string[];
   correctIndexes: number[];
@@ -27,6 +27,16 @@ export type questionImageType = {
   crop: Point;
   zoom: number;
   croppedAreaPixels: Area | null;
+};
+
+export type QuestionDto = {
+  _id?: string;
+  questionText: string;
+  answerOptions: string[];
+  correctIndexes: number[];
+  scoringWeight: number;
+  timeLimit: number;
+  questionImage?: string;
 };
 
 export type sharedWithType = {
@@ -48,6 +58,16 @@ export type quizType = {
   _id?: string;
 };
 
-export type CreateQuizDto = Omit<quizType, "_id">;
+export type QuizDto = {
+  coverImage: string;
+  owner: string;
+  title: string;
+  questions: QuestionDto[];
+  sharedWith: sharedWithType[];
+  tags: string[];
+  _id?: string;
+};
+
+export type CreateQuizDto = Omit<QuizDto, "_id">;
 
 export type UpdateQuizDto = Omit<CreateQuizDto, "owner">;
