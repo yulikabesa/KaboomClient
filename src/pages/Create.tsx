@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import NavigationMenu from "../components/menu/NavigationMenu";
 import QuestionSlideList from "../components/create/Slides/QuestionSlideList";
-import ImageInput from "../components/create/Image/ImageInput";
 import classes from "./Create.module.css";
-import SecondsCircleLayout from "../components/create/Inputs/SecondsCircleLayout";
 import { useLocation, useNavigate } from "react-router-dom";
-import AnswerOptionsInputList from "../components/create/Inputs/AnswerOptionsInputList";
 import {
   questionsReducer,
   createEmptyQuestion,
 } from "../reducers/questionsReducer";
-import RangeInput from "../components/create/Inputs/RangeInput";
 import Settings from "../components/create/Settings/Settings";
 import type {
   quizType,
@@ -20,6 +16,7 @@ import type {
 import { createQuiz, deleteQuiz, updateQuiz } from "../api/quizApi";
 import { useAuth } from "../store/AuthContext";
 import { useQuestionEditor } from "../hooks/useQuestionEditor";
+import QuestionEditor from "../components/create/Inputs/QuestionEditor";
 
 const Create: React.FC<{}> = () => {
   const navigate = useNavigate();
@@ -50,7 +47,7 @@ const Create: React.FC<{}> = () => {
     handleAnswerTextChange,
     handleQuestionCorrectIndexesChange,
     handleQuestionScoringWeightChange,
-    updateQuestionImage
+    updateQuestionImage,
   } = useQuestionEditor(dispatch, currentQuestionBeingEdited);
 
   // states for settings
@@ -68,6 +65,7 @@ const Create: React.FC<{}> = () => {
     croppedAreaPixels: null,
   });
 
+  // functions
   const handleQuestionBeingEditedChange = (index: number) => {
     setCurrentQuestionBeingEdited(index);
   };
@@ -77,7 +75,6 @@ const Create: React.FC<{}> = () => {
       type: "COPY_QUESTION",
       index: currentQuestionBeingEdited,
     });
-
     setCurrentQuestionBeingEdited((prev) => prev + 1);
   };
 
@@ -103,15 +100,12 @@ const Create: React.FC<{}> = () => {
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
-
     if (result.destination.index === result.source.index) return;
-
     dispatch({
       type: "REORDER_QUESTIONS",
       sourceIndex: result.source.index,
       destinationIndex: result.destination.index,
     });
-
     setCurrentQuestionBeingEdited(result.destination.index);
   };
 
@@ -124,15 +118,12 @@ const Create: React.FC<{}> = () => {
   };
 
   const areAllFieldsFull = () => {
-    if (quizName === "") return false;
-    for (let i = 0; i < questions.length; i++) {
-      if (
-        questions[i].questionText === "" ||
-        questions[i].answerOptions.some((item: any) => !item)
-      )
-        return false;
-    }
-    return true;
+    if (!quizName.trim()) return false;
+    return questions.every((q) => {
+      const hasQuestion = q.questionText.trim() !== "";
+      const hasAnswers = q.answerOptions.every((a: any) => a);
+      return hasQuestion && hasAnswers;
+    });
   };
 
   const deleteQuizHandler = async () => {
@@ -198,55 +189,19 @@ const Create: React.FC<{}> = () => {
             הוסף שאלה
           </div>
         </div>
-
         {/* question editing */}
-        <div className={classes["question-editing"]}>
-          <input
-            id="question-text"
-            type="text"
-            placeholder="הקלד כאן את השאלה שלך…"
-            className={classes["question-text-input"]}
-            value={currentQuestion.questionText}
-            onChange={handleQuestionTextInputChange}
-            maxLength={72}
-          />
-          <div className={classes["flex"]}>
-            <div className={classes.center}>
-              <p className={classes["semi-bold"]}>ניקוד</p>
-              <RangeInput
-                scoringWeight={currentQuestion.scoringWeight}
-                handleQuestionScoringWeightChange={
-                  handleQuestionScoringWeightChange
-                }
-              />
-            </div>
-            <div className={classes["image-input-wrapper"]}>
-              <ImageInput
-                imageSrc={questionImage?.src ?? ""}
-                imagePreview={questionImage?.image ?? ""}
-                croppedAreaPixels={questionImage?.croppedAreaPixels ?? null}
-                crop={questionImage?.crop ?? { x: 0, y: 0 }}
-                zoom={questionImage?.zoom ?? 1}
-                setImageDetails={updateQuestionImage}
-                variant="question"
-              />
-            </div>
-            <div className={classes.center}>
-              <p className={classes["semi-bold"]}>כמות זמן</p>
-              <SecondsCircleLayout
-                items={[20, 30, 60, 90, 120, 240, 5, 10]}
-                center={currentQuestion.timeLimit}
-                onCenterChange={handleQuestionTimeLimitChange}
-              />
-            </div>
-          </div>
-          <AnswerOptionsInputList
-            correctAnswerIndexes={currentQuestion.correctIndexes}
-            answerTexts={currentQuestion.answerOptions}
-            onAnswerClick={(index) => handleQuestionCorrectIndexesChange(index)}
-            onAnswerTextChange={handleAnswerTextChange}
-          />
-        </div>
+        <QuestionEditor
+          currentQuestion={currentQuestion}
+          questionImage={questionImage}
+          handleQuestionTextInputChange={handleQuestionTextInputChange}
+          handleQuestionScoringWeightChange={handleQuestionScoringWeightChange}
+          handleQuestionTimeLimitChange={handleQuestionTimeLimitChange}
+          handleQuestionCorrectIndexesChange={
+            handleQuestionCorrectIndexesChange
+          }
+          handleAnswerTextChange={handleAnswerTextChange}
+          updateQuestionImage={updateQuestionImage}
+        />
       </div>
 
       {settingsDisplay && (
