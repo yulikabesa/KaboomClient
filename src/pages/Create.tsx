@@ -2,8 +2,6 @@ import React, { useState, type ChangeEvent } from "react";
 import NavigationMenu from "../components/menu/NavigationMenu";
 import QuestionSlideList from "../components/create/Slides/QuestionSlideList";
 import ImageInput from "../components/create/Image/ImageInput";
-import getCroppedImg from "../utils/cropImage";
-import type { Area } from "react-easy-crop";
 import classes from "./Create.module.css";
 import SecondsCircleLayout from "../components/create/Inputs/SecondsCircleLayout";
 import { useLocation } from "react-router-dom";
@@ -126,32 +124,7 @@ const Create: React.FC<{}> = () => {
     setCurrentQuestionBeingEdited(questions.length);
   };
 
-  const handleImageChange = (file: string) => {
-    const updates = {
-      src: file,
-      image: file,
-      crop: { x: 0, y: 0 },
-      zoom: 1,
-      croppedAreaPixels: null,
-    };
-
-    // if (variant === "settings") {
-    //   handleCoverImageUpdate(updates);
-    // } else
-    dispatch({
-      type: "SET_IMAGE_DETAILS",
-      payload: {
-        index: currentQuestionBeingEdited,
-        updates: updates,
-      },
-    });
-  };
-
-  const handleCropComplete = (areaPixels: Area | null) => {
-    const updates = { croppedAreaPixels: areaPixels };
-    // if (variant === "settings") {
-    //   handleCoverImageUpdate(updates);
-    // } else
+  const updateQuestionImage = (updates: Partial<questionImageType>) => {
     dispatch({
       type: "SET_IMAGE_DETAILS",
       payload: {
@@ -161,34 +134,11 @@ const Create: React.FC<{}> = () => {
     });
   };
 
-  const handleSaveCropped = async () => {
-    if (!questionImage?.src || !questionImage?.croppedAreaPixels) return;
-
-    const cropped = (await getCroppedImg(
-      questionImage.src,
-      questionImage.croppedAreaPixels,
-    )) as string;
-
-    const updates = { image: cropped };
-    if (cropped) {
-      // if (variant === "settings") {
-      //   handleCoverImageUpdate(updates);
-      // } else
-      dispatch({
-        type: "SET_IMAGE_DETAILS",
-        payload: {
-          index: currentQuestionBeingEdited,
-          updates,
-        },
-      });
-    }
-  };
-
-  const handleCoverImageUpdate = (updates: Partial<questionImageType>) => {
-    setCoverImage((coverImage) => {
-      const updated = { ...coverImage, ...updates };
-      return updated;
-    });
+  const updateCoverImage = (updates: Partial<questionImageType>) => {
+    setCoverImage((prev) => ({
+      ...prev,
+      ...updates,
+    }));
   };
 
   const onDragEnd = (result: any) => {
@@ -237,7 +187,7 @@ const Create: React.FC<{}> = () => {
             הוסף שאלה
           </div>
         </div>
-        
+
         {/* question editing */}
         <div className={classes["question-editing"]}>
           <input
@@ -259,35 +209,17 @@ const Create: React.FC<{}> = () => {
                 }
               />
             </div>
-            <ImageInput
-              imageSrc={questionImage?.src ?? ""}
-              imagePreview={questionImage?.image ?? ""}
-              setImage={handleImageChange}
-              croppedAreaPixels={questionImage?.croppedAreaPixels ?? null}
-              crop={questionImage?.crop ?? { x: 0, y: 0 }}
-              zoom={questionImage?.zoom ?? 1}
-              setCrop={(crop) =>
-                dispatch({
-                  type: "SET_IMAGE_DETAILS",
-                  payload: {
-                    index: currentQuestionBeingEdited,
-                    updates: { crop },
-                  },
-                })
-              }
-              setZoom={(zoom) =>
-                dispatch({
-                  type: "SET_IMAGE_DETAILS",
-                  payload: {
-                    index: currentQuestionBeingEdited,
-                    updates: { zoom },
-                  },
-                })
-              }
-              handleCropComplete={handleCropComplete}
-              handleSaveCropped={handleSaveCropped}
-              variant="question"
-            />
+            <div className={classes["image-input-wrapper"]}>
+              <ImageInput
+                imageSrc={questionImage?.src ?? ""}
+                imagePreview={questionImage?.image ?? ""}
+                croppedAreaPixels={questionImage?.croppedAreaPixels ?? null}
+                crop={questionImage?.crop ?? { x: 0, y: 0 }}
+                zoom={questionImage?.zoom ?? 1}
+                setImageDetails={updateQuestionImage}
+                variant="question"
+              />
+            </div>
             <div className={classes.center}>
               <p className={classes["semi-bold"]}>כמות זמן</p>
               <SecondsCircleLayout
@@ -316,7 +248,7 @@ const Create: React.FC<{}> = () => {
           tags={tags}
           setTags={setTags}
           coverImage={coverImage}
-          // setCoverImage={handleCoverImageUpdate}
+          setCoverImage={updateCoverImage}
         />
       )}
     </div>

@@ -16,8 +16,9 @@
 }
 
 .image-wrapper {
-  /* padding: 2%; */
-  background-color: #d9d9d9;
+  background-color: #f2f2f2;
+  padding: 4%;
+  border-radius: 4px;
 }
 
 .container input[type="text"] {

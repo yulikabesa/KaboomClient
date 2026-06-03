@@ -18,11 +18,11 @@ const Button: React.FC<ButtonProps> = (props) => {
       {props.children}
     </Link>
   ) : (
-    <div onClick={props.onClick}
+    <button onClick={props.onClick}
       className={`${classes["btn"]} ${props.variant ? classes[`${props.variant}-btn`] : ""} ${props.className ? classes[props.className] : ""}`}
     >
       {props.children}
-    </div>
+    </button>
   );
 };
 

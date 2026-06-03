@@ -2,31 +2,55 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1vmax;
+  padding: 2%;
 }
 
 .image-container {
   width: 68%;
   aspect-ratio: 3/2;
   position: relative;
-  margin: 1rem auto;
+  margin: auto;
   background-color: #d9d9d9;
   text-align: center;
   border-radius: 4px;
 }
 
 .zoom-input {
-  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5%;
+  width: 100%;
+}
+
+.zoom-icon {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("../../../assets/imageIcon.svg");
+  aspect-ratio: 1;
+}
+
+.large {
+  width: 12px;
+}
+
+.small {
+  width: 8px;
 }
 
 .zoom-input input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
-  width: 100%;
+  width: 20%;
+  min-width: 80px;
   height: 4px;
   background: #888888;
   border-radius: 8px;
   color: transparent;
   cursor: pointer;
+  direction: ltr;
 }
 
 .zoom-input input[type="range"]::-webkit-slider-thumb {
@@ -58,5 +82,5 @@
 }
 
 .actions > * {
-  margin: 1%;
+  margin: 0 1%;
 }

@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from "react";
-import Cropper, { type Area } from "react-easy-crop";
+import Cropper, { type Area, type Point } from "react-easy-crop";
 import Overlay from "../../UI/Overlay";
 import classes from "./ImageCropper.module.css";
 import Button from "../../UI/Button";
@@ -9,13 +9,13 @@ const minZoom = 0.4;
 interface ImageCropProps {
   image: string;
   croppedAreaPixels: Area | null;
+  closeOverlay: () => void;
   onCropComplete: (areaPixels: Area | null) => void;
   onSaveCropped: () => void;
-  closeOverlay: () => void;
-  crop: { x: number; y: number };
-  zoom: number;
-  setCrop: (crop: { x: number; y: number }) => void;
+  setCrop: (crop: Point) => void;
   setZoom: (zoom: number) => void;
+  crop: Point;
+  zoom: number;
 }
 
 const ImageCrop: React.FC<ImageCropProps> = (props) => {
@@ -49,6 +49,7 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
         />
       </div>
       <div className={classes["zoom-input"]}>
+        <div className={`${classes["zoom-icon"]} ${classes["large"]}`} />
         <input
           type="range"
           value={props.zoom}
@@ -59,6 +60,7 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
             props.setZoom(Number(event.target.value));
           }}
         />
+        <div className={`${classes["zoom-icon"]} ${classes["small"]}`} />
       </div>
       <div className={classes["actions"]}>
         <Button variant="white" onClick={props.closeOverlay}>

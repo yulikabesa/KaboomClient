@@ -1,4 +1,5 @@
 .btn {
+  all: unset;
   text-decoration: none;
   cursor: pointer;
   display: inline-block;

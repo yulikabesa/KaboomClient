@@ -22,7 +22,7 @@ const Settings: React.FC<{
   sharedWith: sharedWithType[];
   setSharedWith: React.Dispatch<React.SetStateAction<sharedWithType[]>>;
   coverImage: questionImageType;
-  // setCoverImage: (updates: Partial<questionImageType>) => void;
+  setCoverImage: (updates: Partial<questionImageType>) => void;
 }> = (props) => {
   const QUIZ_NAME_MAX = 50;
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
@@ -114,11 +114,7 @@ const Settings: React.FC<{
                 crop={props.coverImage.crop}
                 zoom={props.coverImage.zoom}
                 croppedAreaPixels={props.coverImage.croppedAreaPixels}
-                setImage={() => {}}
-                setCrop={() => {}}
-                setZoom={() => {}}
-                handleCropComplete={() => {}}
-                handleSaveCropped={() => {}}
+                setImageDetails={props.setCoverImage}
                 variant="settings"
               />
             </div>
