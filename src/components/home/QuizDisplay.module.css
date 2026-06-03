@@ -85,8 +85,8 @@
 
 .testImg {
   width: 14vw;
-  min-width: 100px;
-  height: 9vw;
+  min-width: 140px;
+  aspect-ratio: 3/2;
   border-radius: 5px;
   background: #c0c0c0;
   position: relative;

@@ -24,8 +24,8 @@
 }
 
 .green-circle {
-  width: 1vh;
-  height: 1vh;
+  width: 6%;
+  aspect-ratio: 1;
   background-color: #7cbc4f;
   border-radius: 50%;
 }
