@@ -98,27 +98,17 @@
   font-size: clamp(14px, 2vmax, 24px);
 }
 
-.blue-btn {
-  width: max-content;
+.add-slide-btn {
+  padding: 0.5rem 2.2rem;
   background-color: #1368ce;
   box-shadow: 0 3px 0 0 #04389d;
-  border-radius: 5px;
-  padding: 1vh 4vh;
-  cursor: pointer;
-  font-size: var(--fs-button);
   color: white;
-  font-weight: 700;
-  margin-top: 2vh;
-  margin-bottom: 2vh;
+  border-radius: 6px;
+  margin: 5% 0;
 }
 
-.blue-btn:hover {
+.add-slide-btn:hover {
   background-color: #1363c6;
-}
-
-.blue-btn:active {
-  transform: translateY(3px);
-  box-shadow: 0 0 0 transparent;
 }
 
 .semi-bold {

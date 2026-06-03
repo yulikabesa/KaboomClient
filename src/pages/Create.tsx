@@ -19,6 +19,7 @@ import type {
 } from "../types/quiz";
 import { createQuiz, deleteQuiz, updateQuiz } from "../api/quizApi";
 import { useAuth } from "../store/AuthContext";
+import Button from "../components/UI/Button";
 
 const Create: React.FC<{}> = () => {
   const navigate = useNavigate();
@@ -240,9 +241,9 @@ const Create: React.FC<{}> = () => {
             onDragEnd={onDragEnd}
             onDragStart={onDragStart}
           />
-          <div className={classes["blue-btn"]} onClick={addEmptyQuestion}>
+          <Button className={classes["add-slide-btn"]} onClick={addEmptyQuestion}>
             הוסף שאלה
-          </div>
+          </Button>
         </div>
 
         {/* question editing */}
