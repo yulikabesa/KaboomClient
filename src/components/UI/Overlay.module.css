@@ -27,6 +27,14 @@
 }
 
 .btn {
+  all: unset;
+  background-image: url("../../assets/closeIcon.svg");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  aspect-ratio: 1;
+  width: 2rem;
+
   cursor: pointer;
 }
 

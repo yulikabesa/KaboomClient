@@ -22,10 +22,7 @@ const OverlayCard: React.FC<OverlayProps> = (props) => {
       <header className={classes["header"]}>
         <p style={{fontWeight: '900'}}>{props.title}</p>
         {props.button && (
-          // todo: fix
-          <div className={classes["btn"]} onClick={props.closeOverlay}>
-            <img src={closeIcon} />
-          </div>
+          <button className={classes["btn"]} onClick={props.closeOverlay} />
         )}
       </header>
       <div className={`${classes["content"]} ${props.className}`}>
