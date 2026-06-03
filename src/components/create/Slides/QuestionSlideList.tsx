@@ -1,7 +1,7 @@
 import React from "react";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import DraggableQuestionItem from "./DraggableQuestionItem";
-import type { questionType } from "../../home/ProductsList";
+import type { questionType } from "../../home/QuizzesList";
 
 type Props = {
   questions: questionType[];

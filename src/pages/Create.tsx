@@ -4,7 +4,7 @@ import QuestionSlideList from "../components/create/Slides/QuestionSlideList";
 import ImageInput from "../components/create/Image/ImageInput";
 import classes from "./Create.module.css";
 import SecondsCircleLayout from "../components/create/Inputs/SecondsCircleLayout";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AnswerOptionsInputList from "../components/create/Inputs/AnswerOptionsInputList";
 import {
   questionsReducer,
@@ -13,14 +13,20 @@ import {
 import RangeInput from "../components/create/Inputs/RangeInput";
 import Settings from "../components/create/Settings/Settings";
 import type {
-  productType,
+  quizType,
   questionImageType,
   sharedWithType,
-} from "../components/home/ProductsList";
+} from "../types/quiz";
+import { createQuiz, deleteQuiz, updateQuiz } from "../api/quizApi";
+import { useAuth } from "../store/AuthContext";
 
 const Create: React.FC<{}> = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const userId = user?._id;
+
   const location = useLocation();
-  const data: productType = location.state;
+  const data: quizType = location.state;
 
   // states for questions and slides display
   const initialQuestions =
@@ -163,6 +169,56 @@ const Create: React.FC<{}> = () => {
     setSettingsDisplay((prev) => !prev);
   };
 
+  const areAllFieldsFull = () => {
+    if (quizName === "") return false;
+    for (let i = 0; i < questions.length; i++) {
+      if (
+        questions[i].questionText === "" ||
+        questions[i].answerOptions.some((item: any) => !item)
+      )
+        return false;
+    }
+    return true;
+  };
+
+  const deleteQuizHandler = async () => {
+    try {
+      if (data?._id) {
+        const response = await deleteQuiz(data._id);
+        console.log(response);
+      }
+      navigate("/home");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const quizSaveClickHandler = async () => {
+    const cleanedQuestions = questions.map(
+      ({ _id, questionImage, ...question }) => ({
+        ...question,
+        questionImage: questionImage?.image ?? "",
+      }),
+    );
+    const quiz = {
+      coverImage: "",
+      title: quizName,
+      questions: cleanedQuestions,
+      sharedWith,
+      tags,
+    };
+    try {
+      const response = data
+        ? await updateQuiz(data._id, quiz)
+        : await createQuiz({ ...quiz, owner: userId ?? "" });
+      console.log(response);
+    } catch (error) {
+      console.error("Error saving quiz:", error);
+    } finally {
+      navigate("/home");
+    }
+  };
+
   return (
     <div className={classes.background}>
       <NavigationMenu
@@ -170,6 +226,7 @@ const Create: React.FC<{}> = () => {
         onSettingsClick={toggleSettings}
         quizName={quizName}
         setQuizName={setQuizName}
+        onQuizSave={quizSaveClickHandler}
       />
       <div className={classes["screen-items-flex"]}>
         {/* questions slides */}
@@ -249,6 +306,9 @@ const Create: React.FC<{}> = () => {
           setTags={setTags}
           coverImage={coverImage}
           setCoverImage={updateCoverImage}
+          areAllFieldsFull={areAllFieldsFull}
+          onQuizDelete={deleteQuizHandler}
+          onQuizSave={quizSaveClickHandler}
         />
       )}
     </div>

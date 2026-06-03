@@ -3,7 +3,7 @@ import { Draggable } from "@hello-pangea/dnd";
 import QuestionSlide from "./QuestionSlide";
 import QuestionActions from "./QuestionActions";
 import classes from "./QuestionSlideList.module.css";
-import type { questionType } from "../../home/ProductsList";
+import type { questionType } from "../../home/QuizzesList";
 
 type Props = {
   question: questionType;

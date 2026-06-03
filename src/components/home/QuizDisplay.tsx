@@ -1,33 +1,42 @@
 import type React from "react";
-import classes from "./ProductDisplay.module.css";
+import classes from "./QuizDisplay.module.css";
 import editIcon from "../../assets/editIcon.svg";
 import gameIcon from "../../assets/gameIcon.svg";
 import { useSocket } from "../../store/SocketContext";
 import { useNavigate } from "react-router-dom";
 import { useLobby } from "../../store/LobbyContext";
 import { useState } from "react";
-import type { productType } from "./ProductsList";
+import type { quizType } from "../../types/quiz";
 import defaultCover from "../../assets/defaultCoverPhoto.png";
+import { useAuth } from "../../store/AuthContext";
 
-const ProductDisplay: React.FC<{
+const QuizDisplay: React.FC<{
   isLoading: boolean;
-  product: productType;
+  quiz: quizType;
 }> = (props) => {
   const navigate = useNavigate();
   const { setLobby } = useLobby();
   const socket = useSocket();
+  const { user } = useAuth();
+  const userId = user?._id;
 
-  const [isCreating, setIsCreating] = useState(false);
+  const canEdit =
+    props.quiz?.owner === userId ||
+    props.quiz?.sharedWith?.some(
+      (shared) => shared.user._id === userId && shared.permission === "עריכה",
+    );
+
+  const [isCreatingGame, setIsCreatingGame] = useState(false);
 
   const onClickHandler = () => {
-    if (!socket || isCreating) return;
+    if (!socket || isCreatingGame) return;
 
-    setIsCreating(true);
+    setIsCreatingGame(true);
 
     // Emit event to create game
     socket.emit("game-event", {
       type: "create-game-session",
-      payload: { quizId: props.product._id },
+      payload: { quizId: props.quiz._id },
     });
 
     // Listen for the game-created event only once
@@ -36,19 +45,19 @@ const ProductDisplay: React.FC<{
       setLobby({
         gamePin: pin,
         players: [],
-        quizId: props.product._id,
+        quizId: props.quiz._id ?? "",
       });
       navigate("/lobby");
     });
 
     // fallback
     setTimeout(() => {
-      setIsCreating(false);
+      setIsCreatingGame(false);
     }, 5000);
   };
 
   const onEditClick = () => {
-    navigate("/create", { state: props.product });
+    navigate("/create", { state: props.quiz });
   };
   return (
     <div className={classes.container}>
@@ -71,41 +80,43 @@ const ProductDisplay: React.FC<{
           <div
             className={classes.testImg}
             style={{
-              backgroundImage: `url(${props.product.coverImage === "" ? defaultCover : props.product.coverImage})`,
+              backgroundImage: `url(${props.quiz.coverImage === "" ? defaultCover : props.quiz.coverImage})`,
             }}
           >
             <p className={classes["question-num"]}>
-              {props.product.questions?.length ?? 0} שאלות
+              {props.quiz.questions?.length ?? 0} שאלות
             </p>
             <div className={classes.hoverOverlay}>
               <div
                 onClick={onClickHandler}
                 style={{
-                  pointerEvents: isCreating ? "none" : "auto",
-                  opacity: isCreating ? 0.6 : 1,
-                  cursor: isCreating ? "not-allowed" : "pointer",
+                  pointerEvents: isCreatingGame ? "none" : "auto",
+                  opacity: isCreatingGame ? 0.6 : 1,
+                  cursor: isCreatingGame ? "not-allowed" : "pointer",
                 }}
                 className={`${classes["option-btn"]} ${classes["blue-btn"]}`}
               >
                 <span>לשחק</span>
                 <img src={gameIcon} className={classes.icon} />
               </div>
-              <div
-                onClick={onEditClick}
-                className={`${classes["option-btn"]} ${classes["transparent-btn"]}`}
-              >
-                <span>לערוך</span>
-                <img src={editIcon} className={classes.icon} />
-              </div>
+              {canEdit && (
+                <div
+                  onClick={onEditClick}
+                  className={`${classes["option-btn"]} ${classes["transparent-btn"]}`}
+                >
+                  <span>לערוך</span>
+                  <img src={editIcon} className={classes.icon} />
+                </div>
+              )}
             </div>
           </div>
           <div className={classes["product-title"]}>
-            {props.product.title ?? ""}
+            {props.quiz.title ?? ""}
           </div>
           <div className={classes["product-course"]}>
-            {props.product.tags.length === 1
-              ? props.product.tags[0]
-              : props.product.tags.join(", ")}
+            {props.quiz.tags.length === 1
+              ? props.quiz.tags[0]
+              : props.quiz.tags.join(", ")}
           </div>
         </>
       )}
@@ -113,4 +124,4 @@ const ProductDisplay: React.FC<{
   );
 };
 
-export default ProductDisplay;
+export default QuizDisplay;

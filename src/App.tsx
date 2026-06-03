@@ -15,11 +15,11 @@ import Login from "./pages/Login";
 import ProjectorGamePage from "./pages/projectorDisplay/ProjectorGamePage";
 import Home from "./pages/Home";
 import Create from "./pages/Create";
+import { AuthProvider } from "./store/AuthContext";
 
 const App = () => {
-  // const authCtx = useContext(AuthContext);
-  // const isLoggedIn = authCtx.isLoggedIn;
-  // const isAdmin = authCtx.isAdmin;
+  // const { user } = useAuth();
+    // const userId = user?._id;
 
   const router = createBrowserRouter([
     {
@@ -67,11 +67,13 @@ const App = () => {
   ]);
 
   return (
-    <SocketProvider>
-      <LobbyProvider>
-        <RouterProvider router={router} />
-      </LobbyProvider>
-    </SocketProvider>
+    <AuthProvider>
+      <SocketProvider>
+        <LobbyProvider>
+          <RouterProvider router={router} />
+        </LobbyProvider>
+      </SocketProvider>
+    </AuthProvider>
   );
 };
 

@@ -10,6 +10,7 @@ const NavigationMenu: React.FC<{
   onSettingsClick?: () => void;
   quizName?: string;
   setQuizName?: React.Dispatch<React.SetStateAction<string>>;
+  onQuizSave?: () => void;
 }> = (props) => {
   return (
     <header className={classes.header}>
@@ -31,6 +32,7 @@ const NavigationMenu: React.FC<{
               className={classes["quiz-name-input"]}
               placeholder="שם החידון"
               value={props.quizName}
+              maxLength={50}
               onChange={(e) => props.setQuizName!(e.target.value)}
             />
           </div>
@@ -55,7 +57,9 @@ const NavigationMenu: React.FC<{
                 ליצור
               </Button>
             ) : (
-              <Button variant="blue">לשמור</Button>
+              <Button variant="blue" onClick={props.onQuizSave}>
+                לשמור
+              </Button>
             )}
           </li>
         </ul>

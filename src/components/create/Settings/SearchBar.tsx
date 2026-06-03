@@ -2,15 +2,8 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import classes from "./SearchBar.module.css";
 import { Search } from "lucide-react";
-
-type UserDetails = {
-  name: string;
-  email: string;
-};
-
-type TagDetails = {
-  name: string;
-};
+import { searchData } from "../../../api/searchApi";
+import type { UserDetails, TagDetails } from "../../../types/quiz";
 
 type SearchBarProps<T> = {
   onItemClick: (item: T) => void;
@@ -57,29 +50,17 @@ const SearchBar = <T,>(props: SearchBarProps<T>) => {
 
   const fetchServerData = async (searchTerm: string, signal: AbortSignal) => {
     try {
-      const response = await axios.get(
-        `http://localhost:3000/${props.searchFor}/search`,
-        {
-          params: { q: searchTerm },
-          signal,
-        },
-      );
+      const data = await searchData(props.searchFor, searchTerm, signal);
       const key = props.searchFor === "user" ? "users" : "tags";
-      const responseResults = response.data.data?.[key] || [];
+      const responseResults = data.data?.[key] || [];
       setResults(
         query.trim().length > 1 && responseResults.length === 0
           ? [{ name: "לא נמצאו תוצאות" }]
           : responseResults,
       );
     } catch (error) {
-      if (axios.isCancel(error)) {
-        return;
-      }
-      if (axios.isAxiosError(error)) {
-        console.error("Axios error:", error.message);
-      } else {
-        console.error("Unexpected error:", error);
-      }
+      if (axios.isCancel(error)) return;
+      console.error(error);
     }
   };
 

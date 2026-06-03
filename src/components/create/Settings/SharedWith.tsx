@@ -1,6 +1,6 @@
 import profilePic from "../../../assets/profilePic.svg";
 import classes from "./SharedWith.module.css";
-import type { permissionType } from "./Settings";
+import type { permissionType } from "../../../types/quiz";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -9,6 +9,8 @@ const SharedWith: React.FC<{
   email: string;
   permission: permissionType;
   setPermission: (email: string, newPermission: permissionType) => void;
+  index: number;
+  deleteSharedUser: (indexToRemove: number) => void;
 }> = (props) => {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -95,7 +97,7 @@ const SharedWith: React.FC<{
                   setOpen(false);
                 }}
               >
-                <span className={classes["correct-sign"]}>
+                <span className={`${classes["sign"]} ${classes.blue}`}>
                   {props.permission === "צפייה" && "✓"}
                 </span>
                 <span>צפייה</span>
@@ -109,10 +111,22 @@ const SharedWith: React.FC<{
                   setOpen(false);
                 }}
               >
-                <span className={classes["correct-sign"]}>
+                <span className={`${classes["sign"]} ${classes.blue}`}>
                   {props.permission === "עריכה" && "✓"}
                 </span>
                 <span>עריכה</span>
+              </div>
+
+              <div
+                className={`${classes["dropdown-item"]} ${classes.red}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  props.deleteSharedUser(props.index);
+                  setOpen(false);
+                }}
+              >
+                <span className={`${classes["sign"]} ${classes.red}`}>⃠</span>
+                <span>הסרה</span>
               </div>
             </div>,
             document.getElementById("overlay")!,

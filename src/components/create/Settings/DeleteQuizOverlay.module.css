@@ -1,0 +1,18 @@
+.overOverlay {
+  width: 20vw;
+  min-width: 300px;
+  text-align: center;
+}
+
+.buttons-flex {
+  padding: 0 2vh 2vh 2vh;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.text {
+  padding: 4vh 2vh;
+  font-weight: 700;
+}

@@ -1,43 +1,42 @@
 import NavigationMenu from "../components/menu/NavigationMenu";
 import classes from "./Home.module.css";
 import { useEffect, useState } from "react";
-import ProductsList, { type productType } from "../components/home/ProductsList";
-import axios from "axios";
+import QuizzesList from "../components/home/QuizzesList";
+import type { quizType } from "../types/quiz";
+import { getOwnerQuizzes, getSharedQuizzes } from "../api/quizApi";
+import { useAuth } from "../store/AuthContext";
 
 const Home = () => {
   // todo get products from server
-  const [createdProducts, setCreatedProducts] = useState<productType[]>([]);
-  const [sharedProducts, setSharedProducts] = useState<productType[]>([]);
-  const [myCourseProducts, setMyCourseProducts] = useState<productType[]>([]);
+  const [createdProducts, setCreatedProducts] = useState<quizType[]>([]);
+  const [sharedProducts, setSharedProducts] = useState<quizType[]>([]);
+  const [myCourseProducts, setMyCourseProducts] = useState<quizType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // to delete and get it from localStorae or context
-  const userId = "69dcbda7e2af6ecb8203b547";
+  const { user } = useAuth();
+  const userId = user?._id;
+
+  // const userId = "69dcbda7e2af6ecb8203b547";
 
   useEffect(() => {
     const fetchQuizzes = async () => {
       if (!userId) return;
       setIsLoading(true);
-
       try {
         const [createdRes, sharedRes] = await Promise.all([
-          axios.get(`http://localhost:3000/quiz/owner/${userId}`),
-          axios.get(`http://localhost:3000/quiz/shared/${userId}`),
+          getOwnerQuizzes(userId),
+          getSharedQuizzes(userId),
         ]);
-        setCreatedProducts(createdRes.data);
-        setSharedProducts(sharedRes.data);
-        console.log(createdRes.data);
-        setIsLoading(false);
+        setCreatedProducts(createdRes);
+        setSharedProducts(sharedRes);
       } catch (error) {
-        if (axios.isAxiosError(error)) {
-          console.error("Error fetching quizzes:", error.message);
-        } else {
-          console.error("Unexpected error:", error);
-        }
+        console.error("Error fetching quizzes:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchQuizzes();
-  }, []);
+  }, [userId]);
 
   return (
     <>
@@ -51,11 +50,11 @@ const Home = () => {
             </p>
           </div>
           <p className={classes["sub-title"]}>תוצרים שיצרתי</p>
-          <ProductsList isLoading={isLoading} products={createdProducts} />
+          <QuizzesList isLoading={isLoading} quizzes={createdProducts} />
           <p className={classes["sub-title"]}>התוצרים ששותפו איתי</p>
-          <ProductsList isLoading={isLoading} products={sharedProducts} />
+          <QuizzesList isLoading={isLoading} quizzes={sharedProducts} />
           <p className={classes["sub-title"]}>תוצרים של הקורס שלי</p>
-          <ProductsList isLoading={isLoading} products={myCourseProducts} />
+          <QuizzesList isLoading={isLoading} quizzes={myCourseProducts} />
           {/* todo change products to receive from server */}
         </div>
       </div>
