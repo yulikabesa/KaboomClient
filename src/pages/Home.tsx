@@ -16,7 +16,23 @@ const Home = () => {
   const { user } = useAuth();
   const userId = user?._id;
 
-  // const userId = "69dcbda7e2af6ecb8203b547";
+  const normalizeQuizzes = (quizzes: any[]) =>
+    // converts question img from string to string → questionImageType
+    quizzes.map((quiz) => ({
+      ...quiz,
+      questions: quiz.questions.map((q: any) => ({
+        ...q,
+        questionImage: q.questionImage
+          ? {
+              image: q.questionImage,
+              src: q.questionImage,
+              crop: { x: 0, y: 0 },
+              zoom: 1,
+              croppedAreaPixels: null,
+            }
+          : undefined,
+      })),
+    }));
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -27,8 +43,8 @@ const Home = () => {
           getOwnerQuizzes(userId),
           getSharedQuizzes(userId),
         ]);
-        setCreatedProducts(createdRes);
-        setSharedProducts(sharedRes);
+        setCreatedProducts(normalizeQuizzes(createdRes));
+        setSharedProducts(normalizeQuizzes(sharedRes));
       } catch (error) {
         console.error("Error fetching quizzes:", error);
       } finally {

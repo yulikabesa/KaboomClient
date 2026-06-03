@@ -1,7 +1,4 @@
-import type {
-  questionImageType,
-  questionType,
-} from "../components/home/QuizzesList";
+import type { questionImageType, questionType } from "../types/quiz";
 
 export type QuestionsAction =
   | { type: "SET_QUESTION_TEXT"; index: number; value: string }
