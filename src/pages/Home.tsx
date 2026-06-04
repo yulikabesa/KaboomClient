@@ -59,10 +59,10 @@ const Home = () => {
       <div className={classes.background}>
         <div className={classes.container}>
           <div className={classes["question-marks-div"]}>
-            <p className={classes["tilted-title"]}>נתקעת בלי שיעור?</p>
+            {/* <p className={classes["tilted-title"]}>נתקעת בלי שיעור?</p>
             <p className={classes["sub-title"]}>
               עם עשרות התבניות של קבום – כל אחד יכול להכין שיעור במהירות.
-            </p>
+            </p> */}
           </div>
           <p className={classes["sub-title"]}>תוצרים שיצרתי</p>
           <QuizzesList isLoading={isLoading} quizzes={createdProducts} />
