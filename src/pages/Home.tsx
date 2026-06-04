@@ -56,7 +56,6 @@ const Home = () => {
 
   return (
     <>
-      <NavigationMenu variant="home" />
       <div className={classes.background}>
         <div className={classes.container}>
           <div className={classes["question-marks-div"]}>
@@ -74,6 +73,7 @@ const Home = () => {
           {/* todo change products to receive from server */}
         </div>
       </div>
+      <NavigationMenu variant="home" />
     </>
   );
 };

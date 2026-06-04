@@ -166,7 +166,61 @@ const Create: React.FC<{}> = () => {
   };
 
   return (
-    <div className={classes.background}>
+    <>
+      <div className={classes.background}>
+        <div className={classes["screen-items-flex"]}>
+          {/* questions slides */}
+          <div className={classes["questions-slides"]}>
+            <QuestionSlideList
+              currentQuestionEdited={currentQuestionBeingEdited}
+              onSlideClick={handleQuestionBeingEditedChange}
+              onSlideCopyClick={handleCurrentSlideCopyClick}
+              onSlideDeleteClick={handleCurrentSlideDeleteClick}
+              questions={questions}
+              onDragEnd={onDragEnd}
+              onDragStart={onDragStart}
+            />
+            <Button
+              className={classes["add-slide-btn"]}
+              onClick={addEmptyQuestion}
+            >
+              הוסף שאלה
+            </Button>
+          </div>
+          {/* question editing */}
+          <QuestionEditor
+            currentQuestion={currentQuestion}
+            questionImage={questionImage}
+            handleQuestionTextInputChange={handleQuestionTextInputChange}
+            handleQuestionScoringWeightChange={
+              handleQuestionScoringWeightChange
+            }
+            handleQuestionTimeLimitChange={handleQuestionTimeLimitChange}
+            handleQuestionCorrectIndexesChange={
+              handleQuestionCorrectIndexesChange
+            }
+            handleAnswerTextChange={handleAnswerTextChange}
+            updateQuestionImage={updateQuestionImage}
+          />
+        </div>
+
+        {settingsDisplay && (
+          <Settings
+            closeOverlay={toggleSettings}
+            quizName={quizName}
+            setQuizName={setQuizName}
+            sharedWith={sharedWith}
+            setSharedWith={setSharedWith}
+            tags={tags}
+            setTags={setTags}
+            coverImage={coverImage}
+            setCoverImage={updateCoverImage}
+            areAllFieldsFull={areAllFieldsFull}
+            onQuizDelete={deleteQuizHandler}
+            onQuizSave={quizSaveClickHandler}
+          />
+        )}
+      </div>
       <NavigationMenu
         variant="create"
         onSettingsClick={toggleSettings}
@@ -174,54 +228,7 @@ const Create: React.FC<{}> = () => {
         setQuizName={setQuizName}
         onQuizSave={quizSaveClickHandler}
       />
-      <div className={classes["screen-items-flex"]}>
-        {/* questions slides */}
-        <div className={classes["questions-slides"]}>
-          <QuestionSlideList
-            currentQuestionEdited={currentQuestionBeingEdited}
-            onSlideClick={handleQuestionBeingEditedChange}
-            onSlideCopyClick={handleCurrentSlideCopyClick}
-            onSlideDeleteClick={handleCurrentSlideDeleteClick}
-            questions={questions}
-            onDragEnd={onDragEnd}
-            onDragStart={onDragStart}
-          />
-          <Button className={classes["add-slide-btn"]} onClick={addEmptyQuestion}>
-            הוסף שאלה
-          </Button>
-        </div>
-        {/* question editing */}
-        <QuestionEditor
-          currentQuestion={currentQuestion}
-          questionImage={questionImage}
-          handleQuestionTextInputChange={handleQuestionTextInputChange}
-          handleQuestionScoringWeightChange={handleQuestionScoringWeightChange}
-          handleQuestionTimeLimitChange={handleQuestionTimeLimitChange}
-          handleQuestionCorrectIndexesChange={
-            handleQuestionCorrectIndexesChange
-          }
-          handleAnswerTextChange={handleAnswerTextChange}
-          updateQuestionImage={updateQuestionImage}
-        />
-      </div>
-
-      {settingsDisplay && (
-        <Settings
-          closeOverlay={toggleSettings}
-          quizName={quizName}
-          setQuizName={setQuizName}
-          sharedWith={sharedWith}
-          setSharedWith={setSharedWith}
-          tags={tags}
-          setTags={setTags}
-          coverImage={coverImage}
-          setCoverImage={updateCoverImage}
-          areAllFieldsFull={areAllFieldsFull}
-          onQuizDelete={deleteQuizHandler}
-          onQuizSave={quizSaveClickHandler}
-        />
-      )}
-    </div>
+    </>
   );
 };
 
