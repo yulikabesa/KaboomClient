@@ -1,8 +1,8 @@
 .product-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 3vh 2.5vw;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 30px;
+
   margin-top: 1vh;
   margin-bottom: 5vh;
 }
@@ -11,7 +11,9 @@
   opacity: 0;
   transform: translateY(40px);
   backface-visibility: hidden;
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
 }
 
 .active {
