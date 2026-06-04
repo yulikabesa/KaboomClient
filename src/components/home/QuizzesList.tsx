@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import classes from "./QuizzesList.module.css";
 import QuizDisplay from "./QuizDisplay";
-import defaultCover from "../../assets/defaultCoverPhoto.png";
 import type { quizType } from "../../types/quiz";
 
 const QuizzesList: React.FC<{
@@ -38,29 +37,18 @@ const QuizzesList: React.FC<{
 
   return (
     <div ref={containerRef} className={classes["product-list"]}>
+      {!props.isLoading && props.quizzes.length === 0 && (
+        <QuizDisplay variant={"newQuiz"} />
+      )}
       {!props.isLoading
         ? props.quizzes.map((quiz, index) => (
             <div className={classes.reveal} key={index}>
-              <QuizDisplay
-                isLoading={false}
-                quiz={quiz}
-              />
+              <QuizDisplay variant={"quiz"} quiz={quiz} />
             </div>
           ))
         : Array.from({ length: 5 }, (_, i) => (
             <div key={i}>
-              <QuizDisplay
-                isLoading={true}
-                quiz={{
-                  coverImage: defaultCover,
-                  owner: "",
-                  title: "",
-                  questions: [],
-                  sharedWith: [],
-                  tags: [],
-                  _id: "",
-                }}
-              />
+              <QuizDisplay variant={"loading"} />
             </div>
           ))}
     </div>

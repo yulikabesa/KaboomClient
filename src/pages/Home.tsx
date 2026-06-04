@@ -64,6 +64,7 @@ const Home = () => {
               עם עשרות התבניות של קבום – כל אחד יכול להכין שיעור במהירות.
             </p>
           </div>
+          {/* <div className={classes["question-marks-div"]} /> */}
           <p className={classes["sub-title"]}>תוצרים שיצרתי</p>
           <QuizzesList isLoading={isLoading} quizzes={createdProducts} />
           <p className={classes["sub-title"]}>התוצרים ששותפו איתי</p>

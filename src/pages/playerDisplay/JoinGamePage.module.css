@@ -7,18 +7,19 @@
     background-position: center;
     background-attachment: fixed;
     overflow-y: hidden;
+    display: grid;
+    grid-template-rows: 1fr auto 1fr;
 }
 
 .parent-div {
-    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: fit-content;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    grid-row: 2;
+    justify-self: center;
+    align-self: center;
     gap: 4px;
 }
 
@@ -58,12 +59,11 @@
 }
 
 .info {
-    position: absolute;
-    bottom: 0.5rem;
     text-align: center;
     color: white;
-    left: 50%;
-    transform: translateX(-50%);
+    grid-row: 3;
+    align-self: end;
+    margin-bottom: 0.5rem;
 }
 
 .info-text, .credit-text {

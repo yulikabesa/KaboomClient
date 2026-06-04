@@ -29,9 +29,16 @@
 
 .top-banner {
   width: 100%;
+
   /* aspect-ratio: 40 / 5; */
   background-image: url("../../src/assets/questionMarksBackground.png");
   background-size: cover;
+
+  /* .question-marks-div */
+
+  /* aspect-ratio: 50 / 7;
+  background-image: url("../../src/assets/questionMarksDiv.png");
+  background-size: contain; */
   background-position: center;
   background-repeat: no-repeat;
   text-align: center;

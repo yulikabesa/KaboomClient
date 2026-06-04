@@ -11,8 +11,8 @@ import defaultCover from "../../assets/defaultCoverPhoto.png";
 import { useAuth } from "../../store/AuthContext";
 
 const QuizDisplay: React.FC<{
-  isLoading: boolean;
-  quiz: quizType;
+  variant: "loading" | "quiz" | "newQuiz";
+  quiz?: quizType;
 }> = (props) => {
   const navigate = useNavigate();
   const { setLobby } = useLobby();
@@ -36,7 +36,7 @@ const QuizDisplay: React.FC<{
     // Emit event to create game
     socket.emit("game-event", {
       type: "create-game-session",
-      payload: { quizId: props.quiz._id },
+      payload: { quizId: props.quiz?._id },
     });
 
     // Listen for the game-created event only once
@@ -45,7 +45,7 @@ const QuizDisplay: React.FC<{
       setLobby({
         gamePin: pin,
         players: [],
-        quizId: props.quiz._id ?? "",
+        quizId: props.quiz?._id ?? "",
       });
       navigate("/lobby");
     });
@@ -59,9 +59,10 @@ const QuizDisplay: React.FC<{
   const onEditClick = () => {
     navigate("/create", { state: props.quiz });
   };
+
   return (
     <div className={classes.container}>
-      {props.isLoading ? (
+      {props.variant === "loading" && (
         <>
           <div className={classes.img}>
             <p
@@ -75,16 +76,17 @@ const QuizDisplay: React.FC<{
             className={`${classes["product-course-loading"]} ${classes["skeleton"]}`}
           />
         </>
-      ) : (
+      )}
+      {props.variant === "quiz" && (
         <>
           <div
             className={classes.testImg}
             style={{
-              backgroundImage: `url(${props.quiz.coverImage === "" ? defaultCover : props.quiz.coverImage})`,
+              backgroundImage: `url(${props.quiz?.coverImage === "" ? defaultCover : props.quiz?.coverImage})`,
             }}
           >
             <p className={classes["question-num"]}>
-              {props.quiz.questions?.length ?? 0} שאלות
+              {props.quiz?.questions?.length ?? 0} שאלות
             </p>
             <div className={classes.hoverOverlay}>
               <div
@@ -111,15 +113,16 @@ const QuizDisplay: React.FC<{
             </div>
           </div>
           <div className={classes["product-title"]}>
-            {props.quiz.title ?? ""}
+            {props.quiz?.title ?? ""}
           </div>
           <div className={classes["product-course"]}>
-            {props.quiz.tags.length === 1
-              ? props.quiz.tags[0]
-              : props.quiz.tags.join(", ")}
+            {props.quiz?.tags.length === 1
+              ? props.quiz?.tags[0]
+              : props.quiz?.tags?.join(", ")}
           </div>
         </>
       )}
+      {props.variant === "newQuiz" && <>{/* here the new varient */}</>}
     </div>
   );
 };
