@@ -18,11 +18,7 @@
   height: 100px;
   pointer-events: none;
 
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(0, 0, 0, 0.6)
-  );
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.6));
 }
 
 .container {
@@ -31,20 +27,22 @@
   width: 86vw;
 }
 
-.question-marks-div {
-  text-align: center;
-  margin-top: 4vh;
+.top-banner {
   width: 100%;
-  aspect-ratio: 50 / 7;
+  /* aspect-ratio: 40 / 5; */
   background-image: url("../../src/assets/questionMarksBackground.png");
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  text-align: center;
   border-radius: 3px;
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 0.5vmax;
+  padding: 2%;
+  box-sizing: border-box;
 }
 
 .tilted-title {

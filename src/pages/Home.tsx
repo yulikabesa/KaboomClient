@@ -58,7 +58,7 @@ const Home = () => {
     <>
       <div className={classes.background}>
         <div className={classes.container}>
-          <div className={classes["question-marks-div"]}>
+          <div className={classes["top-banner"]}>
             <p className={classes["tilted-title"]}>נתקעת בלי שיעור?</p>
             <p className={classes["sub-title"]}>
               עם עשרות התבניות של קבום – כל אחד יכול להכין שיעור במהירות.
