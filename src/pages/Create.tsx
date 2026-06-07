@@ -59,7 +59,7 @@ const Create: React.FC<{}> = () => {
   );
   const [tags, setTags] = useState<string[]>(data?.tags ?? []);
   const [coverImage, setCoverImage] = useState<questionImageType>({
-    image: "",
+    image: data?.coverImage ?? "",
     src: "",
     crop: { x: 0, y: 0 },
     zoom: 1,
@@ -147,7 +147,8 @@ const Create: React.FC<{}> = () => {
       }),
     );
     const quiz = {
-      coverImage: "",
+      // coverImage: coverImage?.image ?? "",
+      coverImage: "", // todo change to coverImage.image when fixing image type in database with s3
       title: quizName,
       questions: cleanedQuestions,
       sharedWith,
