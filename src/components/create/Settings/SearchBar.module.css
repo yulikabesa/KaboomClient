@@ -29,7 +29,6 @@
   padding: 0;
   list-style: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  z-index: 1000;
   max-height: 130px;
   overflow-y: auto;
 }

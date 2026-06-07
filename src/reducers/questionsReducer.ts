@@ -29,7 +29,7 @@ export const createEmptyQuestion = (): questionType => ({
   _id: crypto.randomUUID(),
   questionText: "",
   answerOptions: ["", ""],
-  correctIndexes: [0],
+  correctIndexes: [],
   timeLimit: 20,
   scoringWeight: 1,
   questionImage: {

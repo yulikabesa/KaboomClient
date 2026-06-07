@@ -3,7 +3,7 @@ import Button from "../../UI/Button";
 import ImageCropper from "./ImageCropper";
 import getCroppedImg from "../../../utils/cropImage";
 import type { Area, Point } from "react-easy-crop";
-import type { questionImageType } from "../../home/ProductsList";
+import type { questionImageType } from "../../../types/quiz";
 import classes from "./ImageInput.module.css";
 
 interface ImageInputProps {
