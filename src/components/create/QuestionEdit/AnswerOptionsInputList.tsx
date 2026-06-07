@@ -111,6 +111,7 @@ const AnswerOptionsInputList: React.FC<Props> = ({
                 value={answerTexts[i] ?? ""}
                 disabled={isDisabledAnswerOption}
                 onChange={(e) => onAnswerTextChange(i, e.target.value)}
+                autoComplete="off"
               />
             </div>
           </div>
