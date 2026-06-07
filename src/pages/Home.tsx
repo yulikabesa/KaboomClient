@@ -30,7 +30,13 @@ const Home = () => {
               zoom: 1,
               croppedAreaPixels: null,
             }
-          : undefined,
+          : {
+              image: "",
+              src: "",
+              crop: { x: 0, y: 0 },
+              zoom: 1,
+              croppedAreaPixels: null,
+            },
       })),
     }));
 
@@ -44,6 +50,7 @@ const Home = () => {
           getSharedQuizzes(userId),
         ]);
         setCreatedProducts(normalizeQuizzes(createdRes));
+        console.log(normalizeQuizzes(createdRes));
         setSharedProducts(normalizeQuizzes(sharedRes));
       } catch (error) {
         console.error("Error fetching quizzes:", error);
