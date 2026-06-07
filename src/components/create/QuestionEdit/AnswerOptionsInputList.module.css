@@ -21,11 +21,11 @@
   background-color: var(--bg-color);
   transition: background-color 0.2s ease;
   display: flex;
-  justify-content: space-between; /* 👈 splits left and right */
+  justify-content: space-between; /* splits left and right */
   align-items: center;
-  direction: ltr; /* keep layout predictable */
+  direction: ltr;
   color: white;
-  padding: 0 2vh;
+  padding: 2vh;
   border-radius: 2px;
 }
 .answer-option:hover {
@@ -34,8 +34,8 @@
 }
 
 .answer-option svg {
-  width: 2vw; /* reduce width */
-  height: 2vw; /* reduce height to match */
+  height: 70%;
+  aspect-ratio: 1;
 }
 /* text inside projector option */
 .answerText {
@@ -66,8 +66,8 @@
 
 /* result icon on the LEFT */
 .resultSign {
-  width: 3vh;
   height: 3vh;
+  aspect-ratio: 1;
   border: 3px solid white;
   border-radius: 50%;
   position: absolute;
