@@ -122,7 +122,20 @@ const QuizDisplay: React.FC<{
           </div>
         </>
       )}
-      {props.variant === "newQuiz" && <>{/* here the new varient */}</>}
+      {props.variant === "newQuiz" && (
+        <button
+          className={classes["add-quiz"]}
+          onClick={() => {
+            navigate("/create");
+          }}
+        >
+          <div className={classes["add-quiz-content"]}>
+            <p>נראה שלא יצרת שאלון</p>
+            <div className={classes["add-quiz-icon"]} />
+            <p>אולי עכשיו זה הזמן להתחיל</p>
+          </div>
+        </button>
+      )}
     </div>
   );
 };
