@@ -3,6 +3,7 @@ import Podium from "../projector/Podium";
 import classes from "./GameFinalResults.module.css";
 import confetti from "canvas-confetti";
 import { useNavigate } from "react-router-dom";
+import Button from "../UI/Button";
 
 type result = {
   nickname: string;
@@ -37,12 +38,13 @@ const GameFinalResults: React.FC<{
   return (
     <>
       <div className={classes["score-title"]}>ניקוד</div>
-      <div
-        className={classes["btn"]}
+      <Button
+        variant="white"
+        className={classes["new-game-btn"]}
         onClick={() => navigate("/home", { replace: true })}
       >
         משחק חדש
-      </div>
+      </Button>
       <div className={classes["container"]}>
         {props.results.length >= 3 && (
           <Podium

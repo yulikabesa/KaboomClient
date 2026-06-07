@@ -21,25 +21,14 @@
   font-weight: 700;
   max-width: 60vw;
   text-align: center;
-  padding: 1vh;
+  padding: 0.8%;
   border-radius: 4px;
   font-size: var(--fs-h5);
 }
 
-.shorten-time-btn {
-  background-color: white;
-  text-align: center;
-  font-weight: 700;
-  padding: 1vh 2vh;
-  border-radius: 4px;
-  width: fit-content;
-  height: fit-content;
+.top-btn {
   position: absolute;
   inset-inline-end: 4vh;
-}
-
-.shorten-time-btn:hover {
-  cursor: pointer;
 }
 
 .wrapper {

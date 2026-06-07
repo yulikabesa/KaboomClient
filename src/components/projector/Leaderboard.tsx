@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./Leaderboard.module.css";
 import { useSocket } from "../../store/SocketContext";
+import Button from "../UI/Button";
 
 // דוגמא לשימוש:
 {
@@ -35,9 +36,13 @@ const Leaderboard: React.FC<{ rankingArray: Rank[] }> = (props) => {
   return (
     <>
       <div className={classes["score-title"]}>ניקוד</div>
-      <div className={classes["btn"]} onClick={moveToNextQuestion}>
+      <Button
+        variant="white"
+        className={classes["btn"]}
+        onClick={moveToNextQuestion}
+      >
         הבא
-      </div>
+      </Button>
       <div className={classes["Leaderboard-container"]}>
         {props.rankingArray.map((item, index) => (
           <div key={index} className={classes["Leaderboard-line"]}>

@@ -5,6 +5,7 @@ import classes from "./GameQuestion.module.css";
 import BarIndicatorsList from "../projector/BarIndicatorsList";
 import { useSocket } from "../../store/SocketContext";
 import DoubleScore from "../projector/DoubleScore";
+import Button from "../UI/Button";
 
 const GameQuestion: React.FC<{
   question: string;
@@ -44,16 +45,21 @@ const GameQuestion: React.FC<{
       <div className={classes["top-container"]}>
         <div className={classes["question"]}>{props.question}</div>
         {props.showAnswer ? (
-          <div
-            className={classes["shorten-time-btn"]}
+          <Button
+            variant="white"
+            className={classes["top-btn"]}
             onClick={moveToLeaderboard}
           >
             הבא
-          </div>
+          </Button>
         ) : (
-          <div className={classes["shorten-time-btn"]} onClick={onClickHandler}>
+          <Button
+            variant="white"
+            className={classes["top-btn"]}
+            onClick={onClickHandler}
+          >
             קיצור זמנים
-          </div>
+          </Button>
         )}
       </div>
       {props.showAnswer ? (

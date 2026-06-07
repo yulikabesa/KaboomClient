@@ -1,8 +1,9 @@
-import classes from "./JoinGamePage.module.css";
-import kaboomLogo from "../../assets/kaboomLogo.png";
 import React, { useState } from "react";
+import kaboomLogo from "../../assets/kaboomLogo.png";
 import { useSocket } from "../../store/SocketContext";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/UI/Button";
+import classes from "./JoinGamePage.module.css";
 
 const JoinGamePage: React.FC = () => {
   const [pin, setPin] = useState("");
@@ -23,7 +24,7 @@ const JoinGamePage: React.FC = () => {
     setError("");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
 
     // PIN validation
@@ -104,9 +105,13 @@ const JoinGamePage: React.FC = () => {
                 onChange={handlePinChange}
                 className={classes["pin-input"]}
               />
-              <button type="submit" className={classes["join-button"]}>
+              <Button
+                variant="black"
+                type="submit"
+                className={classes["join-game-button"]}
+              >
                 כנס
-              </button>
+              </Button>
             </>
           ) : (
             <>
@@ -117,9 +122,9 @@ const JoinGamePage: React.FC = () => {
                 onChange={handleNicknameChange}
                 className={classes["pin-input"]}
               />
-              <button type="submit" className={classes["join-button"]}>
+              <Button variant="black" type="submit" className={classes["join-game-button"]}>
                 אחלה, מתחברים!
-              </button>
+              </Button>
             </>
           )}
           {error && <p className={classes["error-text"]}>{error}</p>}
