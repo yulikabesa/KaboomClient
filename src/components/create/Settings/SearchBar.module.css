@@ -19,6 +19,7 @@
 .results-list {
   /* position: absolute; */
   /* top: 110%; */
+  pointer-events: auto;
   /* left: 0; */
   width: 100%;
   background: white;

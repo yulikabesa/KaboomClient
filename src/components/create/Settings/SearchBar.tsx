@@ -31,12 +31,14 @@ const SearchBar = <T,>(props: SearchBarProps<T>) => {
   // Close results when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
       if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
+        containerRef.current?.contains(target) ||
+        dropdownRef.current?.contains(target)
       ) {
-        setResults([]);
+        return;
       }
+      setResults([]);
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
