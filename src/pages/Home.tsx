@@ -50,7 +50,6 @@ const Home = () => {
           getSharedQuizzes(userId),
         ]);
         setCreatedProducts(normalizeQuizzes(createdRes));
-        console.log(normalizeQuizzes(createdRes));
         setSharedProducts(normalizeQuizzes(sharedRes));
       } catch (error) {
         console.error("Error fetching quizzes:", error);

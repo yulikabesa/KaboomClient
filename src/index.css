@@ -60,3 +60,10 @@ body {
   font-weight: 600;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "Anomaila AAA bold";
+  src: url("./fonts/Anomalia.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}

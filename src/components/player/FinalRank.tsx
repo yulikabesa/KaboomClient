@@ -3,12 +3,12 @@ import classes from "./FinalRank.module.css";
 import gold from "../../assets/gold.svg";
 import silver from "../../assets/silver.svg";
 import bronze from "../../assets/bronze.svg";
-import forth from "../../assets/4th.svg";
+import rankPlace from "../../assets/rankPlace.svg";
 
 const FinalRank: React.FC<{ currentRank: number; points: number }> = (
   props,
 ) => {
-  const rankImgArray = [gold, silver, bronze, forth];
+  const rankImgArray = [gold, silver, bronze];
 
   useEffect(() => {
     localStorage.removeItem("kaboom-pin-recovery");
@@ -17,11 +17,16 @@ const FinalRank: React.FC<{ currentRank: number; points: number }> = (
 
   return (
     <div className={classes["container"]}>
-      {props.currentRank <= 4 && (
+      {props.currentRank <= 3 ? (
         <img
           className={classes["rank-img"]}
           src={rankImgArray[props.currentRank - 1]}
         />
+      ) : (
+        <div className={classes["rank-wrapper"]}>
+          <img className={classes["rank-img"]} src={rankPlace} />
+          <p className={classes["rank-num"]}>{props.currentRank}</p>
+        </div>
       )}
       <div className={classes["rank-place"]}>
         <span className={classes["hyphen"]}> ---- </span>
