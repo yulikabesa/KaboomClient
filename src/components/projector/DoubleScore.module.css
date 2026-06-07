@@ -24,6 +24,6 @@
 .scoring-text {
   transform: rotate(-11.78deg);
   line-height: 0.9;
-  -webkit-text-stroke: 10px rgb(240, 240, 240);
+  -webkit-text-stroke: 0.2em rgb(240, 240, 240);
   paint-order: stroke fill;
 }
