@@ -17,9 +17,9 @@
 }
 
 .results-list {
-  position: absolute;
-  top: 110%;
-  left: 0;
+  /* position: absolute; */
+  /* top: 110%; */
+  /* left: 0; */
   width: 100%;
   background: white;
   border: solid 2px #afb2af;
