@@ -10,7 +10,7 @@ const Home = () => {
   // todo get products from server
   const [createdProducts, setCreatedProducts] = useState<quizType[]>([]);
   const [sharedProducts, setSharedProducts] = useState<quizType[]>([]);
-  const [myCourseProducts, setMyCourseProducts] = useState<quizType[]>([]);
+  // const [myCourseProducts, setMyCourseProducts] = useState<quizType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const { user } = useAuth();
@@ -69,9 +69,9 @@ const Home = () => {
           <QuizzesList isLoading={isLoading} quizzes={createdProducts} />
           <p className={classes["sub-title"]}>התוצרים ששותפו איתי</p>
           <QuizzesList isLoading={isLoading} quizzes={sharedProducts} />
-          <p className={classes["sub-title"]}>תוצרים של הקורס שלי</p>
-          <QuizzesList isLoading={isLoading} quizzes={myCourseProducts} />
-          {/* todo change products to receive from server */}
+          {/* <p className={classes["sub-title"]}>תוצרים של הקורס שלי</p> */}
+          {/* <QuizzesList isLoading={isLoading} quizzes={myCourseProducts} /> */}
+          {/* todo decide what to do about courses quizzes */}
         </div>
       </div>
       <NavigationMenu variant="home" />
