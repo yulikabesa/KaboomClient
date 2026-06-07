@@ -31,15 +31,9 @@
 .top-banner {
   width: 100%;
 
-  /* aspect-ratio: 40 / 5; */
   background-image: url("../../src/assets/questionMarksBackground.png");
   background-size: cover;
 
-  /* .question-marks-div */
-
-  /* aspect-ratio: 50 / 7;
-  background-image: url("../../src/assets/questionMarksDiv.png");
-  background-size: contain; */
   background-position: center;
   background-repeat: no-repeat;
   text-align: center;
@@ -49,18 +43,18 @@
   flex-direction: column;
   justify-content: center;
   gap: 0.5vmax;
-  padding: 2%;
+  padding: 1.5rem;
   box-sizing: border-box;
 }
 
 .tilted-title {
   font-weight: 900;
-  font-size: clamp(18px, 2vmax, 26px);
+  font-size: var(--fs-h4);
   transform: rotate(4deg);
 }
 
 .sub-title {
   font-weight: 700;
-  font-size: clamp(16px, 1.2vmax, 20px);
+  font-size: var(--fs-body);
   margin-top: 0.5vh;
 }
