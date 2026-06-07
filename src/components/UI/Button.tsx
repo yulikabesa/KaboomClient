@@ -5,8 +5,9 @@ import classes from "./Button.module.css";
 interface ButtonProps extends PropsWithChildren {
   onClick?: any;
   className?: string;
-  variant?: "blue" | "white" | "red";
+  variant?: "blue" | "white" | "red" | "black";
   to?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
@@ -18,7 +19,9 @@ const Button: React.FC<ButtonProps> = (props) => {
       {props.children}
     </Link>
   ) : (
-    <button onClick={props.onClick}
+    <button
+      onClick={props.onClick}
+      type={props.type}
       className={`${classes["btn"]} ${props.variant ? classes[`${props.variant}-btn`] : ""} ${props.className ? props.className : ""}`}
     >
       {props.children}

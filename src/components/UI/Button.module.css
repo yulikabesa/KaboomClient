@@ -1,6 +1,7 @@
 .btn {
   all: unset;
   text-decoration: none;
+  text-align: center;
   cursor: pointer;
   display: inline-block;
   font-weight: bold;
@@ -34,4 +35,10 @@
   color: white;
   background-color: #730000;
   box-shadow: 0 3px 0 0 #400000;
+}
+
+.black-btn {
+  color: white;
+  background-color: #333333;
+  box-shadow: 0 3px 0 0 black;
 }
