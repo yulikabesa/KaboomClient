@@ -1,5 +1,8 @@
 .container {
-    display: flex;
-    gap: 3vw;
-    direction: ltr;
+  display: flex;
+  gap: 3vw;
+  direction: ltr;
+  height: 100%;
+  max-height: 200px;
+  min-height: 50px;
 }

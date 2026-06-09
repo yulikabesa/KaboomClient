@@ -1,8 +1,6 @@
 import classes from "./GameLobby.module.css";
 import kaboomLogo from "../../assets/kaboomLogo.png";
-import personIcon from "../../assets/personIcon.png";
-import rightWhiteTextBackground from "../../assets/rightWhiteTextBackground.png";
-import leftWhiteTextBackground from "../../assets/leftWhiteTextBackground.png";
+import personIcon from "../../assets/personIcon.svg";
 import { useLobby } from "../../store/LobbyContext";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -48,11 +46,6 @@ const GameLobby: React.FC = () => {
     <div className={`${classes["page"]} ${classes["background"]}`}>
       <div className={classes["top-info"]}>
         <div className={classes["right-rectangle"]}>
-          <img
-            src={rightWhiteTextBackground}
-            className={classes["image-container"]}
-            // alt="kaboom logo"
-          />
           <div className={classes["pin-text-overlay"]}>
             <p className={classes["pin-text"]}>קוד משחק:</p>
             <p className={classes["pin"]}>
@@ -61,11 +54,6 @@ const GameLobby: React.FC = () => {
           </div>
         </div>
         <div className={classes["left-rectangle"]}>
-          <img
-            src={leftWhiteTextBackground}
-            className={classes["image-container"]}
-            // alt="kaboom logo"
-          />
           <div className={classes["text-overlay"]}>
             חפשו <span className={classes["bold"]}>KABOOM</span> או
             <br /> כנסו מה - <span className={classes["bold"]}>MOOC</span>

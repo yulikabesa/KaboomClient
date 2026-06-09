@@ -8,11 +8,11 @@
 
 .top-container {
   display: flex;
-  width: 100vw;
+  width: 100%;
   justify-content: center;
   position: relative;
-  padding: 4vh;
   box-sizing: border-box;
+  padding: 2%;
 }
 
 .question {
@@ -28,7 +28,7 @@
 
 .top-btn {
   position: absolute;
-  inset-inline-end: 4vh;
+  left: 2%;
 }
 
 .wrapper {
@@ -75,8 +75,11 @@
 .bar-indicators-wrapper {
   display: flex;
   width: 100vw;
+  flex-grow: 1;
   justify-content: center;
-  padding: 4vh 3vh 0 3vh;
+  align-items: flex-end;
+  align-items: center;
+  padding: 4vh 3vh;
   box-sizing: border-box;
 }
 
