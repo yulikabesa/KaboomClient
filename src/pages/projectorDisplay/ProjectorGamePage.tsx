@@ -12,16 +12,16 @@ const ProjectorGamePage = () => {
 
   const [status, setStatus] = useState("loading");
   const [question, setQuestion] = useState("");
-  const [scoringWeight, setScoringWeight] = useState(
-    1,
-  );
+  const [scoringWeight, setScoringWeight] = useState(1);
+  const [currentQuestion, setCurrentQuestion] = useState(1);
+  const [questionCount, setQuestionCount] = useState(1);
   const [answerTexts, setAnswerTexts] = useState<string[]>([]);
   const [questionImage, setQuestionImage] = useState("");
 
   const [playerAnsweredNum, SetPlayerAnsweredNum] = useState(0);
   const [duration, setDuration] = useState(20);
   const [timeLeft, setTimeLeft] = useState(20);
-  const showResults = timeLeft === 0;
+  const showResults = status === "results";
 
   const [correctAnswerIndex, SetCorrectAnswerIndex] = useState(0);
   const [answerDistributionArrray, setAnswerDistributionArrray] = useState([
@@ -40,6 +40,8 @@ const ProjectorGamePage = () => {
         case "question":
           setQuestion(state.data?.questionText ?? "");
           setScoringWeight(state.data?.scoringWeight ?? 1);
+          setCurrentQuestion(state.data?.currentQuestion + 1);
+          setQuestionCount(state.data?.questionCount ?? 1);
           break;
         case "answers":
           setAnswerTexts(state.data?.answerOptions ?? []);
@@ -56,7 +58,7 @@ const ProjectorGamePage = () => {
           break;
 
         case "results":
-          setQuestion(state.data?.questionText ?? ""); 
+          setQuestion(state.data?.questionText ?? "");
           setAnswerTexts(state.data?.answerOptions ?? []);
           setAnswerDistributionArrray(state.data?.distribution ?? []);
           SetCorrectAnswerIndex(state.data?.correctAnswers?.[0]);
@@ -112,13 +114,13 @@ const ProjectorGamePage = () => {
   }, []);
 
   return (
-    <div className={classes.background} >
+    <div className={classes.background}>
       {status === "loading" && <Loading />}
       {status === "question" && (
         <Question
           question={question}
-          currentQuestion={1} // todo get from server
-          questionCount={2} // todo get from server
+          currentQuestion={currentQuestion} // todo get from server
+          questionCount={questionCount} // todo get from server
           duration={INTRO_DURATION}
           scoringWeight={scoringWeight}
         />
