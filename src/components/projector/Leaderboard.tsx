@@ -36,13 +36,14 @@ const Leaderboard: React.FC<{ rankingArray: Rank[] }> = (props) => {
   return (
     <>
       <div className={classes["score-title"]}>ניקוד</div>
-      <Button
-        variant="white"
-        className={classes["btn"]}
-        onClick={moveToNextQuestion}
-      >
-        הבא
-      </Button>
+      <div className={classes["actions"]}>
+        <Button
+          variant="white"
+          onClick={moveToNextQuestion}
+        >
+          הבא
+        </Button>
+      </div>
       <div className={classes["Leaderboard-container"]}>
         {props.rankingArray.map((item, index) => (
           <div key={index} className={classes["Leaderboard-line"]}>

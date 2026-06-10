@@ -43,7 +43,7 @@
 /* projector option */
 .answer-option.projector {
     display: flex;
-    justify-content: space-between; /* 👈 splits left and right */
+    justify-content: space-between; /* splits left and right */
     align-items: center;
     direction: ltr; /* keep layout predictable */
     color: white;
@@ -61,9 +61,11 @@
 }
 
 .answer-option.projector svg {
-    width: 2vw;
-    height: 2vw;
+    /* todo: fix */
+    height: 1rem;
+    aspect-ratio: 1;
 }
+
 /* text inside projector option */
 .answerText {
     font-weight: 700;

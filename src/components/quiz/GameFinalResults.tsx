@@ -38,13 +38,14 @@ const GameFinalResults: React.FC<{
   return (
     <>
       <div className={classes["score-title"]}>ניקוד</div>
-      <Button
-        variant="white"
-        className={classes["new-game-btn"]}
-        onClick={() => navigate("/home", { replace: true })}
-      >
-        משחק חדש
-      </Button>
+      <div className={classes["actions"]}>
+        <Button
+          variant="white"
+          onClick={() => navigate("/home", { replace: true })}
+        >
+          משחק חדש
+        </Button>
+      </div>
       <div className={classes["container"]}>
         {props.results.length >= 3 && (
           <Podium

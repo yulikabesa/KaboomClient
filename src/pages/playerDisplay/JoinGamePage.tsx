@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import kaboomLogo from "../../assets/kaboomLogo.png";
+import kaboomLogo from "../../assets/KaboomLogo.svg";
 import { useSocket } from "../../store/SocketContext";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/UI/Button";
@@ -93,9 +93,9 @@ const JoinGamePage: React.FC = () => {
 
   return (
     <div className={classes.background}>
-      <div className={classes["parent-div"]}>
-        <img src={kaboomLogo} alt="kaboom logo" />
-        <form className={classes["child-div"]} onSubmit={handleSubmit}>
+      <div className={classes["main"]}>
+        <img src={kaboomLogo} alt="kaboom-logo" />
+        <form className={classes["form"]} onSubmit={handleSubmit}>
           {!didSubmitPin ? (
             <>
               <input
@@ -130,14 +130,14 @@ const JoinGamePage: React.FC = () => {
           {error && <p className={classes["error-text"]}>{error}</p>}
         </form>
       </div>
-      <div className={classes["info"]}>
+      <footer className={classes["info"]}>
         <p className={classes["info-text"]}>
           צור את ה”קאבום” שלך בקלות דרך Kaboom.com/create
         </p>
         <p className={classes["credit-text"]}>
           זכויות שמורות לארטק מדור טכנולוגיות למידה
         </p>
-      </div>
+      </footer>
     </div>
   );
 };

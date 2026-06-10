@@ -39,11 +39,13 @@ const GameQuestion: React.FC<{
   };
   return (
     <div className={classes["flex"]}>
-      {props.scoringWeight === 2 && (
-        <DoubleScore className={classes["double-score"]} />
-      )}
       <div className={classes["top-container"]}>
-        <div className={classes["question"]}>{props.question}</div>
+        <div className={classes["question"]}>
+          {props.question}
+          {props.scoringWeight === 2 && (
+            <DoubleScore className={classes["double-score"]} />
+          )}
+        </div>
         {props.showAnswer ? (
           <Button
             variant="white"

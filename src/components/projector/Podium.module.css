@@ -18,8 +18,7 @@
 
 .name {
   color: white;
-  font-weight: 500;
-  font-size: 2vmax;
+  font-weight: 700;
   text-align: center;
   width: 10vw;
   min-width: 140px;
@@ -59,7 +58,6 @@
 .points {
   color: white;
   font-weight: 800;
-  font-size: 1.5vmax;
 }
 
 .rank {

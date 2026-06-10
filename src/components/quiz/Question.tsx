@@ -14,11 +14,11 @@ const Question: React.FC<{
       <div className={classes["question-count"]}>
         {props.currentQuestion} מתוך {props.questionCount}
       </div>
-      {props.scoringWeight === 2 && (
-        <DoubleScore className={classes["scoring-weight"]} />
-      )}
       <div className={classes["wrapper"]}>
         <div className={classes["content"]}>
+          {props.scoringWeight === 2 && (
+            <DoubleScore className={classes["scoring-weight"]} />
+          )}
           <p>{props.question}</p>
         </div>
       </div>

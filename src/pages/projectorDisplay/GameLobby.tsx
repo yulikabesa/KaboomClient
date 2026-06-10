@@ -1,5 +1,5 @@
 import classes from "./GameLobby.module.css";
-import kaboomLogo from "../../assets/kaboomLogo.png";
+import kaboomLogo from "../../assets/kaboomLogo.svg";
 import personIcon from "../../assets/personIcon.svg";
 import { useLobby } from "../../store/LobbyContext";
 import { Navigate, useNavigate } from "react-router-dom";

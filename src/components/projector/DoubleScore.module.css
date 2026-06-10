@@ -1,23 +1,18 @@
 .two-times-scoring {
-  position: absolute;
-  height: 100vh;
-  padding-right: 8vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   font-weight: 900;
   text-align: center;
-  /* margin-top: -37px; */
 }
 
 .two-times-text {
-  font-size: 3.5vmax;
+  font-size: var(--fs-h2);
   letter-spacing: -5px;
 }
 
 .scoring-text {
-  font-size: 2.5vmax;
+  font-size: var(--fs-h3);
 }
 
 .two-times-text,

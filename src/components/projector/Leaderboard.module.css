@@ -9,15 +9,10 @@
     box-sizing: border-box;
 }
 
-.btn {
-    display: block;
-    margin-top: 4vh;
-    margin-left: 4vh;
-    margin-right: auto;
-}
-
-.btn:hover {
-    cursor: pointer;
+.actions {
+  margin: 2%;
+  display: flex;
+  justify-content: end;
 }
 
 .Leaderboard-container {

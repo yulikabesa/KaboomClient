@@ -5,6 +5,7 @@
 }
 
 .content {
+  position: relative;
   width: 100%;
   background-color: rgb(240, 240, 240);
   color: #333333;
@@ -50,6 +51,8 @@
 }
 
 .scoring-weight {
-  margin-top: -37px;
-  justify-content: center;
+  position: absolute;
+  left: 90%;
+  top: 15%;
+  transform: translate(-50%, -50%);
 }

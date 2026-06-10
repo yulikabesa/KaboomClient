@@ -19,9 +19,10 @@
   overflow-y: hidden;
 }
 
-.new-game-btn {
-  display: block;
-  margin: 4vh auto 0 4vh;
+.actions {
+  margin: 2%;
+  display: flex;
+  justify-content: end;
 }
 
 .lower-places-container {
