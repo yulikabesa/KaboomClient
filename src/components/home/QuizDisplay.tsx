@@ -57,7 +57,7 @@ const QuizDisplay: React.FC<{
   };
 
   const onEditClick = () => {
-    navigate("/create", { state: props.quiz });
+    navigate(`/create/${props.quiz?._id}`);
   };
 
   return (

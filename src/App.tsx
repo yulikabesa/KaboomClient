@@ -35,6 +35,10 @@ const App = () => {
           element: <Home />,
         },
         {
+          path: "/create/:quizId",
+          element: <Create />,
+        },
+        {
           path: "/create",
           element: <Create />,
         },

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavigationMenu from "../components/menu/NavigationMenu";
 import QuestionSlideList from "../components/create/Slides/QuestionSlideList";
 import classes from "./Create.module.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   questionsReducer,
   createEmptyQuestion,
@@ -13,29 +13,49 @@ import type {
   questionImageType,
   sharedWithType,
 } from "../types/quiz";
-import { createQuiz, deleteQuiz, updateQuiz } from "../api/quizApi";
+import {
+  createQuiz,
+  deleteQuiz,
+  getQuizById,
+  updateQuiz,
+} from "../api/quizApi";
 import { useAuth } from "../store/AuthContext";
 import Button from "../components/UI/Button";
 import { useQuestionEditor } from "../hooks/useQuestionEditor";
 import QuestionEditor from "../components/create/QuestionEdit/QuestionEditor";
+import Loading from "../components/player/Loading";
 
 const Create: React.FC<{}> = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const userId = user?._id;
 
-  const location = useLocation();
-  const data: quizType = location.state;
+  const { quizId } = useParams();
+  const [quizData, setQuizData] = useState<quizType | null>(null);
+  const [loading, setLoading] = useState(!!quizId);
+
+  useEffect(() => {
+    if (!quizId) {
+      return;
+    }
+    const fetchQuiz = async () => {
+      try {
+        const quiz = await getQuizById(quizId);
+        setQuizData(quiz);
+      } catch (error) {
+        console.error(error);
+        navigate("/home");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchQuiz();
+  }, [quizId]);
 
   // states for questions and slides display
-  const initialQuestions =
-    Array.isArray(data?.questions) && data?.questions.length > 0
-      ? data?.questions
-      : [createEmptyQuestion()];
-  const [questions, dispatch] = React.useReducer(
-    questionsReducer,
-    initialQuestions,
-  );
+  const [questions, dispatch] = React.useReducer(questionsReducer, [
+    createEmptyQuestion(),
+  ]);
   const [currentQuestionBeingEdited, setCurrentQuestionBeingEdited] =
     useState(0);
   const currentQuestion = questions[currentQuestionBeingEdited];
@@ -53,18 +73,38 @@ const Create: React.FC<{}> = () => {
 
   // states for settings
   const [settingsDisplay, setSettingsDisplay] = useState(false);
-  const [quizName, setQuizName] = useState(data?.title ?? "");
-  const [sharedWith, setSharedWith] = useState<sharedWithType[]>(
-    data?.sharedWith ?? [],
-  );
-  const [tags, setTags] = useState<string[]>(data?.tags ?? []);
+  const [quizName, setQuizName] = useState("");
+  const [sharedWith, setSharedWith] = useState<sharedWithType[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
   const [coverImage, setCoverImage] = useState<questionImageType>({
-    image: data?.coverImage ?? "",
+    image: "",
     src: "",
     crop: { x: 0, y: 0 },
     zoom: 1,
     croppedAreaPixels: null,
   });
+
+  useEffect(() => {
+    if (!quizData) return;
+    dispatch({
+      type: "SET_QUESTIONS",
+      value:
+        quizData.questions?.length > 0
+          ? quizData.questions
+          : [createEmptyQuestion()],
+    });
+    setCurrentQuestionBeingEdited(0);
+    setQuizName(quizData.title ?? "");
+    setSharedWith(quizData.sharedWith ?? []);
+    setTags(quizData.tags ?? []);
+    setCoverImage({
+      image: quizData.coverImage ?? "",
+      src: "",
+      crop: { x: 0, y: 0 },
+      zoom: 1,
+      croppedAreaPixels: null,
+    });
+  }, [quizData]);
 
   // functions
   const handleQuestionBeingEditedChange = (index: number) => {
@@ -129,8 +169,8 @@ const Create: React.FC<{}> = () => {
 
   const deleteQuizHandler = async () => {
     try {
-      if (data?._id) {
-        const response = await deleteQuiz(data._id);
+      if (quizId) {
+        const response = await deleteQuiz(quizId);
         console.log(response);
       }
       navigate("/home");
@@ -155,8 +195,8 @@ const Create: React.FC<{}> = () => {
       tags,
     };
     try {
-      const response = data
-        ? await updateQuiz(data._id, quiz)
+      const response = quizId
+        ? await updateQuiz(quizId, quiz)
         : await createQuiz({ ...quiz, owner: userId ?? "" });
       console.log(response);
     } catch (error) {
@@ -165,6 +205,10 @@ const Create: React.FC<{}> = () => {
       navigate("/home");
     }
   };
+
+  if (loading) {
+    return <div className={classes.background}><Loading /></div>;
+  }
 
   return (
     <>
