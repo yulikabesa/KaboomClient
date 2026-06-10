@@ -8,11 +8,7 @@ import {
   createEmptyQuestion,
 } from "../reducers/questionsReducer";
 import Settings from "../components/create/Settings/Settings";
-import type {
-  quizType,
-  questionImageType,
-  sharedWithType,
-} from "../types/quiz";
+import type { questionImageType, sharedWithType } from "../types/quiz";
 import {
   createQuiz,
   deleteQuiz,
@@ -31,17 +27,35 @@ const Create: React.FC<{}> = () => {
   const userId = user?._id;
 
   const { quizId } = useParams();
-  const [quizData, setQuizData] = useState<quizType | null>(null);
   const [loading, setLoading] = useState(!!quizId);
 
   useEffect(() => {
     if (!quizId) {
+      setLoading(false);
       return;
     }
+
     const fetchQuiz = async () => {
       try {
         const quiz = await getQuizById(quizId);
-        setQuizData(quiz);
+        dispatch({
+          type: "SET_QUESTIONS",
+          value:
+            quiz.questions?.length > 0
+              ? quiz.questions
+              : [createEmptyQuestion()],
+        });
+        setCurrentQuestionBeingEdited(0);
+        setQuizName(quiz.title ?? "");
+        setSharedWith(quiz.sharedWith ?? []);
+        setTags(quiz.tags ?? []);
+        setCoverImage({
+          image: quiz.coverImage ?? "",
+          src: "",
+          crop: { x: 0, y: 0 },
+          zoom: 1,
+          croppedAreaPixels: null,
+        });
       } catch (error) {
         console.error(error);
         navigate("/home");
@@ -50,7 +64,7 @@ const Create: React.FC<{}> = () => {
       }
     };
     fetchQuiz();
-  }, [quizId]);
+  }, [quizId, navigate]);
 
   // states for questions and slides display
   const [questions, dispatch] = React.useReducer(questionsReducer, [
@@ -83,28 +97,6 @@ const Create: React.FC<{}> = () => {
     zoom: 1,
     croppedAreaPixels: null,
   });
-
-  useEffect(() => {
-    if (!quizData) return;
-    dispatch({
-      type: "SET_QUESTIONS",
-      value:
-        quizData.questions?.length > 0
-          ? quizData.questions
-          : [createEmptyQuestion()],
-    });
-    setCurrentQuestionBeingEdited(0);
-    setQuizName(quizData.title ?? "");
-    setSharedWith(quizData.sharedWith ?? []);
-    setTags(quizData.tags ?? []);
-    setCoverImage({
-      image: quizData.coverImage ?? "",
-      src: "",
-      crop: { x: 0, y: 0 },
-      zoom: 1,
-      croppedAreaPixels: null,
-    });
-  }, [quizData]);
 
   // functions
   const handleQuestionBeingEditedChange = (index: number) => {
@@ -207,7 +199,11 @@ const Create: React.FC<{}> = () => {
   };
 
   if (loading) {
-    return <div className={classes.background}><Loading /></div>;
+    return (
+      <div className={classes.background}>
+        <Loading />
+      </div>
+    );
   }
 
   return (
