@@ -3,10 +3,10 @@ import correctSymbol from '../../assets/correct.svg';
 import mistakeSymbol from '../../assets/mistake.svg';
 import classes from './AnswerFeedback.module.css';
 
-const AnswerFeedback: React.FC<{ wasCorrect: boolean; currentRank: number | null }> = (props) => {
-    const title = props.wasCorrect ? 'תשובה נכונה' : 'תשובה לא נכונה';
-    const symbol = props.wasCorrect ? correctSymbol : mistakeSymbol;
-    const divClass = props.wasCorrect ? classes.correct : classes.mistaken;
+const AnswerFeedback: React.FC<{ isCorrect: boolean; currentRank: number | null }> = (props) => {
+    const title = props.isCorrect ? 'תשובה נכונה' : 'תשובה לא נכונה';
+    const symbol = props.isCorrect ? correctSymbol : mistakeSymbol;
+    const divClass = props.isCorrect ? classes.correct : classes.mistaken;
 
     return (
         <div className={classes.centering}>

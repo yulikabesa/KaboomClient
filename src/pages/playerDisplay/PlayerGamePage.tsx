@@ -14,12 +14,12 @@ type GameStatus =
   | "question"
   | "answers"
   | "loading"
-  | "correct"
-  | "wrong"
+  | "answerFeedback"
   | "podium";
 
 const PlayerGamePage = () => {
   const [status, setStatus] = useState<GameStatus>("loading");
+  const [isCorrect, setIsCorrect] = useState(false);
   const [answersCount, setAnswersCount] = useState(0);
   const [points, setPoints] = useState(0);
   const [currentRank, setCurrentRank] = useState(0);
@@ -44,29 +44,26 @@ const PlayerGamePage = () => {
           if (state.data.hasAnswered) setStatus("loading");
           else {
             setAnswersCount(state.data.answerOptions.length);
-            setStatus(state.phase as GameStatus);
+            setStatus(state.phase);
           }
           break;
         case "results":
         case "leaderboard":
-          if (state.data.isCorrect) {
-            setStatus("correct");
-          } else {
-            setStatus("wrong");
-          }
+          setStatus("answerFeedback");
+          setIsCorrect(state.data.isCorrect);
           setCurrentRank(state.data?.currentRank ?? null);
-          // setPoints(state.data.points);
           break;
         case "podium":
           setCurrentRank(state.data?.currentRank ?? null);
           setPoints(state.data.score ?? 0);
-          setStatus("podium");
+          setStatus(state.phase);
           break;
         default:
           setStatus(state.phase as GameStatus);
           break;
       }
-      if (state.data?.score){
+
+      if (state.data?.score) {
         setPoints(state.data.score);
       }
     };
@@ -86,31 +83,28 @@ const PlayerGamePage = () => {
     });
   }, []);
 
+  const statusElement = {
+    lobby: (
+      <WaitingForHost nickname={localStorage.getItem("nickname") || "Guest"} />
+    ),
+    answers: (
+      <AnswerOptions
+        viewMode="player"
+        answersCount={answersCount}
+        onAnswerClick={handleAnswerClick}
+      />
+    ),
+    question: <CountDown initialSeconds={5} />,
+    loading: <Loading />,
+    answerFeedback: (
+      <AnswerFeedback isCorrect={isCorrect} currentRank={currentRank} />
+    ),
+    podium: <FinalRank currentRank={currentRank} points={points} />,
+  };
+
   return (
     <div className={classes.background}>
-      {status === "lobby" && (
-        <WaitingForHost
-          nickname={localStorage.getItem("nickname") || "Guest"}
-        />
-      )}
-      {status === "answers" && (
-        <AnswerOptions
-          viewMode="player"
-          answersCount={answersCount}
-          onAnswerClick={handleAnswerClick}
-        />
-      )}
-      {status === "question" && <CountDown initialSeconds={5} />}
-      {status === "loading" && <Loading />}
-      {status === "correct" && (
-        <AnswerFeedback wasCorrect={true} currentRank={currentRank} />
-      )}
-      {status === "wrong" && (
-        <AnswerFeedback wasCorrect={false} currentRank={currentRank} />
-      )}
-      {status === "podium" && (
-        <FinalRank currentRank={currentRank} points={points} />
-      )}
+      {statusElement[status]}
       <PlayerCard
         name={localStorage.getItem("nickname") || "Guest"}
         points={points}
