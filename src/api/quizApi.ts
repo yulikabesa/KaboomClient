@@ -1,6 +1,11 @@
 import type { CreateQuizDto, UpdateQuizDto } from "../types/quiz";
 import api from "./axios";
 
+export const getQuizById = async (quizId: string) => {
+  const response = await api.get(`/quiz/${quizId}`);
+  return response.data.data.quiz;
+};
+
 export const getOwnerQuizzes = async (userId: string) => {
   const response = await api.get(`/quiz/owner/${userId}`);
   return response.data;
@@ -21,7 +26,10 @@ export const createQuiz = async (quiz: CreateQuizDto) => {
   return response.data;
 };
 
-export const updateQuiz = async (quizId: string | undefined, quiz: UpdateQuizDto) => {
+export const updateQuiz = async (
+  quizId: string | undefined,
+  quiz: UpdateQuizDto,
+) => {
   if (!quizId) return "no quiz id";
   const response = await api.patch(`/quiz/${quizId}`, quiz);
   return response.data;

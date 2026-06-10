@@ -170,7 +170,7 @@ export function questionsReducer(
     }
 
     case "SET_QUESTIONS":
-      return action.value;
+      return action.value.length > 0 ? action.value : [createEmptyQuestion()];
 
     default:
       return state;
