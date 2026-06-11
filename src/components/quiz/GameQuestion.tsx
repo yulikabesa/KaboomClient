@@ -15,7 +15,7 @@ const GameQuestion: React.FC<{
   answerTexts: string[];
   duration: number;
   showAnswer: boolean;
-  correctAnswerIndex: number;
+  correctAnswerIndexes: number[];
   answerDistributionArrray: number[];
   scoringWeight: number;
   questionImage: string;
@@ -68,7 +68,7 @@ const GameQuestion: React.FC<{
         <div className={classes["bar-indicators-wrapper"]}>
           <BarIndicatorsList
             answersCount={props.answerDistributionArrray.length}
-            correctAnswerIndex={props.correctAnswerIndex}
+            correctAnswerIndexes={props.correctAnswerIndexes}
             maxValue={Math.max(...props.answerDistributionArrray)}
             values={props.answerDistributionArrray}
           />
@@ -103,7 +103,7 @@ const GameQuestion: React.FC<{
         answerTexts={props.answerTexts}
         onAnswerClick={(i) => console.log(i)}
         {...(props.showAnswer
-          ? { correctAnswerIndex: props.correctAnswerIndex }
+          ? { correctAnswerIndexes: props.correctAnswerIndexes }
           : {})}
       />
     </div>

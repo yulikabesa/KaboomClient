@@ -12,7 +12,7 @@ type Props = {
   onAnswerClick: (answerIndex: number) => void;
   viewMode?: "player" | "projector";
   answerTexts?: string[];
-  correctAnswerIndex?: number; // new prop for projector mode
+  correctAnswerIndexes?: number[]; // new prop for projector mode
 };
 
 const AnswerOptions: React.FC<Props> = ({
@@ -20,7 +20,7 @@ const AnswerOptions: React.FC<Props> = ({
   onAnswerClick,
   viewMode = "player",
   answerTexts = [],
-  correctAnswerIndex,
+  correctAnswerIndexes,
 }) => {
   const options = [
     {
@@ -64,9 +64,9 @@ const AnswerOptions: React.FC<Props> = ({
   return (
     <div className={`${classes.container} ${classes[viewMode]}`}>
       {Array.from({ length: answersCount }).map((_, i) => {
-        const isCorrect = correctAnswerIndex === i;
+        const isCorrect = correctAnswerIndexes?.includes(i);
         const showResult =
-          viewMode === "projector" && correctAnswerIndex !== undefined;
+          viewMode === "projector" && correctAnswerIndexes !== undefined;
         return (
           <div
             key={i}

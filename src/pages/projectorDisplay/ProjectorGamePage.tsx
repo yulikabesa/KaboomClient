@@ -23,7 +23,9 @@ const ProjectorGamePage = () => {
   const [timeLeft, setTimeLeft] = useState(20);
   const showResults = status === "results";
 
-  const [correctAnswerIndex, SetCorrectAnswerIndex] = useState(0);
+  const [correctAnswerIndexes, SetCorrectAnswerIndexes] = useState<number[]>(
+    [],
+  );
   const [answerDistributionArrray, setAnswerDistributionArrray] = useState([
     0, 0,
   ]);
@@ -61,7 +63,7 @@ const ProjectorGamePage = () => {
           setQuestion(state.data?.questionText ?? "");
           setAnswerTexts(state.data?.answerOptions ?? []);
           setAnswerDistributionArrray(state.data?.distribution ?? []);
-          SetCorrectAnswerIndex(state.data?.correctAnswers?.[0]);
+          SetCorrectAnswerIndexes(state.data?.correctAnswers);
           setTimeLeft(0);
           break;
 
@@ -135,7 +137,7 @@ const ProjectorGamePage = () => {
           scoringWeight={scoringWeight}
           duration={duration}
           showAnswer={showResults}
-          correctAnswerIndex={correctAnswerIndex}
+          correctAnswerIndexes={correctAnswerIndexes}
           answerDistributionArrray={answerDistributionArrray}
           questionImage={questionImage}
         />
