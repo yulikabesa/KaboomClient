@@ -1,10 +1,29 @@
-.container {
+.slide {
   /* width: 14vw;
   height: 18vh; */
   width: 12rem;
   height: 8rem;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.warning {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #3a1182;
+  color: white;
+  height: 20px;
+  aspect-ratio: 1;
+  /* border: 2px solid white; */
+  border-radius: 50%;
+  font-size: var(--fs-body-sm);
 }
 
 .title {

@@ -9,15 +9,17 @@ const QuestionSlide: React.FC<{
   isCurrentlyEdited: boolean;
   answersCount: number;
   correctAnswerIndexes: number[];
+  warning?: string;
 }> = (props) => {
   return (
     <div
-      className={classes.container}
+      className={classes.slide}
       style={{
         backgroundColor: props.isCurrentlyEdited ? "#FFFFFF" : "#f2f2f2",
         border: props.isCurrentlyEdited ? "2px solid #3E6CC4" : "none",
       }}
     >
+      {props.warning && <div className={classes["warning"]}>!</div>}
       <p className={classes.title}>{props.questionText || "\u00A0"}</p>
       <div className={classes["middle-items"]}>
         {props.questionImage !== "" && (
