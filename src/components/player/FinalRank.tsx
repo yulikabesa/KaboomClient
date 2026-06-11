@@ -5,7 +5,7 @@ import silver from "../../assets/silver.svg";
 import bronze from "../../assets/bronze.svg";
 import rankPlace from "../../assets/rankPlace.svg";
 
-const FinalRank: React.FC<{ currentRank: number; points: number }> = (
+const FinalRank: React.FC<{ currentRank: number; points: number, rankAbove: string }> = (
   props,
 ) => {
   const rankImgArray = [gold, silver, bronze];

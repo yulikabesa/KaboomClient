@@ -23,6 +23,7 @@ const PlayerGamePage = () => {
   const [answersCount, setAnswersCount] = useState(0);
   const [points, setPoints] = useState(0);
   const [currentRank, setCurrentRank] = useState(0);
+  const [rankAbove, setRankAbove] = useState("");
 
   const socket = useSocket();
   const handleAnswerClick = (answerIndex: number) => {
@@ -43,20 +44,22 @@ const PlayerGamePage = () => {
         case "answers":
           if (state.data.hasAnswered) setStatus("loading");
           else {
-            setAnswersCount(state.data.answerOptions.length);
             setStatus(state.phase);
+            setAnswersCount(state.data.answerOptions.length);
           }
           break;
         case "results":
         case "leaderboard":
           setStatus("answerFeedback");
-          setIsCorrect(state.data.isCorrect);
           setCurrentRank(state.data?.currentRank ?? null);
+          setRankAbove(state.data?.rankAbove ?? null);
+          setIsCorrect(state.data.isCorrect);
           break;
         case "podium":
-          setCurrentRank(state.data?.currentRank ?? null);
-          setPoints(state.data.score ?? 0);
           setStatus(state.phase);
+          setCurrentRank(state.data?.currentRank ?? null);
+          setRankAbove(state.data?.rankAbove ?? null);
+          setPoints(state.data.score ?? 0);
           break;
         default:
           setStatus(state.phase as GameStatus);
@@ -97,9 +100,15 @@ const PlayerGamePage = () => {
     question: <CountDown initialSeconds={5} />,
     loading: <Loading />,
     answerFeedback: (
-      <AnswerFeedback isCorrect={isCorrect} currentRank={currentRank} />
+      <AnswerFeedback isCorrect={isCorrect} currentRank={currentRank} rankAbove={rankAbove} />
     ),
-    podium: <FinalRank currentRank={currentRank} points={points} />,
+    podium: (
+      <FinalRank
+        currentRank={currentRank}
+        points={points}
+        rankAbove={rankAbove}
+      />
+    ),
   };
 
   return (
