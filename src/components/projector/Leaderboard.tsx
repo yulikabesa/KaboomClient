@@ -7,12 +7,12 @@ import Button from "../UI/Button";
 {
   /* <Leaderboard
     rankingArray={[
-        { nickname: 'נגה', score: 400, rankChangeDirection: 'UP' },
-        { nickname: 'חתול', score: 300, rankChangeDirection: 'UNCHANGED' },
-        { nickname: 'ברווז', score: 200, rankChangeDirection: 'UP' },
-        { nickname: 'ציפור', score: 100, rankChangeDirection: 'DOWN' },
-        { nickname: 'דובי', score: 70, rankChangeDirection: 'UNCHANGED' },
-        { nickname: 'עכבר', score: 20, rankChangeDirection: 'UNCHANGED' },
+        { nickname: 'נגה', score: 400, rankChange: 'UP' },
+        { nickname: 'חתול', score: 300, rankChange: 'UNCHANGED' },
+        { nickname: 'ברווז', score: 200, rankChange: 'UP' },
+        { nickname: 'ציפור', score: 100, rankChange: 'DOWN' },
+        { nickname: 'דובי', score: 70, rankChange: 'UNCHANGED' },
+        { nickname: 'עכבר', score: 20, rankChange: 'UNCHANGED' },
     ]}
 /> */
 }
@@ -20,8 +20,9 @@ import Button from "../UI/Button";
 type Rank = {
   nickname: string;
   score: number;
-  rankChangeDirection: string;
-  // 'UP' | 'DOWN' | 'UNCHANGED';
+  rankChange: number;
+  // "UP" | "DOWN" | "UNCHANGED";
+  // 1 | -1 | 0
 };
 
 const Leaderboard: React.FC<{ rankingArray: Rank[] }> = (props) => {
@@ -37,10 +38,7 @@ const Leaderboard: React.FC<{ rankingArray: Rank[] }> = (props) => {
     <>
       <div className={classes["score-title"]}>ניקוד</div>
       <div className={classes["actions"]}>
-        <Button
-          variant="white"
-          onClick={moveToNextQuestion}
-        >
+        <Button variant="white" onClick={moveToNextQuestion}>
           הבא
         </Button>
       </div>
@@ -54,12 +52,12 @@ const Leaderboard: React.FC<{ rankingArray: Rank[] }> = (props) => {
             <div className={classes["left-side-items"]}>
               <span className={classes.bolder}>{item.score}</span>
               <span
-                className={`${item.rankChangeDirection === "DOWN" ? classes.down : ""}`}
+                className={`${item.rankChange === -1 ? classes.down : ""}`}
                 style={{
                   color:
-                    item.rankChangeDirection === "UP"
+                    item.rankChange === 1
                       ? "#288906"
-                      : item.rankChangeDirection === "DOWN"
+                      : item.rankChange === -1
                         ? "#E21B3C"
                         : "transparent",
                 }}
