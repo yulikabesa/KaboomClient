@@ -15,7 +15,6 @@ const AnswerOptionsInputList: React.FC<Props> = ({
   answerTexts,
   correctAnswerIndexes,
 }) => {
-
   const filledCount = answerTexts.filter(
     (text) => (text ?? "").trim() !== "",
   ).length;
@@ -29,7 +28,9 @@ const AnswerOptionsInputList: React.FC<Props> = ({
     <div className={classes.container}>
       {Array.from({ length: AnswersStyle.length }).map((_, i) => {
         const isCorrect = correctAnswerIndexes?.includes(i) || false;
-        const isDisabledAnswerOption = i >= enabledAnswersCount;
+        const isDisabled = i >= enabledAnswersCount;
+        const isEmpty = answerTexts[i] === "" || answerTexts[i] === undefined;
+
         return (
           <div
             key={i}
@@ -40,21 +41,14 @@ const AnswerOptionsInputList: React.FC<Props> = ({
                 "--hover-color": AnswersStyle[i].colorOnHover,
                 boxShadow: `0 3px 0 0 ${AnswersStyle[i].shadowColor}`,
                 border: `1px solid ${AnswersStyle[i].shadowColor}`,
-                filter: isDisabledAnswerOption
-                  ? "brightness(0.65)"
-                  : "brightness(1)",
+                filter: isDisabled ? "brightness(0.65)" : "brightness(1)",
               } as React.CSSProperties
             }
           >
-            <span
-              className={`${classes.resultSign} ${isCorrect && classes.correct} ${!isDisabledAnswerOption && answerTexts[i] !== "" && answerTexts[i] !== undefined && classes["hover-enabled"]}`}
+            <button
+              className={`${classes.btn} ${isCorrect && classes.correct} ${!isDisabled && !isEmpty && classes["hover-enabled"]}`}
               onClick={() => {
-                if (
-                  !isDisabledAnswerOption &&
-                  answerTexts[i] !== "" &&
-                  answerTexts[i] !== undefined
-                )
-                  onAnswerClick(i);
+                if (!isDisabled && !isEmpty) onAnswerClick(i);
               }}
             />
 
@@ -65,8 +59,9 @@ const AnswerOptionsInputList: React.FC<Props> = ({
                 type="text"
                 placeholder="הוסף תשובה"
                 className={classes.answerText}
-                value={answerTexts[i] ?? ""}
-                disabled={isDisabledAnswerOption}
+                value={answerTexts[i] && !isDisabled ? answerTexts[i] : ""}
+                // value={answerTexts[i] ?? ""}
+                disabled={isDisabled}
                 onChange={(e) => onAnswerTextChange(i, e.target.value)}
                 autoComplete="off"
               />
