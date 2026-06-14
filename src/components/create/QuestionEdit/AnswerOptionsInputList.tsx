@@ -1,10 +1,5 @@
 import React from "react";
-import Diamond from "../../shapes/Diamond";
-import Triangle from "../../shapes/Triangle";
-import Square from "../../shapes/Square";
-import Circle from "../../shapes/Circle";
-import Pentagon from "../../shapes/Pentagon";
-import UpsideDownTriangle from "../../shapes/UpsideDownTriangle";
+import { AnswersStyle } from "../../AnswerOptions";
 import classes from "./AnswerOptionsInputList.module.css";
 
 type Props = {
@@ -20,57 +15,19 @@ const AnswerOptionsInputList: React.FC<Props> = ({
   answerTexts,
   correctAnswerIndexes,
 }) => {
-  const options = [
-    {
-      color: "#E21B3C",
-      shape: <Triangle />,
-      colorOnHover: "#CB002C",
-      shadowColor: "#B51630",
-    },
-    {
-      color: "#1368CE",
-      shape: <Diamond />,
-      colorOnHover: "#0057BA",
-      shadowColor: "#0F53A5",
-    },
-    {
-      color: "#D89E00",
-      shape: <Circle />,
-      colorOnHover: "#C28B00",
-      shadowColor: "#AD7E00",
-    },
-    {
-      color: "#26890C",
-      shape: <Square />,
-      colorOnHover: "#007600",
-      shadowColor: "#1E6E0A",
-    },
-    {
-      color: "#864CBF",
-      shape: <UpsideDownTriangle />,
-      colorOnHover: "#7845acff",
-      shadowColor: "#6B3D99",
-    },
-    {
-      color: "#0AA3A3",
-      shape: <Pentagon />,
-      colorOnHover: "#099494ff",
-      shadowColor: "#088282",
-    },
-  ];
 
   const filledCount = answerTexts.filter(
     (text) => (text ?? "").trim() !== "",
   ).length;
 
   const enabledAnswersCount = Math.min(
-    options.length,
+    AnswersStyle.length,
     Math.max(2, filledCount % 2 === 0 ? filledCount + 2 : filledCount + 1),
   );
 
   return (
     <div className={classes.container}>
-      {Array.from({ length: options.length }).map((_, i) => {
+      {Array.from({ length: AnswersStyle.length }).map((_, i) => {
         const isCorrect = correctAnswerIndexes?.includes(i) || false;
         const isDisabledAnswerOption = i >= enabledAnswersCount;
         return (
@@ -79,10 +36,10 @@ const AnswerOptionsInputList: React.FC<Props> = ({
             className={`${classes["answer-option"]}`}
             style={
               {
-                "--bg-color": options[i].color,
-                "--hover-color": options[i].colorOnHover,
-                boxShadow: `0 3px 0 0 ${options[i].shadowColor}`,
-                border: `1px solid ${options[i].shadowColor}`,
+                "--bg-color": AnswersStyle[i].color,
+                "--hover-color": AnswersStyle[i].colorOnHover,
+                boxShadow: `0 3px 0 0 ${AnswersStyle[i].shadowColor}`,
+                border: `1px solid ${AnswersStyle[i].shadowColor}`,
                 filter: isDisabledAnswerOption
                   ? "brightness(0.65)"
                   : "brightness(1)",
@@ -102,11 +59,11 @@ const AnswerOptionsInputList: React.FC<Props> = ({
             />
 
             <div className={classes.contentRight}>
-              {options[i].shape}
+              {AnswersStyle[i].shape}
               <input
                 id={`answer-${i}`}
                 type="text"
-                placeholder="תשובה"
+                placeholder="הוסף תשובה"
                 className={classes.answerText}
                 value={answerTexts[i] ?? ""}
                 disabled={isDisabledAnswerOption}
