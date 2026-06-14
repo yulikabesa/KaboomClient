@@ -12,7 +12,7 @@ export type TagDetails = {
 export type permissionType = "בעלים" | "עריכה" | "צפייה";
 
 export type questionType = {
-  _id?: string;
+  _id: string;
   questionText: string;
   answerOptions: string[];
   correctIndexes: number[];

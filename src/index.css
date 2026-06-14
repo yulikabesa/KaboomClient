@@ -18,6 +18,22 @@
   --fs-button: clamp(0.8rem, 0.75rem + 0.2vw, 0.9rem);
 }
 
+/* html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  direction: rtl;
+} */
+
+/* body {
+  font-weight: 400;
+  font-family: "Noto Sans", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color: #333333;
+} */
+
 html {
   height: 100%;
   width: 100%;

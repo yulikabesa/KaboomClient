@@ -9,7 +9,7 @@ const QuestionSlide: React.FC<{
   isCurrentlyEdited: boolean;
   answersCount: number;
   correctAnswerIndexes: number[];
-  warning?: string;
+  warning: boolean;
 }> = (props) => {
   return (
     <div

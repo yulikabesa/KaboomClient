@@ -1,6 +1,5 @@
 import React, { type PropsWithChildren } from "react";
 import ReactDOM from "react-dom";
-import closeIcon from "../../assets/closeIcon.svg";
 import classes from "./Overlay.module.css";
 
 interface OverlayProps extends PropsWithChildren {

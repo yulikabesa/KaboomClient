@@ -11,6 +11,8 @@ type Props = {
   onSlideDeleteClick: () => void;
   onDragEnd: (result: any) => void;
   onDragStart: (result: any) => void;
+
+  slideWarnings: boolean[];
 };
 
 const QuestionSlideList: React.FC<Props> = ({
@@ -21,6 +23,8 @@ const QuestionSlideList: React.FC<Props> = ({
   onSlideDeleteClick,
   onDragEnd,
   onDragStart,
+
+  slideWarnings,
 }) => {
   return (
     <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
@@ -40,6 +44,7 @@ const QuestionSlideList: React.FC<Props> = ({
                 onClick={() => onSlideClick(index)}
                 onCopy={onSlideCopyClick}
                 onDelete={onSlideDeleteClick}
+                slideWarning={slideWarnings[index]}
               />
             ))}
 

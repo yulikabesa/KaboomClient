@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavigationMenu from "../components/menu/NavigationMenu";
 import QuestionSlideList from "../components/create/Slides/QuestionSlideList";
+import layoutClasses from "../components/UI/Layout.module.css";
 import classes from "./Create.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -159,6 +160,20 @@ const Create: React.FC<{}> = () => {
     });
   };
 
+  const hasEmptyField = (index: number) => {
+    const question = questions[index];
+    const hasQuestion = question.questionText.trim() !== "";
+    const hasAnswers = question.answerOptions.every((a: any) => a);
+    const hasCorrectAnswer = question.correctIndexes.length > 0;
+    return !(hasQuestion && hasAnswers && hasCorrectAnswer);
+  };
+
+  const mapSlideWarnings = () => {
+    return questions.map((q, index) => hasEmptyField(index));
+  };
+
+  const slideWarnings = mapSlideWarnings();
+
   const deleteQuizHandler = async () => {
     try {
       if (quizId) {
@@ -208,8 +223,15 @@ const Create: React.FC<{}> = () => {
 
   return (
     <>
-      <div className={classes.background}>
-        <div className={classes["screen-items-flex"]}>
+      <div className={`${classes.background} ${layoutClasses.layout}`}>
+        <NavigationMenu
+          variant="create"
+          onSettingsClick={toggleSettings}
+          quizName={quizName}
+          setQuizName={setQuizName}
+          onQuizSave={quizSaveClickHandler}
+        />
+        <div className={`${classes["screen-items-flex"]}`}>
           {/* questions slides */}
           <div className={classes["questions-slides"]}>
             <QuestionSlideList
@@ -220,6 +242,7 @@ const Create: React.FC<{}> = () => {
               questions={questions}
               onDragEnd={onDragEnd}
               onDragStart={onDragStart}
+              slideWarnings={slideWarnings}
             />
             <Button
               className={classes["add-slide-btn"]}
@@ -256,19 +279,12 @@ const Create: React.FC<{}> = () => {
             setTags={setTags}
             coverImage={coverImage}
             setCoverImage={updateCoverImage}
-            areAllFieldsFull={areAllFieldsFull}
+            // areAllFieldsFull={areAllFieldsFull}
             onQuizDelete={deleteQuizHandler}
             onQuizSave={quizSaveClickHandler}
           />
         )}
       </div>
-      <NavigationMenu
-        variant="create"
-        onSettingsClick={toggleSettings}
-        quizName={quizName}
-        setQuizName={setQuizName}
-        onQuizSave={quizSaveClickHandler}
-      />
     </>
   );
 };

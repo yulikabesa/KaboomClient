@@ -34,6 +34,7 @@ const NavigationMenu: React.FC<{
               value={props.quizName}
               maxLength={50}
               onChange={(e) => props.setQuizName!(e.target.value)}
+              autoComplete="off"
             />
           </div>
         )}

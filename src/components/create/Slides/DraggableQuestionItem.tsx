@@ -12,6 +12,7 @@ type Props = {
   onClick: () => void;
   onCopy: () => void;
   onDelete: () => void;
+  slideWarning: boolean;
 };
 
 const DraggableQuestionItem: React.FC<Props> = ({
@@ -21,12 +22,10 @@ const DraggableQuestionItem: React.FC<Props> = ({
   onClick,
   onCopy,
   onDelete,
+  slideWarning
 }) => {
   return (
-    <Draggable
-      draggableId={question._id}
-      index={index}
-    >
+    <Draggable draggableId={question._id} index={index}>
       {(provided) => (
         <div
           ref={provided.innerRef}
@@ -64,6 +63,7 @@ const DraggableQuestionItem: React.FC<Props> = ({
                 isCurrentlyEdited={isActive}
                 answersCount={question.answerOptions.length}
                 correctAnswerIndexes={question.correctIndexes}
+                warning={slideWarning}
               />
             </div>
           </div>

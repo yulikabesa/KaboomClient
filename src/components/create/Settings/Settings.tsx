@@ -20,7 +20,7 @@ const Settings: React.FC<{
   setSharedWith: React.Dispatch<React.SetStateAction<sharedWithType[]>>;
   coverImage: questionImageType;
   setCoverImage: (updates: Partial<questionImageType>) => void;
-  areAllFieldsFull: () => boolean;
+  // areAllFieldsFull: () => boolean;
   onQuizDelete: () => void;
   onQuizSave: () => void;
 }> = (props) => {
@@ -165,7 +165,7 @@ const Settings: React.FC<{
             variant="blue"
             onClick={() => {
               // todo use the are all fields full with isGameable property
-              console.log(props.areAllFieldsFull());
+              // console.log(props.areAllFieldsFull());
               props.onQuizSave();
             }}
           >

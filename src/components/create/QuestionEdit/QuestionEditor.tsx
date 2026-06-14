@@ -37,6 +37,7 @@ const QuestionEditor: React.FC<QuestionEditorProps> = ({
         value={currentQuestion.questionText}
         onChange={handleQuestionTextInputChange}
         maxLength={72}
+        autoComplete="off"
       />
       <div className={classes["flex"]}>
         <div className={classes.center}>

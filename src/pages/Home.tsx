@@ -1,5 +1,6 @@
 import NavigationMenu from "../components/menu/NavigationMenu";
 import classes from "./Home.module.css";
+import layoutClasses from "../components/UI/Layout.module.css";
 import { useEffect, useState } from "react";
 import QuizzesList from "../components/home/QuizzesList";
 import type { quizType } from "../types/quiz";
@@ -61,16 +62,16 @@ const Home = () => {
   }, [userId]);
 
   return (
-    <>
-      <div className={classes.background}>
-        <div className={classes.container}>
+    <div className={`${classes.background} ${layoutClasses.layout}`}>
+      <NavigationMenu variant="home" />
+      <div className={layoutClasses.main}>
+        <div className={classes.page}>
           <div className={classes["top-banner"]}>
             <p className={classes["tilted-title"]}>נתקעת בלי שיעור?</p>
             <p className={classes["sub-title"]}>
               עם עשרות התבניות של קבום – כל אחד יכול להכין שיעור במהירות.
             </p>
           </div>
-          {/* <div className={classes["question-marks-div"]} /> */}
           <p className={classes["sub-title"]}>תוצרים שיצרתי</p>
           <QuizzesList isLoading={isLoading} quizzes={createdProducts} />
           <p className={classes["sub-title"]}>התוצרים ששותפו איתי</p>
@@ -80,8 +81,7 @@ const Home = () => {
           {/* todo decide what to do about courses quizzes */}
         </div>
       </div>
-      <NavigationMenu variant="home" />
-    </>
+    </div>
   );
 };
 
