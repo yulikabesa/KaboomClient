@@ -62,8 +62,8 @@
   height: 100%;
 }
 
-/* result icon on the LEFT */
-.resultSign {
+.btn {
+  all: unset;
   height: 3vh;
   aspect-ratio: 1;
   border: 3px solid white;
