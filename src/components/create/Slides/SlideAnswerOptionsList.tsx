@@ -12,7 +12,7 @@ const SlideAnswerOptionsList: React.FC<Props> = ({
 }) => {
   return (
     <div className={`${classes.container}`}>
-      {Array.from({ length: answersCount }).map((_, i) => {
+      {Array.from({ length: answersCount % 2 === 0 ? answersCount : answersCount + 1 }).map((_, i) => {
         const isCorrect = correctAnswerIndexes.includes(i);
         return (
           <div key={i} className={`${classes["answer-option"]}`}>
