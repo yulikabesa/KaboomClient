@@ -11,8 +11,7 @@ const FinalRank: React.FC<{ currentRank: number; points: number, rankAbove: stri
   const rankImgArray = [gold, silver, bronze];
 
   useEffect(() => {
-    localStorage.removeItem("kaboom-pin-recovery");
-    localStorage.removeItem("nickname");
+    sessionStorage.removeItem("nickname");
   }, []);
 
   return (

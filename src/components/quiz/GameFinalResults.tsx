@@ -28,13 +28,14 @@ const GameFinalResults: React.FC<{
       origin: { x: 1, y: 0.9 },
     });
   };
+  
   useEffect(() => {
-    localStorage.removeItem("lobby");
     const timer = setTimeout(() => {
       fireCannons();
     }, 2500);
     return () => clearTimeout(timer);
   }, []);
+
   return (
     <>
       <div className={classes["score-title"]}>ניקוד</div>

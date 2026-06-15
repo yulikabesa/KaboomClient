@@ -88,7 +88,7 @@ const PlayerGamePage = () => {
 
   const statusElement = {
     lobby: (
-      <WaitingForHost nickname={localStorage.getItem("nickname") || "Guest"} />
+      <WaitingForHost nickname={sessionStorage.getItem("nickname") || "Guest"} />
     ),
     answers: (
       <AnswerOptions
@@ -115,7 +115,7 @@ const PlayerGamePage = () => {
     <div className={classes.background}>
       {statusElement[status]}
       <PlayerCard
-        name={localStorage.getItem("nickname") || "Guest"}
+        name={sessionStorage.getItem("nickname") || "Guest"}
         points={points}
       />
     </div>

@@ -8,35 +8,20 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [socket, setSocket] = useState<any>(null);
 
+  const getPinFromUrl = (): string | null => {
+    const match = window.location.pathname.match(
+      /^\/(?:lobby|game|hostGame)\/(\d+)/,
+    );
+    return match ? match[1] : null;
+  };
+
   const initSocket = () => {
     const token = localStorage.getItem("token");
-    let pin = localStorage.getItem("kaboom-pin-recovery");
-
-    // todo: fix to a nice solution
-    if (!pin) {
-      const hostGameData = localStorage.getItem("lobby");
-      if (hostGameData) {
-        pin = JSON.parse(hostGameData).gamePin;
-      }
-    }
+    const pin = getPinFromUrl();
 
     if (token) {
       const newSocket = connectSocket(token, pin);
       setSocket(newSocket);
-
-      // Rejoin after connection
-      // newSocket.on("connect", () => {
-      //     const pin = localStorage.getItem("kaboom-pin-recovery");
-      //     if (pin) {
-      //         console.log("Rejoining game with pin:", pin);
-      //         socket.emit("game-event", {
-      //             type: "rejoin-game",
-      //             payload: {
-      //                 pin,
-      //             },
-      //         });
-      //     }
-      // });
     }
   };
 

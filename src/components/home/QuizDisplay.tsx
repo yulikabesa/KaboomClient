@@ -47,7 +47,7 @@ const QuizDisplay: React.FC<{
         players: [],
         quizId: props.quiz?._id ?? "",
       });
-      navigate("/lobby");
+      navigate(`/lobby/${pin}`);
     });
 
     // fallback

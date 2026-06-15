@@ -2,7 +2,7 @@ import classes from "./GameLobby.module.css";
 import kaboomLogo from "../../assets/kaboomLogo.svg";
 import personIcon from "../../assets/personIcon.svg";
 import { useLobby } from "../../store/LobbyContext";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useSocket } from "../../store/SocketContext";
 
@@ -10,16 +10,15 @@ const GameLobby: React.FC = () => {
   const socket = useSocket();
   const { lobby, addPlayer } = useLobby();
   const navigate = useNavigate();
-  // making sure u can go to this page only if
-  // if you clicked on create game session from one of your quizes and received game pin
-  if (!lobby) {
+  const { pin } = useParams<{ pin: string }>();
+  if (!lobby || !pin || lobby.gamePin !== pin) {
     return <Navigate to="/home" replace />;
   }
 
   useEffect(() => {
-    if (!socket) return; // Guard against null
+    if (!socket) return;
     const handlePlayerJoined = (player: { id: string; nickname: string }) => {
-      addPlayer(player.nickname); // or player.id if you prefer
+      addPlayer(player);
     };
 
     socket.on("player-joined", handlePlayerJoined);
@@ -32,7 +31,7 @@ const GameLobby: React.FC = () => {
   const startGame = () => {
     if (!socket || !lobby) return;
     socket.once("game-started", () => {
-      navigate("/hostGame", {
+      navigate(`/hostGame/${pin}`, {
         replace: true,
       });
     });
@@ -77,9 +76,9 @@ const GameLobby: React.FC = () => {
       </div>
 
       <div className={classes["player-name-box"]}>
-        {lobby.players.map((player) => (
-          <div className={classes["names"]} key={player}>
-            {player}
+        {lobby.players.map((player, index) => (
+          <div className={classes["names"]} key={`${index}-player`}>
+            {player.nickname}
           </div>
         ))}
       </div>

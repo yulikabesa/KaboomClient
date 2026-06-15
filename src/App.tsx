@@ -51,15 +51,15 @@ const App = () => {
           element: <Login />,
         },
         {
-          path: "/lobby",
+          path: "/lobby/:pin",
           element: <GameLobby />,
         },
         {
-          path: "/game",
+          path: "/game/:pin",
           element: <PlayerGamePage />,
         },
         {
-          path: "/hostGame",
+          path: "/hostGame/:pin",
           element: <ProjectorGamePage />,
         },
       ],

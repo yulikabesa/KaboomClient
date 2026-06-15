@@ -85,9 +85,8 @@ const JoinGamePage: React.FC = () => {
     });
 
     socket.once("game-state", () => {
-      localStorage.setItem("kaboom-pin-recovery", pin);
-      localStorage.setItem("nickname", nickname);
-      navigate("/game", { replace: true });
+      sessionStorage.setItem("nickname", nickname);
+      navigate(`/game/${pin}`, { replace: true });
     });
   };
 
