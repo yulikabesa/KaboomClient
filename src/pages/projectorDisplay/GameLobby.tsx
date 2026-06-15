@@ -5,28 +5,50 @@ import { useLobby } from "../../store/LobbyContext";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useSocket } from "../../store/SocketContext";
+import Loading from "../../components/player/Loading";
 
 const GameLobby: React.FC = () => {
   const socket = useSocket();
-  const { lobby, addPlayer } = useLobby();
+  const { lobby, setLobby, addPlayer } = useLobby();
   const navigate = useNavigate();
   const { pin } = useParams<{ pin: string }>();
-  if (!lobby || !pin || lobby.gamePin !== pin) {
-    return <Navigate to="/home" replace />;
-  }
 
   useEffect(() => {
-    if (!socket) return;
+    if (!socket || !pin) return;
+
+    const handleState = (state: { phase: string; data: any }) => {
+      if (state.phase !== "lobby" || !state.data) return;
+      setLobby({
+        gamePin: pin,
+        quizId: state.data.quizId ?? "",
+        players: state.data.players ?? [],
+      });
+    };
+
     const handlePlayerJoined = (player: { id: string; nickname: string }) => {
       addPlayer(player);
     };
 
+    const handleDisconnect = (reason: string) => {
+      if (reason === "io server disconnect") {
+        navigate("/home", { replace: true });
+      }
+    };
+
+    socket.on("game-state", handleState);
     socket.on("player-joined", handlePlayerJoined);
+    socket.on("disconnect", handleDisconnect);
 
     return () => {
+      socket.off("game-state", handleState);
       socket.off("player-joined", handlePlayerJoined);
+      socket.off("disconnect", handleDisconnect);
     };
-  }, [addPlayer]);
+  }, [socket, pin]);
+
+  if (!pin) {
+    return <Navigate to="/home" replace />;
+  }
 
   const startGame = () => {
     if (!socket || !lobby) return;
@@ -40,6 +62,14 @@ const GameLobby: React.FC = () => {
       payload: null,
     });
   };
+
+  if (!lobby || lobby.gamePin !== pin) {
+    return (
+      <div className={`${classes["page"]} ${classes["background"]}`}>
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div className={`${classes["page"]} ${classes["background"]}`}>
