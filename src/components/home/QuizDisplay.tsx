@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useLobby } from "../../store/LobbyContext";
 import { useState } from "react";
 import type { quizType } from "../../types/quiz";
-import defaultCover from "../../assets/defaultCoverPhoto.png";
+import defaultCover from "../../assets/defaultQuizCover.png";
 import { useAuth } from "../../store/AuthContext";
 
 const QuizDisplay: React.FC<{
