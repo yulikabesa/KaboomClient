@@ -4,8 +4,7 @@ import layoutClasses from "../components/UI/Layout.module.css";
 import { useEffect, useState } from "react";
 import QuizzesList from "../components/home/QuizzesList";
 import type { quizType } from "../types/quiz";
-import { getOwnerQuizzes, getSharedQuizzes } from "../api/quizApi";
-import { useAuth } from "../store/AuthContext";
+import { getOwnedQuizzes, getSharedQuizzes } from "../api/quizApi";
 
 const Home = () => {
   // todo get products from server
@@ -13,9 +12,6 @@ const Home = () => {
   const [sharedProducts, setSharedProducts] = useState<quizType[]>([]);
   // const [myCourseProducts, setMyCourseProducts] = useState<quizType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const { user } = useAuth();
-  const userId = user?._id;
 
   const normalizeQuizzes = (quizzes: any[]) =>
     // converts question img from string to string → questionImageType
@@ -43,12 +39,11 @@ const Home = () => {
 
   useEffect(() => {
     const fetchQuizzes = async () => {
-      if (!userId) return;
       setIsLoading(true);
       try {
         const [createdRes, sharedRes] = await Promise.all([
-          getOwnerQuizzes(userId),
-          getSharedQuizzes(userId),
+          getOwnedQuizzes(),
+          getSharedQuizzes(),
         ]);
         setCreatedProducts(normalizeQuizzes(createdRes));
         setSharedProducts(normalizeQuizzes(sharedRes));
@@ -59,7 +54,7 @@ const Home = () => {
       }
     };
     fetchQuizzes();
-  }, [userId]);
+  }, []);
 
   return (
     <div className={`${classes.background} ${layoutClasses.layout}`}>
@@ -73,7 +68,11 @@ const Home = () => {
             </p>
           </div>
           <p className={classes["sub-title"]}>תוצרים שיצרתי</p>
-          <QuizzesList isLoading={isLoading} quizzes={createdProducts} />
+          <QuizzesList
+            isLoading={isLoading}
+            quizzes={createdProducts}
+            showNewQuiz
+          />
           <p className={classes["sub-title"]}>התוצרים ששותפו איתי</p>
           <QuizzesList isLoading={isLoading} quizzes={sharedProducts} />
           {/* <p className={classes["sub-title"]}>תוצרים של הקורס שלי</p> */}

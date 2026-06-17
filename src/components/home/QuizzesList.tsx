@@ -6,6 +6,7 @@ import type { quizType } from "../../types/quiz";
 const QuizzesList: React.FC<{
   quizzes: quizType[];
   isLoading: boolean;
+  showNewQuiz?: boolean;
 }> = (props) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -37,9 +38,9 @@ const QuizzesList: React.FC<{
 
   return (
     <div ref={containerRef} className={classes["product-list"]}>
-      {!props.isLoading && props.quizzes.length === 0 && (
-        <QuizDisplay variant={"newQuiz"} />
-      )}
+      {!props.isLoading &&
+        props.quizzes.length === 0 &&
+        props.showNewQuiz && <QuizDisplay variant={"newQuiz"} />}
       {!props.isLoading
         ? props.quizzes.map((quiz, index) => (
             <div className={classes.reveal} key={index}>

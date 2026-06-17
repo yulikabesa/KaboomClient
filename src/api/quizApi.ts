@@ -6,13 +6,13 @@ export const getQuizById = async (quizId: string) => {
   return response.data.data.quiz;
 };
 
-export const getOwnerQuizzes = async (userId: string) => {
-  const response = await api.get(`/quiz/owner/${userId}`);
+export const getOwnedQuizzes = async () => {
+  const response = await api.get(`/quiz/owner/`);
   return response.data;
 };
 
-export const getSharedQuizzes = async (userId: string) => {
-  const response = await api.get(`/quiz/shared/${userId}`);
+export const getSharedQuizzes = async () => {
+  const response = await api.get(`/quiz/shared/`);
   return response.data;
 };
 
