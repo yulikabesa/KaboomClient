@@ -3,39 +3,39 @@ import classes from "./Home.module.css";
 import layoutClasses from "../components/UI/Layout.module.css";
 import { useEffect, useState } from "react";
 import QuizzesList from "../components/home/QuizzesList";
-import type { quizType } from "../types/quiz";
+import type { quizDisplayType } from "../types/quiz";
 import { getOwnedQuizzes, getSharedQuizzes } from "../api/quizApi";
 
 const Home = () => {
-  // todo get products from server
-  const [createdProducts, setCreatedProducts] = useState<quizType[]>([]);
-  const [sharedProducts, setSharedProducts] = useState<quizType[]>([]);
-  // const [myCourseProducts, setMyCourseProducts] = useState<quizType[]>([]);
+  const [createdProducts, setCreatedProducts] = useState<quizDisplayType[]>([]);
+  const [sharedProducts, setSharedProducts] = useState<quizDisplayType[]>([]);
+  // const [myCourseProducts, setMyCourseProducts] = useState<quizDisplayType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const normalizeQuizzes = (quizzes: any[]) =>
-    // converts question img from string to string → questionImageType
-    quizzes.map((quiz) => ({
-      ...quiz,
-      questions: quiz.questions.map((q: any) => ({
-        ...q,
-        questionImage: q.questionImage
-          ? {
-              image: q.questionImage,
-              src: q.questionImage,
-              crop: { x: 0, y: 0 },
-              zoom: 1,
-              croppedAreaPixels: null,
-            }
-          : {
-              image: "",
-              src: "",
-              crop: { x: 0, y: 0 },
-              zoom: 1,
-              croppedAreaPixels: null,
-            },
-      })),
-    }));
+  // todo: use somewhere else
+  // const normalizeQuizzes = (quizzes: any[]) =>
+  //   // converts question img from string to string → questionImageType
+  //   quizzes.map((quiz) => ({
+  //     ...quiz,
+  //     questions: quiz.questions.map((q: any) => ({
+  //       ...q,
+  //       questionImage: q.questionImage
+  //         ? {
+  //             image: q.questionImage,
+  //             src: q.questionImage,
+  //             crop: { x: 0, y: 0 },
+  //             zoom: 1,
+  //             croppedAreaPixels: null,
+  //           }
+  //         : {
+  //             image: "",
+  //             src: "",
+  //             crop: { x: 0, y: 0 },
+  //             zoom: 1,
+  //             croppedAreaPixels: null,
+  //           },
+  //     })),
+  //   }));
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -45,8 +45,8 @@ const Home = () => {
           getOwnedQuizzes(),
           getSharedQuizzes(),
         ]);
-        setCreatedProducts(normalizeQuizzes(createdRes));
-        setSharedProducts(normalizeQuizzes(sharedRes));
+        setCreatedProducts(createdRes);
+        setSharedProducts(sharedRes);
       } catch (error) {
         console.error("Error fetching quizzes:", error);
       } finally {

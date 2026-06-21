@@ -169,7 +169,7 @@ const Create: React.FC<{}> = () => {
   };
 
   const mapSlideWarnings = () => {
-    return questions.map((q, index) => hasEmptyField(index));
+    return questions.map((_, index) => hasEmptyField(index));
   };
 
   const slideWarnings = mapSlideWarnings();

@@ -1,4 +1,8 @@
-import type { CreateQuizDto, UpdateQuizDto } from "../types/quiz";
+import type {
+  CreateQuizDto,
+  UpdateQuizDto,
+  quizDisplayType,
+} from "../types/quiz";
 import api from "./axios";
 
 export const getQuizById = async (quizId: string) => {
@@ -6,12 +10,12 @@ export const getQuizById = async (quizId: string) => {
   return response.data.data.quiz;
 };
 
-export const getOwnedQuizzes = async () => {
+export const getOwnedQuizzes = async (): Promise<quizDisplayType[]> => {
   const response = await api.get(`/quiz/owner/`);
   return response.data;
 };
 
-export const getSharedQuizzes = async () => {
+export const getSharedQuizzes = async (): Promise<quizDisplayType[]> => {
   const response = await api.get(`/quiz/shared/`);
   return response.data;
 };

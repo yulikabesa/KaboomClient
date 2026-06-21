@@ -6,25 +6,18 @@ import { useSocket } from "../../store/SocketContext";
 import { useNavigate } from "react-router-dom";
 import { useLobby } from "../../store/LobbyContext";
 import { useState } from "react";
-import type { quizType } from "../../types/quiz";
+import type { quizDisplayType } from "../../types/quiz";
 import defaultCover from "../../assets/defaultQuizCover.png";
-import { useAuth } from "../../store/AuthContext";
 
 const QuizDisplay: React.FC<{
   variant: "loading" | "quiz" | "newQuiz";
-  quiz?: quizType;
+  quiz?: quizDisplayType;
 }> = (props) => {
   const navigate = useNavigate();
   const { setLobby } = useLobby();
   const socket = useSocket();
-  const { user } = useAuth();
-  const userId = user?._id;
 
-  const canEdit =
-    props.quiz?.owner === userId ||
-    props.quiz?.sharedWith?.some(
-      (shared) => shared.user._id === userId && shared.permission === "עריכה",
-    );
+  const canEdit = props.quiz?.canEdit ?? false;
 
   const [isCreatingGame, setIsCreatingGame] = useState(false);
 
@@ -86,7 +79,7 @@ const QuizDisplay: React.FC<{
             }}
           >
             <p className={classes["question-num"]}>
-              {props.quiz?.questions?.length ?? 0} שאלות
+              {props.quiz?.questionCount ?? 0} שאלות
             </p>
             <div className={classes.hoverOverlay}>
               <div
