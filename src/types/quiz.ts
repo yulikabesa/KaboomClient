@@ -71,3 +71,8 @@ export type QuizDto = {
 export type CreateQuizDto = Omit<QuizDto, "_id">;
 
 export type UpdateQuizDto = Omit<CreateQuizDto, "owner">;
+
+export type QuestionWarning = {
+  hasWarning: boolean;
+  messages: string[];
+};

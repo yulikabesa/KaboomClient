@@ -1,7 +1,7 @@
 import React from "react";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import DraggableQuestionItem from "./DraggableQuestionItem";
-import type { questionType } from "../../../types/quiz";
+import type { questionType, QuestionWarning } from "../../../types/quiz";
 
 type Props = {
   questions: questionType[];
@@ -12,7 +12,7 @@ type Props = {
   onDragEnd: (result: any) => void;
   onDragStart: (result: any) => void;
 
-  slideWarnings: boolean[];
+  slideWarnings: QuestionWarning[];
 };
 
 const QuestionSlideList: React.FC<Props> = ({

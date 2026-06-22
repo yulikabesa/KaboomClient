@@ -3,7 +3,7 @@ import { Draggable } from "@hello-pangea/dnd";
 import QuestionSlide from "./QuestionSlide";
 import QuestionActions from "./QuestionActions";
 import classes from "./QuestionSlideList.module.css";
-import type { questionType } from "../../../types/quiz";
+import type { questionType, QuestionWarning } from "../../../types/quiz";
 
 type Props = {
   question: questionType;
@@ -12,7 +12,7 @@ type Props = {
   onClick: () => void;
   onCopy: () => void;
   onDelete: () => void;
-  slideWarning: boolean;
+  slideWarning: QuestionWarning;
 };
 
 const DraggableQuestionItem: React.FC<Props> = ({

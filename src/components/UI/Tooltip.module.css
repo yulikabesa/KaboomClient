@@ -1,0 +1,29 @@
+.tooltip {
+  /* position: fixed; */
+  /* left: calc(120% + 8px); */
+   /* add 8px gap */
+  /* right: 120%; */
+  /* top: 50%; */
+  /* transform: translateY(-50%); */
+  background-color: #3a1182;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  white-space: pre-line;
+  z-index: 100000;
+  min-width: 100px;
+  transform: translate(-100%, -50%);
+}
+
+.tooltip::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 8px solid #3a1182;
+}

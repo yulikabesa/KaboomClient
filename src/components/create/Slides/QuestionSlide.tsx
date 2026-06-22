@@ -1,6 +1,9 @@
 import classes from "./QuestionSlide.module.css";
 import type React from "react";
 import SlideAnswerOptionsList from "./SlideAnswerOptionsList";
+import type { QuestionWarning } from "../../../types/quiz";
+import { useRef, useState } from "react";
+import ToolTip from "../../UI/ToolTip";
 
 const QuestionSlide: React.FC<{
   questionText: string;
@@ -9,8 +12,10 @@ const QuestionSlide: React.FC<{
   isCurrentlyEdited: boolean;
   answersCount: number;
   correctAnswerIndexes: number[];
-  warning: boolean;
+  warning: QuestionWarning;
 }> = (props) => {
+  const [hovered, setHovered] = useState<boolean>(false);
+  const warningRef = useRef<HTMLDivElement>(null);
   return (
     <div
       className={classes.slide}
@@ -19,7 +24,19 @@ const QuestionSlide: React.FC<{
         border: props.isCurrentlyEdited ? "2px solid #3E6CC4" : "none",
       }}
     >
-      {props.warning && <div className={classes["warning"]}>!</div>}
+      {props.warning.hasWarning && (
+        <>
+          <div
+            ref={warningRef}
+            className={classes["warning"]}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          >
+            !
+          </div>
+            {hovered && warningRef && <ToolTip content={props.warning.messages.join("\n")} target={warningRef.current!} />}
+        </>
+      )}
       <p className={classes.title}>{props.questionText || "\u00A0"}</p>
       <div className={classes["middle-items"]}>
         {props.questionImage !== "" && (

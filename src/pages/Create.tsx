@@ -9,7 +9,11 @@ import {
   createEmptyQuestion,
 } from "../reducers/questionsReducer";
 import Settings from "../components/create/Settings/Settings";
-import type { questionImageType, sharedWithType } from "../types/quiz";
+import type {
+  questionImageType,
+  QuestionWarning,
+  sharedWithType,
+} from "../types/quiz";
 import {
   createQuiz,
   deleteQuiz,
@@ -151,28 +155,33 @@ const Create: React.FC<{}> = () => {
     setSettingsDisplay((prev) => !prev);
   };
 
-  const areAllFieldsFull = () => {
-    if (!quizName.trim()) return false;
-    return questions.every((q) => {
-      const hasQuestion = q.questionText.trim() !== "";
-      const hasAnswers = q.answerOptions.every((a: any) => a);
-      return hasQuestion && hasAnswers;
-    });
-  };
 
-  const hasEmptyField = (index: number) => {
+  const getQuestionWarnings = (index: number): QuestionWarning => {
     const question = questions[index];
-    const hasQuestion = question.questionText.trim() !== "";
-    const hasAnswers = question.answerOptions.every((a: any) => a);
-    const hasCorrectAnswer = question.correctIndexes.length > 0;
-    return !(hasQuestion && hasAnswers && hasCorrectAnswer);
+    const messages: string[] = [];
+    if (!question.questionText.trim()) {
+      messages.push("כותרת השאלה ריקה");
+    }
+    const emptyAnswerIndexes = question.answerOptions
+      .map((answer: string, idx: number) => (!answer ? idx + 1 : null))
+      .filter(Boolean);
+    if (emptyAnswerIndexes.length > 0) {
+      messages.push(
+        `תשוב${emptyAnswerIndexes.length > 1 ? "ות" : "ה"} ${emptyAnswerIndexes.join(", ")} ${
+          emptyAnswerIndexes.length > 1 ? "ריקות" : "ריקה"
+        }`,
+      );
+    }
+    if (question.correctIndexes.length === 0) {
+      messages.push("לפחות תשובה אחת חייבת להיות נכונה");
+    }
+    return {
+      hasWarning: messages.length > 0,
+      messages,
+    };
   };
 
-  const mapSlideWarnings = () => {
-    return questions.map((q, index) => hasEmptyField(index));
-  };
-
-  const slideWarnings = mapSlideWarnings();
+  const slideWarnings = questions.map((_, index) => getQuestionWarnings(index));
 
   const deleteQuizHandler = async () => {
     try {

@@ -1,6 +1,4 @@
 .slide {
-  /* width: 14vw;
-  height: 18vh; */
   width: 12rem;
   height: 8rem;
   display: flex;
@@ -21,9 +19,10 @@
   color: white;
   height: 20px;
   aspect-ratio: 1;
-  /* border: 2px solid white; */
   border-radius: 50%;
   font-size: var(--fs-body-sm);
+  cursor: pointer;
+  overflow: visible;
 }
 
 .title {
