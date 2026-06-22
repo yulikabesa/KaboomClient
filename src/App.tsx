@@ -16,10 +16,11 @@ import ProjectorGamePage from "./pages/projectorDisplay/ProjectorGamePage";
 import Home from "./pages/Home";
 import Create from "./pages/Create";
 import { AuthProvider } from "./store/AuthContext";
+// import ProtectedRoute from "./store/ProtectedRoute";
 
 const App = () => {
   // const { user } = useAuth();
-    // const userId = user?._id;
+  // const userId = user?._id;
 
   const router = createBrowserRouter([
     {
@@ -52,15 +53,27 @@ const App = () => {
         },
         {
           path: "/lobby/:pin",
-          element: <GameLobby />,
+          element: (
+            //<ProtectedRoute expectedRole="host">
+              <GameLobby />
+            //</ProtectedRoute>
+          ),
         },
         {
           path: "/game/:pin",
-          element: <PlayerGamePage />,
+          element: (
+            //<ProtectedRoute expectedRole="player">
+              <PlayerGamePage />
+            //</ProtectedRoute>
+          ),
         },
         {
           path: "/hostGame/:pin",
-          element: <ProjectorGamePage />,
+          element: (
+            //<ProtectedRoute expectedRole="host">
+              <ProjectorGamePage />
+            //</ProtectedRoute>
+          ),
         },
       ],
     },

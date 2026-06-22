@@ -1,4 +1,12 @@
-.score-title {
+.layout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: auto 1;
+  overflow: hidden;
+}
+
+.header {
   background-color: white;
   width: 100vw;
   padding: 2vh;
@@ -9,14 +17,21 @@
   box-sizing: border-box;
 }
 
-.container {
+.final-results {
+  position: relative;
+}
+
+.podium-flex {
   display: flex;
-  position: absolute;
-  bottom: 0;
-  width: 100vw;
   justify-content: center;
   align-items: flex-end;
-  overflow-y: hidden;
+}
+
+.main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .actions {
@@ -25,23 +40,25 @@
   justify-content: end;
 }
 
-.lower-places-container {
+.lower-ranks {
   display: flex;
   flex-direction: column;
   gap: 1vh;
   position: absolute;
   bottom: 8vh;
-  width: 100vw;
+  width: 100%;
   align-items: center;
+  z-index: 2;
 }
 
 .rank-div {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1vh 1.5vh;
+  padding: 1rem 0.5rem;
   border-radius: 4px;
   width: 20vw;
+  min-width: 250px;
   background-color: white;
   font-size: clamp(20px, 2vmax, 24px);
   transform: translateX(100vw);
@@ -50,8 +67,9 @@
 
 .right-side-items {
   display: flex;
-  gap: 1.5vh;
   align-items: center;
+  gap: 1.5vh;
+  font-weight: 700;
 }
 
 .left-side-items {

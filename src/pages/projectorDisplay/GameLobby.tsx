@@ -39,6 +39,8 @@ const GameLobby: React.FC = () => {
     socket.on("player-joined", handlePlayerJoined);
     socket.on("disconnect", handleDisconnect);
 
+    socket.emit("game-event", { type: "get-game-state", payload: {} });
+
     return () => {
       socket.off("game-state", handleState);
       socket.off("player-joined", handlePlayerJoined);

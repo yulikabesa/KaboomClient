@@ -1,6 +1,6 @@
 import Overlay from "../../UI/Overlay";
 import classes from "./MediaLibrary.module.css";
-import img from "../../../assets/defaultCoverPhoto.png";
+import img from "../../../assets/defaultQuizCover.png";
 import img2 from "../../../assets/questionMarksBackground.png";
 
 const categories: string[] = [

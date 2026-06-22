@@ -48,6 +48,15 @@ export type sharedWithType = {
   };
 };
 
+export type quizDisplayType = {
+  _id: string;
+  title: string;
+  coverImage: string;
+  tags: string[];
+  questionCount: number;
+  canEdit: boolean;
+};
+
 export type quizType = {
   coverImage: string;
   owner: string;

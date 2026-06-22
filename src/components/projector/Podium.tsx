@@ -21,12 +21,14 @@ const Podium: React.FC<{ name: string; rank: number; points: number }> = (
   }
 
   return (
-    <div className={`${classes["container"]} ${classes[`container${props.rank}`]}`}>
-      <div className={`${classes["name"]} ${props.rank === 1 && classes['first-place-width']}`}>{props.name}</div>
+    <div
+      className={`${classes["rank-container"]} ${classes[`animate-${props.rank}`]}`}
+    >
+      <div className={classes["nickname"]}>{props.name}</div>
       <div
-        className={`${classes["purple-rectangle"]} ${classes[`rank${props.rank}`]}`}
+        className={`${classes["purple-rectangle"]} ${classes[`rank-${props.rank}`]}`}
       >
-        <img className={classes["rank"]} src={rankSymbol} alt="rank" />
+        <img className={classes["rank-img"]} src={rankSymbol} alt="rank" />
         <p className={classes["points"]}>{props.points} </p>
       </div>
     </div>
