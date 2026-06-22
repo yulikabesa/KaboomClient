@@ -24,19 +24,6 @@ const QuestionSlide: React.FC<{
         border: props.isCurrentlyEdited ? "2px solid #3E6CC4" : "none",
       }}
     >
-      {props.warning.hasWarning && (
-        <>
-          <div
-            ref={warningRef}
-            className={classes["warning"]}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-          >
-            !
-          </div>
-            {hovered && warningRef && <ToolTip content={props.warning.messages.join("\n")} target={warningRef.current!} />}
-        </>
-      )}
       <p className={classes.title}>{props.questionText || "\u00A0"}</p>
       <div className={classes["middle-items"]}>
         {props.questionImage !== "" && (
@@ -53,6 +40,24 @@ const QuestionSlide: React.FC<{
         answersCount={props.answersCount}
         correctAnswerIndexes={props.correctAnswerIndexes}
       />
+      {props.warning.hasWarning && (
+        <>
+          <div
+            ref={warningRef}
+            className={classes["warning"]}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          >
+            !
+          </div>
+          {hovered && warningRef && (
+            <ToolTip
+              content={props.warning.messages.join("\n")}
+              target={warningRef.current!}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 };
