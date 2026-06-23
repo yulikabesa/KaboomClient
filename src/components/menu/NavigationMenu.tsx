@@ -39,32 +39,26 @@ const NavigationMenu: React.FC<{
           </div>
         )}
       </div>
-      <nav>
-        <ul>
-          <li>
-            {props.variant === "home" ? (
-              <Button variant="white" to="/join">
-                לשחק
-              </Button>
-            ) : (
-              <Button variant="white" to="/home">
-                לצאת
-              </Button>
-            )}
-          </li>
-          <li>
-            {props.variant === "home" ? (
-              <Button variant="blue" to="/create">
-                ליצור
-              </Button>
-            ) : (
-              <Button variant="blue" onClick={props.onQuizSave}>
-                לשמור
-              </Button>
-            )}
-          </li>
-        </ul>
-      </nav>
+      <div className={classes["actions"]}>
+        {props.variant === "home" ? (
+          <Button variant="white" to="/join">
+            לשחק
+          </Button>
+        ) : (
+          <Button variant="white" to="/home">
+            לצאת
+          </Button>
+        )}
+        {props.variant === "home" ? (
+          <Button variant="blue" to="/create">
+            ליצור
+          </Button>
+        ) : (
+          <Button variant="blue" onClick={props.onQuizSave}>
+            לשמור
+          </Button>
+        )}
+      </div>
     </header>
   );
 };

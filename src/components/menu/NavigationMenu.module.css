@@ -1,6 +1,7 @@
 .header {
   width: 100vw;
-  height: 6vh;
+  height: 5vh;
+  min-height: 42px;
   background-color: #3a1182;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
@@ -16,12 +17,6 @@
   width: 50%;
 }
 
-.header nav {
-  width: 50%;
-  height: 60%;
-}
-
-.header li,
 .right-side-items > * {
   margin: 0 1%;
 }
@@ -30,13 +25,10 @@
   height: 100%;
 }
 
-.header ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.actions {
   display: flex;
-  align-items: baseline;
   justify-content: end;
+  gap: 5%;
 }
 
 .input-container {
