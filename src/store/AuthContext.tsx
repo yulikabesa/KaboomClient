@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
 type User = {
@@ -15,29 +15,23 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
+const readStoredAuth = (): { token: string | null; user: User | null } => {
+  const savedToken = localStorage.getItem("token");
+  if (!savedToken) return { token: null, user: null };
+  try {
+    return { token: savedToken, user: jwtDecode<User>(savedToken) };
+  } catch {
+    localStorage.removeItem("token");
+    return { token: null, user: null };
+  }
+};
 
-  // restore login on refresh
-  useEffect(() => {
-    const savedToken = localStorage.getItem("token");
-    if (!savedToken) return;
-    try {
-      const decoded = jwtDecode<User>(savedToken);
-      setToken(savedToken);
-      setUser(decoded);
-    } catch (error) {
-      console.error("Invalid token");
-      localStorage.removeItem("token");
-    }
-  }, []);
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [{ token, user }, setAuth] = useState(readStoredAuth);
 
   const setAuthToken = (newToken: string) => {
     localStorage.setItem("token", newToken);
-    const decoded = jwtDecode<User>(newToken);
-    setToken(newToken);
-    setUser(decoded);
+    setAuth({ token: newToken, user: jwtDecode<User>(newToken) });
   };
 
   return (
