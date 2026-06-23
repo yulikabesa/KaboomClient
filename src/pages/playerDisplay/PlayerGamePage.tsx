@@ -8,13 +8,15 @@ import { useSocket } from "../../store/SocketContext";
 import CountDown from "../../components/player/CountDown";
 import FinalRank from "../../components/player/FinalRank";
 import classes from "./JoinGamePage.module.css";
+import layoutClasses from "../../components/UI/Layout.module.css";
 
-type GameStatus =
+export type GameStatus =
+  | "loading"
   | "lobby"
   | "question"
   | "answers"
-  | "loading"
-  | "answerFeedback"
+  | "results"
+  | "leaderboard"
   | "podium";
 
 const PlayerGamePage = () => {
@@ -50,7 +52,7 @@ const PlayerGamePage = () => {
           break;
         case "results":
         case "leaderboard":
-          setStatus("answerFeedback");
+          setStatus(state.phase);
           setCurrentRank(state.data?.currentRank ?? null);
           setRankAbove(state.data?.rankAbove ?? null);
           setIsCorrect(state.data.isCorrect);
@@ -86,9 +88,20 @@ const PlayerGamePage = () => {
     });
   }, []);
 
+  const answerFeedback = (
+    <AnswerFeedback
+      isCorrect={isCorrect}
+      currentRank={currentRank}
+      rankAbove={rankAbove}
+    />
+  );
+
   const statusElement = {
+    loading: <Loading />,
     lobby: (
-      <WaitingForHost nickname={sessionStorage.getItem("nickname") || "Guest"} />
+      <WaitingForHost
+        nickname={sessionStorage.getItem("nickname") || "Guest"}
+      />
     ),
     answers: (
       <AnswerOptions
@@ -98,10 +111,8 @@ const PlayerGamePage = () => {
       />
     ),
     question: <CountDown initialSeconds={5} />,
-    loading: <Loading />,
-    answerFeedback: (
-      <AnswerFeedback isCorrect={isCorrect} currentRank={currentRank} rankAbove={rankAbove} />
-    ),
+    results: answerFeedback,
+    leaderboard: answerFeedback,
     podium: (
       <FinalRank
         currentRank={currentRank}
@@ -112,7 +123,9 @@ const PlayerGamePage = () => {
   };
 
   return (
-    <div className={classes.background}>
+    <div
+      className={`${classes.page} ${layoutClasses["background"]} ${layoutClasses["light-img"]}`}
+    >
       {statusElement[status]}
       <PlayerCard
         name={sessionStorage.getItem("nickname") || "Guest"}

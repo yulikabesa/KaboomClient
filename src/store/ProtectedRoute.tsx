@@ -3,6 +3,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { useSocket } from "./SocketContext";
 import { useAuth } from "./AuthContext";
 import Loading from "../components/player/Loading";
+import layoutClasses from "../components/UI/Layout.module.css";
 
 type Role = "host" | "player";
 type Status = "loading" | "allowed" | "denied";
@@ -45,21 +46,25 @@ const ProtectedRoute: React.FC<Props> = ({ expectedRole, children }) => {
 
     if (socket.connected) {
       sendCheck();
-    } else {
-      socket.once("connect", sendCheck);
     }
 
     return () => {
       socket.off("game-role", handleRole);
       socket.off("disconnect", handleDisconnect);
-      socket.off("connect", sendCheck);
     };
   }, [socket, pin, expectedRole]);
 
   if (!token) return <Navigate to="/login" replace />;
   if (!pin) return <Navigate to="/home" replace />;
   if (status === "denied") return <Navigate to="/home" replace />;
-  if (status === "loading") return <Loading />;
+  if (status === "loading")
+    return (
+      <div
+        className={`${layoutClasses["background"]} ${layoutClasses["light-img"]}`}
+      >
+        <Loading />
+      </div>
+    );
 
   return <>{children}</>;
 };

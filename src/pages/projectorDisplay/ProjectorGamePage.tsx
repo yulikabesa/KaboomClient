@@ -5,12 +5,16 @@ import Question from "../../components/quiz/Question";
 import Leaderboard from "../../components/projector/Leaderboard";
 import GameFinalResults from "../../components/quiz/GameFinalResults";
 import Loading from "../../components/player/Loading";
+import { type GameStatus } from "../playerDisplay/PlayerGamePage";
+import { Navigate } from "react-router-dom";
 import classes from "./GameLobby.module.css";
+import layoutClasses from "../../components/UI/Layout.module.css";
 
 const ProjectorGamePage = () => {
+  const [mode, setMode] = useState("light");
   const INTRO_DURATION = 5;
 
-  const [status, setStatus] = useState("loading");
+  const [status, setStatus] = useState<GameStatus>("loading");
   const [question, setQuestion] = useState("");
   const [scoringWeight, setScoringWeight] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState(1);
@@ -37,13 +41,13 @@ const ProjectorGamePage = () => {
 
     const handler = (state: any) => {
       console.log("state", state);
-      // לאפס כמה ענו ולאפס גרף
       switch (state.phase) {
         case "question":
           setQuestion(state.data?.questionText ?? "");
           setScoringWeight(state.data?.scoringWeight ?? 1);
           setCurrentQuestion(state.data?.currentQuestion + 1);
           setQuestionCount(state.data?.questionCount ?? 1);
+          setMode("light");
           break;
         case "answers":
           setAnswerTexts(state.data?.answerOptions ?? []);
@@ -57,6 +61,7 @@ const ProjectorGamePage = () => {
           setAnswerDistributionArrray(
             new Array(state.data?.answerOptions?.length ?? 2).fill(0),
           );
+          setMode("light");
           break;
 
         case "results":
@@ -65,11 +70,16 @@ const ProjectorGamePage = () => {
           setAnswerDistributionArrray(state.data?.distribution ?? []);
           SetCorrectAnswerIndexes(state.data?.correctAnswers);
           setTimeLeft(0);
+          setMode("dark");
           break;
 
         case "leaderboard":
+          SetRankingArray(state.data);
+          setMode("dark");
+          break;
         case "podium":
           SetRankingArray(state.data);
+          setMode("light");
           break;
       }
       setStatus(state.phase);
@@ -115,35 +125,46 @@ const ProjectorGamePage = () => {
     });
   }, []);
 
+  const answersAndResultsPage = (
+    <GameQuestion
+      question={question}
+      playerAnsweredNum={playerAnsweredNum}
+      timeLeft={timeLeft}
+      setTimeLeft={setTimeLeft}
+      answerTexts={answerTexts}
+      scoringWeight={scoringWeight}
+      duration={duration}
+      showAnswer={showResults}
+      correctAnswerIndexes={correctAnswerIndexes}
+      answerDistributionArrray={answerDistributionArrray}
+      questionImage={questionImage}
+    />
+  );
+
+  const statusElement = {
+    loading: <Loading />,
+    // todo: decide -> lobby element
+    lobby: <></>,
+    answers: answersAndResultsPage,
+    results: answersAndResultsPage,
+    question: (
+      <Question
+        question={question}
+        currentQuestion={currentQuestion}
+        questionCount={questionCount}
+        duration={INTRO_DURATION}
+        scoringWeight={scoringWeight}
+      />
+    ),
+    leaderboard: <Leaderboard rankingArray={rankingArray} />,
+    podium: <GameFinalResults results={rankingArray} />,
+  };
+
   return (
-    <div className={classes.background}>
-      {status === "loading" && <Loading />}
-      {status === "question" && (
-        <Question
-          question={question}
-          currentQuestion={currentQuestion} // todo get from server
-          questionCount={questionCount} // todo get from server
-          duration={INTRO_DURATION}
-          scoringWeight={scoringWeight}
-        />
-      )}
-      {(status === "answers" || status === "results") && (
-        <GameQuestion
-          question={question}
-          playerAnsweredNum={playerAnsweredNum}
-          timeLeft={timeLeft}
-          setTimeLeft={setTimeLeft}
-          answerTexts={answerTexts}
-          scoringWeight={scoringWeight}
-          duration={duration}
-          showAnswer={showResults}
-          correctAnswerIndexes={correctAnswerIndexes}
-          answerDistributionArrray={answerDistributionArrray}
-          questionImage={questionImage}
-        />
-      )}
-      {status === "leaderboard" && <Leaderboard rankingArray={rankingArray} />}
-      {status === "podium" && <GameFinalResults results={rankingArray} />}
+    <div
+      className={`${classes.background} ${layoutClasses["background"]} ${layoutClasses[`${mode}-img`]}`}
+    >
+      {statusElement[status]}
     </div>
   );
 };

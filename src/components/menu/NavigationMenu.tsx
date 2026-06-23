@@ -15,6 +15,7 @@ const NavigationMenu: React.FC<{
   return (
     <header className={classes.header}>
       <div className={classes["right-side-items"]}>
+        {/* todo: remove link */}
         <Link to="/">
           <img src={kaboomLogo} className={classes.logo} />
         </Link>

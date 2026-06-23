@@ -4,6 +4,7 @@ import { useSocket } from "../../store/SocketContext";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/UI/Button";
 import classes from "./JoinGamePage.module.css";
+import layoutClasses from "../../components/UI/Layout.module.css";
 
 const JoinGamePage: React.FC = () => {
   const [pin, setPin] = useState("");
@@ -91,7 +92,9 @@ const JoinGamePage: React.FC = () => {
   };
 
   return (
-    <div className={classes.background}>
+    <div
+      className={`${classes.page} ${layoutClasses["background"]} ${layoutClasses["light-img"]}`}
+    >
       <div className={classes["main"]}>
         <img src={kaboomLogo} alt="kaboom-logo" />
         <form className={classes["form"]} onSubmit={handleSubmit}>
@@ -121,7 +124,11 @@ const JoinGamePage: React.FC = () => {
                 onChange={handleNicknameChange}
                 className={classes["pin-input"]}
               />
-              <Button variant="black" type="submit" className={classes["join-game-button"]}>
+              <Button
+                variant="black"
+                type="submit"
+                className={classes["join-game-button"]}
+              >
                 אחלה, מתחברים!
               </Button>
             </>
