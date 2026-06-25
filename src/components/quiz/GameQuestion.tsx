@@ -9,14 +9,14 @@ import Button from "../UI/Button";
 
 const GameQuestion: React.FC<{
   question: string;
-  playerAnsweredNum: number;
+  playersAnswered: number;
   timeLeft: number;
   setTimeLeft: Dispatch<SetStateAction<number>>;
-  answerTexts: string[];
+  answerOptions: string[];
   duration: number;
   showAnswer: boolean;
   correctAnswerIndexes: number[];
-  answerDistributionArrray: number[];
+  answerDistributionArray: number[];
   scoringWeight: number;
   questionImage: string;
 }> = (props) => {
@@ -67,10 +67,10 @@ const GameQuestion: React.FC<{
       {props.showAnswer ? (
         <div className={classes["bar-indicators-wrapper"]}>
           <BarIndicatorsList
-            answersCount={props.answerDistributionArrray.length}
+            answersCount={props.answerDistributionArray.length}
             correctAnswerIndexes={props.correctAnswerIndexes}
-            maxValue={Math.max(...props.answerDistributionArrray)}
-            values={props.answerDistributionArrray}
+            maxValue={Math.max(...props.answerDistributionArray)}
+            values={props.answerDistributionArray}
           />
         </div>
       ) : (
@@ -78,7 +78,7 @@ const GameQuestion: React.FC<{
           <div className={classes.wrapper}>
             <div className={classes["players-answered-container"]}>
               <p className={classes["players-answered-num"]}>
-                {props.playerAnsweredNum}
+                {props.playersAnswered}
               </p>
               <p className={classes["players-answered-text"]}>ענו</p>
             </div>
@@ -99,8 +99,8 @@ const GameQuestion: React.FC<{
       )}
       <AnswerOptions
         viewMode="projector"
-        answersCount={props.answerTexts.length}
-        answerTexts={props.answerTexts}
+        answersCount={props.answerOptions.length}
+        answerOptions={props.answerOptions}
         onAnswerClick={(i) => console.log(i)}
         {...(props.showAnswer
           ? { correctAnswerIndexes: props.correctAnswerIndexes }

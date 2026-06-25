@@ -3,62 +3,44 @@ import layoutClasses from "../../components/UI/Layout.module.css";
 import kaboomLogo from "../../assets/kaboomLogo.svg";
 import personIcon from "../../assets/personIcon.svg";
 import { useLobby } from "../../store/LobbyContext";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useSocket } from "../../store/SocketContext";
-import Loading from "../../components/player/Loading";
+import { useInitialGameState } from "../../store/GameStateContext";
 
 const GameLobby: React.FC = () => {
   const socket = useSocket();
+  const initialState = useInitialGameState();
   const { lobby, setLobby, addPlayer } = useLobby();
   const navigate = useNavigate();
   const { pin } = useParams<{ pin: string }>();
 
   useEffect(() => {
-    if (!socket || !pin) return;
-
-    const handleState = (state: { phase: string; data: any }) => {
-      if (state.phase !== "lobby" || !state.data) return;
+    if (!pin) return;
+    if (initialState.phase === "lobby" && initialState.data) {
       setLobby({
         gamePin: pin,
-        quizId: state.data.quizId ?? "",
-        players: state.data.players ?? [],
+        quizId: initialState.data.quizId ?? "",
+        players: initialState.data.players ?? [],
       });
-    };
+    }
+  }, []);
 
+  useEffect(() => {
+    if (!socket) return;
     const handlePlayerJoined = (player: { id: string; nickname: string }) => {
       addPlayer(player);
     };
-
-    const handleDisconnect = (reason: string) => {
-      if (reason === "io server disconnect") {
-        navigate("/home", { replace: true });
-      }
-    };
-
-    socket.on("game-state", handleState);
     socket.on("player-joined", handlePlayerJoined);
-    socket.on("disconnect", handleDisconnect);
-
-    socket.emit("game-event", { type: "get-game-state", payload: {} });
-
     return () => {
-      socket.off("game-state", handleState);
       socket.off("player-joined", handlePlayerJoined);
-      socket.off("disconnect", handleDisconnect);
     };
-  }, [socket, pin]);
-
-  if (!pin) {
-    return <Navigate to="/home" replace />;
-  }
+  }, [socket, addPlayer]);
 
   const startGame = () => {
     if (!socket || !lobby) return;
     socket.once("game-started", () => {
-      navigate(`/hostGame/${pin}`, {
-        replace: true,
-      });
+      navigate(`/hostGame/${pin}`, { replace: true });
     });
     socket.emit("game-event", {
       type: "start-game",
@@ -66,13 +48,12 @@ const GameLobby: React.FC = () => {
     });
   };
 
-  if (!lobby || lobby.gamePin !== pin) {
-    return (
-        <div className={`${classes["page"]} ${layoutClasses["background"]} ${layoutClasses["light-img"]}`}>
-        <Loading />
-      </div>
-    );
-  }
+
+  const view = lobby ?? {
+    gamePin: pin ?? "",
+    quizId: "",
+    players: [] as { id: string; nickname: string }[],
+  };
 
   return (
     <div
@@ -83,7 +64,7 @@ const GameLobby: React.FC = () => {
           <div className={classes["pin-text-overlay"]}>
             <p className={classes["pin-text"]}>קוד משחק:</p>
             <p className={classes["pin"]}>
-              {lobby.gamePin.slice(0, 3)} {lobby.gamePin.slice(3)}
+              {view.gamePin.slice(0, 3)} {view.gamePin.slice(3)}
             </p>
           </div>
         </div>
@@ -100,7 +81,7 @@ const GameLobby: React.FC = () => {
           התחל
         </div>
         <div className={classes["player-number-box"]}>
-          {lobby.players.length.toString()}
+          {view.players.length.toString()}
           <img src={personIcon} alt="icon" />
         </div>
         <img
@@ -111,7 +92,7 @@ const GameLobby: React.FC = () => {
       </div>
 
       <div className={classes["player-name-box"]}>
-        {lobby.players.map((player, index) => (
+        {view.players.map((player, index) => (
           <div className={classes["names"]} key={`${index}-player`}>
             {player.nickname}
           </div>

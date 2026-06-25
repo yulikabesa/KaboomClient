@@ -4,9 +4,9 @@ import { useSocket } from "./SocketContext";
 import { useAuth } from "./AuthContext";
 import Loading from "../components/player/Loading";
 import layoutClasses from "../components/UI/Layout.module.css";
+import { GameStateProvider, type GameStateEvent } from "./GameStateContext";
 
 type Role = "host" | "player";
-type Status = "loading" | "allowed" | "denied";
 
 interface Props {
   expectedRole: Role;
@@ -18,46 +18,47 @@ const ProtectedRoute: React.FC<Props> = ({ expectedRole, children }) => {
   const { token } = useAuth();
   const { pin } = useParams<{ pin: string }>();
 
-  const [status, setStatus] = useState<Status>("loading");
+  const [role, setRole] = useState<Role | null>(null);
+  const [initialState, setInitialState] = useState<GameStateEvent | null>(null);
+  const [denied, setDenied] = useState(false);
 
   useEffect(() => {
     if (!socket || !pin) return;
 
     const handleRole = (response: { pin: string; role: Role | null }) => {
       if (response.pin !== pin) return;
-      setStatus(response.role === expectedRole ? "allowed" : "denied");
+      if (response.role === expectedRole) setRole(response.role);
+      else setDenied(true);
+    };
+
+    const handleState = (state: GameStateEvent) => {
+      setInitialState((prev) => prev ?? state);
     };
 
     const handleDisconnect = (reason: string) => {
-      if (reason === "io server disconnect") {
-        setStatus("denied");
-      }
-    };
-
-    const sendCheck = () => {
-      socket.emit("game-event", {
-        type: "check-game-role",
-        payload: { pin },
-      });
+      if (reason === "io server disconnect") setDenied(true);
     };
 
     socket.on("game-role", handleRole);
+    socket.on("game-state", handleState);
     socket.on("disconnect", handleDisconnect);
 
     if (socket.connected) {
-      sendCheck();
+      socket.emit("game-event", { type: "check-game-role", payload: { pin } });
+      socket.emit("game-event", { type: "get-game-state", payload: {} });
     }
 
     return () => {
       socket.off("game-role", handleRole);
+      socket.off("game-state", handleState);
       socket.off("disconnect", handleDisconnect);
     };
   }, [socket, pin, expectedRole]);
 
   if (!token) return <Navigate to="/login" replace />;
   if (!pin) return <Navigate to="/home" replace />;
-  if (status === "denied") return <Navigate to="/home" replace />;
-  if (status === "loading")
+  if (denied) return <Navigate to="/home" replace />;
+  if (!role || !initialState) {
     return (
       <div
         className={`${layoutClasses["background"]} ${layoutClasses["light-img"]}`}
@@ -65,8 +66,9 @@ const ProtectedRoute: React.FC<Props> = ({ expectedRole, children }) => {
         <Loading />
       </div>
     );
+  }
 
-  return <>{children}</>;
+  return <GameStateProvider value={initialState}>{children}</GameStateProvider>;
 };
 
 export default ProtectedRoute;

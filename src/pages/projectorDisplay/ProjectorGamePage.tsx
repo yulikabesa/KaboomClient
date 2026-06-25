@@ -7,136 +7,176 @@ import GameFinalResults from "../../components/quiz/GameFinalResults";
 import Loading from "../../components/player/Loading";
 import { type GameStatus } from "../playerDisplay/PlayerGamePage";
 import { Navigate } from "react-router-dom";
-import classes from "./GameLobby.module.css";
 import layoutClasses from "../../components/UI/Layout.module.css";
+import {
+  type GameStateEvent,
+  useInitialGameState,
+} from "../../store/GameStateContext";
+
+const INTRO_DURATION = 5;
+
+type Display = {
+  status: GameStatus;
+  background: "light" | "dark";
+  question: string;
+  scoringWeight: number;
+  currentQuestion: number;
+  questionCount: number;
+  answerOptions: string[];
+  questionImage: string;
+  duration: number;
+  timeLeft: number;
+  correctAnswerIndexes: number[];
+  answerDistribution: number[];
+  ranking: any[];
+};
+
+const defaultDisplay: Display = {
+  status: null,
+  background: "light",
+  question: "",
+  scoringWeight: 1,
+  currentQuestion: 1,
+  questionCount: 1,
+  answerOptions: [],
+  questionImage: "",
+  duration: 20,
+  timeLeft: 20,
+  correctAnswerIndexes: [],
+  answerDistribution: [],
+  ranking: [],
+};
+
+function applyState(prev: Display, state: GameStateEvent): Display {
+  const display: Display = { ...prev, status: state.phase as GameStatus };
+  const data = state.data ?? {};
+
+  console.log("phase", state.phase);
+  console.log("data", state.data);
+
+  switch (state.phase) {
+    case "question":
+      display.question = data.questionText ?? "";
+      display.scoringWeight = data.scoringWeight ?? 1;
+      display.currentQuestion = (data.currentQuestion ?? 0) + 1;
+      display.questionCount = data.questionCount ?? 1;
+      display.background = "light";
+      break;
+    case "answers":
+      display.answerOptions = data.answerOptions ?? [];
+      display.question = data.questionText ?? "";
+      display.timeLeft = data.timeLimit ?? 20;
+      display.duration = data.timeLimit ?? 20;
+      display.scoringWeight = data.scoringWeight ?? 1;
+      display.questionImage = data.questionImage ?? "";
+      display.answerDistribution = new Array(
+        data.answerOptions?.length ?? 2,
+      ).fill(0);
+      display.background = "light";
+      break;
+    case "results":
+      display.question = data.questionText ?? "";
+      display.answerOptions = data.answerOptions ?? [];
+      display.answerDistribution = data.distribution ?? [];
+      display.correctAnswerIndexes = data.correctAnswers ?? [];
+      display.timeLeft = 0;
+      display.background = "dark";
+      break;
+    case "leaderboard":
+      display.ranking = data ?? [];
+      display.background = "dark";
+      break;
+    case "podium":
+      display.ranking = data ?? [];
+      display.background = "light";
+      break;
+  }
+
+  return display;
+}
 
 const ProjectorGamePage = () => {
-  const [mode, setMode] = useState("light");
-  const INTRO_DURATION = 5;
-
-  const [status, setStatus] = useState<GameStatus>("loading");
-  const [question, setQuestion] = useState("");
-  const [scoringWeight, setScoringWeight] = useState(1);
-  const [currentQuestion, setCurrentQuestion] = useState(1);
-  const [questionCount, setQuestionCount] = useState(1);
-  const [answerTexts, setAnswerTexts] = useState<string[]>([]);
-  const [questionImage, setQuestionImage] = useState("");
-
-  const [playerAnsweredNum, SetPlayerAnsweredNum] = useState(0);
-  const [duration, setDuration] = useState(20);
-  const [timeLeft, setTimeLeft] = useState(20);
-  const showResults = status === "results";
-
-  const [correctAnswerIndexes, SetCorrectAnswerIndexes] = useState<number[]>(
-    [],
-  );
-  const [answerDistributionArrray, setAnswerDistributionArrray] = useState([
-    0, 0,
-  ]);
-  const [rankingArray, SetRankingArray] = useState([]);
   const socket = useSocket();
+  const initialState = useInitialGameState();
+
+  const [display, setDisplay] = useState<Display>(() =>
+    applyState(defaultDisplay, initialState),
+  );
+  const [playersAnswered, setPlayersAnswered] = useState(0);
 
   useEffect(() => {
     if (!socket) return;
-
-    const handler = (state: any) => {
-      console.log("state", state);
-      switch (state.phase) {
-        case "question":
-          setQuestion(state.data?.questionText ?? "");
-          setScoringWeight(state.data?.scoringWeight ?? 1);
-          setCurrentQuestion(state.data?.currentQuestion + 1);
-          setQuestionCount(state.data?.questionCount ?? 1);
-          setMode("light");
-          break;
-        case "answers":
-          setAnswerTexts(state.data?.answerOptions ?? []);
-          setQuestion(state.data?.questionText ?? "");
-          setTimeLeft(state.data?.timeLimit ?? 20);
-          setDuration(state.data?.timeLimit ?? 20);
-          setScoringWeight(state.data?.scoringWeight ?? 1);
-          setQuestionImage(state.data?.questionImage ?? "");
-          // reset variables
-          SetPlayerAnsweredNum(0);
-          setAnswerDistributionArrray(
-            new Array(state.data?.answerOptions?.length ?? 2).fill(0),
-          );
-          setMode("light");
-          break;
-
-        case "results":
-          setQuestion(state.data?.questionText ?? "");
-          setAnswerTexts(state.data?.answerOptions ?? []);
-          setAnswerDistributionArrray(state.data?.distribution ?? []);
-          SetCorrectAnswerIndexes(state.data?.correctAnswers);
-          setTimeLeft(0);
-          setMode("dark");
-          break;
-
-        case "leaderboard":
-          SetRankingArray(state.data);
-          setMode("dark");
-          break;
-        case "podium":
-          SetRankingArray(state.data);
-          setMode("light");
-          break;
-      }
-      setStatus(state.phase);
+    const handler = (state: GameStateEvent) => {
+      setDisplay((prev) => applyState(prev, state));
+      if (state.phase === "answers") setPlayersAnswered(0);
     };
-
     socket.on("game-state", handler);
-    return () => socket.off("game-state", handler);
+    return () => {
+      socket.off("game-state", handler);
+    };
   }, [socket]);
 
   useEffect(() => {
-    if (status !== "question" || !socket) return;
+    if (display.status !== "question" || !socket) return;
 
-    const timer = setTimeout(
-      () => {
-        socket.emit("game-event", {
-          type: "reveal-answers",
-          payload: {},
-        });
-      },
-      INTRO_DURATION * 1000 - 1.5,
-    );
+    const timer = setTimeout(() => {
+      socket.emit("game-event", {
+        type: "reveal-answers",
+        payload: {},
+      });
+    }, INTRO_DURATION * 1000);
 
     return () => clearTimeout(timer);
-  }, [status, socket]);
+  }, [display.status, socket]);
 
   useEffect(() => {
     if (!socket) return;
-
-    const progressHandler = (answeredNumber: number) => {
-      SetPlayerAnsweredNum(answeredNumber);
-    };
-
+    const progressHandler = (n: number) => setPlayersAnswered(n);
     socket.on("answer-progress", progressHandler);
-
-    return () => socket.off("answer-progress", progressHandler);
+    return () => {
+      socket.off("answer-progress", progressHandler);
+    };
   }, [socket]);
 
-  useEffect(() => {
-    if (!socket) return;
-    socket.emit("game-event", {
-      type: "get-game-state",
-      payload: {},
-    });
-  }, []);
+  const setTimeLeft: React.Dispatch<React.SetStateAction<number>> = (action) =>
+    setDisplay((prev) => ({
+      ...prev,
+      timeLeft:
+        typeof action === "function"
+          ? (action as (n: number) => number)(prev.timeLeft)
+          : action,
+    }));
+
+  const {
+    status,
+    background,
+    question,
+    scoringWeight,
+    currentQuestion,
+    questionCount,
+    answerOptions,
+    questionImage,
+    duration,
+    timeLeft,
+    correctAnswerIndexes,
+    answerDistribution,
+    ranking,
+  } = display;
+
+  const showResults = status === "results";
 
   const answersAndResultsPage = (
     <GameQuestion
       question={question}
-      playerAnsweredNum={playerAnsweredNum}
+      playersAnswered={playersAnswered}
       timeLeft={timeLeft}
       setTimeLeft={setTimeLeft}
-      answerTexts={answerTexts}
+      answerOptions={answerOptions}
       scoringWeight={scoringWeight}
       duration={duration}
       showAnswer={showResults}
       correctAnswerIndexes={correctAnswerIndexes}
-      answerDistributionArrray={answerDistributionArrray}
+      answerDistributionArray={answerDistribution}
       questionImage={questionImage}
     />
   );
@@ -156,15 +196,15 @@ const ProjectorGamePage = () => {
         scoringWeight={scoringWeight}
       />
     ),
-    leaderboard: <Leaderboard rankingArray={rankingArray} />,
-    podium: <GameFinalResults results={rankingArray} />,
+    leaderboard: <Leaderboard rankingArray={ranking} />,
+    podium: <GameFinalResults results={ranking} />,
   };
 
   return (
     <div
-      className={`${classes.background} ${layoutClasses["background"]} ${layoutClasses[`${mode}-img`]}`}
+      className={`${layoutClasses["background"]} ${layoutClasses[`${background}-img`]}`}
     >
-      {statusElement[status]}
+      {status ? statusElement[status] : <Navigate to="/home" replace />}
     </div>
   );
 };

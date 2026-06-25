@@ -11,7 +11,7 @@ type Props = {
   answersCount: number;
   onAnswerClick: (answerIndex: number) => void;
   viewMode?: "player" | "projector";
-  answerTexts?: string[];
+  answerOptions?: string[];
   correctAnswerIndexes?: number[]; // new prop for projector mode
 };
 
@@ -58,7 +58,7 @@ const AnswerOptions: React.FC<Props> = ({
   answersCount,
   onAnswerClick,
   viewMode = "player",
-  answerTexts = [],
+  answerOptions = [],
   correctAnswerIndexes,
 }) => {
   return (
@@ -98,7 +98,7 @@ const AnswerOptions: React.FC<Props> = ({
             {viewMode === "projector" && (
               <div className={classes.contentRight}>
                 {AnswersStyle[i].shape}
-                <span className={classes.answerText}>{answerTexts[i]}</span>
+                <span className={classes.answerText}>{answerOptions[i]}</span>
               </div>
             )}
           </div>
