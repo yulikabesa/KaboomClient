@@ -1,4 +1,5 @@
 import classes from "./GameLobby.module.css";
+import layoutClasses from "../../components/UI/Layout.module.css";
 import kaboomLogo from "../../assets/kaboomLogo.svg";
 import personIcon from "../../assets/personIcon.svg";
 import { useLobby } from "../../store/LobbyContext";
@@ -67,14 +68,16 @@ const GameLobby: React.FC = () => {
 
   if (!lobby || lobby.gamePin !== pin) {
     return (
-      <div className={`${classes["page"]} ${classes["background"]}`}>
+        <div className={`${classes["page"]} ${layoutClasses["background"]} ${layoutClasses["light-img"]}`}>
         <Loading />
       </div>
     );
   }
 
   return (
-    <div className={`${classes["page"]} ${classes["background"]}`}>
+    <div
+      className={`${classes["page"]} ${layoutClasses["background"]} ${layoutClasses["light-img"]}`}
+    >
       <div className={classes["top-info"]}>
         <div className={classes["right-rectangle"]}>
           <div className={classes["pin-text-overlay"]}>
