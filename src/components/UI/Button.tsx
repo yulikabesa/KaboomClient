@@ -8,6 +8,7 @@ interface ButtonProps extends PropsWithChildren {
   variant?: "blue" | "white" | "red" | "black";
   to?: string;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
@@ -20,6 +21,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     </Link>
   ) : (
     <button
+      disabled={props.disabled}
       onClick={props.onClick}
       type={props.type}
       className={`${classes["btn"]} ${props.variant ? classes[`${props.variant}-btn`] : ""} ${props.className ? props.className : ""}`}
