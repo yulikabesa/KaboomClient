@@ -1,10 +1,10 @@
 import { createContext, useContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
-type User = {
+export type User = {
   _id: string;
   name: string;
-  email?: string;
+  email: string;
 };
 
 type AuthContextType = {

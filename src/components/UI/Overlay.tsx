@@ -17,14 +17,14 @@ const Backdrop: React.FC<{ onClick: () => void }> = (props) => {
 
 const OverlayCard: React.FC<OverlayProps> = (props) => {
   return (
-    <div className={`${classes["card"]} ${props.cardClassName}`}>
+    <div className={`${classes["card"]} ${props.cardClassName ?? ""}`}>
       <header className={classes["header"]}>
         <p style={{fontWeight: '900'}}>{props.title}</p>
         {props.button && (
           <button className={classes["btn"]} onClick={props.closeOverlay} />
         )}
       </header>
-      <div className={`${classes["content"]} ${props.className}`}>
+      <div className={`${classes["content"]} ${props.className ?? ""}`}>
         {props.children}
       </div>
     </div>

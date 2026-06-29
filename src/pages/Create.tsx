@@ -20,7 +20,7 @@ import {
   getQuizById,
   updateQuiz,
 } from "../api/quizApi";
-import { useAuth } from "../store/AuthContext";
+import { useAuth, type User } from "../store/AuthContext";
 import Button from "../components/UI/Button";
 import { useQuestionEditor } from "../hooks/useQuestionEditor";
 import QuestionEditor from "../components/create/QuestionEdit/QuestionEditor";
@@ -53,6 +53,7 @@ const Create: React.FC<{}> = () => {
         setCurrentQuestionBeingEdited(0);
         setQuizName(quiz.title ?? "");
         setSharedWith(quiz.sharedWith ?? []);
+        setOwner(quiz.owner);
         setTags(quiz.tags ?? []);
         setCoverImage({
           image: quiz.coverImage ?? "",
@@ -94,6 +95,7 @@ const Create: React.FC<{}> = () => {
   const [settingsDisplay, setSettingsDisplay] = useState(false);
   const [quizName, setQuizName] = useState("");
   const [sharedWith, setSharedWith] = useState<sharedWithType[]>([]);
+  const [owner, setOwner] = useState<User>();
   const [tags, setTags] = useState<string[]>([]);
   const [coverImage, setCoverImage] = useState<questionImageType>({
     image: "",
@@ -154,7 +156,6 @@ const Create: React.FC<{}> = () => {
   const toggleSettings = () => {
     setSettingsDisplay((prev) => !prev);
   };
-
 
   const getQuestionWarnings = (index: number): QuestionWarning => {
     const question = questions[index];
@@ -282,6 +283,7 @@ const Create: React.FC<{}> = () => {
             closeOverlay={toggleSettings}
             quizName={quizName}
             setQuizName={setQuizName}
+            owner={owner ?? null}
             sharedWith={sharedWith}
             setSharedWith={setSharedWith}
             tags={tags}

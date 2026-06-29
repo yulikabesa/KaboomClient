@@ -9,6 +9,7 @@ import type { questionImageType, sharedWithType } from "../../../types/quiz";
 import Button from "../../UI/Button";
 import DeleteQuizOverlay from "./DeleteQuizOverlay";
 import type { permissionType } from "../../../types/quiz";
+import { useAuth, type User } from "../../../store/AuthContext";
 
 const Settings: React.FC<{
   closeOverlay: () => void;
@@ -18,6 +19,7 @@ const Settings: React.FC<{
   setTags: React.Dispatch<React.SetStateAction<string[]>>;
   sharedWith: sharedWithType[];
   setSharedWith: React.Dispatch<React.SetStateAction<sharedWithType[]>>;
+  owner: User | null;
   coverImage: questionImageType;
   setCoverImage: (updates: Partial<questionImageType>) => void;
   // areAllFieldsFull: () => boolean;
@@ -26,6 +28,8 @@ const Settings: React.FC<{
 }> = (props) => {
   const QUIZ_NAME_MAX = 50;
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
+
+  const { user } = useAuth();
 
   const changePermissionHandle = (
     email: string,
@@ -86,6 +90,11 @@ const Settings: React.FC<{
     setShowDeleteOverlay((prev) => !prev);
   };
 
+  const owner = {
+    user: props.owner ?? user,
+    permission: "בעלים",
+  } as sharedWithType;
+
   return (
     <>
       <Overlay
@@ -128,9 +137,20 @@ const Settings: React.FC<{
           <div>
             <p className={classes.title}>משותפים</p>
             <div className={classes["shared-with-div"]}>
+              {owner.user && (
+                <SharedWith
+                  key={"owner"}
+                  email={owner.user.email}
+                  name={owner.user.name}
+                  permission={owner.permission}
+                  setPermission={changePermissionHandle}
+                  deleteSharedUser={deleteSharedUserHandle}
+                  index={-1}
+                />
+              )}
               {props.sharedWith.map((user, index) => (
                 <SharedWith
-                  key={index}
+                  key={"shared-" + index}
                   email={user.user.email}
                   name={user.user.name}
                   permission={user.permission}
