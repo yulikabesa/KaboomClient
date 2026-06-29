@@ -95,6 +95,13 @@ const Settings: React.FC<{
     permission: "בעלים",
   } as sharedWithType;
 
+  // to disable delete button to non owners
+  let deleteBtnDisabled = true;
+  if (user)
+    deleteBtnDisabled = props.sharedWith.some(
+      (shared) => shared.user._id === user._id,
+    );
+
   return (
     <>
       <Overlay
@@ -191,7 +198,11 @@ const Settings: React.FC<{
           >
             שמור וצא
           </Button>
-          <Button variant="red" onClick={changeShowDeleteOverlay}>
+          <Button
+            variant="red"
+            onClick={changeShowDeleteOverlay}
+            disabled={deleteBtnDisabled}
+          >
             מחק שאלון
           </Button>
         </div>
