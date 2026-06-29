@@ -56,6 +56,11 @@
   box-sizing: border-box;
 }
 
+ .error {
+  border: solid #e21d3c 1.8px;
+  /* background-color: #6c4ab1fe; */
+}
+
 .quiz-name-input::placeholder {
   color: white;
 }

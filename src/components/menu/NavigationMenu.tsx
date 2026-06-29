@@ -4,6 +4,7 @@ import kaboomLogo from "../../assets/kaboomLogo.svg";
 import type React from "react";
 import settingsIcon from "../../assets/settingsIcon.svg";
 import Button from "../UI/Button";
+import { useState } from "react";
 
 const NavigationMenu: React.FC<{
   variant: "home" | "create";
@@ -12,6 +13,8 @@ const NavigationMenu: React.FC<{
   setQuizName?: React.Dispatch<React.SetStateAction<string>>;
   onQuizSave?: () => void;
 }> = (props) => {
+  const [isError, setIsError] = useState(false);
+  const quizNameInputClasses = `${classes["quiz-name-input"]} ${isError && classes["error"]}`;
   return (
     <header className={classes.header}>
       <div className={classes["right-side-items"]}>
@@ -30,11 +33,15 @@ const NavigationMenu: React.FC<{
             <input
               id="quiz-name"
               type="text"
-              className={classes["quiz-name-input"]}
+              className={quizNameInputClasses}
               placeholder="שם החידון"
               value={props.quizName}
               maxLength={50}
-              onChange={(e) => props.setQuizName!(e.target.value)}
+              onChange={(e) => {
+                if (e.target.value && e.target.value.trim() !== "")
+                  setIsError(false);
+                props.setQuizName!(e.target.value);
+              }}
               autoComplete="off"
             />
           </div>
@@ -55,7 +62,16 @@ const NavigationMenu: React.FC<{
             ליצור
           </Button>
         ) : (
-          <Button variant="blue" onClick={props.onQuizSave}>
+          <Button
+            variant="blue"
+            onClick={() => {
+              if (!props.quizName || props.quizName.trim() === "") {
+                setIsError(true);
+                return;
+              }
+              props.onQuizSave && props.onQuizSave();
+            }}
+          >
             לשמור
           </Button>
         )}
