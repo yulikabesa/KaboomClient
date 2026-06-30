@@ -9,6 +9,7 @@ import { type GameStatus } from "../playerDisplay/PlayerGamePage";
 import { Navigate } from "react-router-dom";
 import classes from "./GameLobby.module.css";
 import layoutClasses from "../../components/UI/Layout.module.css";
+import { useRouteLoading } from "../../store/RouteLoadingContext";
 
 const ProjectorGamePage = () => {
   const [mode, setMode] = useState("light");
@@ -35,12 +36,14 @@ const ProjectorGamePage = () => {
   ]);
   const [rankingArray, SetRankingArray] = useState([]);
   const socket = useSocket();
+  const routeLoading = useRouteLoading();
 
   useEffect(() => {
     if (!socket) return;
 
     const handler = (state: any) => {
       console.log("state", state);
+      routeLoading?.setReady();
       switch (state.phase) {
         case "question":
           setQuestion(state.data?.questionText ?? "");

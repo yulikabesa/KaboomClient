@@ -6,10 +6,12 @@ import { useLobby } from "../../store/LobbyContext";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useSocket } from "../../store/SocketContext";
+import { useRouteLoading } from "../../store/RouteLoadingContext";
 import Loading from "../../components/player/Loading";
 
 const GameLobby: React.FC = () => {
   const socket = useSocket();
+  const routeLoading = useRouteLoading();
   const { lobby, setLobby, addPlayer } = useLobby();
   const navigate = useNavigate();
   const { pin } = useParams<{ pin: string }>();
@@ -19,6 +21,7 @@ const GameLobby: React.FC = () => {
 
     const handleState = (state: { phase: string; data: any }) => {
       if (state.phase !== "lobby" || !state.data) return;
+      routeLoading?.setReady();
       setLobby({
         gamePin: pin,
         quizId: state.data.quizId ?? "",

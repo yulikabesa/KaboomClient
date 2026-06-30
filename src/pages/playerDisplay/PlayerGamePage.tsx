@@ -5,6 +5,7 @@ import Loading from "../../components/player/Loading";
 import AnswerFeedback from "../../components/player/AnswerFeedback";
 import WaitingForHost from "../../components/player/WaitingForHost";
 import { useSocket } from "../../store/SocketContext";
+import { useRouteLoading } from "../../store/RouteLoadingContext";
 import CountDown from "../../components/player/CountDown";
 import FinalRank from "../../components/player/FinalRank";
 import classes from "./JoinGamePage.module.css";
@@ -28,6 +29,7 @@ const PlayerGamePage = () => {
   const [rankAbove, setRankAbove] = useState("");
 
   const socket = useSocket();
+  const routeLoading = useRouteLoading();
   const handleAnswerClick = (answerIndex: number) => {
     setStatus("loading");
     socket.emit("game-event", {
@@ -42,6 +44,7 @@ const PlayerGamePage = () => {
     const handleStatusChange = (state: { phase: string; data: any }) => {
       console.log("phase", state.phase);
       console.log("data", state.data);
+      routeLoading?.setReady();
       switch (state.phase) {
         case "answers":
           if (state.data.hasAnswered) setStatus("loading");
