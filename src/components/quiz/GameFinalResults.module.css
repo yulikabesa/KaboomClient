@@ -43,11 +43,13 @@
 .lower-ranks {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1vh;
   position: absolute;
-  bottom: 8vh;
-  width: 100%;
-  align-items: center;
+  bottom: 6%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
   z-index: 2;
 }
 
@@ -57,8 +59,7 @@
   align-items: center;
   padding: 1rem 0.5rem;
   border-radius: 4px;
-  width: 20vw;
-  min-width: 250px;
+  width: 100%;
   background-color: white;
   font-size: clamp(20px, 2vmax, 24px);
   transform: translateX(100vw);

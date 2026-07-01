@@ -106,6 +106,7 @@ const JoinGamePage: React.FC = () => {
                 placeholder="הכנס קוד"
                 onChange={handlePinChange}
                 className={classes["pin-input"]}
+                maxLength={25}
               />
               <Button
                 variant="black"
