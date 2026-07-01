@@ -84,3 +84,7 @@
 .actions > * {
   margin: 0 1%;
 }
+
+.card {
+  width: 50vw;
+}

@@ -15,7 +15,7 @@ const categories: string[] = [
   "מנהיגות",
 ];
 
-const media: string[] = [img2, img, img, img, img, img2, img, img, img, img2];
+const media: string[] = [img2, img, img, img, img, img2, img, img, img, img2, img, img, img, img];
 
 const MediaLibrary: React.FC = () => {
   return (
@@ -24,6 +24,7 @@ const MediaLibrary: React.FC = () => {
       button={true}
       closeOverlay={() => {}}
       elementId="overlay"
+      className={classes["card-content"]}
     >
       <div className={classes["layout"]}>
         <div className={classes["category-list"]}>

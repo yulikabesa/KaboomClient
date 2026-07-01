@@ -14,7 +14,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: fit-content;
-  min-width: 50vw;  
 }
 
 .header {
@@ -36,7 +35,6 @@
   background-repeat: no-repeat;
   aspect-ratio: 1;
   width: 2rem;
-
   cursor: pointer;
 }
 

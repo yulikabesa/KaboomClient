@@ -31,6 +31,7 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
       closeOverlay={props.closeOverlay}
       button={true}
       className={classes["align-content"]}
+      cardClassName={classes["card"]}
     >
       <div className={classes["image-container"]}>
         <Cropper
