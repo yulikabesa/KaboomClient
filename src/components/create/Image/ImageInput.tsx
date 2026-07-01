@@ -5,6 +5,7 @@ import getCroppedImg from "../../../utils/cropImage";
 import type { Area, Point } from "react-easy-crop";
 import type { questionImageType } from "../../../types/quiz";
 import classes from "./ImageInput.module.css";
+import MediaLibrary from "./MediaLibrary";
 
 interface ImageInputProps {
   imageSrc: string;
@@ -18,6 +19,7 @@ interface ImageInputProps {
 
 const ImageInput: React.FC<ImageInputProps> = (props) => {
   const [imageCropDisplay, setImageCropDisplay] = useState(false);
+  const [mediaLibDisplay, setMediaLibDisplay] = useState(false);
 
   const setImage = (src: string) => {
     props.setImageDetails({
@@ -77,16 +79,26 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
     setImageCropDisplay((prev) => !prev);
   };
 
+  const toggleMediaLibrary = () => {
+    setMediaLibDisplay((prev) => !prev);
+  };
+
+  const handleLibClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleMediaLibrary();
+  };
+
+  console.log(props.imagePreview);
+
   const isSettings = props.variant === "settings";
 
   return (
     <>
-      <div
-        className={`${classes["variant-layout"]} ${
-          isSettings ? classes["settings-layout"] : ""
-        }`}
-      >
-        {isSettings && (
+      {isSettings ? (
+        <div
+          className={`${classes["variant-layout"]} ${classes["settings-layout"]}`}
+        >
           <div className={classes["side-actions"]}>
             {props.imagePreview ? (
               <>
@@ -115,88 +127,99 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
                   העלה
                 </Button>
 
-                <Button
-                  variant="blue"
-                  onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }}
-                >
+                <Button variant="blue" onClick={handleLibClick}>
                   מאגר
                 </Button>
               </>
             )}
           </div>
-        )}
-
-        <div
-          className={`
+          <div
+            className={`
           ${classes["image-select"]}
           ${classes[props.variant]}
           ${props.imagePreview ? classes["selected"] : ""}
         `}
-        >
-          {!props.imagePreview && (
-            <>
-              <input
-                id={`file-upload-${props.variant}`}
-                type="file"
-                accept="image/*"
-                onChange={uploadImageHandler}
-              />
-
-              <label
-                htmlFor={`file-upload-${props.variant}`}
-                className={classes["file-upload-wrapper"]}
-              >
-                <div className={classes["upload-icon"]} />
-                {!isSettings && (
-                  <>
-                    <p className={classes["title"]}>העלאת תמונה</p>
-                    <p className={classes["text"]}>
-                      רוצה להוסיף תמונה? גרור, העלה או בחר אחת מושלמת מהמאגר
-                      שלנו
-                    </p>
-
-                    <div className={classes["input-actions"]}>
-                      <Button
-                        variant="white"
-                        onClick={() => {
-                          document
-                            .getElementById(`file-upload-${props.variant}`)
-                            ?.click();
-                        }}
-                      >
-                        העלה
-                      </Button>
-
-                      <Button
-                        variant="blue"
-                        onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                        }}
-                      >
-                        מאגר
-                      </Button>
-                    </div>
-                  </>
-                )}
-              </label>
-            </>
-          )}
-
-          {props.imagePreview && (
-            <>
-              <div className={classes["image-wrapper"]}>
-                <img
-                  className={classes["image"]}
-                  src={props.imagePreview}
-                  alt="Preview"
+          >
+            {!props.imagePreview ? (
+              <>
+                <input
+                  id={`file-upload-${props.variant}`}
+                  type="file"
+                  accept="image/*"
+                  onChange={uploadImageHandler}
                 />
-              </div>
 
-              {!isSettings && (
+                <label
+                  htmlFor={`file-upload-${props.variant}`}
+                  className={classes["file-upload-wrapper"]}
+                >
+                  <div className={classes["upload-icon"]} />
+                </label>
+              </>
+            ) : (
+              <>
+                <div className={classes["image-wrapper"]}>
+                  <img
+                    className={classes["image"]}
+                    src={props.imagePreview}
+                    alt="Preview"
+                  />
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className={classes["variant-layout"]}>
+          <div
+            className={`
+          ${classes["image-select"]}
+          ${classes[props.variant]}
+          ${props.imagePreview ? classes["selected"] : ""}
+        `}
+          >
+            {!props.imagePreview && (
+              <>
+                <input
+                  id={`file-upload-${props.variant}`}
+                  type="file"
+                  accept="image/*"
+                  onChange={uploadImageHandler}
+                />
+
+                <label
+                  htmlFor={`file-upload-${props.variant}`}
+                  className={classes["file-upload-wrapper"]}
+                >
+                  <div className={classes["upload-icon"]} />
+                  <p className={classes["title"]}>העלאת תמונה</p>
+                  <p className={classes["text"]}>
+                    רוצה להוסיף תמונה? גרור, העלה או בחר אחת מושלמת מהמאגר שלנו
+                  </p>
+
+                  <div className={classes["input-actions"]}>
+                    <Button variant="white" onClick={() => {}}>
+                      העלה
+                    </Button>
+
+                    <Button variant="blue" onClick={handleLibClick}>
+                      מאגר
+                    </Button>
+                  </div>
+                </label>
+              </>
+            )}
+
+            {props.imagePreview && (
+              <>
+                <div className={classes["image-wrapper"]}>
+                  <img
+                    className={classes["image"]}
+                    src={props.imagePreview}
+                    alt="Preview"
+                  />
+                </div>
+
                 <div className={classes["actions"]}>
                   <button
                     className={`${classes["round-btn"]} ${classes["delete-btn"]}`}
@@ -210,12 +233,11 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
                     type="button"
                   />
                 </div>
-              )}
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
-      </div>
-
+      )}
       {imageCropDisplay && (
         <ImageCropper
           image={props.imageSrc}
@@ -229,6 +251,7 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
           onSaveCropped={saveCroppedImage}
         />
       )}
+      {mediaLibDisplay && <MediaLibrary closeOverlay={toggleMediaLibrary} />}
     </>
   );
 };

@@ -4,8 +4,23 @@
   width: 100%;
 }
 
-.category-list {
+.layout div {
   padding: 1%;
+}
+
+.layout div::-webkit-scrollbar {
+  width: 10px;
+}
+
+.layout div::-webkit-scrollbar-thumb {
+  background: #ccc;
+}
+
+.layout div::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+.category-list {
   width: 25%;
   min-width: fit-content;
   display: flex;

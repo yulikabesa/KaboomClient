@@ -15,14 +15,33 @@ const categories: string[] = [
   "מנהיגות",
 ];
 
-const media: string[] = [img2, img, img, img, img, img2, img, img, img, img2, img, img, img, img];
+interface MediaLibProps {
+  closeOverlay: () => void;
+}
 
-const MediaLibrary: React.FC = () => {
+const media: string[] = [
+  img2,
+  img,
+  img,
+  img,
+  img,
+  img2,
+  img,
+  img,
+  img,
+  img2,
+  img,
+  img,
+  img,
+  img,
+];
+
+const MediaLibrary: React.FC<MediaLibProps> = (props) => {
   return (
     <Overlay
       title="מאגר תמונות"
       button={true}
-      closeOverlay={() => {}}
+      closeOverlay={props.closeOverlay}
       elementId="overlay"
       className={classes["card-content"]}
     >
