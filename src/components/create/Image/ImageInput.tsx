@@ -89,6 +89,10 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
     toggleMediaLibrary();
   };
 
+  const handleUploadClick = () => {
+    document.getElementById(`file-upload-${props.variant}`)?.click();
+  };
+
   console.log(props.imagePreview);
 
   const isSettings = props.variant === "settings";
@@ -116,14 +120,7 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
               </>
             ) : (
               <>
-                <Button
-                  variant="white"
-                  onClick={() => {
-                    document
-                      .getElementById(`file-upload-${props.variant}`)
-                      ?.click();
-                  }}
-                >
+                <Button variant="white" onClick={handleUploadClick}>
                   העלה
                 </Button>
 
@@ -198,7 +195,7 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
                   </p>
 
                   <div className={classes["input-actions"]}>
-                    <Button variant="white" onClick={() => {}}>
+                    <Button variant="white" onClick={handleUploadClick}>
                       העלה
                     </Button>
 
