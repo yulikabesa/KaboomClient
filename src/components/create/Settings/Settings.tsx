@@ -5,11 +5,11 @@ import SharedWith from "./SharedWith";
 import SearchBar from "./SearchBar";
 import Tag from "./Tag";
 import ImageInput from "../Image/ImageInput";
-import type { questionImageType, sharedWithType } from "../../../types/quiz";
+import type { questionImageType, sharedWithType, User } from "../../../types/quiz";
 import Button from "../../UI/Button";
 import DeleteQuizOverlay from "./DeleteQuizOverlay";
 import type { permissionType } from "../../../types/quiz";
-import { useAuth, type User } from "../../../store/AuthContext";
+import { useAuth } from "../../../store/AuthContext";
 
 const Settings: React.FC<{
   closeOverlay: () => void;

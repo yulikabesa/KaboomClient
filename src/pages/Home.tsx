@@ -12,31 +12,6 @@ const Home = () => {
   // const [myCourseProducts, setMyCourseProducts] = useState<quizDisplayType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // todo: use somewhere else
-  // const normalizeQuizzes = (quizzes: any[]) =>
-  //   // converts question img from string to string → questionImageType
-  //   quizzes.map((quiz) => ({
-  //     ...quiz,
-  //     questions: quiz.questions.map((q: any) => ({
-  //       ...q,
-  //       questionImage: q.questionImage
-  //         ? {
-  //             image: q.questionImage,
-  //             src: q.questionImage,
-  //             crop: { x: 0, y: 0 },
-  //             zoom: 1,
-  //             croppedAreaPixels: null,
-  //           }
-  //         : {
-  //             image: "",
-  //             src: "",
-  //             crop: { x: 0, y: 0 },
-  //             zoom: 1,
-  //             croppedAreaPixels: null,
-  //           },
-  //     })),
-  //   }));
-
   useEffect(() => {
     const fetchQuizzes = async () => {
       setIsLoading(true);

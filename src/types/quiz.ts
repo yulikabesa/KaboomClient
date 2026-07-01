@@ -1,9 +1,12 @@
 import type { Area, Point } from "react-easy-crop";
 
-export type UserDetails = {
+export type User = {
+  _id: string;
   name: string;
   email: string;
 };
+
+export type UserDetails = Omit<User, "_id">;
 
 export type TagDetails = {
   name: string;
@@ -59,7 +62,7 @@ export type quizDisplayType = {
 
 export type quizType = {
   coverImage: string;
-  owner: string;
+  owner: User;
   title: string;
   questions: questionType[];
   sharedWith: sharedWithType[];
@@ -69,7 +72,7 @@ export type quizType = {
 
 export type QuizDto = {
   coverImage: string;
-  owner: string;
+  owner: string | User;
   title: string;
   questions: QuestionDto[];
   sharedWith: sharedWithType[];

@@ -1,11 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-
-export type User = {
-  _id: string;
-  name: string;
-  email: string;
-};
+import { type User } from "../types/quiz";
 
 type AuthContextType = {
   user: User | null;

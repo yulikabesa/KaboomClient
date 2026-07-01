@@ -10,9 +10,13 @@ import {
 } from "../reducers/questionsReducer";
 import Settings from "../components/create/Settings/Settings";
 import type {
+  QuestionDto,
   questionImageType,
   QuestionWarning,
+  QuizDto,
+  quizType,
   sharedWithType,
+  User,
 } from "../types/quiz";
 import {
   createQuiz,
@@ -20,11 +24,28 @@ import {
   getQuizById,
   updateQuiz,
 } from "../api/quizApi";
-import { useAuth, type User } from "../store/AuthContext";
+import { useAuth } from "../store/AuthContext";
 import Button from "../components/UI/Button";
 import { useQuestionEditor } from "../hooks/useQuestionEditor";
 import QuestionEditor from "../components/create/QuestionEdit/QuestionEditor";
 import Loading from "../components/player/Loading";
+
+const normalizeQuiz = (rawQuiz: QuizDto) => {
+  const quiz = {
+    ...rawQuiz,
+    questions: rawQuiz.questions.map((q: QuestionDto) => ({
+      ...q,
+      questionImage: {
+        image: q.questionImage ?? "",
+        src: q.questionImage ?? "",
+        crop: { x: 0, y: 0 },
+        zoom: 1,
+        croppedAreaPixels: null,
+      },
+    })),
+  };
+  return quiz as quizType;
+};
 
 const Create: React.FC<{}> = () => {
   const navigate = useNavigate();
@@ -42,7 +63,7 @@ const Create: React.FC<{}> = () => {
 
     const fetchQuiz = async () => {
       try {
-        const quiz = await getQuizById(quizId);
+        const quiz = normalizeQuiz(await getQuizById(quizId));
         dispatch({
           type: "SET_QUESTIONS",
           value:
@@ -57,7 +78,7 @@ const Create: React.FC<{}> = () => {
         setTags(quiz.tags ?? []);
         setCoverImage({
           image: quiz.coverImage ?? "",
-          src: "",
+          src: quiz.coverImage ?? "",
           crop: { x: 0, y: 0 },
           zoom: 1,
           croppedAreaPixels: null,
