@@ -5,7 +5,8 @@ import { createPortal } from "react-dom";
 const ToolTip: React.FC<{
   content: string;
   target: HTMLElement;
-}> = ({ content, target }) => {
+  backgroundColor: string;
+}> = ({ content, target, backgroundColor }) => {
   const rect = target.getBoundingClientRect();
   return createPortal(
     <div
@@ -14,6 +15,8 @@ const ToolTip: React.FC<{
         position: "fixed",
         top: rect.top + rect.height / 2,
         left: rect.left - 8,
+        backgroundColor: backgroundColor,
+        ["--tooltip-arrow" as any]: backgroundColor,
       }}
     >
       {content}

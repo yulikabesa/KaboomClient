@@ -78,6 +78,15 @@
   font-weight: 900;
   line-height: 0.8;
   letter-spacing: -2px;
+  padding: 2%;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.pin:hover {
+  background-color: rgba(0, 0, 0, 0.042);
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .pin-text,

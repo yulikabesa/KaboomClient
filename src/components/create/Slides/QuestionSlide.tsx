@@ -54,6 +54,7 @@ const QuestionSlide: React.FC<{
             <ToolTip
               content={props.warning.messages.join("\n")}
               target={warningRef.current!}
+              backgroundColor="#3a1182"
             />
           )}
         </>

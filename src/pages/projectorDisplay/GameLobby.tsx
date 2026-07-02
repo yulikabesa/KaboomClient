@@ -4,10 +4,12 @@ import kaboomLogo from "../../assets/kaboomLogo.svg";
 import personIcon from "../../assets/personIcon.svg";
 import { useLobby } from "../../store/LobbyContext";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSocket } from "../../store/SocketContext";
 import { useRouteLoading } from "../../store/RouteLoadingContext";
 import Loading from "../../components/player/Loading";
+import { useRef } from "react";
+import ToolTip from "../../components/UI/ToolTip";
 
 const GameLobby: React.FC = () => {
   const socket = useSocket();
@@ -15,6 +17,9 @@ const GameLobby: React.FC = () => {
   const { lobby, setLobby, addPlayer } = useLobby();
   const navigate = useNavigate();
   const { pin } = useParams<{ pin: string }>();
+  const [isHovered, setIsHovered] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
+  const pinRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     if (!socket || !pin) return;
@@ -71,11 +76,26 @@ const GameLobby: React.FC = () => {
 
   if (!lobby || lobby.gamePin !== pin) {
     return (
-        <div className={`${classes["page"]} ${layoutClasses["background"]} ${layoutClasses["light-img"]}`}>
+      <div
+        className={`${classes["page"]} ${layoutClasses["background"]} ${layoutClasses["light-img"]}`}
+      >
         <Loading />
       </div>
     );
   }
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(pin);
+      setIsCopied(true);
+      setTimeout(() => {
+        setIsCopied(false);
+        setIsHovered(false);
+      }, 1500);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div
@@ -85,7 +105,13 @@ const GameLobby: React.FC = () => {
         <div className={classes["right-rectangle"]}>
           <div className={classes["pin-text-overlay"]}>
             <p className={classes["pin-text"]}>קוד משחק:</p>
-            <p className={classes["pin"]}>
+            <p
+              ref={pinRef}
+              className={classes["pin"]}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              onClick={handleCopy}
+            >
               {lobby.gamePin.slice(0, 3)} {lobby.gamePin.slice(3)}
             </p>
           </div>
@@ -97,6 +123,14 @@ const GameLobby: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {pinRef.current && (isHovered || isCopied) && (
+        <ToolTip
+          target={pinRef.current}
+          content={isCopied ? "הועתק!" : "העתק קוד משחק"}
+          backgroundColor="black"
+        />
+      )}
 
       <div className={classes["buttons-box"]}>
         <div onClick={startGame} className={classes["start-button"]}>
