@@ -47,13 +47,14 @@ const DraggableQuestionItem: React.FC<Props> = ({
               isActive={isActive}
               onCopy={onCopy}
               onDelete={onDelete}
+              isLoading={isLoading}
             />
 
             <div className={classes["question-and-slide-container"]}>
               <div
                 className={classes["question-num"]}
                 style={{
-                  color: isActive ? "black" : "#6e6e6e",
+                  color: isActive && !isLoading ? "black" : "#6e6e6e",
                 }}
               >
                 שאלה

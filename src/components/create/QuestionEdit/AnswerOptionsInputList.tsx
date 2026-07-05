@@ -32,7 +32,6 @@ const AnswerOptionsInputList: React.FC<Props> = ({
         const isCorrect = correctAnswerIndexes?.includes(i) || false;
         const isDisabled = i >= enabledAnswersCount;
         const isEmpty = answerTexts[i] === "" || answerTexts[i] === undefined;
-
         return (
           <div
             key={i}

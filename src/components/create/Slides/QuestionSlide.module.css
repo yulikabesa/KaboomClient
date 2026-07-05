@@ -17,16 +17,17 @@
   content: "";
   position: absolute;
   top: 0;
-  left: -150%;
+  left: -180%;
+  width: 180%;
   height: 100%;
-  width: 150%;
   background: linear-gradient(
-    90deg,
+    to right,
     transparent,
-    rgba(255, 255, 255, 0.592),
+    rgba(255, 255, 255, 0.85),
     transparent
   );
-  animation: shimmer 1.2s infinite;
+  filter: blur(2px);
+  animation: shimmer 1.2s linear infinite;
 }
 
 @keyframes shimmer {

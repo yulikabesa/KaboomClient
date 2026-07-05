@@ -8,6 +8,7 @@ type Props = {
   isActive: boolean;
   onCopy: () => void;
   onDelete: () => void;
+  isLoading: boolean;
 };
 
 const QuestionActions: React.FC<Props> = ({
@@ -15,13 +16,14 @@ const QuestionActions: React.FC<Props> = ({
   isActive,
   onCopy,
   onDelete,
+  isLoading
 }) => {
   return (
     <div className={classes["icons-and-number-container"]}>
       <div
         className={`${classes["question-num"]} ${classes["center-text"]}`}
         style={{
-          color: isActive ? "black" : "#6e6e6e",
+          color: isActive && !isLoading ? "black" : "#6e6e6e",
         }}
       >
         {index + 1}

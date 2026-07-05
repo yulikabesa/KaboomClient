@@ -92,6 +92,8 @@
   opacity: 0.7;
 }
 
+/* shimmering option!!! */
+
 .skeleton {
   position: relative;
   overflow: hidden;
@@ -100,24 +102,72 @@
 .skeleton::after {
   content: "";
   position: absolute;
+
   top: 0;
-  left: -150%;
+  left: -180%;
+  width: 180%;
   height: 100%;
-  width: 150%;
+
   background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.337),
-    transparent
+    to right,
+    transparent 20%,
+    rgba(255,255,255,.12) 40%,
+    rgba(255,255,255,.28) 50%,
+    rgba(255,255,255,.12) 60%,
+    transparent 80%
   );
-  animation: shimmer 1.2s infinite;
+  filter: blur(2px);
+  animation: shimmer 1.2s linear infinite;
 }
 
 @keyframes shimmer {
-  0% {
-    left: -150%;
+  from {
+    left: -180%;
   }
-  100% {
-    left: 150%;
+
+  to {
+    left: 180%;
   }
 }
+
+
+/* bluring option!!! */
+
+/* .skeleton input,
+.skeleton button,
+.skeleton svg {
+    visibility: hidden;
+}
+
+.skeleton::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,.18);
+} */
+
+
+
+/* pulsing option!!! */
+
+/* .skeleton {
+  pointer-events: none;
+  animation: pulse 1.3s ease-in-out infinite;
+}
+
+.skeleton,
+.skeleton button {
+  opacity: 0;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.75;
+  }
+} */
