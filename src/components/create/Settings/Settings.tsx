@@ -28,8 +28,8 @@ const Settings: React.FC<{
   setCoverImage: (updates: Partial<questionImageType>) => void;
   onQuizDelete: () => void;
   onQuizSave: () => void;
-  isQuizNameError?: boolean;
-  setIsQuizNameError?: React.Dispatch<React.SetStateAction<boolean>>;
+  isQuizNameError: boolean;
+  setIsQuizNameError: React.Dispatch<React.SetStateAction<boolean>>;
 }> = (props) => {
   const QUIZ_NAME_MAX = 50;
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
@@ -211,9 +211,11 @@ const Settings: React.FC<{
           <Button
             variant="blue"
             onClick={() => {
-              // todo use the are all fields full with isGameable property
-              // console.log(props.areAllFieldsFull());
-              props.onQuizSave();
+              if (!props.quizName || props.quizName.trim() === "") {
+                props.setIsQuizNameError(true);
+                return;
+              }
+              props.onQuizSave && props.onQuizSave();
             }}
           >
             שמור וצא
