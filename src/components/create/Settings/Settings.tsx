@@ -5,7 +5,11 @@ import SharedWith from "./SharedWith";
 import SearchBar from "./SearchBar";
 import Tag from "./Tag";
 import ImageInput from "../Image/ImageInput";
-import type { questionImageType, sharedWithType, User } from "../../../types/quiz";
+import type {
+  questionImageType,
+  sharedWithType,
+  User,
+} from "../../../types/quiz";
 import Button from "../../UI/Button";
 import DeleteQuizOverlay from "./DeleteQuizOverlay";
 import type { permissionType } from "../../../types/quiz";
@@ -22,9 +26,10 @@ const Settings: React.FC<{
   owner: User | null;
   coverImage: questionImageType;
   setCoverImage: (updates: Partial<questionImageType>) => void;
-  // areAllFieldsFull: () => boolean;
   onQuizDelete: () => void;
   onQuizSave: () => void;
+  isQuizNameError?: boolean;
+  setIsQuizNameError?: React.Dispatch<React.SetStateAction<boolean>>;
 }> = (props) => {
   const QUIZ_NAME_MAX = 50;
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
@@ -113,16 +118,31 @@ const Settings: React.FC<{
         <div className={classes.container}>
           <div>
             <p className={classes.title}>כותרת</p>
-            <div className={classes["input-wrapper"]}>
+            <div className={`${classes["input-wrapper"]}`}>
               <span className={classes["counter"]}>
                 {props.quizName.length}/{QUIZ_NAME_MAX}
               </span>
               <input
+                className={props.isQuizNameError ? classes.error : ""}
                 type="text"
                 placeholder="מה שם החידון שלך?"
                 maxLength={QUIZ_NAME_MAX}
                 value={props.quizName}
-                onChange={(e) => props.setQuizName(e.target.value)}
+                onChange={(e) => {
+                  if (
+                    e.target.value &&
+                    e.target.value.trim() !== "" &&
+                    props.setIsQuizNameError
+                  )
+                    props.setIsQuizNameError(false);
+                  else if (
+                    e.target.value.trim() === "" &&
+                    props.setIsQuizNameError
+                  ) {
+                    props.setIsQuizNameError(true);
+                  }
+                  props.setQuizName!(e.target.value);
+                }}
               />
             </div>
           </div>

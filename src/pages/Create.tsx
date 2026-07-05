@@ -115,6 +115,7 @@ const Create: React.FC<{}> = () => {
   // states for settings
   const [settingsDisplay, setSettingsDisplay] = useState(false);
   const [quizName, setQuizName] = useState("");
+  const [isQuizNameError, setIsQuizNameError] = useState(false);
   const [sharedWith, setSharedWith] = useState<sharedWithType[]>([]);
   const [owner, setOwner] = useState<User>();
   const [tags, setTags] = useState<string[]>([]);
@@ -261,6 +262,8 @@ const Create: React.FC<{}> = () => {
           quizName={quizName}
           setQuizName={setQuizName}
           onQuizSave={quizSaveClickHandler}
+          isQuizNameError={isQuizNameError}
+          setIsQuizNameError={setIsQuizNameError}
         />
         <div className={`${classes["screen-items-flex"]}`}>
           {/* questions slides */}
@@ -314,6 +317,8 @@ const Create: React.FC<{}> = () => {
             // areAllFieldsFull={areAllFieldsFull}
             onQuizDelete={deleteQuizHandler}
             onQuizSave={quizSaveClickHandler}
+            isQuizNameError={isQuizNameError}
+            setIsQuizNameError={setIsQuizNameError}
           />
         )}
       </div>

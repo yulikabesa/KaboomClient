@@ -17,6 +17,10 @@
   width: 100%;
 }
 
+.error {
+  border: solid #e21d3c 1.8px !important;
+}
+
 .image-wrapper {
   background-color: #f2f2f2;
   padding: 4%;

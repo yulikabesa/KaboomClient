@@ -4,17 +4,17 @@ import kaboomLogo from "../../assets/kaboomLogo.svg";
 import type React from "react";
 import settingsIcon from "../../assets/settingsIcon.svg";
 import Button from "../UI/Button";
-import { useState } from "react";
 
 const NavigationMenu: React.FC<{
   variant: "home" | "create";
   onSettingsClick?: () => void;
   quizName?: string;
   setQuizName?: React.Dispatch<React.SetStateAction<string>>;
+  isQuizNameError?: boolean;
+  setIsQuizNameError?: React.Dispatch<React.SetStateAction<boolean>>;
   onQuizSave?: () => void;
 }> = (props) => {
-  const [isError, setIsError] = useState(false);
-  const quizNameInputClasses = `${classes["quiz-name-input"]} ${isError && classes["error"]}`;
+  const quizNameInputClasses = `${classes["quiz-name-input"]} ${props.isQuizNameError && classes["error"]}`;
   return (
     <header className={classes.header}>
       <div className={classes["right-side-items"]}>
@@ -38,8 +38,18 @@ const NavigationMenu: React.FC<{
               value={props.quizName}
               maxLength={50}
               onChange={(e) => {
-                if (e.target.value && e.target.value.trim() !== "")
-                  setIsError(false);
+                if (
+                  e.target.value &&
+                  e.target.value.trim() !== "" &&
+                  props.setIsQuizNameError
+                )
+                  props.setIsQuizNameError(false);
+                else if (
+                  e.target.value.trim() === "" &&
+                  props.setIsQuizNameError
+                ) {
+                  props.setIsQuizNameError(true);
+                }
                 props.setQuizName!(e.target.value);
               }}
               autoComplete="off"
@@ -65,8 +75,11 @@ const NavigationMenu: React.FC<{
           <Button
             variant="blue"
             onClick={() => {
-              if (!props.quizName || props.quizName.trim() === "") {
-                setIsError(true);
+              if (
+                (!props.quizName || props.quizName.trim() === "") &&
+                props.setIsQuizNameError
+              ) {
+                props.setIsQuizNameError(true);
                 return;
               }
               props.onQuizSave && props.onQuizSave();
