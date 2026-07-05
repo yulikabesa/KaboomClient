@@ -129,6 +129,7 @@ const GameLobby: React.FC = () => {
           target={pinRef.current}
           content={isCopied ? "הועתק!" : "העתק קוד משחק"}
           backgroundColor="black"
+          placement="bottom"
         />
       )}
 
