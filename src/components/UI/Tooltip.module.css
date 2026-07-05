@@ -18,7 +18,7 @@
   content: "";
   position: absolute;
   top: 50%;
-  right: -8px;
+  right: -7px;
   transform: translateY(-50%);
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
@@ -33,7 +33,7 @@
   content: "";
   position: absolute;
   top: 50%;
-  left: -8px;
+  left: -7px;
   transform: translateY(-50%);
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
@@ -47,7 +47,7 @@
 .top::before {
   content: "";
   position: absolute;
-  bottom: -8px;
+  bottom: -7px;
   left: 50%;
   transform: translateX(-50%);
   border-left: 8px solid transparent;
@@ -62,7 +62,7 @@
 .bottom::before {
   content: "";
   position: absolute;
-  top: -8px;
+  top: -7px;
   left: 50%;
   transform: translateX(-50%);
   border-left: 8px solid transparent;
