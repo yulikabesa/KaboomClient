@@ -13,6 +13,7 @@ type Props = {
   onCopy: () => void;
   onDelete: () => void;
   slideWarning: QuestionWarning;
+  isLoading: boolean;
 };
 
 const DraggableQuestionItem: React.FC<Props> = ({
@@ -22,7 +23,8 @@ const DraggableQuestionItem: React.FC<Props> = ({
   onClick,
   onCopy,
   onDelete,
-  slideWarning
+  slideWarning,
+  isLoading
 }) => {
   return (
     <Draggable draggableId={question._id} index={index}>
@@ -34,7 +36,7 @@ const DraggableQuestionItem: React.FC<Props> = ({
           className={classes.container}
           style={{
             width: "100%",
-            backgroundColor: isActive ? "#ECF4FB" : "transparent",
+            backgroundColor: isActive && !isLoading ? "#ECF4FB" : "transparent",
             ...provided.draggableProps.style,
           }}
           onClick={onClick}
@@ -64,6 +66,7 @@ const DraggableQuestionItem: React.FC<Props> = ({
                 answersCount={question.answerOptions.length}
                 correctAnswerIndexes={question.correctIndexes}
                 warning={slideWarning}
+                isLoading={isLoading}
               />
             </div>
           </div>

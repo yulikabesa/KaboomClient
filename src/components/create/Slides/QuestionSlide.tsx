@@ -13,15 +13,16 @@ const QuestionSlide: React.FC<{
   answersCount: number;
   correctAnswerIndexes: number[];
   warning: QuestionWarning;
+  isLoading: boolean;
 }> = (props) => {
   const [hovered, setHovered] = useState<boolean>(false);
   const warningRef = useRef<HTMLDivElement>(null);
   return (
     <div
-      className={classes.slide}
+      className={`${classes.slide} ${props.isLoading ? classes.skeleton : ""}`}
       style={{
-        backgroundColor: props.isCurrentlyEdited ? "#FFFFFF" : "#f2f2f2",
-        border: props.isCurrentlyEdited ? "2px solid #3E6CC4" : "none",
+        backgroundColor: props.isCurrentlyEdited && !props.isLoading ? "#FFFFFF" : "#f2f2f2",
+        border: props.isCurrentlyEdited && !props.isLoading ? "2px solid #3E6CC4" : "none",
       }}
     >
       <p className={classes.title}>{props.questionText || "\u00A0"}</p>

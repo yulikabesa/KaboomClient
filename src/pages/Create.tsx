@@ -245,13 +245,13 @@ const Create: React.FC<{}> = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className={classes.background}>
-        <Loading />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className={classes.background}>
+  //       <Loading />
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
@@ -276,7 +276,8 @@ const Create: React.FC<{}> = () => {
               questions={questions}
               onDragEnd={onDragEnd}
               onDragStart={onDragStart}
-              slideWarnings={slideWarnings}
+              slideWarnings={loading ? [] : slideWarnings}
+              isLoading={loading}
             />
             <Button
               className={classes["add-slide-btn"]}
