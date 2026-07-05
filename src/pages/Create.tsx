@@ -300,6 +300,7 @@ const Create: React.FC<{}> = () => {
             }
             handleAnswerTextChange={handleAnswerTextChange}
             updateQuestionImage={updateQuestionImage}
+            isLoading={loading}
           />
         </div>
 

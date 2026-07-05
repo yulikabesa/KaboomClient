@@ -7,6 +7,7 @@ type Props = {
   onAnswerTextChange: (answerIndex: number, value: string) => void;
   answerTexts: string[];
   correctAnswerIndexes: number[];
+  isLoading: boolean;
 };
 
 const AnswerOptionsInputList: React.FC<Props> = ({
@@ -14,6 +15,7 @@ const AnswerOptionsInputList: React.FC<Props> = ({
   onAnswerTextChange,
   answerTexts,
   correctAnswerIndexes,
+  isLoading,
 }) => {
   const filledCount = answerTexts.filter(
     (text) => (text ?? "").trim() !== "",
@@ -34,7 +36,7 @@ const AnswerOptionsInputList: React.FC<Props> = ({
         return (
           <div
             key={i}
-            className={`${classes["answer-option"]}`}
+            className={`${classes["answer-option"]} ${isLoading ? classes["skeleton"] : ""}`}
             style={
               {
                 "--bg-color": AnswersStyle[i].color,
