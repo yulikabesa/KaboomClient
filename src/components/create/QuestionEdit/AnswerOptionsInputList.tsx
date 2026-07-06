@@ -1,13 +1,13 @@
 import React from "react";
 import { AnswersStyle } from "../../AnswerOptions";
 import classes from "./AnswerOptionsInputList.module.css";
+import { useQuizLoading } from "../../../store/QuizLoadingContext";
 
 type Props = {
   onAnswerClick: (answerIndex: number) => void;
   onAnswerTextChange: (answerIndex: number, value: string) => void;
   answerTexts: string[];
   correctAnswerIndexes: number[];
-  isLoading: boolean;
 };
 
 const AnswerOptionsInputList: React.FC<Props> = ({
@@ -15,8 +15,8 @@ const AnswerOptionsInputList: React.FC<Props> = ({
   onAnswerTextChange,
   answerTexts,
   correctAnswerIndexes,
-  isLoading,
 }) => {
+  const isLoading = useQuizLoading();
   const filledCount = answerTexts.filter(
     (text) => (text ?? "").trim() !== "",
   ).length;

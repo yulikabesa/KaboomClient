@@ -4,6 +4,7 @@ import SlideAnswerOptionsList from "./SlideAnswerOptionsList";
 import type { QuestionWarning } from "../../../types/quiz";
 import { useRef, useState } from "react";
 import ToolTip from "../../UI/ToolTip";
+import { useQuizLoading } from "../../../store/QuizLoadingContext";
 
 const QuestionSlide: React.FC<{
   questionText: string;
@@ -13,16 +14,16 @@ const QuestionSlide: React.FC<{
   answersCount: number;
   correctAnswerIndexes: number[];
   warning: QuestionWarning;
-  isLoading: boolean;
 }> = (props) => {
+  const isLoading = useQuizLoading();
   const [hovered, setHovered] = useState<boolean>(false);
   const warningRef = useRef<HTMLDivElement>(null);
   return (
     <div
-      className={`${classes.slide} ${props.isLoading ? classes.skeleton : ""}`}
+      className={`${classes.slide} ${isLoading ? classes.skeleton : ""}`}
       style={{
-        backgroundColor: props.isCurrentlyEdited && !props.isLoading ? "#FFFFFF" : "#f2f2f2",
-        border: props.isCurrentlyEdited && !props.isLoading ? "2px solid #3E6CC4" : "none",
+        backgroundColor: props.isCurrentlyEdited && !isLoading ? "#FFFFFF" : "#f2f2f2",
+        border: props.isCurrentlyEdited && !isLoading ? "2px solid #3E6CC4" : "none",
       }}
     >
       <p className={classes.title}>{props.questionText || "\u00A0"}</p>
