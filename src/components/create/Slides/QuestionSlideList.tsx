@@ -12,7 +12,6 @@ type Props = {
   onDragEnd: (result: any) => void;
   onDragStart: (result: any) => void;
   slideWarnings: QuestionWarning[];
-  isLoading: boolean;
 };
 
 const QuestionSlideList: React.FC<Props> = ({
@@ -24,7 +23,6 @@ const QuestionSlideList: React.FC<Props> = ({
   onDragEnd,
   onDragStart,
   slideWarnings,
-  isLoading,
 }) => {
   return (
     <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
@@ -49,7 +47,6 @@ const QuestionSlideList: React.FC<Props> = ({
                     ? slideWarnings[index]
                     : { hasWarning: false, messages: [""] }
                 }
-                isLoading={isLoading}
               />
             ))}
 

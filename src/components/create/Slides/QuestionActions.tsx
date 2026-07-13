@@ -2,13 +2,13 @@ import React from "react";
 import copyIcon from "../../../assets/grayCopyIcon.svg";
 import deleteIcon from "../../../assets/grayDeleteIcon.svg";
 import classes from "./QuestionSlideList.module.css";
+import { useQuizLoading } from "../../../store/QuizLoadingContext";
 
 type Props = {
   index: number;
   isActive: boolean;
   onCopy: () => void;
   onDelete: () => void;
-  isLoading: boolean;
 };
 
 const QuestionActions: React.FC<Props> = ({
@@ -16,8 +16,8 @@ const QuestionActions: React.FC<Props> = ({
   isActive,
   onCopy,
   onDelete,
-  isLoading
 }) => {
+  const isLoading = useQuizLoading();
   return (
     <div className={classes["icons-and-number-container"]}>
       <div

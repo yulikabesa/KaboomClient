@@ -4,6 +4,7 @@ import QuestionSlide from "./QuestionSlide";
 import QuestionActions from "./QuestionActions";
 import classes from "./QuestionSlideList.module.css";
 import type { questionType, QuestionWarning } from "../../../types/quiz";
+import { useQuizLoading } from "../../../store/QuizLoadingContext";
 
 type Props = {
   question: questionType;
@@ -13,7 +14,6 @@ type Props = {
   onCopy: () => void;
   onDelete: () => void;
   slideWarning: QuestionWarning;
-  isLoading: boolean;
 };
 
 const DraggableQuestionItem: React.FC<Props> = ({
@@ -24,8 +24,8 @@ const DraggableQuestionItem: React.FC<Props> = ({
   onCopy,
   onDelete,
   slideWarning,
-  isLoading
 }) => {
+  const isLoading = useQuizLoading();
   return (
     <Draggable draggableId={question._id} index={index}>
       {(provided) => (
@@ -47,7 +47,6 @@ const DraggableQuestionItem: React.FC<Props> = ({
               isActive={isActive}
               onCopy={onCopy}
               onDelete={onDelete}
-              isLoading={isLoading}
             />
 
             <div className={classes["question-and-slide-container"]}>
@@ -67,8 +66,7 @@ const DraggableQuestionItem: React.FC<Props> = ({
                 answersCount={question.answerOptions.length}
                 correctAnswerIndexes={question.correctIndexes}
                 warning={slideWarning}
-                isLoading={isLoading}
-              />
+                />
             </div>
           </div>
         </div>

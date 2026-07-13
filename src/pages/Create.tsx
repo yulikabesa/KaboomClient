@@ -28,7 +28,8 @@ import { useAuth } from "../store/AuthContext";
 import Button from "../components/UI/Button";
 import { useQuestionEditor } from "../hooks/useQuestionEditor";
 import QuestionEditor from "../components/create/QuestionEdit/QuestionEditor";
-import Loading from "../components/player/Loading";
+// import Loading from "../components/player/Loading";
+import QuizLoadingContext from "../store/QuizLoadingContext";
 
 const normalizeQuiz = (rawQuiz: QuizDto) => {
   const quiz = {
@@ -254,7 +255,7 @@ const Create: React.FC<{}> = () => {
   // }
 
   return (
-    <>
+    <QuizLoadingContext.Provider value={loading}>
       <div className={`${classes.background} ${layoutClasses.layout}`}>
         <NavigationMenu
           variant="create"
@@ -277,7 +278,6 @@ const Create: React.FC<{}> = () => {
               onDragEnd={onDragEnd}
               onDragStart={onDragStart}
               slideWarnings={loading ? [] : slideWarnings}
-              isLoading={loading}
             />
             <Button
               className={classes["add-slide-btn"]}
@@ -300,7 +300,6 @@ const Create: React.FC<{}> = () => {
             }
             handleAnswerTextChange={handleAnswerTextChange}
             updateQuestionImage={updateQuestionImage}
-            isLoading={loading}
           />
         </div>
 
@@ -324,7 +323,7 @@ const Create: React.FC<{}> = () => {
           />
         )}
       </div>
-    </>
+    </QuizLoadingContext.Provider>
   );
 };
 

@@ -15,7 +15,6 @@ type QuestionEditorProps = {
   handleQuestionCorrectIndexesChange: (index: number) => void;
   handleAnswerTextChange: (answerIndex: number, value: string) => void;
   updateQuestionImage: (updates: Partial<questionImageType>) => void;
-  isLoading: boolean;
 };
 
 const QuestionEditor: React.FC<QuestionEditorProps> = ({
@@ -27,7 +26,6 @@ const QuestionEditor: React.FC<QuestionEditorProps> = ({
   handleQuestionCorrectIndexesChange,
   handleAnswerTextChange,
   updateQuestionImage,
-  isLoading,
 }) => {
   return (
     <div className={classes["question-editing"]}>
@@ -76,7 +74,6 @@ const QuestionEditor: React.FC<QuestionEditorProps> = ({
         answerTexts={currentQuestion.answerOptions}
         onAnswerClick={(index) => handleQuestionCorrectIndexesChange(index)}
         onAnswerTextChange={handleAnswerTextChange}
-        isLoading={isLoading}
       />
     </div>
   );
