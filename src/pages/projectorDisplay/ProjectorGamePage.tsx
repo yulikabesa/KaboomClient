@@ -95,15 +95,12 @@ const ProjectorGamePage = () => {
   useEffect(() => {
     if (status !== "question" || !socket) return;
 
-    const timer = setTimeout(
-      () => {
-        socket.emit("game-event", {
-          type: "reveal-answers",
-          payload: {},
-        });
-      },
-      INTRO_DURATION * 1000 - 1.5,
-    );
+    const timer = setTimeout(() => {
+      socket.emit("game-event", {
+        type: "reveal-answers",
+        payload: {},
+      });
+    }, INTRO_DURATION * 1000);
 
     return () => clearTimeout(timer);
   }, [status, socket]);
