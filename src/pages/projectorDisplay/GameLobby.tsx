@@ -9,7 +9,7 @@ import { useSocket } from "../../store/SocketContext";
 import { useRouteLoading } from "../../store/RouteLoadingContext";
 import Loading from "../../components/player/Loading";
 import { useRef } from "react";
-import ToolTip from "../../components/UI/ToolTip";
+import ToolTip from "../../components/UI/Tooltip";
 
 const GameLobby: React.FC = () => {
   const socket = useSocket();

@@ -1,5 +1,3 @@
-// context for the game lobby-
-// relevant to lobby Gamepage and the page where the host can click on starting the game session
 import { createContext, useContext, useState } from "react";
 
 type LobbyDataType = {
@@ -11,7 +9,7 @@ type LobbyDataType = {
 type LobbyContextType = {
   lobby: LobbyDataType | null;
   setLobby: (data: LobbyDataType) => void;
-  addPlayer: (player: {nickname: string, id: string}) => void;
+  addPlayer: (player: { nickname: string; id: string }) => void;
   clearLobby: () => void;
 };
 
@@ -28,19 +26,23 @@ export const LobbyProvider = ({ children }: { children: React.ReactNode }) => {
     setLobbyState(null);
   };
 
+  // TODO: HANDLE SAME USER REJOINED DIFFERENTLY
   const addPlayer = (player: { nickname: string; id: string }) => {
-    setLobbyState((prev) => {
-      if (!prev) return prev;
-      return { ...prev, players: [...prev.players, player] };
-    });
-  };
-
-  const removePlayer = (player: { nickname: string; id: string }) => {
     setLobbyState((prev) => {
       if (!prev) return prev;
       return {
         ...prev,
-        players: prev.players.filter((p) => p.id !== player.id),
+        players: [...prev.players.filter((p) => p.id !== player.id), player],
+      };
+    });
+  };
+
+  const removePlayer = (userId: string) => {
+    setLobbyState((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        players: prev.players.filter((p) => p.id !== userId),
       };
     });
   };

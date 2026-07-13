@@ -89,6 +89,11 @@ const JoinGamePage: React.FC = () => {
       sessionStorage.setItem("nickname", nickname);
       navigate(`/game/${pin}`, { replace: true });
     });
+
+    // TODO: HANDLE NICKNAME ERROR DIFFERENTLY
+    socket.once("nickname-error", (message: string) => {
+      setError(message);
+    });
   };
 
   return (

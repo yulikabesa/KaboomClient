@@ -31,7 +31,7 @@ const PlayerGamePage = () => {
   const socket = useSocket();
   const routeLoading = useRouteLoading();
   const handleAnswerClick = (answerIndex: number) => {
-    setStatus("loading");
+    // setStatus("loading");
     socket.emit("game-event", {
       type: "submit-answer",
       payload: {
