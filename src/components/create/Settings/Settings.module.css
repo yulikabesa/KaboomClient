@@ -6,6 +6,14 @@
   gap: 2rem;
 }
 
+@media (max-width: 800px) {
+  .container {
+    width: auto;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
 .title {
   font-weight: 700;
   margin-bottom: 0.2rem;

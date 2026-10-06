@@ -1,19 +1,21 @@
 .backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   background: rgba(0, 0, 0, 0.65);
 }
 
 .card {
   background-color: white;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: fit-content;
+  max-width: calc(100% - 2rem);
+  max-height: calc(100% - 2rem);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 .header {
@@ -25,6 +27,7 @@
   padding: 1rem;
   direction: rtl;
   max-height: 10vh;
+  flex: 0 0 auto;
 }
 
 .btn {
@@ -36,6 +39,7 @@
   aspect-ratio: 1;
   width: 2rem;
   cursor: pointer;
+  flex: 0 0 auto;
 }
 
 .header p {
@@ -47,12 +51,14 @@
 .content {
   height: fit-content;
   max-height: 70vh;
-  overflow-y: auto;
+  min-height: 0;
+  overflow: auto;
   direction: rtl;
 }
 
 .content::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 .content::-webkit-scrollbar-thumb {
