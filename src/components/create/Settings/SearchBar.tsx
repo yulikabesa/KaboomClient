@@ -10,6 +10,7 @@ type SearchBarProps<T> = {
   onItemClick: (item: T) => void;
   placeHolder: string;
   searchFor: "tag" | "user";
+  excludeIds?: string[];
 };
 
 const SearchBar = <T,>(props: SearchBarProps<T>) => {
@@ -18,6 +19,10 @@ const SearchBar = <T,>(props: SearchBarProps<T>) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const inputWrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLUListElement>(null);
+
+
+  const excludeIdsRef = useRef(props.excludeIds);
+  excludeIdsRef.current = props.excludeIds;
 
   const updateDropdownPosition = () => {
     if (!inputWrapperRef.current || !dropdownRef.current) return;
@@ -85,7 +90,12 @@ const SearchBar = <T,>(props: SearchBarProps<T>) => {
 
   const fetchServerData = async (searchTerm: string, signal: AbortSignal) => {
     try {
-      const data = await searchData(props.searchFor, searchTerm, signal);
+      const data = await searchData(
+        props.searchFor,
+        searchTerm,
+        signal,
+        excludeIdsRef.current,
+      );
       const key = props.searchFor === "user" ? "users" : "tags";
       const responseResults = data.data?.[key] || [];
       setResults(

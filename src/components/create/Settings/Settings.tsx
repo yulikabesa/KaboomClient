@@ -100,6 +100,11 @@ const Settings: React.FC<{
     permission: "בעלים",
   } as sharedWithType;
 
+  const alreadySharedIds = [
+    owner.user?._id,
+    ...props.sharedWith.map((shared) => shared.user._id),
+  ].filter((id): id is string => !!id);
+
   // to disable delete button to non owners
   let deleteBtnDisabled = true;
   if (user)
@@ -191,6 +196,7 @@ const Settings: React.FC<{
               onItemClick={addNewSharedUserHandle}
               placeHolder="הכנס מייל או שם..."
               searchFor="user"
+              excludeIds={alreadySharedIds}
             />
           </div>
           <div>
