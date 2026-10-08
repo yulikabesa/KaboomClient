@@ -16,8 +16,8 @@
 
 .title {
   font-weight: 700;
-  margin-bottom: 0.2rem;
-  display: inline;
+  display: inline-block;
+  margin: 0 0 0.4rem;
 }
 
 .input-wrapper {
