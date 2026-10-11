@@ -14,6 +14,7 @@ const RangeInput: React.FC<{
       style={
         {
           "--index": scoringWeightOptions.indexOf(props.scoringWeight),
+          "--steps": scoringWeightOptions.length - 1,
         } as React.CSSProperties
       }
     >

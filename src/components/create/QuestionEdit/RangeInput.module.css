@@ -25,6 +25,9 @@
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
   cursor: pointer;
   height: 20px;
   background: transparent;
@@ -51,7 +54,7 @@
 .input-range::-webkit-slider-thumb {
   -webkit-appearance: none;
   height: 40px;
-  width: 53px;
+  width: var(--thumb);
   background: white;
   border-radius: 25px;
   margin-top: -19px;
@@ -62,7 +65,7 @@
 .input-range::-moz-range-thumb {
   -moz-appearance: none;
   height: 40px;
-  width: 53px;
+  width: var(--thumb);
   background: white;
   border-radius: 25px;
   margin-top: -19px;
