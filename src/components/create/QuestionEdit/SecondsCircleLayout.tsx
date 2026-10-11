@@ -31,6 +31,7 @@ const SecondsCircleLayout: React.FC<{
     <div
       ref={containerRef}
       className={`${classes.container} ${isOpen ? classes.open : ""}`}
+      data-open={isOpen}
     >
       {/* Surrounding */}
       {items.map((sec, index) => {
