@@ -24,6 +24,8 @@
 .input-range {
   -webkit-appearance: none;
   appearance: none;
+  /* block, so the wrap is exactly as tall as the input and 50% is its real middle */
+  display: block;
   width: 100%;
   margin: 0;
   padding: 0;

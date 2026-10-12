@@ -30,6 +30,7 @@ import { useQuestionEditor } from "../hooks/useQuestionEditor";
 import QuestionEditor from "../components/create/QuestionEdit/QuestionEditor";
 // import Loading from "../components/player/Loading";
 import QuizLoadingContext from "../store/QuizLoadingContext";
+import UnsavedChangesOverlay from "../components/create/UnsavedChangesOverlay";
 
 const normalizeQuiz = (rawQuiz: QuizDto) => {
   const quiz = {
@@ -128,7 +129,43 @@ const Create: React.FC<{}> = () => {
     croppedAreaPixels: null,
   });
 
+  // state for the unsaved changes warning on exit
+  const [showUnsavedChangesOverlay, setShowUnsavedChangesOverlay] =
+    useState(false);
+
+  // the quiz as it is right now, compared to how it was when it was opened
+  const quizSnapshot = JSON.stringify({
+    quizName,
+    questions,
+    sharedWith,
+    tags,
+  });
+  const [openedSnapshot, setOpenedSnapshot] = useState<string | null>(null);
+  const hasUnsavedChanges =
+    openedSnapshot !== null && openedSnapshot !== quizSnapshot;
+
+  useEffect(() => {
+    if (!loading && openedSnapshot === null) setOpenedSnapshot(quizSnapshot);
+  }, [loading, openedSnapshot, quizSnapshot]);
+
   // functions
+  const exitClickHandler = () => {
+    if (hasUnsavedChanges) {
+      setShowUnsavedChangesOverlay(true);
+      return;
+    }
+    navigate("/home");
+  };
+
+  const saveAndExitClickHandler = () => {
+    if (quizName.trim() === "") {
+      setIsQuizNameError(true);
+      setShowUnsavedChangesOverlay(false);
+      return;
+    }
+    quizSaveClickHandler();
+  };
+
   const handleQuestionBeingEditedChange = (index: number) => {
     setCurrentQuestionBeingEdited(index);
   };
@@ -263,6 +300,7 @@ const Create: React.FC<{}> = () => {
           quizName={quizName}
           setQuizName={setQuizName}
           onQuizSave={quizSaveClickHandler}
+          onExit={exitClickHandler}
           isQuizNameError={isQuizNameError}
           setIsQuizNameError={setIsQuizNameError}
         />
@@ -320,6 +358,14 @@ const Create: React.FC<{}> = () => {
             onQuizSave={quizSaveClickHandler}
             isQuizNameError={isQuizNameError}
             setIsQuizNameError={setIsQuizNameError}
+          />
+        )}
+
+        {showUnsavedChangesOverlay && (
+          <UnsavedChangesOverlay
+            onClose={() => setShowUnsavedChangesOverlay(false)}
+            onSaveAndExit={saveAndExitClickHandler}
+            onExitWithoutSaving={() => navigate("/home")}
           />
         )}
       </div>

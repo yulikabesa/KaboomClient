@@ -13,6 +13,7 @@ const NavigationMenu: React.FC<{
   isQuizNameError?: boolean;
   setIsQuizNameError?: React.Dispatch<React.SetStateAction<boolean>>;
   onQuizSave?: () => void;
+  onExit?: () => void;
 }> = (props) => {
   const quizNameInputClasses = `${classes["quiz-name-input"]} ${props.isQuizNameError && classes["error"]}`;
   return (
@@ -61,6 +62,10 @@ const NavigationMenu: React.FC<{
         {props.variant === "home" ? (
           <Button variant="white" to="/join">
             לשחק
+          </Button>
+        ) : props.onExit ? (
+          <Button variant="white" onClick={props.onExit}>
+            לצאת
           </Button>
         ) : (
           <Button variant="white" to="/home">
